@@ -31,13 +31,13 @@ $accessNames = [
             <div class="user-box">
                 <span class="user-name"><?php echo htmlspecialchars($user['username']); ?></span>
                 <span class="user-level"><?php echo htmlspecialchars($accessNames[$user['access_level']] ?? 'Unknown'); ?></span>
-                <form action="logout.php" method="post" style="display:inline;">
+                <form action="/logout.php" method="post" style="display:inline;">
                     <button type="submit">Log Out</button>
                 </form>
             </div>
         <?php else: ?>
             <div class="login-box">
-                <form action="login.php" method="post">
+                <form action="/login.php" method="post">
                     <input type="text" name="username" placeholder="Username" required>
                     <input type="password" name="password" placeholder="Password" required>
                     <button type="submit">Log In</button>

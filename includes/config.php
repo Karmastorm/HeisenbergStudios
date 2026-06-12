@@ -4,9 +4,9 @@
  * Update these values for your environment.
  */
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'johnsonk_heisenbergstudios');
-define('DB_USER', '***REMOVED***');
-define('DB_PASS', '***REMOVED***');
+define('DB_NAME', 'site_portal');
+define('DB_USER', 'your_db_user');
+define('DB_PASS', 'your_db_password');
 
 function get_db_connection(): PDO {
     static $pdo = null;

@@ -42,7 +42,7 @@ foreach ($rows as $row) {
 ?>
 <nav class="main-nav">
     <ul>
-        <li><a href="index.php">Home</a></li>
+        <li><a href="/index.php">Home</a></li>
         <?php foreach ($menu as $category): ?>
             <li>
                 <span><?php echo htmlspecialchars($category['name']); ?> &#9662;</span>
@@ -50,7 +50,7 @@ foreach ($rows as $row) {
                     <ul class="dropdown">
                         <?php foreach ($category['items'] as $item): ?>
                             <li>
-                                <a href="index.php?section=<?php echo urlencode($item['slug']); ?>">
+                                <a href="/index.php?section=<?php echo urlencode($item['slug']); ?>">
                                     <?php echo htmlspecialchars($item['name']); ?>
                                 </a>
                             </li>
@@ -59,5 +59,17 @@ foreach ($rows as $row) {
                 <?php endif; ?>
             </li>
         <?php endforeach; ?>
+
+        <?php if ($userLevel >= 3): // Editor and above ?>
+            <li>
+                <span>Admin &#9662;</span>
+                <ul class="dropdown">
+                    <li><a href="/admin/cards.php">Manage Cards</a></li>
+                    <?php if ($userLevel >= 5): // Webmaster only ?>
+                        <li><a href="/admin/folders.php">Manage Folders</a></li>
+                    <?php endif; ?>
+                </ul>
+            </li>
+        <?php endif; ?>
     </ul>
 </nav>
