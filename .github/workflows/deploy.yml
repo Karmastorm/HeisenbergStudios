@@ -18,4 +18,4 @@ jobs:
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./
-          server-dir: /home1/johnsonk/public_html/heisenbergstudios
+          server-dir: public_html/heisenbergstudios/
