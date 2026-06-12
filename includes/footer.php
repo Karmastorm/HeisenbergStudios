@@ -10,10 +10,10 @@ $year = date('Y');
         <div>
             <h4>Site</h4>
             <ul>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="login.php">Login</a></li>
-                <li><a href="about.php">About</a></li>
-                <li><a href="contact.php">Contact</a></li>
+                <li><a href="/index.php">Home</a></li>
+                <li><a href="/login.php">Login</a></li>
+                <li><a href="/about.php">About</a></li>
+                <li><a href="/contact.php">Contact</a></li>
             </ul>
         </div>
 
@@ -25,7 +25,7 @@ $year = date('Y');
                         <ul>
                             <?php foreach ($category['items'] as $item): ?>
                                 <li>
-                                    <a href="index.php?section=<?php echo urlencode($item['slug']); ?>">
+                                    <a href="/index.php?section=<?php echo urlencode($item['slug']); ?>">
                                         <?php echo htmlspecialchars($item['name']); ?>
                                     </a>
                                 </li>
@@ -40,11 +40,11 @@ $year = date('Y');
             <h4>Account</h4>
             <ul>
                 <?php if (is_logged_in()): ?>
-                    <li><a href="profile.php">My Profile</a></li>
-                    <li><a href="logout.php">Log Out</a></li>
+                    <li><a href="/profile.php">My Profile</a></li>
+                    <li><a href="/logout.php">Log Out</a></li>
                 <?php else: ?>
-                    <li><a href="login.php">Log In</a></li>
-                    <li><a href="register.php">Register</a></li>
+                    <li><a href="/login.php">Log In</a></li>
+                    <li><a href="/register.php">Register</a></li>
                 <?php endif; ?>
             </ul>
         </div>
