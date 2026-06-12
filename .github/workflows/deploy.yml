@@ -19,3 +19,18 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./
           server-dir: public_html/heisenbergstudios/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.env*
+            **/.npmrc
+            **/.yarnrc
+            **/.aws/**
+            **/.docker/**
+            **/.kube/**
+            **/.config/**
+            **/.vercel/**
+            **/node_modules/**
+            **/.github/**
+            **/schema*.sql
+            **/make_hash.php
