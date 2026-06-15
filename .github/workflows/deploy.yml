@@ -20,7 +20,7 @@ jobs:
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           local_path: './'
-          remote_path: '/public_html/heisenbergstudios/'
+          remote_path: 'public_html/heisenbergstudios/'
           sftpArgs: '-o ConnectTimeout=15'
           # Exclude repo meta, setup helpers, secrets, and server-state.
           rsyncArgs: '--exclude=.git --exclude=.github --exclude=setup --exclude=.env --exclude=node_modules --exclude=README.md'
