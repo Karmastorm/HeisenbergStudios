@@ -51,8 +51,10 @@ a {
     display: block;
 }
 
-.site-header .brand-text {
-    line-height: 1;
+.site-header .brand-wordmark {
+    height: 34px;
+    width: auto;
+    display: block;
 }
 
 .header-right {
