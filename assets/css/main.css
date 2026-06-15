@@ -241,15 +241,30 @@ a {
     line-height: 1.4;
 }
 
-.card-badge {
-    align-self: flex-start;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    background-color: var(--color-accent);
-    color: #fff;
-    padding: 0.15rem 0.5rem;
-    border-radius: 3px;
+/* ---- Card top banner (shows the category, colored by access level) ---- */
+.card-banner {
+    padding: 0.4rem 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
+
+.card-banner-category {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #ffffff;
+}
+
+/* Per-level banner colors. Chosen to be distinct from one another and to
+   sit comfortably on top of any card theme without clashing.
+   1 = read_only, 2 = restricted, 3 = editor, 4 = web_dev, 5 = webmaster */
+.card-banner-level-1 { background-color: #4a8fb5; } /* calm blue   */
+.card-banner-level-2 { background-color: #5a9367; } /* muted green */
+.card-banner-level-3 { background-color: #c98a3c; } /* warm amber  */
+.card-banner-level-4 { background-color: #a3563d; } /* terracotta  */
+.card-banner-level-5 { background-color: #6d4c91; } /* deep purple */
 
 /* ---------------- FOOTER -------------------------------------- */
 .site-footer {
