@@ -51,6 +51,6 @@ $year = date('Y');
     </div>
 
     <div class="footer-bottom">
-        &copy; <?php echo $year; ?> My Toolbox Site. All rights reserved.
+        &copy; <?php echo $year; ?> Heisenberg Studios. All rights reserved.
     </div>
 </footer>
