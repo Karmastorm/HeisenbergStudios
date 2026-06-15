@@ -1,4 +1,0 @@
-# Deny all direct web access to this directory and its subfolders.
-# All files must be served through download.php / browse.php,
-# which enforce login + access-level checks.
-Require all denied
