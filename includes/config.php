@@ -10,12 +10,7 @@
  * The .env file is git-ignored and must never be committed.
  * Copy ".env.example" to ".env" and fill in real values to get started.
  */
-<<<<<<< HEAD
 
-/**
- * Minimal .env loader (no external dependencies).
- * Existing environment variables always take precedence over the file.
- */
 function load_env_file(string $path): void {
     if (!is_readable($path)) {
         return;
@@ -41,19 +36,12 @@ function load_env_file(string $path): void {
     }
 }
 
-// Project root is one directory up from /includes
 load_env_file(__DIR__ . '/../.env');
 
 define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
 define('DB_NAME', getenv('DB_NAME') ?: '');
 define('DB_USER', getenv('DB_USER') ?: '');
 define('DB_PASS', getenv('DB_PASS') ?: '');
-=======
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'johnsonk_heisenbergstudios');
-define('DB_USER', '***REMOVED***');
-define('DB_PASS', '***REMOVED***');
->>>>>>> 69d8d85145cc4585539e7b21dbe0032e42d1636a
 
 function get_db_connection(): PDO {
     static $pdo = null;
