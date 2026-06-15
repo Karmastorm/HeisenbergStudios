@@ -15,7 +15,10 @@ $accessNames = [
 ];
 ?>
 <header class="site-header">
-    <div class="brand">Heisenberg Studios</div>
+    <div class="brand">
+        <img src="/assets/img/logo.png" alt="Heisenberg Studios logo" class="brand-logo">
+        <span class="brand-text">Heisenberg Studios</span>
+    </div>
 
     <div class="header-right">
         <div class="theme-switcher">
