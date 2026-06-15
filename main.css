@@ -1,0 +1,387 @@
+/* ============================================================
+   MAIN STYLESHEET
+   Uses CSS variables from themes.css for all colors so that
+   switching body[data-theme] re-themes the whole page.
+   ============================================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    color: var(--color-accent);
+    text-decoration: none;
+}
+
+/* ---------------- HEADER / BANNER -------------------------- */
+.site-header {
+    background-color: var(--color-header-bg);
+    color: var(--color-header-fg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.5rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.site-header .brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Login form shown when logged out */
+.login-box form {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.login-box input[type="text"],
+.login-box input[type="password"] {
+    padding: 0.4rem 0.6rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    width: 120px;
+}
+
+.login-box button,
+.user-box button {
+    padding: 0.4rem 0.9rem;
+    background-color: var(--color-accent);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.login-box button:hover,
+.user-box button:hover {
+    opacity: 0.85;
+}
+
+/* Logged-in user box */
+.user-box {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background-color: rgba(255,255,255,0.08);
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+}
+
+.user-box .user-name {
+    font-weight: 600;
+}
+
+.user-box .user-level {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    background-color: var(--color-accent);
+    color: #fff;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+}
+
+/* Theme switcher */
+.theme-switcher select {
+    padding: 0.35rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--color-border);
+    font-size: 0.85rem;
+}
+
+/* ---------------- NAVIGATION MENU --------------------------- */
+.main-nav {
+    background-color: var(--color-menu-bg);
+    position: relative;
+    z-index: 50;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.main-nav > ul > li {
+    position: relative;
+}
+
+.main-nav > ul > li > a,
+.main-nav > ul > li > span {
+    display: block;
+    padding: 0.85rem 1.25rem;
+    color: var(--color-menu-fg);
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.main-nav > ul > li:hover > a,
+.main-nav > ul > li:hover > span,
+.main-nav > ul > li:hover {
+    background-color: var(--color-menu-hover);
+}
+
+/* Dropdown panel */
+.main-nav .dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 200px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    box-shadow: 0 4px 10px var(--color-card-shadow);
+    flex-direction: column;
+    z-index: 100;
+}
+
+.main-nav li:hover .dropdown {
+    display: flex;
+}
+
+.main-nav .dropdown li a {
+    display: block;
+    padding: 0.6rem 1rem;
+    color: var(--color-text);
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.main-nav .dropdown li a:hover {
+    background-color: var(--color-bg);
+    color: var(--color-accent);
+}
+
+/* ---------------- MAIN BODY / CARDS -------------------------- */
+.main-content {
+    flex: 1;
+    padding: 2rem 1.5rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.page-title {
+    margin-bottom: 1.5rem;
+    color: var(--color-primary);
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+}
+
+@media (max-width: 1100px) {
+    .card-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+    .card-grid { grid-template-columns: 1fr; }
+    .main-nav > ul > li > a, .main-nav > ul > li > span { padding: 0.7rem 1rem; }
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px var(--color-card-shadow);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    color: var(--color-text);
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px var(--color-card-shadow);
+}
+
+.card-body {
+    padding: 1rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.card-headline {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+.card-synopsis {
+    font-size: 0.88rem;
+    color: var(--color-text-soft);
+    line-height: 1.4;
+}
+
+/* ---- Card top banner (shows the category, colored by access level) ---- */
+.card-banner {
+    padding: 0.4rem 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-banner-category {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #ffffff;
+}
+
+/* Per-level banner colors. Chosen to be distinct from one another and to
+   sit comfortably on top of any card theme without clashing.
+   1 = read_only, 2 = restricted, 3 = editor, 4 = web_dev, 5 = webmaster */
+.card-banner-level-1 { background-color: #4a8fb5; } /* calm blue   */
+.card-banner-level-2 { background-color: #5a9367; } /* muted green */
+.card-banner-level-3 { background-color: #c98a3c; } /* warm amber  */
+.card-banner-level-4 { background-color: #a3563d; } /* terracotta  */
+.card-banner-level-5 { background-color: #6d4c91; } /* deep purple */
+
+/* ---------------- FOOTER -------------------------------------- */
+.site-footer {
+    background-color: var(--color-header-bg);
+    color: var(--color-header-fg);
+    padding: 2rem 1.5rem 1rem;
+    margin-top: 2rem;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1.5rem;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.footer-grid h4 {
+    margin-bottom: 0.6rem;
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 0.3rem;
+}
+
+.footer-grid ul {
+    list-style: none;
+}
+
+.footer-grid ul li {
+    margin-bottom: 0.35rem;
+    font-size: 0.85rem;
+}
+
+.footer-grid ul li a {
+    color: var(--color-header-fg);
+    opacity: 0.85;
+}
+
+.footer-grid ul li a:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+.footer-bottom {
+    text-align: center;
+    font-size: 0.8rem;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    opacity: 0.8;
+}
+
+/* ---------------- LOGIN PAGE ----------------------------------- */
+.login-page-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.login-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 4px 14px var(--color-card-shadow);
+}
+
+.login-card h2 {
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+}
+
+.login-card label {
+    display: block;
+    font-size: 0.85rem;
+    margin-bottom: 0.3rem;
+    color: var(--color-text-soft);
+}
+
+.login-card input {
+    width: 100%;
+    padding: 0.55rem 0.7rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+}
+
+.login-card button {
+    width: 100%;
+    padding: 0.6rem;
+    background-color: var(--color-accent);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.error-msg {
+    background-color: #fdecea;
+    color: #b3261e;
+    padding: 0.6rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+}
+
+.access-denied {
+    text-align: center;
+    padding: 3rem 1rem;
+}
+
+.access-denied h2 {
+    color: var(--color-primary);
+    margin-bottom: 0.75rem;
+}
