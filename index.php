@@ -79,7 +79,7 @@ $accessNames = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Toolbox Site</title>
+    <title>HEISENBER STUDIOS</title>
     <link rel="stylesheet" href="assets/css/themes.css">
     <link rel="stylesheet" href="assets/css/main.css">
 </head>
