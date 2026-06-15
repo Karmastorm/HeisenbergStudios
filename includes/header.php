@@ -15,7 +15,7 @@ $accessNames = [
 ];
 ?>
 <header class="site-header">
-    <div class="brand">My Toolbox Site</div>
+    <div class="brand">Heisenberg Studios</div>
 
     <div class="header-right">
         <div class="theme-switcher">
