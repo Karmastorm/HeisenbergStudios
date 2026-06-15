@@ -9,7 +9,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Deploy via SFTP
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
@@ -20,19 +20,16 @@ jobs:
           port: 22
           local_path: './*'
           remote_path: '/public_html/heisenbergstudios/'
-          sftpArgs: '-o ConnectTimeout=5'
+          # Never deploy server-state, setup helpers, secrets, or repo meta.
           exclude: |
             **/.git*
             **/.git*/**
-            **/.env*
-            **/.npmrc
-            **/.yarnrc
-            **/.aws/**
-            **/.docker/**
-            **/.kube/**
-            **/.config/**
-            **/.vercel/**
-            **/node_modules/**
             **/.github/**
-            **/schema*.sql
-            **/make_hash.php
+            **/setup/**
+            **/.env*
+            **/node_modules/**
+            **/.ftp-deploy-sync-state.json
+            **/.ftpquota
+            **/error_log
+            **/*.phpupgrader.*
+            **/_index.html

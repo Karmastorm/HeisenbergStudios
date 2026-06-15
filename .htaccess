@@ -1,3 +1,7 @@
-DirectoryIndex index.html index.htm index.php
+DirectoryIndex index.php
 Options -Indexes
 
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# This domain inherits the “PHP” package.
+# php -- END cPanel-generated handler, do not edit

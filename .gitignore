@@ -1,13 +1,13 @@
-# Environment / secrets -- never commit these
-.env
-.env.*
-!.env.example
+# Server-generated state (never commit)
+.ftp-deploy-sync-state.json
+.ftpquota
+error_log
+*.phpupgrader.*
 
-# OS / editor cruft
+# Local/editor cruft
 .DS_Store
 Thumbs.db
-*.swp
-*.swo
+node_modules/
 
-# Logs
-*.log
+# Setup helpers and DB dumps are kept in /setup but never deployed.
+# (They stay in the repo for reference; the deploy workflow excludes them.)
