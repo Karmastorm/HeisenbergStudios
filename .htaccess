@@ -1,0 +1,12 @@
+DirectoryIndex index.php
+Options -Indexes
+
+# Block direct web access to sensitive dotfiles
+<FilesMatch "^\.env">
+    Require all denied
+</FilesMatch>
+
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# This domain inherits the "PHP" package.
+# php -- END cPanel-generated handler, do not edit
