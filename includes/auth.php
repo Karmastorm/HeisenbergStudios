@@ -40,7 +40,7 @@ function current_user(): ?array {
         'id'           => $_SESSION['user_id'],
         'username'     => $_SESSION['username'],
         'access_level' => $_SESSION['access_level'],
-        'theme'        => $_SESSION['theme'] ?? 'default',
+        'theme'        => $_SESSION['theme'] ?? 'light',
     ];
 }
 

@@ -152,8 +152,9 @@ $allCards = $cardsStmt->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Cards - My Toolbox Site</title>
-    <link rel="stylesheet" href="../assets/css/themes.css?v=4">
-    <link rel="stylesheet" href="../assets/css/main.css?v=4">
+    <link rel="stylesheet" href="../assets/css/themes.css?v=5">
+    <link rel="stylesheet" href="../assets/css/fonts.css?v=5">
+    <link rel="stylesheet" href="../assets/css/main.css?v=5">
     <style>
         .admin-form { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; padding: 1.25rem; margin-bottom: 2rem; max-width: 700px; }
         .admin-form label { display: block; font-size: 0.85rem; color: var(--color-text-soft); margin-bottom: 0.25rem; margin-top: 0.75rem; }
@@ -172,7 +173,7 @@ $allCards = $cardsStmt->fetchAll();
         .msg-error { background: #fdecea; color: #b3261e; padding: 0.6rem 0.9rem; border-radius: 4px; margin-bottom: 1rem; font-size: 0.9rem; }
     </style>
 </head>
-<body data-theme="default">
+<body data-theme="light">
     <?php include __DIR__ . '/../includes/header.php'; ?>
     <?php include __DIR__ . '/../includes/nav.php'; ?>
 

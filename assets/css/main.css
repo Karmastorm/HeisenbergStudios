@@ -11,7 +11,7 @@
 }
 
 body {
-    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    font-family: 'Nunito', -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
     background-color: var(--color-bg);
     color: var(--color-text);
     min-height: 100vh;
@@ -22,6 +22,19 @@ body {
 a {
     color: var(--color-accent);
     text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--color-text-soft);
+    outline-offset: 2px;
 }
 
 /* ---------------- HEADER / BANNER -------------------------- */
@@ -74,7 +87,7 @@ a {
 .login-box input[type="password"] {
     padding: 0.4rem 0.6rem;
     border: 1px solid var(--color-border);
-    border-radius: 4px;
+    border-radius: 6px;
     font-size: 0.9rem;
     width: 120px;
 }
@@ -83,9 +96,9 @@ a {
 .user-box button {
     padding: 0.4rem 0.9rem;
     background-color: var(--color-accent);
-    color: #fff;
+    color: var(--color-accent-fg);
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     font-size: 0.9rem;
 }
@@ -113,7 +126,7 @@ a {
     font-size: 0.75rem;
     text-transform: uppercase;
     background-color: var(--color-accent);
-    color: #fff;
+    color: var(--color-accent-fg);
     padding: 0.15rem 0.5rem;
     border-radius: 3px;
 }
@@ -121,7 +134,7 @@ a {
 /* Theme switcher */
 .theme-switcher select {
     padding: 0.35rem 0.5rem;
-    border-radius: 4px;
+    border-radius: 6px;
     border: 1px solid var(--color-border);
     font-size: 0.85rem;
 }
@@ -151,17 +164,19 @@ a {
     cursor: pointer;
     font-weight: 500;
     font-size: 0.95rem;
+    text-decoration: none;
 }
 
 .main-nav > ul > li:hover > a,
 .main-nav > ul > li:hover > span,
 .main-nav > ul > li:hover {
     background-color: var(--color-menu-hover);
+    text-decoration: none;
 }
 
 /* Dropdown panel */
 .main-nav .dropdown {
-    display: none;
+    display: flex;
     position: absolute;
     top: 100%;
     left: 0;
@@ -171,10 +186,18 @@ a {
     box-shadow: 0 4px 10px var(--color-card-shadow);
     flex-direction: column;
     z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px);
+    transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+    pointer-events: none;
 }
 
 .main-nav li:hover .dropdown {
-    display: flex;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
 }
 
 .main-nav .dropdown li a {
@@ -183,11 +206,13 @@ a {
     color: var(--color-text);
     font-size: 0.9rem;
     white-space: nowrap;
+    text-decoration: none;
 }
 
 .main-nav .dropdown li a:hover {
     background-color: var(--color-bg);
     color: var(--color-accent);
+    text-decoration: none;
 }
 
 /* ---------------- MAIN BODY / CARDS -------------------------- */
@@ -201,7 +226,11 @@ a {
 
 .page-title {
     margin-bottom: 1.5rem;
-    color: var(--color-primary);
+    color: var(--color-brand-accent);
+    font-family: 'Bebas Neue', 'Nunito', sans-serif;
+    font-size: 2.25rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
 }
 
 .card-grid {
@@ -234,6 +263,7 @@ a {
 .card:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 16px var(--color-card-shadow);
+    text-decoration: none;
 }
 
 .card-body {
@@ -245,8 +275,10 @@ a {
 }
 
 .card-headline {
-    font-size: 1.05rem;
-    font-weight: 700;
+    font-family: 'Bebas Neue', 'Nunito', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
     color: var(--color-primary);
 }
 
@@ -352,7 +384,11 @@ a {
 }
 
 .login-card h2 {
-    color: var(--color-primary);
+    color: var(--color-brand-accent);
+    font-family: 'Bebas Neue', 'Nunito', sans-serif;
+    font-size: 1.75rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
     margin-bottom: 1rem;
 }
 
@@ -368,16 +404,16 @@ a {
     padding: 0.55rem 0.7rem;
     margin-bottom: 1rem;
     border: 1px solid var(--color-border);
-    border-radius: 4px;
+    border-radius: 6px;
 }
 
 .login-card button {
     width: 100%;
     padding: 0.6rem;
     background-color: var(--color-accent);
-    color: #fff;
+    color: var(--color-accent-fg);
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     font-size: 1rem;
     cursor: pointer;
 }
@@ -407,7 +443,11 @@ a {
 }
 
 .access-denied h2 {
-    color: var(--color-primary);
+    color: var(--color-brand-accent);
+    font-family: 'Bebas Neue', 'Nunito', sans-serif;
+    font-size: 1.75rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
     margin-bottom: 0.75rem;
 }
 
@@ -449,15 +489,17 @@ a {
     padding: 0.5rem 0.6rem;
     border-radius: 6px;
     color: var(--color-text);
+    text-decoration: none;
 }
 
 .ticker-index a:hover {
     background-color: var(--color-bg);
+    text-decoration: none;
 }
 
 .ticker-index a.active {
     background-color: var(--color-accent);
-    color: #fff;
+    color: var(--color-accent-fg);
 }
 
 .ticker-index .ticker-symbol {

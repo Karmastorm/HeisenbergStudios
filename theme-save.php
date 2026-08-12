@@ -11,7 +11,7 @@ if (!is_logged_in()) {
 }
 
 $theme = $_POST['theme'] ?? '';
-$allowedThemes = ['default', 'dark', 'forest', 'royal'];
+$allowedThemes = ['light', 'dark'];
 
 if (!in_array($theme, $allowedThemes, true)) {
     http_response_code(400);

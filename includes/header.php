@@ -4,7 +4,7 @@
  * Expects start_secure_session() to have already been called by the page.
  */
 $user = current_user();
-$currentTheme = $user['theme'] ?? ($_SESSION['theme'] ?? 'default');
+$currentTheme = $user['theme'] ?? ($_SESSION['theme'] ?? 'light');
 
 $accessNames = [
     1 => 'Read Only',
@@ -23,10 +23,8 @@ $accessNames = [
     <div class="header-right">
         <div class="theme-switcher">
             <select id="theme-select" aria-label="Choose color theme">
-                <option value="default">Default</option>
+                <option value="light">Light</option>
                 <option value="dark">Dark</option>
-                <option value="forest">Forest</option>
-                <option value="royal">Royal</option>
             </select>
         </div>
 
