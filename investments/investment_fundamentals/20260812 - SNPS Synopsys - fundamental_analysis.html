@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Synopsys (SNPS) Fundamental Analysis — Aug 12, 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --g-fill:#EAF3DE;--g-text:#27500A;--g-border:#C0DD97;--g-accent:#639922;
+  --a-fill:#FAEEDA;--a-text:#854F0B;--a-border:#FAC775;--a-accent:#EF9F27;
+  --r-fill:#FCEBEB;--r-text:#A32D2D;--r-border:#F7C1C1;--r-accent:#E24B4A;
+  --b-fill:#E6F1FB;--b-text:#185FA5;--b-border:#B5D4F4;--b-accent:#378ADD;
+  --n-fill:#F1EFE8;--n-text:#444441;--n-border:#D3D1C7;
+  --color-text-primary:#1C1B18;--color-text-secondary:#6B6A64;
+  --color-background-primary:#FFFFFF;--color-background-secondary:#F5F4F0;
+  --color-border-primary:rgba(0,0,0,0.35);--color-border-secondary:rgba(0,0,0,0.18);--color-border-tertiary:rgba(0,0,0,0.10)
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --g-fill:#173404;--g-text:#C0DD97;--g-border:#3B6D11;--g-accent:#97C459;
+  --a-fill:#412402;--a-text:#FAC775;--a-border:#854F0B;--a-accent:#EF9F27;
+  --r-fill:#501313;--r-text:#F09595;--r-border:#A32D2D;--r-accent:#E24B4A;
+  --b-fill:#042C53;--b-text:#85B7EB;--b-border:#185FA5;--b-accent:#378ADD;
+  --n-fill:#2C2C2A;--n-text:#D3D1C7;--n-border:#5F5E5A;
+  --color-text-primary:#EDECE7;--color-text-secondary:#A6A49C;
+  --color-background-primary:#171613;--color-background-secondary:#211F1B;
+  --color-border-primary:rgba(255,255,255,0.35);--color-border-secondary:rgba(255,255,255,0.18);--color-border-tertiary:rgba(255,255,255,0.10)
+}}
+:root[data-theme="dark"]{
+  --g-fill:#173404;--g-text:#C0DD97;--g-border:#3B6D11;--g-accent:#97C459;
+  --a-fill:#412402;--a-text:#FAC775;--a-border:#854F0B;--a-accent:#EF9F27;
+  --r-fill:#501313;--r-text:#F09595;--r-border:#A32D2D;--r-accent:#E24B4A;
+  --b-fill:#042C53;--b-text:#85B7EB;--b-border:#185FA5;--b-accent:#378ADD;
+  --n-fill:#2C2C2A;--n-text:#D3D1C7;--n-border:#5F5E5A;
+  --color-text-primary:#EDECE7;--color-text-secondary:#A6A49C;
+  --color-background-primary:#171613;--color-background-secondary:#211F1B;
+  --color-border-primary:rgba(255,255,255,0.35);--color-border-secondary:rgba(255,255,255,0.18);--color-border-tertiary:rgba(255,255,255,0.10)
+}
+body{font-family:var(--font-sans,-apple-system,"Segoe UI",system-ui,sans-serif);font-size:13px;line-height:1.6;color:var(--color-text-primary);background:var(--color-background-primary)}
+.wrap{max-width:860px;margin:0 auto;padding:20px 16px 32px}
+table,.mc .mv,.eps-v,.iv{font-variant-numeric:tabular-nums}
+.conf{padding:10px 16px;border-radius:8px;margin-bottom:14px;font-size:12px}
+.conf.high,.conf.moderate{background:var(--g-fill);color:var(--g-text)}
+.conf.low{background:var(--a-fill);color:var(--a-text)}
+.conf.vlow{background:var(--r-fill);color:var(--r-text)}
+.tab-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.tab-btn{padding:7px 18px;border-radius:100px;border:1px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);font-size:13px;font-weight:400;cursor:pointer;font-family:inherit;transition:border-color 0.15s,color 0.15s}
+.tab-btn:hover{border-color:var(--color-border-primary);color:var(--color-text-primary)}
+.tab-btn.active{border:1.5px solid var(--color-text-primary);color:var(--color-text-primary);font-weight:500}
+.tab-btn:focus-visible{outline:2px solid var(--b-accent);outline-offset:2px}
+.panel{display:none}.panel.on{display:block}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:12px;padding:16px 20px;margin-bottom:12px}
+.card.green{background:var(--g-fill);border-color:var(--g-border)}
+.card.amber{background:var(--a-fill);border-color:var(--a-border)}
+.card.red{background:var(--r-fill);border-color:var(--r-border)}
+.card.blue{background:var(--b-fill);border-color:var(--b-border)}
+.card.grey{background:var(--n-fill);border-color:var(--n-border)}
+.view-label{font-size:18px;font-weight:500;margin-bottom:6px}
+.view-label.green{color:var(--g-text)}.view-label.amber{color:var(--a-text)}.view-label.red{color:var(--r-text)}
+.view-reason{font-size:13px;margin-bottom:16px;color:var(--color-text-primary)}
+.sec-label{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin:14px 0 8px}
+.bullet-row{display:flex;gap:10px;align-items:flex-start;padding:6px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:13px}
+.bullet-row:last-child{border-bottom:none}
+.bicon{font-size:14px;min-width:18px;margin-top:1px}
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px;margin:8px 0;min-width:560px}
+th{text-align:left;padding:7px 10px;font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.7px;color:var(--color-text-secondary);border-bottom:0.5px solid var(--color-border-tertiary);white-space:nowrap}
+td{padding:9px 10px;color:var(--color-text-primary);border-bottom:0.5px solid var(--color-border-tertiary)}
+tr:last-child td{border-bottom:none}
+.pos{color:var(--g-accent);font-weight:500}.neg{color:var(--r-accent);font-weight:500}.neu{color:var(--color-text-secondary)}
+.badge{display:inline-block;padding:2px 9px;border-radius:100px;font-size:11px;font-weight:500;white-space:nowrap}
+.badge.ok{background:var(--g-fill);color:var(--g-text)}
+.badge.warn{background:var(--a-fill);color:var(--a-text)}
+.badge.bad{background:var(--r-fill);color:var(--r-text)}
+.badge.info{background:var(--b-fill);color:var(--b-text)}
+.badge.neu{background:var(--n-fill);color:var(--n-text)}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;margin:12px 0}
+.mc{background:var(--color-background-secondary);border-radius:8px;padding:12px 14px}
+.mc .ml{font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:var(--color-text-secondary);margin-bottom:4px}
+.mc .mv{font-size:18px;font-weight:500;color:var(--color-text-primary)}
+.mc .ms{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.info-row{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:0.5px solid var(--color-border-tertiary);gap:16px}
+.info-row:last-child{border-bottom:none}
+.il{font-size:12px;color:var(--color-text-secondary)}
+.iv{font-size:12px;color:var(--color-text-primary);font-weight:500;text-align:right}
+.flag-card{border-left:3px solid var(--a-accent);background:var(--a-fill);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:8px}
+.flag-title{font-size:13px;font-weight:500;color:var(--a-text);margin-bottom:3px}
+.flag-note{font-size:12px;color:var(--a-text)}
+.score-box{background:var(--color-background-secondary);border-radius:8px;padding:14px 16px;margin-top:14px;font-size:12px;color:var(--color-text-secondary)}
+.eps-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.eps-chip{background:var(--color-background-secondary);border-radius:8px;padding:10px 14px;text-align:center;min-width:85px}
+.eps-q{font-size:10px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.5px}
+.eps-v{font-size:16px;font-weight:500;color:var(--color-text-primary);margin:3px 0}
+.eps-y{font-size:11px}
+.peer-you{background:var(--color-background-secondary)}
+.foot{font-size:11px;color:var(--color-text-secondary);margin-top:8px;line-height:1.6}
+.disc{font-size:11px;color:var(--color-text-secondary);border-top:0.5px solid var(--color-border-tertiary);padding-top:14px;margin-top:24px;line-height:1.6}
+details summary{font-size:12px;color:var(--color-text-secondary);cursor:pointer;padding:8px 0}
+details p{font-size:12px;color:var(--color-text-secondary);padding:4px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+details p:last-child{border-bottom:none}
+details strong{color:var(--color-text-primary);font-weight:500}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="conf moderate">
+  <strong>Data confidence: MODERATE</strong><br>
+  Live metrics retrieved: 9 of 12 key sections cleanly sourced &nbsp;|&nbsp; Sources: stockanalysis.com, official Synopsys press releases (prnewswire.com/news.synopsys.com), SEC EDGAR, FTC.gov, CNBC, Bloomberg, GuruFocus, Investing.com &nbsp;|&nbsp; Synopsys's ~$35B Ansys acquisition (closed Jul 17, 2025) distorts nearly every trailing GAAP metric, and sources genuinely disagree on FY2025's exact GAAP net income/EPS — both are flagged 🚩 inline, especially on the Growth and Valuation tabs.
+</div>
+
+<div class="tab-row">
+  <button class="tab-btn" onclick="show(0)">Snapshot</button>
+  <button class="tab-btn" onclick="show(1)">Valuation</button>
+  <button class="tab-btn" onclick="show(2)">Growth</button>
+  <button class="tab-btn" onclick="show(3)">Health</button>
+  <button class="tab-btn" onclick="show(4)">Returns</button>
+  <button class="tab-btn" onclick="show(5)">Peers</button>
+  <button class="tab-btn" onclick="show(6)">Ownership</button>
+  <button class="tab-btn active" onclick="show(7)">View</button>
+</div>
+
+<!-- ═══ TAB 0: SNAPSHOT ═══ -->
+<div class="panel" id="p0">
+
+  <div class="card">
+    <div class="info-row"><span class="il">Company</span><span class="iv">Synopsys, Inc.</span></div>
+    <div class="info-row"><span class="il">Ticker</span><span class="iv">SNPS · NASDAQ</span></div>
+    <div class="info-row"><span class="il">Sector</span><span class="iv">Technology</span></div>
+    <div class="info-row"><span class="il">Industry</span><span class="iv">Software — Electronic Design Automation (EDA)</span></div>
+    <div class="info-row"><span class="il">What it does</span><span class="iv" style="max-width:440px;text-align:right">The world's #1 EDA software provider — tools chipmakers use to design, verify and manufacture semiconductors — plus licensable Design IP. Since closing its ≈$35B Ansys acquisition in July 2025, it also owns Ansys's engineering-simulation (multi-physics/CAE) software, positioning it as a "silicon-to-systems" platform.</span></div>
+    <div class="info-row"><span class="il">What makes it different</span><span class="iv" style="max-width:440px;text-align:right">A near-duopoly (Synopsys ≈38% / Cadence ≈36% of EDA share) protected by deep customer switching costs built into multi-year chip design flows, near-100% retention, and ≈80-85% recurring/subscription revenue.</span></div>
+  </div>
+
+  <div class="mgrid">
+    <div class="mc"><div class="ml">CMP</div><div class="mv">≈$415</div><div class="ms">Aug 12, 2026 (sources ranged $412.87–$417.22) · NASDAQ</div></div>
+    <div class="mc"><div class="ml">52W High</div><div class="mv">$628.89</div><div class="ms">stockanalysis.com</div></div>
+    <div class="mc"><div class="ml">52W Low</div><div class="mv">$366.00</div><div class="ms">stockanalysis.com</div></div>
+    <div class="mc"><div class="ml">Market Cap</div><div class="mv">≈$79.1B</div><div class="ms">stockanalysis.com</div></div>
+    <div class="mc"><div class="ml">Par Value</div><div class="mv">$0.01</div><div class="ms">Per share · SEC 10-K filings</div></div>
+  </div>
+
+  <div class="flag-card">
+    <div class="flag-title">ANSYS MERGER DISTORTS RECENT HISTORY</div>
+    <div class="flag-note">Synopsys closed its ≈$35B acquisition of Ansys on July 17, 2025. Every FY2025–FY2026 trend below blends organic Synopsys with Ansys, and GAAP EPS has swung wildly quarter to quarter (e.g. Q2 FY2026 GAAP EPS was $0.09 vs. non-GAAP $3.35) due to acquisition-related amortization and deal costs. Source: official Synopsys press releases.</div>
+  </div>
+  <div class="flag-card">
+    <div class="flag-title">LARGE NEW DEBT LOAD FROM THE DEAL</div>
+    <div class="flag-note">Long-term debt reached ≈$13.46B post-deal, up from near-zero historically; debt-to-equity jumped from ≈0.08–0.11 (FY2022–24) to 0.50 in FY2025 before easing to 0.36 TTM. Source: Synopsys FY2025 press release, stockanalysis.com.</div>
+  </div>
+  <div class="flag-card">
+    <div class="flag-title">FTC-MANDATED DIVESTITURES &amp; A 2025 CHINA EXPORT-CONTROL SHOCK</div>
+    <div class="flag-note">The FTC required Synopsys to divest its optical/photonic software tools (and Ansys to divest PowerArtist) to Keysight as a condition of clearance (final order Oct 17, 2025). Separately, on May 29, 2025 the US Commerce Dept (BIS) barred EDA sales/support to China, forcing Synopsys to suspend guidance and halt Chinese business — rescinded July 2, 2025, but China was ≈16% of FY2024 revenue and analysts flagged lingering customer-confidence damage. Source: FTC.gov, CNBC, DataCenterDynamics.</div>
+  </div>
+  <div class="flag-card">
+    <div class="flag-title">SOURCES DISAGREE ON FY2025 GAAP FIGURES</div>
+    <div class="flag-note">The official Synopsys press release states FY2025 GAAP net income of $1.336B (EPS $8.07) and non-GAAP net income of $2.138B (EPS $12.91); a separate data-aggregator pull showed conflicting numbers for the same period. This report uses the official press-release figures as authoritative — verify against the 10-K before relying on any other source's FY2025 numbers.</div>
+  </div>
+  <div class="flag-card">
+    <div class="flag-title">ACTIVIST INVESTOR NOW ON THE BOARD</div>
+    <div class="flag-note">Elliott Management built a multi-billion-dollar stake (disclosed ≈March 2026) and settled with Synopsys in May 2026, placing partner Jesse Cohn on the board effective June 1, 2026 — a sign professional investors see real room for margin/capital-allocation improvement post-Ansys. Source: CNBC, Bloomberg.</div>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 1: VALUATION ═══ -->
+<div class="panel" id="p1">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Is this stock cheap, fair, or expensive right now?</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Metric</th><th>Current</th><th>Sector avg</th><th>Stock 5Y avg</th><th>Signal</th><th>Plain English</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>P/E</td><td>97.3x trailing¹ · 25.9x fwd</td><td>≈23.2x trailing (software)²</td><td>≈49.8x¹</td>
+          <td><span class="badge ok">FAIR</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Trailing P/E is a GAAP-distortion artifact — forward P/E is close to the sector and cheaper than close peer Cadence</td>
+        </tr>
+        <tr>
+          <td>P/B</td><td>2.58x</td><td>🚩 DATA UNAVAILABLE</td><td>≈8.24x¹</td>
+          <td><span class="badge ok">CHEAP</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Well below own history — but mostly because equity roughly doubled from stock issued to fund the Ansys deal, not because shares got cheaper</td>
+        </tr>
+        <tr>
+          <td>EV/EBITDA</td><td>38.0x</td><td>≈17.2x (software)²</td><td>≈42.5x¹</td>
+          <td><span class="badge warn">EXPENSIVE</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">More than double the software-sector average, though roughly in line with (even slightly below) Synopsys's own 5-year average</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">
+      ¹ "5-year average" figures are computed from Synopsys's own year-by-year multiples (FY2021–FY2025) but should be read with real caution: FY2024's unusually low P/E reflects a one-time tax/gain item, and FY2025's P/B and EV/EBITDA are distorted by the Ansys deal's effect on both equity and earnings — not a clean baseline. ² CSIMarket, Software &amp; Programming industry, Q1 2026 — a broad "software" benchmark, not an EDA-specific one (no clean EDA-sector-only average was found).
+    </div>
+  </div>
+
+  <div class="score-box">
+    Overall valuation: <strong>MIXED</strong><br>
+    <span style="margin-top:4px;display:block">Trailing multiples look expensive largely because Ansys purchase accounting has temporarily suppressed GAAP earnings — on a forward basis the stock is roughly in line with the software sector and cheaper than its closest peer, Cadence.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 2: GROWTH ═══ -->
+<div class="panel" id="p2">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Is this company growing its revenue and profits?</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Metric</th><th>3Y CAGR</th><th>5Y CAGR</th><th>Trend</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td>Revenue</td><td>15.1%*</td><td>🚩 DATA UNAVAILABLE</td><td>📈</td><td style="color:var(--color-text-secondary);font-size:11px">stockanalysis.com</td></tr>
+        <tr><td>Net profit</td><td>n/m — see footnote†</td><td>n/m†</td><td>➡️</td><td style="color:var(--color-text-secondary);font-size:11px">Official press releases</td></tr>
+        <tr><td>EPS</td><td>n/m — see footnote†</td><td>n/m†</td><td>➡️</td><td style="color:var(--color-text-secondary);font-size:11px">Official press releases</td></tr>
+        <tr><td>EBITDA margin</td><td>🚩 DATA UNAVAILABLE‡</td><td>🚩 DATA UNAVAILABLE‡</td><td>📉</td><td style="color:var(--color-text-secondary);font-size:11px">—</td></tr>
+        <tr><td>Net profit margin</td><td>🚩 DATA UNAVAILABLE‡</td><td>🚩 DATA UNAVAILABLE‡</td><td>📉</td><td style="color:var(--color-text-secondary);font-size:11px">stockanalysis.com</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">* Inflated by Ansys's inorganic revenue contribution starting Q3 FY2025 (≈$757M in FY2025 alone) — organic growth is materially lower than this headline figure. † GAAP net income/EPS is not usable for a CAGR: FY2024 included a one-time tax/gain item (net income $4.527B, EPS $29.37 — an outlier), and FY2025 (official: $1.336B net income, $8.07 EPS) is suppressed by Ansys amortization/deal costs. Non-GAAP net income was a more stable $2.138B in FY2025. ‡ EBITDA-margin trend was structurally unavailable this pass (source blocked); as a proxy, GAAP operating margin fell from a historical ≈22-27% to 7.03% TTM, and GAAP net margin fell to 8.90% TTM (vs. non-GAAP net margin ≈30.3% FY2025) — almost entirely a purchase-accounting effect, not an operating deterioration.</div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">EPS — last 8 quarters (non-GAAP — GAAP EPS is not comparable quarter-to-quarter post-Ansys)</div>
+    <div class="eps-row">
+      <div class="eps-chip"><div class="eps-q">Q3 FY24</div><div class="eps-v">$3.43</div><div class="eps-y pos">+27.0% YoY</div></div>
+      <div class="eps-chip"><div class="eps-q">Q4 FY24</div><div class="eps-v">$3.40</div><div class="eps-y pos">≈+13% YoY</div></div>
+      <div class="eps-chip"><div class="eps-q">Q1 FY25</div><div class="eps-v">$3.03</div><div class="eps-y neu">YoY: n/a</div></div>
+      <div class="eps-chip"><div class="eps-q">Q2 FY25</div><div class="eps-v">$3.67</div><div class="eps-y pos">+22.3% YoY</div></div>
+      <div class="eps-chip"><div class="eps-q">Q3 FY25</div><div class="eps-v">$3.39</div><div class="eps-y neg">-1.2% YoY</div></div>
+      <div class="eps-chip"><div class="eps-q">Q4 FY25</div><div class="eps-v">$2.90</div><div class="eps-y neg">-14.7% YoY</div></div>
+      <div class="eps-chip"><div class="eps-q">Q1 FY26</div><div class="eps-v">$3.77</div><div class="eps-y pos">+24.4% YoY</div></div>
+      <div class="eps-chip"><div class="eps-q">Q2 FY26</div><div class="eps-v">$3.35</div><div class="eps-y neg">-8.7% YoY</div></div>
+    </div>
+    <div class="foot">Non-GAAP EPS used here since GAAP EPS is distorted by Ansys purchase accounting (e.g. Q2 FY2026 GAAP EPS was just $0.09). Q1 FY2025's exact prior-year comparator was not captured — marked n/a rather than estimated. The two YoY declines (Q4 FY25, Q2 FY26) were both attributed by management partly to Design IP segment softness. Q3 FY2026 results are due Aug 26, 2026 — not included above. Source: official Synopsys press releases.</div>
+  </div>
+
+  <div class="score-box">
+    Growth classification: <strong>STEADY</strong><br>
+    <span style="margin-top:4px;display:block">Revenue has grown at a consistent mid-teens percentage rate for four straight fiscal years, but non-GAAP EPS growth has been choppier quarter to quarter — including two recent year-over-year declines — largely tied to a weak Design IP segment and Ansys integration noise rather than a genuine slowdown in the core EDA franchise.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 3: HEALTH ═══ -->
+<div class="panel" id="p3">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Is this company financially safe and stable?</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Metric</th><th>Value</th><th>5Y trend</th><th>Signal</th><th>Plain English</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Debt / Equity</td><td>0.36 (TTM)</td><td>↑ Spiked with the deal: 0.12→0.11→0.08→0.50(FY25)→0.36</td>
+          <td><span class="badge ok">SAFE</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Still well below 1 even after a debt-funded $35B acquisition</td>
+        </tr>
+        <tr>
+          <td>Interest Coverage</td><td>🚩 DATA UNAVAILABLE</td><td>—</td>
+          <td><span class="badge neu">UNKNOWN</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Not disclosed by any source checked — verify directly in the 10-K before assuming this is healthy</td>
+        </tr>
+        <tr>
+          <td>Current Ratio</td><td>1.43 (TTM)</td><td>→ Uneven: 1.16→1.09→1.15→2.44(FY24)→1.62→1.43</td>
+          <td><span class="badge warn">WATCH</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Just below the 1.5 comfortable line</td>
+        </tr>
+        <tr>
+          <td>Free Cash Flow</td><td>$2.63B (TTM)</td><td>↑ Improving: $1.40B(FY21)→...→$1.35B(FY25)→$2.63B(TTM)</td>
+          <td><span class="badge ok">STRONG</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Nearly doubled TTM — though FY2026 full-year guidance (≈$1.9B) is more conservative than the TTM run-rate, worth watching</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">Sources: stockanalysis.com balance sheet &amp; cash-flow statements, official Synopsys press releases.</div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Forward projections — 3 year horizon</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Scenario</th><th>Assumption</th><th>Est. revenue</th><th>Est. net profit</th><th>Est. EPS</th></tr></thead>
+      <tbody>
+        <tr><td>🐢 Bear</td><td style="color:var(--color-text-secondary);font-size:12px">Growth slows to ≈8%/yr (Design IP stays weak, China exposure remains a drag); GAAP margins stay compressed near TTM levels</td><td>≈$10.9B</td><td>≈$0.55B</td><td>≈$2.86</td></tr>
+        <tr><td>🚶 Base</td><td style="color:var(--color-text-secondary);font-size:12px">Growth continues near ≈12%/yr, roughly matching management's own FY2026 guidance pace; GAAP margins recover as Ansys amortization burns off</td><td>≈$12.2B</td><td>≈$1.83B</td><td>≈$9.55</td></tr>
+        <tr><td>🚀 Bull</td><td style="color:var(--color-text-secondary);font-size:12px">Growth accelerates to ≈18%/yr on synergies and new agentic-AI EDA products; margins expand back toward pre-merger historical norms (≈20% net margin)</td><td>≈$14.3B</td><td>≈$2.85B</td><td>≈$14.90</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">Base: TTM revenue of $8.68B (through Apr 2026) and ≈191.48M shares outstanding. These are scenario calculations anchored to Synopsys's own FY2026 guidance ($9.665B midpoint, ≈11.4% above TTM) and historical growth-rate/margin range — not guarantees or predictions.</div>
+  </div>
+
+  <div class="score-box">
+    Financial health: <strong>MODERATE RISK</strong><br>
+    <span style="margin-top:4px;display:block">Leverage remains low in absolute terms and free cash flow is strong and improving, but the debt step-change from the Ansys deal, an unverified interest coverage ratio, and a current ratio that's dipped just below the "comfortable" line together warrant closer attention than a clean "safe" label would suggest.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 4: RETURNS ═══ -->
+<div class="panel" id="p4">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Is this company creating real value for shareholders?</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Metric</th><th>Current (TTM)</th><th>3Y avg*</th><th>5Y avg*</th><th>Signal</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>ROE</td><td>2.63%</td><td>≈15.6%</td><td>≈15.9%</td>
+          <td><span class="badge bad">WEAK</span></td>
+        </tr>
+        <tr>
+          <td>ROIC / ROCE</td><td>1.50% / 1.39%</td><td>≈17.1% / ≈12.3%</td><td>≈17.9% / ≈13.3%</td>
+          <td><span class="badge bad">WEAK</span></td>
+        </tr>
+        <tr>
+          <td>Dividend yield</td><td>0.00%</td><td>0.00%</td><td>0.00%</td>
+          <td><span class="badge neu">—</span></td>
+        </tr>
+        <tr>
+          <td>Dividend payout</td><td>n/a — no dividend</td><td>n/a</td><td>n/a</td>
+          <td><span class="badge neu">—</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">ROE above 15% = good &nbsp;·&nbsp; ROCE above 15% = efficient capital use. * The stark gap between the "current TTM" column (weak) and the 3-/5-year averages (strong, 15-24% in FY2021-FY2024) is the clearest evidence that Synopsys's return metrics are currently a GAAP/purchase-accounting artifact of the Ansys deal, not a genuine deterioration in the underlying business's earning power — though this should be confirmed as GAAP figures normalize over the next few quarters rather than assumed. Synopsys has never paid a dividend. Source: stockanalysis.com.</div>
+  </div>
+
+  <div class="score-box">
+    Return quality: <strong>WEAK ON PAPER, STRONG UNDERLYING HISTORY</strong><br>
+    <span style="margin-top:4px;display:block">Pre-merger, Synopsys was a genuine high-quality compounder (ROE/ROIC consistently 15-24%); the current weak TTM readings reflect Ansys purchase accounting rather than a change in the business itself — but that thesis needs to be confirmed by improving GAAP numbers over the coming year, not just assumed.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 5: PEERS ═══ -->
+<div class="panel" id="p5">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">How does it compare to its 3 closest competitors?</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Company</th><th>P/E</th><th>P/B</th><th>ROE</th><th>Rev growth</th><th>D/E</th><th>Edge</th></tr></thead>
+      <tbody>
+        <tr class="peer-you">
+          <td><strong>SNPS ◀ you</strong></td>
+          <td>97.3x* · 25.9x fwd</td><td>2.58</td><td>2.63%*</td><td>+15.1%†</td><td>0.36</td>
+          <td style="font-size:12px">Ansys-expanded "silicon-to-systems" platform</td>
+        </tr>
+        <tr>
+          <td>Cadence Design Systems (CDNS)</td>
+          <td>84.89x · 44.68x fwd</td><td>15.69</td><td>20.66%</td><td>+24%†</td><td>0.47</td>
+          <td style="font-size:12px">No recent mega-merger distortion; faster growth</td>
+        </tr>
+        <tr>
+          <td>PTC Inc. (PTC)</td>
+          <td>11.4–13.6x · 15.4x fwd</td><td>🚩 DATA UNAVAILABLE</td><td>34.40%</td><td>+22–28%†</td><td>0.36</td>
+          <td style="font-size:12px">Cheapest of the group; highest ROE besides Autodesk</td>
+        </tr>
+        <tr>
+          <td>Autodesk (ADSK)</td>
+          <td>36.25x · 19.26x fwd</td><td>🚩 DATA UNAVAILABLE</td><td>50.40%</td><td>≈+18%†</td><td>0.85</td>
+          <td style="font-size:12px">Highest ROE of the group</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">* GAAP trailing P/E and ROE are both distorted by Ansys purchase accounting — see Valuation and Returns tabs. † Most recently reported YoY figures per company; SNPS's is the FY2025 annual figure (includes partial-year Ansys), others are recent-quarter or full-year-guidance figures as available. Ansys itself is no longer an independent comparator (acquired by Synopsys); Siemens EDA doesn't report separately from Siemens AG. Sources: stockanalysis.com, GuruFocus, Investing.com.</div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Latest news — top 5 long-term relevant items</div>
+    <div style="padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">Q3 FY2026 earnings date set for Aug 26, 2026; General Counsel transition disclosed</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">Next data point will show whether the Q1/Q2 FY26 beat-and-raise streak continues and whether Design IP is recovering as guided.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">Aug 12, 2026 · Synopsys IR</div>
+      </div>
+    </div>
+    <div style="padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">Piper Sandler upgrades SNPS to Overweight, raises target to $550</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">Cites Intel Foundry tailwinds and an improving IP growth outlook — a leading indicator sell-side analysts see the Design IP segment turning.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">Jun 23, 2026 · Barchart/TipRanks</div>
+      </div>
+    </div>
+    <div style="padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">Synopsys settles with activist Elliott Management; appoints Jesse Cohn to board</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">Signals sustained investor pressure for margin improvement/capital discipline post-Ansys; stock reportedly up ≈20% since Elliott's involvement became public.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">May 27, 2026 · Bloomberg / CNBC</div>
+      </div>
+    </div>
+    <div style="padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">Q2 FY2026 earnings beat expectations but stock falls ≈8.6% on Design IP weakness</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">Highlights that despite headline beats and raised guidance, the market is scrutinizing segment-level softness closely.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">May 27, 2026 · Investing.com</div>
+      </div>
+    </div>
+    <div style="padding:10px 0">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">Synopsys showcases agentic-AI engineering workflows co-developed with Nvidia at DAC 2026</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">A next-generation autonomous EDA/CAE product roadmap targeted for 2H2026 availability — a potential multi-year growth and pricing lever.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">2026 · Synopsys IR</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="score-box">
+    Peer standing: <strong>LAGGING</strong><br>
+    <span style="margin-top:4px;display:block">Weakest current ROE of the four (even accounting for merger distortion) and slower growth than Cadence, PTC or Autodesk right now — though SNPS is also the largest, most diversified business here following the Ansys deal, and its forward P/E is actually the cheapest apart from PTC.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 6: OWNERSHIP ═══ -->
+<div class="panel" id="p6">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Who owns this company — and are they buying or stepping away? (Adapted from "promoter/FII/DII" to institutions, insiders, and Synopsys's new activist-investor board seat)</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Holder</th><th>Latest %</th><th>Recent trend</th><th>Signal</th><th>What it means</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Institutional (13F filers)</td><td>85.5–88.5%</td><td>↑ Increasing — 1,114 buyers vs. 710 sellers past 12mo ($30.4B in vs. $10.3B out)</td>
+          <td><span class="badge ok">INCREASING</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Largest holders: BlackRock ≈8.5%, Vanguard ≈7.5%</td>
+        </tr>
+        <tr>
+          <td>Insiders (officers/directors)</td><td>0.77%</td><td>→ Routine — CEO/execs sold ≈$17.7M via pre-planned 10b5-1 plans (Jun 2026), mostly option-conversion related</td>
+          <td><span class="badge neu">STABLE</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Small economic stake, typical of a large-cap tech company</td>
+        </tr>
+        <tr>
+          <td>Elliott Management (activist)</td><td>Multi-billion $ stake, % undisclosed</td><td>New in 2026 — disclosed ≈March, settled with a board seat (Jesse Cohn) effective Jun 1, 2026</td>
+          <td><span class="badge info">STRATEGIC</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Pushing for margin improvement and capital discipline post-Ansys</td>
+        </tr>
+        <tr>
+          <td>Insider pledging</td><td>—</td><td>—</td>
+          <td><span class="badge ok">N/A</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">No pledging disclosures found — not a standard US disclosure item</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">Sources: MarketBeat, WallStreetZen, CNBC, Bloomberg, stocktitan.net.</div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Latest earnings call — Q2 FY2026</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>What management said</th><th>What it means for you</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Beat guidance on revenue ($2.276B), non-GAAP operating margin (39.5%), and non-GAAP EPS ($3.35), on "strong execution and AI-driven demand"</td>
+          <td style="color:var(--color-text-secondary);font-size:12px">The core EDA franchise is executing well despite the merger noise</td>
+        </tr>
+        <tr>
+          <td>Backlog reached $11B at quarter-end</td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Strong forward revenue visibility, typical of this subscription-heavy business model</td>
+        </tr>
+        <tr>
+          <td>Design IP segment revenue fell 6% YoY to $454M — management says it "bottomed in Q1" with sequential recovery expected in 2H</td>
+          <td style="color:var(--color-text-secondary);font-size:12px">The one clearly weak spot in an otherwise strong quarter — worth tracking against the guided recovery</td>
+        </tr>
+        <tr>
+          <td>Raised full-year FY2026 guidance across revenue, operating margin, EPS and FCF, citing "accelerating synergies"</td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Management is signaling confidence that Ansys integration is ahead of, not behind, plan</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:12px;color:var(--color-text-secondary);margin-top:8px">
+      Management tone: <strong style="color:var(--color-text-primary)">CONFIDENT</strong> — though the market reacted more cautiously, sending the stock down ≈8.6% on the IP-segment softness
+    </div>
+  </div>
+
+  <div class="score-box">
+    Ownership signal: <strong>HOLDING STEADY</strong><br>
+    <span style="margin-top:4px;display:block">Institutions have been net buyers over the past year and insider selling has been small and routine — the standout structural development is Elliott Management's new board seat, a clear signal that a sophisticated investor sees room for operational improvement post-Ansys.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 7: VIEW (default active) ═══ -->
+<div class="panel on" id="p7">
+
+  <div class="card amber">
+    <div class="view-label amber">MODERATE FUNDAMENTALS</div>
+    <div class="view-reason">Synopsys's underlying business — a duopoly EDA franchise with historically 15-24% returns on capital — remains structurally strong, but its trailing financials are heavily distorted by the ≈$35 billion Ansys acquisition closed in July 2025, which added debt, compressed GAAP earnings and returns, and coincided with a real 2025 China export-control shock and FTC-mandated divestitures that are still working their way through the numbers.</div>
+
+    <div class="sec-label">What works for this stock</div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--g-accent)">✓</span><span>Revenue has grown steadily in the mid-teens percentage range for four straight fiscal years, and the company holds a near-duopoly position in EDA software (≈38% share alongside Cadence's ≈36%) with ≈80-85% recurring revenue and near-100% customer retention.</span></div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--g-accent)">✓</span><span>Despite the debt taken on to fund the Ansys deal, leverage remains low in absolute terms (D/E 0.36 TTM, well below 1) and free cash flow has strengthened materially (TTM $2.63B, up from $1.35B in FY2025).</span></div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--g-accent)">✓</span><span>Historical returns on capital were genuinely strong before the merger — ROE and ROIC both ran 15-24% in FY2021-FY2024 — suggesting the current TTM weakness (ROE 2.63%) is largely a GAAP/accounting artifact of the acquisition rather than a decline in the underlying business's earning power.</span></div>
+
+    <div class="sec-label">What to watch</div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--a-accent)">⚠</span><span>The Ansys acquisition has made nearly every trailing financial series (P/E, ROE, ROIC, net margin) temporarily unreliable or misleading due to amortization and deal-cost accounting, and sources disagree on FY2025's exact GAAP net income and EPS figures — worth independently verifying against the 10-K rather than taking any single source at face value.</span></div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--a-accent)">⚠</span><span>Synopsys already experienced one real China export-control shock in 2025 (a five-week ban on EDA sales/support that forced a guidance suspension, since rescinded), China remains a meaningful revenue exposure, and an activist investor (Elliott Management) now sits on the board pushing for margin improvement — all signal real, unresolved uncertainty rather than a smooth integration.</span></div>
+
+    <div class="sec-label">Track this going forward</div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--color-text-secondary)">→</span><span>Whether Q3 FY2026 results (due August 26, 2026) and subsequent quarters show the Design IP segment recovering as management guided, and whether GAAP earnings/returns metrics normalize as Ansys amortization and integration costs wash out of the trailing figures.</span></div>
+
+    <div style="margin-top:16px;font-size:11px;color:var(--color-text-secondary);font-style:italic">
+      This is a VIEW based on fundamentals only. Not a buy/sell recommendation. The decision is always yours.
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px">
+    <div class="card green">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--g-text);margin-bottom:8px">Opportunities</div>
+      <div class="bullet-row" style="border-color:var(--g-border)"><span class="bicon" style="color:var(--g-accent)">+</span><span style="color:var(--g-text);font-size:12px">Synopsys is positioning as a "silicon-to-systems" platform combining chip design (EDA) with full-system engineering simulation (Ansys) — a broader addressable market than EDA alone</span></div>
+      <div class="bullet-row" style="border-color:var(--g-border)"><span class="bicon" style="color:var(--g-accent)">+</span><span style="color:var(--g-text);font-size:12px">AI-driven chip design complexity is structurally increasing EDA tool intensity and value; Synopsys showcased agentic-AI-assisted design workflows developed with Nvidia at DAC 2026, targeting 2H2026 availability</span></div>
+      <div class="bullet-row" style="border-color:var(--g-border);border-bottom:none"><span class="bicon" style="color:var(--g-accent)">+</span><span style="color:var(--g-text);font-size:12px">Sell-side sentiment has turned more constructive recently (Piper Sandler upgrade to Overweight, $550 target, citing Intel Foundry tailwinds and IP growth outlook)</span></div>
+    </div>
+    <div class="card red">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--r-text);margin-bottom:8px">Risks</div>
+      <div class="bullet-row" style="border-color:var(--r-border)"><span class="bicon" style="color:var(--r-accent)">−</span><span style="color:var(--r-text);font-size:12px">Nearly every trailing GAAP financial metric is distorted by Ansys purchase accounting right now, and different data sources materially disagree on FY2025's exact net income and EPS — real verification work is needed before trusting any single number</span></div>
+      <div class="bullet-row" style="border-color:var(--r-border)"><span class="bicon" style="color:var(--r-accent)">−</span><span style="color:var(--r-text);font-size:12px">China export-control risk is not hypothetical — it already happened once in 2025 — and Synopsys, Cadence and Siemens EDA collectively control over 70% of China's EDA market, making this a recurring geopolitical exposure</span></div>
+      <div class="bullet-row" style="border-color:var(--r-border);border-bottom:none"><span class="bicon" style="color:var(--r-accent)">−</span><span style="color:var(--r-text);font-size:12px">An activist investor (Elliott Management) now has a board seat explicitly pushing for margin improvement — a sign that even sophisticated professional investors see real execution/capital-allocation issues in the post-Ansys company that aren't yet resolved</span></div>
+    </div>
+  </div>
+
+</div>
+
+<details style="margin-top:20px;padding:0 4px">
+  <summary>Definitions — tap to expand</summary>
+  <p><strong>P/E ratio</strong> — What you pay per $1 of profit. Lower vs. history and sector = cheaper. Can be badly distorted by one-time items or acquisition accounting, as it currently is here.</p>
+  <p><strong>P/B ratio</strong> — Price vs. what the company actually owns. A low reading can reflect a genuinely cheap stock, or simply a recently enlarged equity base (as here, from stock-funded M&amp;A).</p>
+  <p><strong>EV/EBITDA</strong> — Full business value check including debt. Lower = better value, all else equal.</p>
+  <p><strong>ROE</strong> — For every $100 shareholders invested, how much profit the company made. Above 15% = good.</p>
+  <p><strong>ROIC / ROCE</strong> — How efficiently the whole business uses capital, including borrowed money. Above 15% = healthy.</p>
+  <p><strong>Free Cash Flow</strong> — Cash left after all expenses and investments. Positive and growing = genuinely healthy business.</p>
+  <p><strong>13F filing</strong> — A quarterly SEC disclosure large institutional investors must file showing their US equity holdings.</p>
+  <p><strong>CAGR</strong> — Compound Annual Growth Rate. Not meaningful when the underlying figure includes one-time items or spans a major acquisition.</p>
+</details>
+
+<div class="disc">
+  This is a fundamental screening and education tool only. Data sourced from SEC EDGAR, official Synopsys press releases, stockanalysis.com, FTC.gov, and other public financial databases and news outlets as cited inline. This is NOT investment advice, a buy/sell recommendation, or research from a registered investment adviser or broker-dealer. AI can make errors — verify all numbers directly against SEC filings (10-K/10-Q/8-K) or Synopsys's own investor relations site before making any decision, especially given the real cross-source disagreement on FY2025 GAAP figures flagged above. Past performance does not guarantee future results. Investing carries risk, including loss of principal. Consult a licensed financial advisor before investing.
+</div>
+
+</div>
+
+<script>
+function show(n){
+  var panels=document.querySelectorAll('.panel');
+  var tabs=document.querySelectorAll('.tab-btn');
+  for(var i=0;i<panels.length;i++){
+    panels[i].className='panel'+(i===n?' on':'');
+    tabs[i].className='tab-btn'+(i===n?' active':'');
+  }
+}
+</script>
+</body>
+</html>

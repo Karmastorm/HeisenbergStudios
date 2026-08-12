@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generate Biomedicines (GENB) Fundamental Analysis — Aug 12, 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --g-fill:#EAF3DE;--g-text:#27500A;--g-border:#C0DD97;--g-accent:#639922;
+  --a-fill:#FAEEDA;--a-text:#854F0B;--a-border:#FAC775;--a-accent:#EF9F27;
+  --r-fill:#FCEBEB;--r-text:#A32D2D;--r-border:#F7C1C1;--r-accent:#E24B4A;
+  --b-fill:#E6F1FB;--b-text:#185FA5;--b-border:#B5D4F4;--b-accent:#378ADD;
+  --n-fill:#F1EFE8;--n-text:#444441;--n-border:#D3D1C7;
+  --color-text-primary:#1C1B18;--color-text-secondary:#6B6A64;
+  --color-background-primary:#FFFFFF;--color-background-secondary:#F5F4F0;
+  --color-border-primary:rgba(0,0,0,0.35);--color-border-secondary:rgba(0,0,0,0.18);--color-border-tertiary:rgba(0,0,0,0.10)
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --g-fill:#173404;--g-text:#C0DD97;--g-border:#3B6D11;--g-accent:#97C459;
+  --a-fill:#412402;--a-text:#FAC775;--a-border:#854F0B;--a-accent:#EF9F27;
+  --r-fill:#501313;--r-text:#F09595;--r-border:#A32D2D;--r-accent:#E24B4A;
+  --b-fill:#042C53;--b-text:#85B7EB;--b-border:#185FA5;--b-accent:#378ADD;
+  --n-fill:#2C2C2A;--n-text:#D3D1C7;--n-border:#5F5E5A;
+  --color-text-primary:#EDECE7;--color-text-secondary:#A6A49C;
+  --color-background-primary:#171613;--color-background-secondary:#211F1B;
+  --color-border-primary:rgba(255,255,255,0.35);--color-border-secondary:rgba(255,255,255,0.18);--color-border-tertiary:rgba(255,255,255,0.10)
+}}
+:root[data-theme="dark"]{
+  --g-fill:#173404;--g-text:#C0DD97;--g-border:#3B6D11;--g-accent:#97C459;
+  --a-fill:#412402;--a-text:#FAC775;--a-border:#854F0B;--a-accent:#EF9F27;
+  --r-fill:#501313;--r-text:#F09595;--r-border:#A32D2D;--r-accent:#E24B4A;
+  --b-fill:#042C53;--b-text:#85B7EB;--b-border:#185FA5;--b-accent:#378ADD;
+  --n-fill:#2C2C2A;--n-text:#D3D1C7;--n-border:#5F5E5A;
+  --color-text-primary:#EDECE7;--color-text-secondary:#A6A49C;
+  --color-background-primary:#171613;--color-background-secondary:#211F1B;
+  --color-border-primary:rgba(255,255,255,0.35);--color-border-secondary:rgba(255,255,255,0.18);--color-border-tertiary:rgba(255,255,255,0.10)
+}
+body{font-family:var(--font-sans,-apple-system,"Segoe UI",system-ui,sans-serif);font-size:13px;line-height:1.6;color:var(--color-text-primary);background:var(--color-background-primary)}
+.wrap{max-width:860px;margin:0 auto;padding:20px 16px 32px}
+table,.mc .mv,.eps-v,.iv{font-variant-numeric:tabular-nums}
+.conf{padding:10px 16px;border-radius:8px;margin-bottom:14px;font-size:12px}
+.conf.high,.conf.moderate{background:var(--g-fill);color:var(--g-text)}
+.conf.low{background:var(--a-fill);color:var(--a-text)}
+.conf.vlow{background:var(--r-fill);color:var(--r-text)}
+.tab-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.tab-btn{padding:7px 18px;border-radius:100px;border:1px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);font-size:13px;font-weight:400;cursor:pointer;font-family:inherit;transition:border-color 0.15s,color 0.15s}
+.tab-btn:hover{border-color:var(--color-border-primary);color:var(--color-text-primary)}
+.tab-btn.active{border:1.5px solid var(--color-text-primary);color:var(--color-text-primary);font-weight:500}
+.tab-btn:focus-visible{outline:2px solid var(--b-accent);outline-offset:2px}
+.panel{display:none}.panel.on{display:block}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:12px;padding:16px 20px;margin-bottom:12px}
+.card.green{background:var(--g-fill);border-color:var(--g-border)}
+.card.amber{background:var(--a-fill);border-color:var(--a-border)}
+.card.red{background:var(--r-fill);border-color:var(--r-border)}
+.card.blue{background:var(--b-fill);border-color:var(--b-border)}
+.card.grey{background:var(--n-fill);border-color:var(--n-border)}
+.view-label{font-size:18px;font-weight:500;margin-bottom:6px}
+.view-label.green{color:var(--g-text)}.view-label.amber{color:var(--a-text)}.view-label.red{color:var(--r-text)}
+.view-reason{font-size:13px;margin-bottom:16px;color:var(--color-text-primary)}
+.sec-label{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin:14px 0 8px}
+.bullet-row{display:flex;gap:10px;align-items:flex-start;padding:6px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:13px}
+.bullet-row:last-child{border-bottom:none}
+.bicon{font-size:14px;min-width:18px;margin-top:1px}
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px;margin:8px 0;min-width:560px}
+th{text-align:left;padding:7px 10px;font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.7px;color:var(--color-text-secondary);border-bottom:0.5px solid var(--color-border-tertiary);white-space:nowrap}
+td{padding:9px 10px;color:var(--color-text-primary);border-bottom:0.5px solid var(--color-border-tertiary)}
+tr:last-child td{border-bottom:none}
+.pos{color:var(--g-accent);font-weight:500}.neg{color:var(--r-accent);font-weight:500}.neu{color:var(--color-text-secondary)}
+.badge{display:inline-block;padding:2px 9px;border-radius:100px;font-size:11px;font-weight:500;white-space:nowrap}
+.badge.ok{background:var(--g-fill);color:var(--g-text)}
+.badge.warn{background:var(--a-fill);color:var(--a-text)}
+.badge.bad{background:var(--r-fill);color:var(--r-text)}
+.badge.info{background:var(--b-fill);color:var(--b-text)}
+.badge.neu{background:var(--n-fill);color:var(--n-text)}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;margin:12px 0}
+.mc{background:var(--color-background-secondary);border-radius:8px;padding:12px 14px}
+.mc .ml{font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:var(--color-text-secondary);margin-bottom:4px}
+.mc .mv{font-size:18px;font-weight:500;color:var(--color-text-primary)}
+.mc .ms{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.info-row{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:0.5px solid var(--color-border-tertiary);gap:16px}
+.info-row:last-child{border-bottom:none}
+.il{font-size:12px;color:var(--color-text-secondary)}
+.iv{font-size:12px;color:var(--color-text-primary);font-weight:500;text-align:right}
+.flag-card{border-left:3px solid var(--a-accent);background:var(--a-fill);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:8px}
+.flag-title{font-size:13px;font-weight:500;color:var(--a-text);margin-bottom:3px}
+.flag-note{font-size:12px;color:var(--a-text)}
+.score-box{background:var(--color-background-secondary);border-radius:8px;padding:14px 16px;margin-top:14px;font-size:12px;color:var(--color-text-secondary)}
+.eps-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.eps-chip{background:var(--color-background-secondary);border-radius:8px;padding:10px 14px;text-align:center;min-width:85px}
+.eps-q{font-size:10px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.5px}
+.eps-v{font-size:16px;font-weight:500;color:var(--color-text-primary);margin:3px 0}
+.eps-y{font-size:11px}
+.peer-you{background:var(--color-background-secondary)}
+.foot{font-size:11px;color:var(--color-text-secondary);margin-top:8px;line-height:1.6}
+.disc{font-size:11px;color:var(--color-text-secondary);border-top:0.5px solid var(--color-border-tertiary);padding-top:14px;margin-top:24px;line-height:1.6}
+details summary{font-size:12px;color:var(--color-text-secondary);cursor:pointer;padding:8px 0}
+details p{font-size:12px;color:var(--color-text-secondary);padding:4px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+details p:last-child{border-bottom:none}
+details strong{color:var(--color-text-primary);font-weight:500}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="conf moderate">
+  <strong>Data confidence: MODERATE</strong><br>
+  Live metrics retrieved: 8 of 12 key sections cleanly sourced &nbsp;|&nbsp; Sources: stockanalysis.com, StockTitan (10-Q recaps), company earnings releases (GlobeNewswire), SEC EDGAR, ClinicalTrials.gov, BioPharma Dive, Seeking Alpha &nbsp;|&nbsp; This is a template built for profitable/revenue-generating companies — Generate Biomedicines is a pre-revenue, clinical-stage biotech that IPO'd only ≈5.5 months ago (Feb 27, 2026), so several standard metrics (P/E, ROE, 5-year averages) are adapted or marked structurally not applicable rather than fabricated. See the Valuation, Growth and Health tabs for how each was handled.
+</div>
+
+<div class="tab-row">
+  <button class="tab-btn" onclick="show(0)">Snapshot</button>
+  <button class="tab-btn" onclick="show(1)">Valuation</button>
+  <button class="tab-btn" onclick="show(2)">Growth</button>
+  <button class="tab-btn" onclick="show(3)">Health</button>
+  <button class="tab-btn" onclick="show(4)">Returns</button>
+  <button class="tab-btn" onclick="show(5)">Peers</button>
+  <button class="tab-btn" onclick="show(6)">Ownership</button>
+  <button class="tab-btn active" onclick="show(7)">View</button>
+</div>
+
+<!-- ═══ TAB 0: SNAPSHOT ═══ -->
+<div class="panel" id="p0">
+
+  <div class="card">
+    <div class="info-row"><span class="il">Company</span><span class="iv">Generate Biomedicines, Inc.</span></div>
+    <div class="info-row"><span class="il">Ticker</span><span class="iv">GENB · NASDAQ Global Select</span></div>
+    <div class="info-row"><span class="il">Sector</span><span class="iv">Healthcare</span></div>
+    <div class="info-row"><span class="il">Industry</span><span class="iv">Biotechnology (Pharmaceuticals &amp; Biotech)</span></div>
+    <div class="info-row"><span class="il">What it does</span><span class="iv" style="max-width:440px;text-align:right">A clinical-stage "generative biology" company that uses its own generative AI model (Chroma) to design novel protein therapeutics — antibodies, enzymes, cell therapies — that don't exist in nature. Revenue today comes almost entirely from pharma collaboration/milestone payments (Amgen, Novartis); long-term economics depend on advancing its own pipeline, led by GB-0895, to approval or further partnering.</span></div>
+    <div class="info-row"><span class="il">What makes it different</span><span class="iv" style="max-width:440px;text-align:right">Chroma is a general de novo protein generator conditioned on arbitrary structural/functional constraints (published/validated in Nature Methods), rather than an antibody-specific optimizer like some peers — a broader but still contested and unproven moat versus well-capitalized rivals like Isomorphic Labs and Xaira.</span></div>
+  </div>
+
+  <div class="mgrid">
+    <div class="mc"><div class="ml">CMP</div><div class="mv">$14.35</div><div class="ms">Aug 12, 2026 · NASDAQ</div></div>
+    <div class="mc"><div class="ml">Post-IPO High</div><div class="mv">$18.18</div><div class="ms">Jun 30, 2026 — not a true 52W range, see flag</div></div>
+    <div class="mc"><div class="ml">Post-IPO Low</div><div class="mv">$11.00</div><div class="ms">Mar 4, 2026</div></div>
+    <div class="mc"><div class="ml">Market Cap</div><div class="mv">≈$1.84B</div><div class="ms">stockanalysis.com</div></div>
+    <div class="mc"><div class="ml">Par Value</div><div class="mv">$0.001</div><div class="ms">Per share</div></div>
+    <div class="mc"><div class="ml">Cash + Investments</div><div class="mv">$457.4M</div><div class="ms">As of Jun 30, 2026 — the single most important number on this page</div></div>
+    <div class="mc"><div class="ml">Cash Runway</div><div class="mv">Into 1H 2028</div><div class="ms">Company guidance, reaffirmed each quarter since IPO</div></div>
+  </div>
+
+  <div class="flag-card">
+    <div class="flag-title">GOING-CONCERN WARNING RESOLVED ONLY BY THE IPO</div>
+    <div class="flag-note">FY2025 (pre-IPO) financials disclosed "substantial doubt about the company's ability to continue as a going concern" — resolved only by the March 2026 IPO's $369.3M in net proceeds. Source: StockTitan Q1 2026 10-Q recap.</div>
+  </div>
+  <div class="flag-card">
+    <div class="flag-title">THE ENTIRE INVESTMENT CASE RESTS ON A LATE-2028/EARLY-2029 READOUT</div>
+    <div class="flag-note">Lead program GB-0895's pivotal Phase 3 trial (severe asthma) has an estimated primary completion of December 2028 or January 2029 — no pivotal, FDA-relevant data is expected inside a standard 3-year window from today. Source: ClinicalTrials.gov (NCT07359846).</div>
+  </div>
+  <div class="flag-card">
+    <div class="flag-title">QUARTERLY COLLABORATION REVENUE IS ACTUALLY DECLINING</div>
+    <div class="flag-note">Revenue fell 18% YoY in Q1 2026 and 37.6% YoY in Q2 2026 — even though a trailing-twelve-month headline figure shows +55.9% growth (an artifact of comparing against an earlier, lower base period). 100% of revenue comes from just two partners, Novartis and Amgen. Source: StockTitan 10-Q recaps, Q2 2026 earnings release.</div>
+  </div>
+  <div class="flag-card">
+    <div class="flag-title">LOCKUP EXPIRATION IMMINENT</div>
+    <div class="flag-note">The IPO lockup runs 180 days from the final prospectus (~Feb 26, 2026), implying expiration around late August–early September 2026 — the exact date wasn't confirmed (SEC full-text fetch was blocked). Flagship Pioneering alone holds 48.9% of shares, making this a large potential unlock overhang. Source: standard 180-day lockup mechanism; SEC 424B4 (fetch blocked).</div>
+  </div>
+  <div class="flag-card">
+    <div class="flag-title">WEAK IPO DEBUT &amp; A CROWDED, WELL-FUNDED COMPETITIVE FIELD</div>
+    <div class="flag-note">GENB priced at $16.00, opened around $15, and closed its first trading day at $12.65 (-21%). Competitors include Isomorphic Labs (Alphabet-backed, raised a $2.1B Series B in May 2026) and Xaira Therapeutics (≈$1.3B raised, $4B valuation at inception) — both private but extremely well-capitalized. Source: BioPharma Dive, Forbes, Tracxn.</div>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 1: VALUATION ═══ -->
+<div class="panel" id="p1">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Is this stock cheap, fair, or expensive right now? (Standard ratios barely apply to a pre-revenue biotech — read the plain English column carefully)</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Metric</th><th>Current</th><th>Peer comparator</th><th>Stock 5Y avg</th><th>Signal</th><th>Plain English</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>P/E</td><td>n/a — net loss¹</td><td>n/a — peers also pre-profit</td><td>🚩 STRUCTURALLY UNAVAILABLE²</td>
+          <td><span class="badge neu">N/A</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Not a usable metric for a clinical-stage biotech with no product revenue</td>
+        </tr>
+        <tr>
+          <td>P/S (TTM)</td><td>≈69x³</td><td>Recursion (RXRX): ≈32x</td><td>🚩 STRUCTURALLY UNAVAILABLE²</td>
+          <td><span class="badge warn">RICHER THAN PEER</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Trades at more than double Recursion's sales multiple, though both are noisy given tiny revenue bases</td>
+        </tr>
+        <tr>
+          <td>EV/Revenue</td><td>≈52x (approx.)⁴</td><td>🚩 DATA UNAVAILABLE</td><td>🚩 STRUCTURALLY UNAVAILABLE²</td>
+          <td><span class="badge neu">UNCLEAR</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Self-calculated approximation, not a directly published figure — treat as directional only</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">
+      ¹ TTM net loss is -$268.67M — a P/E ratio is not meaningful. ² Structurally unavailable: GENB has traded publicly only since Feb 27, 2026 (≈5.5 months), so no genuine multi-year average exists. ³ Calculated: $1.84B market cap ÷ $26.48M TTM revenue. ⁴ Approximated as (market cap − cash) ÷ TTM revenue ≈ ($1.84B − $0.457B) ÷ $26.48M ≈ 52x — not a figure the company or a data provider directly publishes.
+    </div>
+  </div>
+
+  <div class="score-box">
+    Overall valuation: <strong>NOT MEANINGFULLY ASSESSABLE ON THESE METRICS</strong><br>
+    <span style="margin-top:4px;display:block">Traditional "cheap vs. expensive" screening doesn't really apply here — the real valuation question is whether the pipeline's risk-adjusted potential justifies a ≈$1.84B market cap, which is a clinical/scientific judgment call well beyond what a fundamentals ratio screen like this can answer.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 2: GROWTH ═══ -->
+<div class="panel" id="p2">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Is this company growing — and what does "growth" even mean for a pre-revenue biotech?</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Metric</th><th>Recent trend</th><th>Latest figure</th><th>Direction</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td>Collaboration revenue</td><td>Declining last 2 quarters despite a positive TTM headline*</td><td>Q2 2026: $6.3M (-37.6% YoY)</td><td>📉</td><td style="color:var(--color-text-secondary);font-size:11px">StockTitan 10-Q recaps</td></tr>
+        <tr><td>Net loss</td><td>Widening every quarter since IPO</td><td>Q2 2026: -$67.3M (attributable to common)</td><td>📉</td><td style="color:var(--color-text-secondary);font-size:11px">Q2 2026 earnings release</td></tr>
+        <tr><td>R&amp;D spend</td><td>Rising steadily as trials scale</td><td>Q2 2026: $64.3M (H1 2026: $122.1M)</td><td>📈</td><td style="color:var(--color-text-secondary);font-size:11px">Q2 2026 earnings release</td></tr>
+        <tr><td>Operating cash burn</td><td>Rising ≈36% YoY (H1 2026 vs H1 2025)</td><td>H1 2026: $138.3M (vs $101.9M H1 2025)</td><td>📉</td><td style="color:var(--color-text-secondary);font-size:11px">StockTitan 10-Q recaps</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">* stockanalysis.com's TTM revenue growth figure (+55.9%) is a real calculation but is misleading on its own — it compares trailing-12-month revenue against an earlier, lower base period, while the two most recently reported individual quarters actually declined year-over-year. 100% of collaboration revenue currently comes from just two partners (Novartis, Amgen).</div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Pipeline &amp; clinical catalyst timeline — the growth story that actually matters here</div>
+    <div class="eps-row">
+      <div class="eps-chip" style="min-width:150px"><div class="eps-q">GB-0895 · Asthma</div><div class="eps-v" style="font-size:13px">Phase 3</div><div class="eps-y neu">Primary completion ≈Dec 2028/Jan 2029</div></div>
+      <div class="eps-chip" style="min-width:150px"><div class="eps-q">GB-0895 · COPD</div><div class="eps-v" style="font-size:13px">Phase 1b</div><div class="eps-y neu">Data at ERS Congress, Sep 8, 2026</div></div>
+      <div class="eps-chip" style="min-width:150px"><div class="eps-q">GB-4362 · Oncology</div><div class="eps-v" style="font-size:13px">Phase 1</div><div class="eps-y neu">Poster at ESMO, Oct 23-27, 2026</div></div>
+      <div class="eps-chip" style="min-width:150px"><div class="eps-q">GB-5267 · Ovarian ca.</div><div class="eps-v" style="font-size:13px">Phase 1</div><div class="eps-y neu">Recruiting; first dosing expected 2026</div></div>
+    </div>
+    <div class="foot">Phase 3 SOLAIRIA-1/2 (≈1,600 patients) initiated Dec 1, 2025, with regulatory clearance in 33 of 42 planned countries as of Q2 2026 — real enrollment progress, even though the readout itself sits outside a standard 3-year window. Separately, Novartis chose to advance a Chroma-designed biologic into its own preclinical pipeline in Q2 2026 — third-party validation that doesn't depend on GENB's own trial results. Source: ClinicalTrials.gov, Q2 2026 earnings release.</div>
+  </div>
+
+  <div class="score-box">
+    Growth classification: <strong>SLOWING (REVENUE) / ADVANCING (PIPELINE)</strong><br>
+    <span style="margin-top:4px;display:block">On a strict revenue basis this looks like SLOWING — collaboration revenue fell in both of the last two reported quarters while cash burn rose. But for a clinical-stage biotech, revenue isn't really the growth story: the pipeline itself is genuinely advancing on three fronts at once, which is the more decision-relevant signal at this stage.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 3: HEALTH ═══ -->
+<div class="panel" id="p3">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Is this company financially safe and stable? (For a pre-revenue biotech, this tab — cash and runway — matters more than any other on this page)</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Metric</th><th>Value</th><th>Trend</th><th>Signal</th><th>Plain English</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Cash + investments</td><td>$457.4M (Jun 30, 2026)</td><td>→ Set by the March 2026 IPO raise ($369.3M net)</td>
+          <td><span class="badge ok">STRONG</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">The single most important number for a company at this stage</td>
+        </tr>
+        <tr>
+          <td>Debt</td><td>Effectively $0</td><td>—</td>
+          <td><span class="badge ok">N/A</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Equity-funded; no interest-bearing debt found in sources reviewed</td>
+        </tr>
+        <tr>
+          <td>Current Ratio</td><td>8.3x</td><td>—</td>
+          <td><span class="badge ok">VERY COMFORTABLE</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">$470.3M current assets vs. $56.6M current liabilities</td>
+        </tr>
+        <tr>
+          <td>Quarterly burn rate</td><td>≈$58–80M/quarter (H1 2026)</td><td>↑ Rising ≈36% YoY</td>
+          <td><span class="badge warn">WATCH</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Trial costs are scaling as Phase 3 enrollment ramps</td>
+        </tr>
+        <tr>
+          <td>Cash runway</td><td>Into 1H 2028 (company guidance)</td><td>→ Reaffirmed both quarters since IPO</td>
+          <td><span class="badge ok">≈6-7 QUARTERS</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Back-of-envelope check ($457.4M ÷ ≈$70M/qtr ≈ 6.5 quarters) roughly matches management's own guidance</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">Free cash flow isn't separately reported by the company (typical for a biotech — operating cash burn above is the relevant proxy). Sources: Q1/Q2 2026 earnings releases, StockTitan 10-Q recaps.</div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Cash runway scenarios — 3 year horizon (adapted: a revenue/profit projection isn't meaningful pre-Phase-3-readout, so this models when the next capital raise is likely needed instead)</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Scenario</th><th>Assumption</th><th>Implied quarterly burn</th><th>Implied runway</th><th>Next raise likely needed</th></tr></thead>
+      <tbody>
+        <tr><td>🐢 Bear</td><td style="color:var(--color-text-secondary);font-size:12px">Burn accelerates as Phase 3 enrollment completes and both Phase 1 programs scale simultaneously</td><td>≈$85M/qtr</td><td>≈5.4 quarters</td><td>Early-to-mid 2027 — roughly a year earlier than guidance</td></tr>
+        <tr><td>🚶 Base</td><td style="color:var(--color-text-secondary);font-size:12px">Burn stays near the H1 2026 average, consistent with management's own guidance</td><td>≈$69M/qtr</td><td>≈6.6 quarters</td><td>Mid-2028, matching "into 1H 2028" guidance</td></tr>
+        <tr><td>🚀 Bull</td><td style="color:var(--color-text-secondary);font-size:12px">Milestone payments from Novartis/Amgen and cost discipline moderate net burn</td><td>≈$55M/qtr</td><td>≈8.3 quarters</td><td>Early-to-mid 2029 — potentially past the Phase 3 SOLAIRIA readout, a much stronger position to raise from</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">Base: $457.4M cash + investments (Jun 30, 2026). These are scenario calculations built from Generate Biomedicines' own historical burn-rate range — not guarantees or predictions. A raise before the Phase 3 readout would very likely be dilutive to existing shareholders, given no pivotal data will yet exist to support a premium valuation.</div>
+  </div>
+
+  <div class="score-box">
+    Financial health: <strong>SAFE (LIQUIDITY ONLY)</strong><br>
+    <span style="margin-top:4px;display:block">Near-term liquidity is genuinely strong — no debt, comfortable runway into 1H 2028 on management's own numbers. This "safe" rating is about near-term cash, not clinical or commercial risk, which is separate, much larger, and not something a balance-sheet screen like this can capture.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 4: RETURNS ═══ -->
+<div class="panel" id="p4">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Is this company creating real value for shareholders? (These metrics are structurally negative for almost any pre-revenue biotech — read as expected-for-stage, not as a red flag on their own)</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Metric</th><th>Current</th><th>3Y avg</th><th>5Y avg</th><th>Signal</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>ROE</td><td>≈-59%*</td><td>🚩 STRUCTURALLY UNAVAILABLE</td><td>🚩 STRUCTURALLY UNAVAILABLE</td>
+          <td><span class="badge neu">N/M</span></td>
+        </tr>
+        <tr>
+          <td>ROIC</td><td>≈-89%†</td><td>🚩 STRUCTURALLY UNAVAILABLE</td><td>🚩 STRUCTURALLY UNAVAILABLE</td>
+          <td><span class="badge neu">N/M</span></td>
+        </tr>
+        <tr>
+          <td>Dividend yield</td><td>0.00%</td><td>n/a</td><td>n/a</td>
+          <td><span class="badge neu">—</span></td>
+        </tr>
+        <tr>
+          <td>Dividend payout</td><td>n/a — no dividend</td><td>n/a</td><td>n/a</td>
+          <td><span class="badge neu">—</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">* Calculated (-$268.67M TTM net loss ÷ $456.0M equity) — a separate aggregator figure of "0.33" appears to be a data artifact and is not trusted. † Directionally sourced but not precisely verified — the exact magnitude is uncertain, though "deeply negative" is consistent across everything reviewed. None of this is unusual for a clinical-stage biotech reinvesting 100% of capital into R&amp;D and trials — treat ROE/ROIC as not meaningful at this stage rather than as a quality signal one way or the other. Generate Biomedicines has never paid a dividend.</div>
+  </div>
+
+  <div class="score-box">
+    Return quality: <strong>NOT MEANINGFUL AT THIS STAGE</strong><br>
+    <span style="margin-top:4px;display:block">Return-on-capital metrics are structurally negative for a pre-revenue clinical-stage biotech and don't tell you much on their own — the cash-runway analysis on the Health tab is the metric that actually matters for a long-term holder right now.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 5: PEERS ═══ -->
+<div class="panel" id="p5">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">How does it compare to other AI-drug-discovery companies? (Standard P/E/ROE/D-E columns are replaced with biotech-relevant metrics — cash, runway and pipeline stage)</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Company</th><th>Mkt Cap</th><th>TTM Rev</th><th>P/S</th><th>Cash</th><th>Runway</th><th>Lead pipeline stage</th></tr></thead>
+      <tbody>
+        <tr class="peer-you">
+          <td><strong>GENB ◀ you</strong></td>
+          <td>≈$1.84B</td><td>$26.48M</td><td>≈69x</td><td>$457.4M</td><td>Into 1H 2028</td>
+          <td style="font-size:12px">Phase 3 (asthma)</td>
+        </tr>
+        <tr>
+          <td>Recursion (RXRX)</td>
+          <td>≈$1.76B</td><td>$54.86M</td><td>≈32x</td><td>$556.8M</td><td>Into early 2028</td>
+          <td style="font-size:12px">Phase 2 (REC-4881)</td>
+        </tr>
+        <tr>
+          <td>Absci (ABSI)</td>
+          <td>≈$1.56B</td><td>$1.56M</td><td>n/m*</td><td>Recent $100M raise incl. $40M Lilly investment†</td><td>🚩 DATA UNAVAILABLE</td>
+          <td style="font-size:12px">Phase 1 (ABS-201, positive interim data)</td>
+        </tr>
+        <tr>
+          <td>Isomorphic Labs</td>
+          <td>Private</td><td>Private</td><td>Private</td><td>$2.1B Series B (May 2026)</td><td>Private</td>
+          <td style="font-size:12px">Preclinical — Lilly (≈$1.7B milestones) and Novartis (≈$1.2B) deals</td>
+        </tr>
+        <tr>
+          <td>Xaira Therapeutics</td>
+          <td>Private</td><td>Private</td><td>Private</td><td>≈$1.3B raised total</td><td>Private</td>
+          <td style="font-size:12px">Early-stage — co-founded by Nobel laureate David Baker</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">* Absci's TTM revenue is near-zero, making a P/S multiple not meaningful. † Exact total cash position and runway weren't confirmed in sources reviewed. Isomorphic Labs and Xaira Therapeutics remain private — included for landscape context per your request, but not directly comparable on public-market metrics. Sources: stockanalysis.com, Forbes, Tracxn.</div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Latest news — top 5 long-term relevant items</div>
+    <div style="padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">Piper Sandler reaffirms Buy/Overweight rating on GENB</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">Sell-side conviction persisting despite a Q2 revenue/EPS miss signals continued Street backing for the long-term platform thesis.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">Aug 7, 2026 · Analyst note</div>
+      </div>
+    </div>
+    <div style="padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">Q2 2026 earnings: $457.4M cash, runway reaffirmed into 1H 2028, revenue/EPS miss Street estimates</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">The single most decision-relevant data point for a long-term holder — funding holds through the next ≈2 years, but underlying quarterly collaboration revenue is trending down.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">Aug 6, 2026 · GlobeNewswire</div>
+      </div>
+    </div>
+    <div style="padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">Novartis advances a Chroma-designed biologic into its own preclinical pipeline</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">Concrete third-party validation that the AI platform is generating drug candidates a major partner chooses to advance — independent of GENB's own trial results.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">Aug 6, 2026 · Q2 2026 earnings release</div>
+      </div>
+    </div>
+    <div style="padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">Phase 3 SOLAIRIA regulatory clearance reaches 33 of 42 planned countries; GB-4362 Phase 1 first cohort fully dosed</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">Operational execution proof-points on the pivotal asthma program and a second pipeline asset advancing into human dosing.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">Aug 6, 2026 · Q2 2026 business update</div>
+      </div>
+    </div>
+    <div style="padding:10px 0">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">Seeking Alpha initiates coverage at Hold: "Post Mega-Money IPO, Caution Is Warranted"</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">An independent counterweight to sell-side bullishness — flags that most pipeline assets are early-stage with no imminent value-driving catalysts inside a short window.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">Jul 23, 2026 · Seeking Alpha</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="score-box">
+    Peer standing: <strong>MID-PACK</strong><br>
+    <span style="margin-top:4px;display:block">GENB's lead program (Phase 3) is more clinically advanced than Recursion's (Phase 2), but it trades at a much richer sales multiple and has a somewhat smaller cash cushion — a reasonable, not clearly leading or lagging, position among its closest public peers.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 6: OWNERSHIP ═══ -->
+<div class="panel" id="p6">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Who owns this company? (Adapted from "promoter/FII/DII" — the dominant story here is Flagship Pioneering's concentrated stake and the approaching lockup expiration)</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Holder</th><th>Latest %</th><th>Recent trend</th><th>Signal</th><th>What it means</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Flagship Pioneering (lead backer)</td><td>48.9%</td><td>Bought an additional 4.69M shares at the $16.00 IPO price</td>
+          <td><span class="badge info">STRATEGIC</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Across three affiliated funds — by far the largest holder, and the same firm GENB's CEO is a partner at</td>
+        </tr>
+        <tr>
+          <td>ARCH Venture Partners</td><td>Confirmed holder, % undisclosed</td><td>—</td>
+          <td><span class="badge info">STRATEGIC</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Exact current stake not found in sources reviewed</td>
+        </tr>
+        <tr>
+          <td>Nvidia (NVentures)</td><td>≈$10.4M invested</td><td>New — one of NVentures' top-5 holdings</td>
+          <td><span class="badge info">STRATEGIC</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Framed in financial press as "Jensen Huang's favorite biotech stock"</td>
+        </tr>
+        <tr>
+          <td>Institutional (13F filers, ex-Flagship)</td><td>🚩 DATA UNAVAILABLE</td><td>→ Sources conflict sharply (near-zero to unreliable)</td>
+          <td><span class="badge neu">UNCLEAR</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Only GENB's second full quarter of 13F reporting eligibility — treat any specific % claim with skepticism</td>
+        </tr>
+        <tr>
+          <td>Lockup expiration</td><td>≈Late Aug–early Sept 2026 (approx.)</td><td>180 days post-prospectus — exact date unconfirmed</td>
+          <td><span class="badge warn">WATCH</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">A large unlock overhang given Flagship's 48.9% stake and other early investors</td>
+        </tr>
+        <tr>
+          <td>Insider pledging</td><td>—</td><td>—</td>
+          <td><span class="badge ok">N/A</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">No evidence found — expected for a company 5.5 months post-IPO</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">SoftBank was not found as a Generate Biomedicines investor in any source checked, despite sometimes being assumed as a backer of AI-biotech platforms generally — flagged as unconfirmed rather than assumed. Sources: StockTitan (13G/Form 4 recaps), MarketBeat, ARCH Venture Partners.</div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Post-IPO business updates — Q2 FY2026</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>What management said</th><th>What it means for you</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Reaffirmed cash runway "into the first half of 2028"</td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Consistent guidance across both quarters since IPO — a modest positive signal on management credibility</td>
+        </tr>
+        <tr>
+          <td>Phase 3 SOLAIRIA regulatory clearance reached 33 of 42 planned countries</td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Real, verifiable operational progress on the pivotal trial</td>
+        </tr>
+        <tr>
+          <td>Disclosed Novartis advancing a Chroma-designed molecule into its own preclinical pipeline</td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Independent validation of the AI platform from a major pharma partner</td>
+        </tr>
+        <tr>
+          <td>Q2 revenue and EPS both missed Street forecasts</td>
+          <td style="color:var(--color-text-secondary);font-size:12px">A near-term negative, though less decision-relevant than the cash-runway and pipeline items above at this stage</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:12px;color:var(--color-text-secondary);margin-top:8px">
+      Management tone: <strong style="color:var(--color-text-primary)">CONFIDENT</strong> — consistent guidance and platform validation, tempered by the revenue/EPS miss
+    </div>
+  </div>
+
+  <div class="score-box">
+    Ownership signal: <strong>HOLDING STEADY</strong><br>
+    <span style="margin-top:4px;display:block">No evidence of Flagship Pioneering or other major backers selling down yet — but the approaching lockup expiration (≈late Aug/early Sept 2026) is the single most important near-term ownership event to watch, given how concentrated the current shareholder base is.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 7: VIEW (default active) ═══ -->
+<div class="panel on" id="p7">
+
+  <div class="card red">
+    <div class="view-label red">WEAK FUNDAMENTALS</div>
+    <div class="view-reason">Generate Biomedicines is a clinical-stage, pre-revenue biotech whose entire near-term investment case rests on a well-funded balance sheet ($457M cash, no debt, runway into the first half of 2028) carrying it through to a pivotal Phase 3 asthma readout that isn't expected until late 2028 or early 2029 — meaning a 3-year holder would very likely exit before the company's own key value-defining data exists. "Weak fundamentals" here largely reflects the normal, expected shape of a pre-revenue clinical biotech, not distress — it shouldn't be read the same way as for a mature, revenue-generating company.</div>
+
+    <div class="sec-label">What works for this stock</div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--g-accent)">✓</span><span>A genuinely strong, debt-free balance sheet: $457.4M in cash and investments as of June 30, 2026, a current ratio of 8.3x, and a management-guided cash runway "into the first half of 2028" that roughly checks out against the company's own recent burn rate.</span></div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--g-accent)">✓</span><span>Real third-party platform validation beyond its own trials: Novartis chose to advance a Chroma-designed biologic into its own preclinical pipeline in Q2 2026, and existing Amgen and Novartis collaborations carry substantial combined potential milestone payments.</span></div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--g-accent)">✓</span><span>The pipeline is genuinely advancing on multiple fronts at once — Phase 3 SOLAIRIA enrollment has regulatory clearance in 33 of 42 planned countries, GB-4362 (oncology) has fully dosed its first Phase 1 cohort, and GB-5267 (ovarian cancer) is recruiting — not a single-asset, all-or-nothing bet.</span></div>
+
+    <div class="sec-label">What to watch</div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--a-accent)">⚠</span><span>The entire near-term equity story rests on a Phase 3 asthma readout (GB-0895) whose primary completion isn't estimated until December 2028 or January 2029 — realistically outside a standard 3-year holding window from today.</span></div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--a-accent)">⚠</span><span>Quarterly collaboration revenue — currently 100% of the company's revenue, split between just two partners — declined year-over-year in both of the two most recently reported quarters, and the company's own FY2025 (pre-IPO) financials disclosed substantial doubt about its ability to continue as a going concern, resolved only by the March 2026 IPO proceeds.</span></div>
+
+    <div class="sec-label">Track this going forward</div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--color-text-secondary)">→</span><span>Whether the lockup expiration (expected approximately late August/early September 2026, unlocking Flagship Pioneering's 48.9% stake among others) creates meaningful selling pressure, and whether cash burn stays consistent with the company's own "into 1H 2028" runway guidance as Phase 3 enrollment costs scale.</span></div>
+
+    <div style="margin-top:16px;font-size:11px;color:var(--color-text-secondary);font-style:italic">
+      This is a VIEW based on fundamentals only. Not a buy/sell recommendation. The decision is always yours.
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px">
+    <div class="card green">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--g-text);margin-bottom:8px">Opportunities</div>
+      <div class="bullet-row" style="border-color:var(--g-border)"><span class="bicon" style="color:var(--g-accent)">+</span><span style="color:var(--g-text);font-size:12px">Two additional near-term data readouts inside a 3-year window — GB-0895 Phase 1b COPD data (Sept 8, 2026) and GB-4362 oncology Phase 1 data (Oct 23-27, 2026) — could serve as intermediate value-defining catalysts well before the 2028-29 Phase 3 readout</span></div>
+      <div class="bullet-row" style="border-color:var(--g-border)"><span class="bicon" style="color:var(--g-accent)">+</span><span style="color:var(--g-text);font-size:12px">Nvidia's NVentures fund holds a stake described as one of its top-five holdings — a form of third-party technology validation beyond the core pharma collaborations</span></div>
+      <div class="bullet-row" style="border-color:var(--g-border);border-bottom:none"><span class="bicon" style="color:var(--g-accent)">+</span><span style="color:var(--g-text);font-size:12px">The broader AI-drug-discovery category is attracting massive capital validation (Isomorphic Labs' $2.1B Series B, its own $1.7B Lilly and $1.2B Novartis deals) — a sector tailwind that could support GENB's valuation even before its own pivotal data lands</span></div>
+    </div>
+    <div class="card red">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--r-text);margin-bottom:8px">Risks</div>
+      <div class="bullet-row" style="border-color:var(--r-border)"><span class="bicon" style="color:var(--r-accent)">−</span><span style="color:var(--r-text);font-size:12px">Sell-side isn't unanimous — Seeking Alpha initiated coverage at Hold in July 2026, cautioning that most pipeline assets are early-stage with no imminent value-driving catalysts inside a short window, a counterweight to Piper Sandler's Buy rating</span></div>
+      <div class="bullet-row" style="border-color:var(--r-border)"><span class="bicon" style="color:var(--r-accent)">−</span><span style="color:var(--r-text);font-size:12px">The imminent lockup expiration could pressure the stock as Flagship Pioneering's 48.9% stake and other early investors become free to sell, particularly given the stock's already weak IPO-day performance (-21% on debut)</span></div>
+      <div class="bullet-row" style="border-color:var(--r-border);border-bottom:none"><span class="bicon" style="color:var(--r-accent)">−</span><span style="color:var(--r-text);font-size:12px">Well-funded, well-known competitors (Isomorphic Labs backed by Alphabet, Xaira co-founded by a Nobel laureate) are racing in the same generative-biology space, and the sector overall has seen VC funding fall from a $22B peak (2021) to $10.5B (2024) as investors increasingly demand clinical proof over platform hype</span></div>
+    </div>
+  </div>
+
+</div>
+
+<details style="margin-top:20px;padding:0 4px">
+  <summary>Definitions — tap to expand</summary>
+  <p><strong>Cash runway</strong> — How long a company can keep operating at its current spending rate before it needs to raise more money. The single most important metric for a pre-revenue biotech.</p>
+  <p><strong>P/S ratio</strong> — Price vs. revenue. Used instead of P/E when a company isn't yet profitable — though for a biotech this early, even P/S is a weak signal since revenue is mostly collaboration payments, not product sales.</p>
+  <p><strong>Going concern warning</strong> — An auditor's formal statement that a company may not have enough resources to continue operating without additional financing — a serious flag, though common for pre-IPO biotechs that later raise capital to resolve it, as happened here.</p>
+  <p><strong>Lockup expiration</strong> — The date after an IPO when early investors and insiders are first allowed to sell their shares — often creates selling pressure as a large new supply of shares becomes tradeable at once.</p>
+  <p><strong>ROE / ROIC</strong> — Return on equity / invested capital. Structurally negative for almost any pre-revenue biotech reinvesting all capital into R&amp;D — not a meaningful quality signal at this stage.</p>
+  <p><strong>Phase 1 / Phase 2 / Phase 3</strong> — Successive stages of human clinical trials, testing safety (Phase 1), then early efficacy (Phase 2), then large-scale efficacy and safety (Phase 3) — the last step before an FDA approval decision.</p>
+  <p><strong>13F filing</strong> — A quarterly SEC disclosure large institutional investors must file showing their US equity holdings.</p>
+</details>
+
+<div class="disc">
+  This is a fundamental screening and education tool only. Data sourced from SEC EDGAR, company earnings releases, stockanalysis.com, ClinicalTrials.gov, and other public financial databases and news outlets as cited inline. This is NOT investment advice, a buy/sell recommendation, or research from a registered investment adviser or broker-dealer. AI can make errors — verify all numbers directly against SEC filings (S-1/10-Q) or the company's own investor relations site before making any decision. Clinical-stage biotech investing carries substantial additional risk beyond what a fundamentals screen like this can capture — including binary clinical trial outcomes, regulatory risk, and a high likelihood of future dilutive capital raises — on top of the usual risks that past performance does not guarantee future results and investing carries risk of loss of principal. Consult a licensed financial advisor before investing.
+</div>
+
+</div>
+
+<script>
+function show(n){
+  var panels=document.querySelectorAll('.panel');
+  var tabs=document.querySelectorAll('.tab-btn');
+  for(var i=0;i<panels.length;i++){
+    panels[i].className='panel'+(i===n?' on':'');
+    tabs[i].className='tab-btn'+(i===n?' active':'');
+  }
+}
+</script>
+</body>
+</html>

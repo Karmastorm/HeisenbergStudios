@@ -400,3 +400,97 @@ a {
     color: var(--color-primary);
     margin-bottom: 0.75rem;
 }
+
+/* ---------------- INVESTMENT FUNDAMENTALS ---------------------- */
+.investments-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    max-width: 100%;
+}
+
+.ticker-index {
+    flex: 0 0 220px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.ticker-index h2 {
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text-soft);
+    margin-bottom: 0.75rem;
+}
+
+.ticker-index ul {
+    list-style: none;
+}
+
+.ticker-index li + li {
+    margin-top: 0.25rem;
+}
+
+.ticker-index a {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 0.6rem;
+    border-radius: 6px;
+    color: var(--color-text);
+}
+
+.ticker-index a:hover {
+    background-color: var(--color-bg);
+}
+
+.ticker-index a.active {
+    background-color: var(--color-accent);
+    color: #fff;
+}
+
+.ticker-index .ticker-symbol {
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.ticker-index .ticker-company {
+    font-size: 0.78rem;
+    opacity: 0.8;
+}
+
+.ticker-viewer {
+    flex: 1;
+    min-width: 0;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    min-height: 70vh;
+    display: flex;
+}
+
+.ticker-viewer iframe {
+    flex: 1;
+    width: 100%;
+    min-height: 70vh;
+    border: none;
+    border-radius: 8px;
+}
+
+.ticker-viewer-empty {
+    margin: auto;
+    color: var(--color-text-soft);
+    padding: 2rem;
+}
+
+@media (max-width: 800px) {
+    .investments-layout {
+        flex-direction: column;
+    }
+
+    .ticker-index {
+        flex: 1 1 auto;
+        width: 100%;
+    }
+}

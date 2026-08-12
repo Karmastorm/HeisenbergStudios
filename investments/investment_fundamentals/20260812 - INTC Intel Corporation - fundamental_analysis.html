@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intel (INTC) Fundamental Analysis — Aug 12, 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --g-fill:#EAF3DE;--g-text:#27500A;--g-border:#C0DD97;--g-accent:#639922;
+  --a-fill:#FAEEDA;--a-text:#854F0B;--a-border:#FAC775;--a-accent:#EF9F27;
+  --r-fill:#FCEBEB;--r-text:#A32D2D;--r-border:#F7C1C1;--r-accent:#E24B4A;
+  --b-fill:#E6F1FB;--b-text:#185FA5;--b-border:#B5D4F4;--b-accent:#378ADD;
+  --n-fill:#F1EFE8;--n-text:#444441;--n-border:#D3D1C7;
+  --color-text-primary:#1C1B18;--color-text-secondary:#6B6A64;
+  --color-background-primary:#FFFFFF;--color-background-secondary:#F5F4F0;
+  --color-border-primary:rgba(0,0,0,0.35);--color-border-secondary:rgba(0,0,0,0.18);--color-border-tertiary:rgba(0,0,0,0.10)
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --g-fill:#173404;--g-text:#C0DD97;--g-border:#3B6D11;--g-accent:#97C459;
+  --a-fill:#412402;--a-text:#FAC775;--a-border:#854F0B;--a-accent:#EF9F27;
+  --r-fill:#501313;--r-text:#F09595;--r-border:#A32D2D;--r-accent:#E24B4A;
+  --b-fill:#042C53;--b-text:#85B7EB;--b-border:#185FA5;--b-accent:#378ADD;
+  --n-fill:#2C2C2A;--n-text:#D3D1C7;--n-border:#5F5E5A;
+  --color-text-primary:#EDECE7;--color-text-secondary:#A6A49C;
+  --color-background-primary:#171613;--color-background-secondary:#211F1B;
+  --color-border-primary:rgba(255,255,255,0.35);--color-border-secondary:rgba(255,255,255,0.18);--color-border-tertiary:rgba(255,255,255,0.10)
+}}
+:root[data-theme="dark"]{
+  --g-fill:#173404;--g-text:#C0DD97;--g-border:#3B6D11;--g-accent:#97C459;
+  --a-fill:#412402;--a-text:#FAC775;--a-border:#854F0B;--a-accent:#EF9F27;
+  --r-fill:#501313;--r-text:#F09595;--r-border:#A32D2D;--r-accent:#E24B4A;
+  --b-fill:#042C53;--b-text:#85B7EB;--b-border:#185FA5;--b-accent:#378ADD;
+  --n-fill:#2C2C2A;--n-text:#D3D1C7;--n-border:#5F5E5A;
+  --color-text-primary:#EDECE7;--color-text-secondary:#A6A49C;
+  --color-background-primary:#171613;--color-background-secondary:#211F1B;
+  --color-border-primary:rgba(255,255,255,0.35);--color-border-secondary:rgba(255,255,255,0.18);--color-border-tertiary:rgba(255,255,255,0.10)
+}
+body{font-family:-apple-system,"Segoe UI",system-ui,sans-serif;font-size:13px;line-height:1.6;color:var(--color-text-primary);background:var(--color-background-primary)}
+.wrap{max-width:860px;margin:0 auto;padding:20px 16px 32px}
+table,.mc .mv,.eps-v,.iv{font-variant-numeric:tabular-nums}
+.conf{padding:10px 16px;border-radius:8px;margin-bottom:14px;font-size:12px}
+.conf.high,.conf.moderate{background:var(--g-fill);color:var(--g-text)}
+.conf.low{background:var(--a-fill);color:var(--a-text)}
+.conf.vlow{background:var(--r-fill);color:var(--r-text)}
+.tab-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.tab-btn{padding:7px 18px;border-radius:100px;border:1px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);font-size:13px;font-weight:400;cursor:pointer;font-family:inherit;transition:border-color 0.15s,color 0.15s}
+.tab-btn:hover{border-color:var(--color-border-primary);color:var(--color-text-primary)}
+.tab-btn.active{border:1.5px solid var(--color-text-primary);color:var(--color-text-primary);font-weight:500}
+.tab-btn:focus-visible{outline:2px solid var(--b-accent);outline-offset:2px}
+.panel{display:none}.panel.on{display:block}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:12px;padding:16px 20px;margin-bottom:12px}
+.card.green{background:var(--g-fill);border-color:var(--g-border)}
+.card.amber{background:var(--a-fill);border-color:var(--a-border)}
+.card.red{background:var(--r-fill);border-color:var(--r-border)}
+.card.blue{background:var(--b-fill);border-color:var(--b-border)}
+.card.grey{background:var(--n-fill);border-color:var(--n-border)}
+.view-label{font-size:18px;font-weight:500;margin-bottom:6px}
+.view-label.green{color:var(--g-text)}.view-label.amber{color:var(--a-text)}.view-label.red{color:var(--r-text)}
+.view-reason{font-size:13px;margin-bottom:16px;color:var(--color-text-primary)}
+.sec-label{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin:14px 0 8px}
+.bullet-row{display:flex;gap:10px;align-items:flex-start;padding:6px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:13px}
+.bullet-row:last-child{border-bottom:none}
+.bicon{font-size:14px;min-width:18px;margin-top:1px}
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px;margin:8px 0;min-width:560px}
+th{text-align:left;padding:7px 10px;font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.7px;color:var(--color-text-secondary);border-bottom:0.5px solid var(--color-border-tertiary);white-space:nowrap}
+td{padding:9px 10px;color:var(--color-text-primary);border-bottom:0.5px solid var(--color-border-tertiary)}
+tr:last-child td{border-bottom:none}
+.pos{color:var(--g-accent);font-weight:500}.neg{color:var(--r-accent);font-weight:500}.neu{color:var(--color-text-secondary)}
+.badge{display:inline-block;padding:2px 9px;border-radius:100px;font-size:11px;font-weight:500;white-space:nowrap}
+.badge.ok{background:var(--g-fill);color:var(--g-text)}
+.badge.warn{background:var(--a-fill);color:var(--a-text)}
+.badge.bad{background:var(--r-fill);color:var(--r-text)}
+.badge.info{background:var(--b-fill);color:var(--b-text)}
+.badge.neu{background:var(--n-fill);color:var(--n-text)}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;margin:12px 0}
+.mc{background:var(--color-background-secondary);border-radius:8px;padding:12px 14px}
+.mc .ml{font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:var(--color-text-secondary);margin-bottom:4px}
+.mc .mv{font-size:18px;font-weight:500;color:var(--color-text-primary)}
+.mc .ms{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.info-row{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:0.5px solid var(--color-border-tertiary);gap:16px}
+.info-row:last-child{border-bottom:none}
+.il{font-size:12px;color:var(--color-text-secondary)}
+.iv{font-size:12px;color:var(--color-text-primary);font-weight:500;text-align:right}
+.flag-card{border-left:3px solid var(--a-accent);background:var(--a-fill);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:8px}
+.flag-title{font-size:13px;font-weight:500;color:var(--a-text);margin-bottom:3px}
+.flag-note{font-size:12px;color:var(--a-text)}
+.score-box{background:var(--color-background-secondary);border-radius:8px;padding:14px 16px;margin-top:14px;font-size:12px;color:var(--color-text-secondary)}
+.eps-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.eps-chip{background:var(--color-background-secondary);border-radius:8px;padding:10px 14px;text-align:center;min-width:85px}
+.eps-q{font-size:10px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.5px}
+.eps-v{font-size:16px;font-weight:500;color:var(--color-text-primary);margin:3px 0}
+.eps-y{font-size:11px}
+.peer-you{background:var(--color-background-secondary)}
+.foot{font-size:11px;color:var(--color-text-secondary);margin-top:8px;line-height:1.6}
+.disc{font-size:11px;color:var(--color-text-secondary);border-top:0.5px solid var(--color-border-tertiary);padding-top:14px;margin-top:24px;line-height:1.6}
+details summary{font-size:12px;color:var(--color-text-secondary);cursor:pointer;padding:8px 0}
+details p{font-size:12px;color:var(--color-text-secondary);padding:4px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+details p:last-child{border-bottom:none}
+details strong{color:var(--color-text-primary);font-weight:500}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="conf high">
+  <strong>Data confidence: HIGH</strong><br>
+  Live metrics retrieved: 10 of 12 key sections &nbsp;|&nbsp; Sources: stockanalysis.com, Yahoo Finance, SEC EDGAR / Intel Investor Relations, CNBC, GuruFocus, CSIMarket, Fintel, Business Quant, Benzinga, QuiverQuant, Tom's Hardware, Intel Newsroom &nbsp;|&nbsp; A handful of sub-metrics are individually flagged 🚩 DATA UNAVAILABLE below — see Valuation and Returns tabs.
+</div>
+
+<div class="tab-row">
+  <button class="tab-btn" onclick="show(0)">Snapshot</button>
+  <button class="tab-btn" onclick="show(1)">Valuation</button>
+  <button class="tab-btn" onclick="show(2)">Growth</button>
+  <button class="tab-btn" onclick="show(3)">Health</button>
+  <button class="tab-btn" onclick="show(4)">Returns</button>
+  <button class="tab-btn" onclick="show(5)">Peers</button>
+  <button class="tab-btn" onclick="show(6)">Ownership</button>
+  <button class="tab-btn active" onclick="show(7)">View</button>
+</div>
+
+<!-- ═══ TAB 0: SNAPSHOT ═══ -->
+<div class="panel" id="p0">
+
+  <div class="card">
+    <div class="info-row"><span class="il">Company</span><span class="iv">Intel Corporation</span></div>
+    <div class="info-row"><span class="il">Ticker</span><span class="iv">INTC · NASDAQ Global Select</span></div>
+    <div class="info-row"><span class="il">Sector</span><span class="iv">Technology</span></div>
+    <div class="info-row"><span class="il">Industry</span><span class="iv">Semiconductors</span></div>
+    <div class="info-row"><span class="il">What it does</span><span class="iv" style="max-width:440px;text-align:right">Designs and manufactures chips across four lines — Client Computing (PC/laptop CPUs), Data Center &amp; AI (server CPUs/AI silicon), Intel Foundry (contract manufacturing for outside customers), and Network &amp; Edge — plus a majority stake in Mobileye. Most revenue still comes from selling its own branded chips; foundry service fees are a small but strategically important and growing slice.</span></div>
+    <div class="info-row"><span class="il">What makes it different</span><span class="iv" style="max-width:440px;text-align:right">One of very few companies that both designs and manufactures leading-edge logic chips at scale — though its manufacturing lead over TSMC has eroded, and it's now racing to prove its 18A/14A nodes can win real outside customers.</span></div>
+  </div>
+
+  <div class="mgrid">
+    <div class="mc"><div class="ml">CMP</div><div class="mv">$97.71</div><div class="ms">Close Aug 11, 2026 · NASDAQ</div></div>
+    <div class="mc"><div class="ml">52W High</div><div class="mv">$142.35</div><div class="ms">stockanalysis.com</div></div>
+    <div class="mc"><div class="ml">52W Low</div><div class="mv">$20.44</div><div class="ms">stockanalysis.com</div></div>
+    <div class="mc"><div class="ml">Market Cap</div><div class="mv">≈$505B</div><div class="ms">Range $493–513B — see flag below</div></div>
+    <div class="mc"><div class="ml">Par Value</div><div class="mv">$0.001</div><div class="ms">Per share · SEC filings</div></div>
+  </div>
+
+  <div class="flag-card">
+    <div class="flag-title">DIVIDEND SUSPENDED SINCE Q4 2024</div>
+    <div class="flag-note">Cut 65% in Feb 2023 ($0.365 → $0.125/share), then fully suspended starting Q4 2024. No dividend has been reinstated as of Aug 2026. Source: CNBC, company filings.</div>
+  </div>
+  <div class="flag-card">
+    <div class="flag-title">GAAP NET LOSSES IN 2024 AND 2025</div>
+    <div class="flag-note">Net income fell from $19.9B (2021) to a $18.8B loss (2024) and a smaller $0.27B loss (2025); TTM ROE is -10.7%. Source: stockanalysis.com financials.</div>
+  </div>
+  <div class="flag-card">
+    <div class="flag-title">CREDIT RATING DOWNGRADED</div>
+    <div class="flag-note">Moody's cut Intel from A3 to Baa1 and S&amp;P from BBB+ to BBB during 2024 — both still investment-grade, but several notches lower than a few years prior. Source: Moody's, S&amp;P via BondBlox.</div>
+  </div>
+  <div class="flag-card">
+    <div class="flag-title">MASSIVE DILUTION &amp; NEW GOVERNMENT OWNERSHIP</div>
+    <div class="flag-note">The US government converted its CHIPS Act grant into a ~10% equity stake (Aug 2025, with restrictions on Intel's executive pay and buybacks); SoftBank and Nvidia added $2B and $5B stakes; Intel then raised a further $20B in a public share sale in Aug 2026 — its first since its 1971 IPO — diluting every existing shareholder. Source: CNBC, Intel Newsroom.</div>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 1: VALUATION ═══ -->
+<div class="panel" id="p1">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Is this stock cheap, fair, or expensive right now?</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Metric</th><th>Current</th><th>Sector avg</th><th>Stock 5Y avg</th><th>Signal</th><th>Plain English</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>P/E</td><td>n/m trailing¹ · 58.6–76.9x fwd²</td><td>~30x fwd (median)³</td><td>🚩 DATA UNAVAILABLE⁴</td>
+          <td><span class="badge warn">EXPENSIVE</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">No trailing profit to price against; priced richly on next-year earnings estimates</td>
+        </tr>
+        <tr>
+          <td>P/B</td><td>5.63x</td><td>13.3–19.2x⁵</td><td>🚩 DATA UNAVAILABLE⁴</td>
+          <td><span class="badge ok">CHEAP</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Priced well below sector on assets owned — sector figure itself is skewed high by mega-caps</td>
+        </tr>
+        <tr>
+          <td>EV/EBITDA</td><td>43.0x</td><td>~17.8x⁵</td><td>🚩 DATA UNAVAILABLE⁴</td>
+          <td><span class="badge warn">EXPENSIVE</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">More than double the sector average full-business value check</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">
+      ¹ TTM EPS is negative (loss-making), so a trailing P/E is not meaningful. ² Forward P/E based on consensus next-12-month estimates: stockanalysis.com (58.6x) vs. GuruFocus, Aug 11 2026 (76.9x). ³ Semiconductor forward P/E median per GuruFocus (Aug 2026); trailing sector averages from different providers ranged 25.8x–48.4x, a ~2x spread likely from mega-cap AI names skewing index construction — treat sector-average figures as directional only. ⁴ Intel's own 5-year historical average multiples could not be cleanly retrieved (macrotrends.net blocked automated access) — verify at macrotrends.net/stocks/charts/INTC/intel/pe-ratio. Also, a clean "5-year average" is arguably not very meaningful for a company that swung from consistently profitable to loss-making mid-period. ⁵ CSIMarket, Q1 2026 semiconductor industry data.
+    </div>
+  </div>
+
+  <div class="score-box">
+    Overall valuation: <strong>MIXED</strong><br>
+    <span style="margin-top:4px;display:block">Cheap on assets (P/B) but expensive on every earnings-based measure (forward P/E, EV/EBITDA) — the market is pricing a profitability turnaround that hasn't yet shown up in Intel's trailing GAAP numbers.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 2: GROWTH ═══ -->
+<div class="panel" id="p2">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Is this company growing its revenue and profits?</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Metric</th><th>3Y CAGR</th><th>5Y CAGR</th><th>Trend</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td>Revenue</td><td>-5.7%</td><td>-7.7%</td><td>📉</td><td style="color:var(--color-text-secondary);font-size:11px">stockanalysis.com</td></tr>
+        <tr><td>Net profit</td><td>n/m — $19.9B profit (2021) → loss (2024–25)*</td><td>n/m*</td><td>📉</td><td style="color:var(--color-text-secondary);font-size:11px">stockanalysis.com</td></tr>
+        <tr><td>EPS</td><td>n/m — $4.86 (2021) → negative (2024–25)*</td><td>n/m*</td><td>📉</td><td style="color:var(--color-text-secondary);font-size:11px">stockanalysis.com</td></tr>
+        <tr><td>EBITDA margin</td><td>-31pts (FY21→FY24)</td><td>🚩 DATA UNAVAILABLE†</td><td>📉</td><td style="color:var(--color-text-secondary);font-size:11px">macrotrends.net</td></tr>
+        <tr><td>Net profit margin</td><td>-60pts (FY21→FY24)</td><td>-45pts (FY21→TTM)‡</td><td>📉</td><td style="color:var(--color-text-secondary);font-size:11px">stockanalysis.com</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">* CAGR is not mathematically meaningful when the base swings from a large profit to a loss. Reported as the actual trend instead. † Full-year FY2025 EBITDA margin could not be cleanly retrieved (macrotrends.net blocked automated access) — verify directly. ‡ TTM margin (-19.6%) is a partial recovery from the FY2024 trough (-35.3%), still well below FY2021.</div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">EPS — last 8 quarters (GAAP)</div>
+    <div class="eps-row">
+      <div class="eps-chip"><div class="eps-q">Q3 FY24</div><div class="eps-v">-$3.88</div><div class="eps-y neu">YoY: n/a</div></div>
+      <div class="eps-chip"><div class="eps-q">Q4 FY24</div><div class="eps-v">-$0.03</div><div class="eps-y neu">YoY: n/a</div></div>
+      <div class="eps-chip"><div class="eps-q">Q1 FY25</div><div class="eps-v">-$0.19</div><div class="eps-y neu">YoY: n/a</div></div>
+      <div class="eps-chip"><div class="eps-q">Q2 FY25</div><div class="eps-v">-$0.67</div><div class="eps-y neg">Loss widened</div></div>
+      <div class="eps-chip"><div class="eps-q">Q3 FY25</div><div class="eps-v">$0.90</div><div class="eps-y pos">Swung to profit</div></div>
+      <div class="eps-chip"><div class="eps-q">Q4 FY25</div><div class="eps-v">-$0.12</div><div class="eps-y neg">Loss widened</div></div>
+      <div class="eps-chip"><div class="eps-q">Q1 FY26</div><div class="eps-v">-$0.73</div><div class="eps-y neg">Loss widened</div></div>
+      <div class="eps-chip"><div class="eps-q">Q2 FY26</div><div class="eps-v">-$2.16</div><div class="eps-y neg">Loss widened*</div></div>
+    </div>
+    <div class="foot">* Q2 FY26's wider GAAP loss was driven by a one-off $12.5B mark-to-market charge on shares escrowed under the CHIPS Act equity deal, not core operations — adjusted (non-GAAP) EPS that quarter was +$0.42, ahead of the $0.21 consensus estimate. Three quarters (Q3 FY24, Q4 FY24, Q1 FY25) lack a verified prior-year comparator and are marked n/a rather than estimated. Source: stockanalysis.com quarterly financials.</div>
+  </div>
+
+  <div class="score-box">
+    Growth classification: <strong>DECLINING</strong><br>
+    <span style="margin-top:4px;display:block">Trailing 3- and 5-year CAGRs for revenue, profit and EPS are all negative — the historical multi-year trend is a genuine decline, not just noise. The one exception on record is the most recently reported quarter (Q2 FY26), where revenue grew 25% year-over-year, the fastest pace in over a decade; that single data point is noted here as historical fact, not projected forward.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 3: HEALTH ═══ -->
+<div class="panel" id="p3">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Is this company financially safe and stable?</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Metric</th><th>Value</th><th>5Y trend</th><th>Signal</th><th>Plain English</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Debt / Equity</td><td>0.49 (TTM)</td><td>→ Volatile: 0.41→0.48→0.37→0.49</td>
+          <td><span class="badge ok">SAFE</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Below 1 = safe, but equity base itself has been rebuilt via large stock issuance, not retained profit</td>
+        </tr>
+        <tr>
+          <td>Interest Coverage</td><td>2.43x (FY25)</td><td>↑ Recovering — went negative in FY24's loss year</td>
+          <td><span class="badge warn">WATCH</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Below the 3x healthy line, though improved from a negative reading</td>
+        </tr>
+        <tr>
+          <td>Current Ratio</td><td>1.60 (TTM)</td><td>→ Uneven: 2.13→1.57→1.54→1.33→2.02→1.60</td>
+          <td><span class="badge ok">COMFORTABLE</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Just above the 1.5 comfortable line</td>
+        </tr>
+        <tr>
+          <td>Free Cash Flow</td><td>+$2.83B (TTM)</td><td>↑ Improving — from -$15.66B in FY24</td>
+          <td><span class="badge warn">CONCERN</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Negative for 3 straight years (FY22–24) before a modest recent turn positive; FY26 capex guidance was just raised again</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">Sources: stockanalysis.com balance sheet &amp; cash flow statements; GuruFocus, Simply Wall St (interest coverage).</div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Forward projections — 3 year horizon</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Scenario</th><th>Assumption</th><th>Est. revenue</th><th>Est. net profit</th><th>Est. EPS</th></tr></thead>
+      <tbody>
+        <tr><td>🐢 Bear</td><td style="color:var(--color-text-secondary);font-size:12px">Revenue keeps shrinking at the trailing 3Y CAGR pace (-5.7%/yr); margins stay compressed near FY24 levels</td><td>≈$44.3B</td><td>≈-$8.9B</td><td>≈-$1.70</td></tr>
+        <tr><td>🚶 Base</td><td style="color:var(--color-text-secondary);font-size:12px">Revenue grows ≈6%/yr — between the trailing 3Y decline and the most recent quarter's pace; margins recover toward breakeven</td><td>≈$62.9B</td><td>≈$1.3B</td><td>≈$0.24</td></tr>
+        <tr><td>🚀 Bull</td><td style="color:var(--color-text-secondary);font-size:12px">Revenue grows ≈15%/yr, closer to the most recent quarter's momentum; margins partially recover toward FY2022 levels</td><td>≈$80.4B</td><td>≈$8.0B</td><td>≈$1.55</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">Base: FY2025 revenue of $52.85B and ≈5.2B shares outstanding post the Aug 2026 offering. These are scenario calculations built from Intel's own historical growth-rate range (-5.7% trailing CAGR to +25% in the most recent single quarter) and historical margin range (25% in FY2021, down to -35% in FY2024) — not guarantees or predictions.</div>
+  </div>
+
+  <div class="score-box">
+    Financial health: <strong>MODERATE RISK</strong><br>
+    <span style="margin-top:4px;display:block">Leverage itself is low and liquidity is comfortable — the real balance-sheet risk isn't debt, it's cash burn: three straight years of negative free cash flow that has been funded by selling equity to the US government, SoftBank, Nvidia and public markets rather than by operations.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 4: RETURNS ═══ -->
+<div class="panel" id="p4">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Is this company creating real value for shareholders?</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Metric</th><th>Current</th><th>3Y avg</th><th>5Y avg</th><th>Signal</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>ROE</td><td>-10.72% (TTM)</td><td>-5.43%</td><td>2.86%</td>
+          <td><span class="badge bad">WEAK</span></td>
+        </tr>
+        <tr>
+          <td>ROIC / ROCE*</td><td>3.42% (TTM)</td><td>-4.96%</td><td>1.06%</td>
+          <td><span class="badge bad">WEAK</span></td>
+        </tr>
+        <tr>
+          <td>Dividend yield</td><td>0.00%</td><td>≈0.8%†</td><td>≈1.7%†</td>
+          <td><span class="badge neu">—</span></td>
+        </tr>
+        <tr>
+          <td>Dividend payout</td><td>n/a — suspended</td><td>n/a</td><td>n/a</td>
+          <td><span class="badge neu">—</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">ROE above 15% = good &nbsp;·&nbsp; ROCE above 15% = efficient capital use. * A separate ROCE series (ValueSense) shows FY25 at 0.5%, a 3Y avg of -3.3% and a 5Y avg of 0.8% — directionally identical, both series shown for transparency since providers don't fully reconcile. † 3Y/5Y average yields are derived from quarterly yield snapshots, not an audited annual series, and are heavily distorted by the mid-2023 dividend cut and the Q4 2024 suspension — treat as directional only. Sources: stockanalysis.com, ValueSense.</div>
+  </div>
+
+  <div class="score-box">
+    Return quality: <strong>WEAK RETURNS (TURNAROUND STAGE)</strong><br>
+    <span style="margin-top:4px;display:block">ROE and ROIC have averaged negative-to-near-zero over the trailing 3 years, and the dividend has been suspended since Q4 2024 — none of the standard "quality compounder" or "dividend play" labels fit; this is a company earning little-to-negative return on capital while it rebuilds.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 5: PEERS ═══ -->
+<div class="panel" id="p5">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">How does it compare to its 3 closest competitors?</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Company</th><th>P/E</th><th>P/B</th><th>ROE</th><th>Rev growth</th><th>D/E</th><th>Edge</th></tr></thead>
+      <tbody>
+        <tr class="peer-you">
+          <td><strong>INTC ◀ you</strong></td>
+          <td>n/m*</td><td>5.63</td><td>-10.72%</td><td>+25%†</td><td>0.49</td>
+          <td style="font-size:12px">US foundry optionality</td>
+        </tr>
+        <tr>
+          <td>AMD</td>
+          <td>123.37</td><td>11.34</td><td>10.20%</td><td>+50%†</td><td>0.06</td>
+          <td style="font-size:12px">AI GPU/CPU design leader</td>
+        </tr>
+        <tr>
+          <td>TSMC (TSM)</td>
+          <td>27.32</td><td>19.92</td><td>39.97%</td><td>≈+35%‡</td><td>0.15</td>
+          <td style="font-size:12px">Foundry scale &amp; tech leader</td>
+        </tr>
+        <tr>
+          <td>Nvidia (NVDA)</td>
+          <td>34.30</td><td>23.84</td><td>114.29%</td><td>+73.2%§</td><td>0.07</td>
+          <td style="font-size:12px">AI accelerator dominance</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">* TTM loss-making; forward P/E 58.6–76.9x (see Valuation tab). † Q2 2026 YoY, most recently reported quarter. ‡ TSM's exact latest-single-quarter YoY figure was 🚩 DATA UNAVAILABLE in this research pass — 35.1% is from a nearby but not perfectly matched period; verify at stockanalysis.com/stocks/tsm before relying on it. § Full fiscal-year figure. Sources: stockanalysis.com, AMD Q2 2026 press release, GuruFocus.</div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Latest news — top 5 long-term relevant items</div>
+    <div style="padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">Intel prices $20B stock offering at $95/share, upsized from $15B</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">Intel's first public share sale since its 1971 IPO; funds foundry/AI capex but dilutes every existing holder — government, SoftBank, Nvidia and retail alike — by an estimated ≈3%.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">Aug 10, 2026 · CNBC</div>
+      </div>
+    </div>
+    <div style="padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">Dean Jarnac appointed EVP &amp; Chief Sales Officer</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">Signals a push to convert Foundry/AI technical wins into signed customer revenue — addresses the gap between Intel's technology claims and its still-tiny external foundry revenue.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">Aug 7, 2026 · Intel Newsroom</div>
+      </div>
+    </div>
+    <div style="padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">Q2 2026 earnings: revenue +25% YoY, 7th straight beat, but an $11B GAAP net loss</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">Strongest evidence yet of an operational turnaround under CEO Lip-Bu Tan, but the GAAP loss headline (driven by a one-off CHIPS Act accounting charge) and higher capex guidance show the company is still burning significant capital.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">Jul 23, 2026 · CNBC / Intel IR</div>
+      </div>
+    </div>
+    <div style="padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">Fresh layoffs in Data Center &amp; AI Group despite 22%+ YoY segment growth</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">Restructuring and cost discipline continuing even in Intel's best-performing segment — management prioritizing margin recovery over headcount-led growth.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">Jul 2026 · Benzinga</div>
+      </div>
+    </div>
+    <div style="padding:10px 0">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">Intel Foundry reports 18A yield gains; design-win interest cited from Apple, AMD, Nvidia, Microsoft, Meta and OpenAI</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">The single biggest swing factor for the next 3 years — if 14A converts this interest into signed external revenue, the foundry turnaround has legs; if not, the thesis weakens.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">Mid-2026 · Tom's Hardware / WCCFTech</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="score-box">
+    Peer standing: <strong>LAGGING</strong><br>
+    <span style="margin-top:4px;display:block">Weakest ROE and the only peer without a meaningful trailing P/E among AMD, TSMC and Nvidia, though its most recent quarter's revenue growth (+25% YoY) is now closing the gap with faster-growing peers.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 6: OWNERSHIP ═══ -->
+<div class="panel" id="p6">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Who owns this company — and are they buying or stepping away? (US equity has no "promoter" class; adapted to insiders, institutions, and Intel's unusually large strategic/government stakes)</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Holder</th><th>Latest %</th><th>Recent trend</th><th>Signal</th><th>What it means</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Insiders &amp; founders' estate</td><td>0.08–4.3%*</td><td>→ Mixed — mostly routine RSU/tax sales, some open-market exec buys</td>
+          <td><span class="badge neu">STABLE</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">CFO bought at $42.50 (Jan 2026); a director sold at $26.00 (Nov 2024)</td>
+        </tr>
+        <tr>
+          <td>Institutional (13F filers)</td><td>63.0–64.5%*</td><td>↑ +2.16% QoQ, though fund-level activity split ≈844 adding vs 1,098 trimming</td>
+          <td><span class="badge ok">INCREASING</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Largest holder BlackRock, ≈9.1%; ≈2,200–2,600 institutional filers</td>
+        </tr>
+        <tr>
+          <td>US Government (CHIPS Act stake)</td><td>≈10%†</td><td>New Aug 2025; diluted ≈3pts by the Aug 2026 offering</td>
+          <td><span class="badge info">STRATEGIC</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Now Intel's single largest shareholder; comes with restrictions on exec pay &amp; buybacks</td>
+        </tr>
+        <tr>
+          <td>SoftBank + Nvidia (strategic)</td><td>≈2% + ≈4%†</td><td>New 2025; also diluted by the Aug 2026 offering</td>
+          <td><span class="badge info">STRATEGIC</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">$2B and $5B investments tied to partnership/supply agreements, not passive index buying</td>
+        </tr>
+        <tr>
+          <td>Insider pledging</td><td>—</td><td>—</td>
+          <td><span class="badge ok">N/A</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">No share-pledging or margin-loan arrangements found in proxy disclosures</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">* Ranges reflect genuinely differing methodologies between stockanalysis.com and WallStreetZen/Bullfincher (e.g. whether Gordon Moore's estate, ≈3.4%, counts as "insider"). † Exact post-Aug-2026-offering percentages for the government/SoftBank/Nvidia stakes were 🚩 DATA UNAVAILABLE at research time — only the ≈3% aggregate dilution estimate was found; verify at Intel's next proxy filing (DEF 14A) or 8-K. Sources: Fintel, Business Quant, Benzinga, QuiverQuant, CNBC, Intel Newsroom.</div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Latest earnings call — Q2 FY2026</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>What management said</th><th>What it means for you</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>"Seventh consecutive quarter of exceeding financial expectations" — revenue beat guidance midpoint by $1.8B</td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Management is rebuilding guidance credibility after years of missed targets under the prior CEO</td>
+        </tr>
+        <tr>
+          <td>AI-driven businesses now ≈70% of revenue mix, growing 70%+ YoY</td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Intel says it's finally participating meaningfully in the AI buildout, not just the legacy PC/server cycle</td>
+        </tr>
+        <tr>
+          <td>2026 capex guidance raised to &gt;$20B "on stronger customer demand"</td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Bullish on order visibility, but also means free cash flow stays under pressure — part of why the $20B equity raise happened</td>
+        </tr>
+        <tr>
+          <td>Hired former SK hynix CEO to address AI-infrastructure memory bottlenecks, working with three major memory vendors</td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Trying to build systems/packaging capability beyond pure logic chips — also flags memory supply as a real near-term constraint</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:12px;color:var(--color-text-secondary);margin-top:8px">
+      Management tone: <strong style="color:var(--color-text-primary)">CONFIDENT</strong> — tempered by a large GAAP loss headline and continued restructuring
+    </div>
+  </div>
+
+  <div class="score-box">
+    Ownership signal: <strong>HOLDING STEADY</strong><br>
+    <span style="margin-top:4px;display:block">Institutional ownership ticked up modestly and insider activity was mostly routine — but the dominant ownership story right now is structural, not sentiment-driven: the US government, SoftBank and Nvidia together hold large strategic stakes with real restrictions attached, a governance setup with little precedent for a company this size.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 7: VIEW (default active) ═══ -->
+<div class="panel on" id="p7">
+
+  <div class="card red">
+    <div class="view-label red">WEAK FUNDAMENTALS</div>
+    <div class="view-reason">Intel's trailing financials show a company still working through a multi-year profitability collapse — GAAP losses in 2024 and 2025, negative returns on equity, a suspended dividend and a credit downgrade — even as its most recently reported quarter shows a real, verifiable inflection in AI-driven revenue growth and foundry execution.</div>
+
+    <div class="sec-label">What works for this stock</div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--g-accent)">✓</span><span>A genuine recent operational inflection: Q2 2026 revenue grew 25% year-over-year — the fastest pace in over a decade — with seven straight quarters of beating guidance under CEO Lip-Bu Tan.</span></div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--g-accent)">✓</span><span>Balance-sheet leverage stays low (D/E ≈0.49) and Intel has secured unusually large strategic equity backing — $8.9B from the US government, $2B from SoftBank, $5B from Nvidia, and a further $20B public offering — cutting near-term insolvency risk despite heavy cash burn.</span></div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--g-accent)">✓</span><span>Intel Foundry's 18A node is reportedly showing improved yields, with design-win interest cited from Apple, AMD, Nvidia, Microsoft, Meta and OpenAI — the first real sign of outside validation for the foundry strategy.</span></div>
+
+    <div class="sec-label">What to watch</div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--a-accent)">⚠</span><span>GAAP profitability and returns remain deeply negative — net losses in 2024 and 2025, ROE of -10.7% TTM, and free cash flow was negative for three straight years (2022–2024) before a modest recent recovery; 2026 capex guidance was just raised again, which could pressure cash flow further.</span></div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--a-accent)">⚠</span><span>Heavy, ongoing reliance on external capital (government, SoftBank, Nvidia, public equity) to fund the turnaround, plus a 2024 credit downgrade, show that Intel's core operations alone are not yet self-funding the transformation.</span></div>
+
+    <div class="sec-label">Track this going forward</div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--color-text-secondary)">→</span><span>Whether Intel Foundry actually converts its 18A/14A technical progress into signed, material external customer revenue — external Foundry revenue was just $293M in Q2 2026, versus TSMC's ≈$35.9B in a single quarter.</span></div>
+
+    <div style="margin-top:16px;font-size:11px;color:var(--color-text-secondary);font-style:italic">
+      This is a VIEW based on fundamentals only. Not a buy/sell recommendation. The decision is always yours.
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px">
+    <div class="card green">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--g-text);margin-bottom:8px">Opportunities</div>
+      <div class="bullet-row" style="border-color:var(--g-border)"><span class="bicon" style="color:var(--g-accent)">+</span><span style="color:var(--g-text);font-size:12px">AI-driven Data Center &amp; AI segment now ≈70% of revenue mix and growing 70%+ YoY, per management's Q2 2026 commentary</span></div>
+      <div class="bullet-row" style="border-color:var(--g-border)"><span class="bicon" style="color:var(--g-accent)">+</span><span style="color:var(--g-text);font-size:12px">US policy tailwinds (CHIPS Act, national-security push for domestic advanced fabs) underwrite Intel's capacity buildout in a way few competitors enjoy</span></div>
+      <div class="bullet-row" style="border-color:var(--g-border);border-bottom:none"><span class="bicon" style="color:var(--g-accent)">+</span><span style="color:var(--g-text);font-size:12px">14A customer decisions are reportedly expected H2 2026–H1 2027 — a concrete, verifiable near-term data point for the foundry thesis</span></div>
+    </div>
+    <div class="card red">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--r-text);margin-bottom:8px">Risks</div>
+      <div class="bullet-row" style="border-color:var(--r-border)"><span class="bicon" style="color:var(--r-accent)">−</span><span style="color:var(--r-text);font-size:12px">TSMC and Samsung remain far ahead in foundry scale and yield; Nvidia and AMD dominate AI chip design — Intel is competing from behind on both fronts at once</span></div>
+      <div class="bullet-row" style="border-color:var(--r-border)"><span class="bicon" style="color:var(--r-accent)">−</span><span style="color:var(--r-text);font-size:12px">China/export-control exposure and possible retaliation (rare-earth and critical-mineral controls) sit on top of an already fragile earnings base</span></div>
+      <div class="bullet-row" style="border-color:var(--r-border);border-bottom:none"><span class="bicon" style="color:var(--r-accent)">−</span><span style="color:var(--r-text);font-size:12px">The unprecedented US government equity stake introduces novel governance constraints (limits on executive pay and buybacks) and political-cycle risk with no real precedent for a company this size</span></div>
+    </div>
+  </div>
+
+</div>
+
+<details style="margin-top:20px;padding:0 4px">
+  <summary>Definitions — tap to expand</summary>
+  <p><strong>P/E ratio</strong> — What you pay per $1 of profit. Lower vs. history and sector = cheaper. Not meaningful when a company has no trailing profit.</p>
+  <p><strong>P/B ratio</strong> — Price vs. what the company actually owns. Below 1 = buying at a discount to assets.</p>
+  <p><strong>EV/EBITDA</strong> — Full business value check including debt. Lower = better value.</p>
+  <p><strong>ROE</strong> — For every $100 shareholders invested, how much profit the company made. Above 15% = good.</p>
+  <p><strong>ROIC / ROCE</strong> — How efficiently the whole business uses capital, including borrowed money. Above 15% = healthy.</p>
+  <p><strong>Free Cash Flow</strong> — Cash left after all expenses and investments. Positive and growing = genuinely healthy business.</p>
+  <p><strong>13F filing</strong> — A quarterly SEC disclosure large institutional investors (funds, banks, pensions) must file showing their US equity holdings — the US equivalent of tracking FII/DII activity in other markets.</p>
+  <p><strong>CAGR</strong> — Compound Annual Growth Rate. The average yearly growth rate over a period; not meaningful when the underlying figure swings from positive to negative.</p>
+</details>
+
+<div class="disc">
+  This is a fundamental screening and education tool only. Data sourced from SEC EDGAR, Intel Investor Relations, stockanalysis.com, Yahoo Finance, and other public financial databases and news outlets as cited inline. This is NOT investment advice, a buy/sell recommendation, or research from a registered investment adviser or broker-dealer. AI can make errors — verify all numbers directly against SEC filings (10-K/10-Q/8-K) or Intel's own investor relations site before making any decision. Past performance does not guarantee future results. Investing carries risk, including loss of principal. Consult a licensed financial advisor before investing.
+</div>
+
+</div>
+
+<script>
+function show(n){
+  var panels=document.querySelectorAll('.panel');
+  var tabs=document.querySelectorAll('.tab-btn');
+  for(var i=0;i<panels.length;i++){
+    panels[i].className='panel'+(i===n?' on':'');
+    tabs[i].className='tab-btn'+(i===n?' active':'');
+  }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coherent Corp (COHR) Fundamental Analysis — Aug 12, 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --g-fill:#EAF3DE;--g-text:#27500A;--g-border:#C0DD97;--g-accent:#639922;
+  --a-fill:#FAEEDA;--a-text:#854F0B;--a-border:#FAC775;--a-accent:#EF9F27;
+  --r-fill:#FCEBEB;--r-text:#A32D2D;--r-border:#F7C1C1;--r-accent:#E24B4A;
+  --b-fill:#E6F1FB;--b-text:#185FA5;--b-border:#B5D4F4;--b-accent:#378ADD;
+  --n-fill:#F1EFE8;--n-text:#444441;--n-border:#D3D1C7;
+  --color-text-primary:#1C1B18;--color-text-secondary:#6B6A64;
+  --color-background-primary:#FFFFFF;--color-background-secondary:#F5F4F0;
+  --color-border-primary:rgba(0,0,0,0.35);--color-border-secondary:rgba(0,0,0,0.18);--color-border-tertiary:rgba(0,0,0,0.10)
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --g-fill:#173404;--g-text:#C0DD97;--g-border:#3B6D11;--g-accent:#97C459;
+  --a-fill:#412402;--a-text:#FAC775;--a-border:#854F0B;--a-accent:#EF9F27;
+  --r-fill:#501313;--r-text:#F09595;--r-border:#A32D2D;--r-accent:#E24B4A;
+  --b-fill:#042C53;--b-text:#85B7EB;--b-border:#185FA5;--b-accent:#378ADD;
+  --n-fill:#2C2C2A;--n-text:#D3D1C7;--n-border:#5F5E5A;
+  --color-text-primary:#EDECE7;--color-text-secondary:#A6A49C;
+  --color-background-primary:#171613;--color-background-secondary:#211F1B;
+  --color-border-primary:rgba(255,255,255,0.35);--color-border-secondary:rgba(255,255,255,0.18);--color-border-tertiary:rgba(255,255,255,0.10)
+}}
+:root[data-theme="dark"]{
+  --g-fill:#173404;--g-text:#C0DD97;--g-border:#3B6D11;--g-accent:#97C459;
+  --a-fill:#412402;--a-text:#FAC775;--a-border:#854F0B;--a-accent:#EF9F27;
+  --r-fill:#501313;--r-text:#F09595;--r-border:#A32D2D;--r-accent:#E24B4A;
+  --b-fill:#042C53;--b-text:#85B7EB;--b-border:#185FA5;--b-accent:#378ADD;
+  --n-fill:#2C2C2A;--n-text:#D3D1C7;--n-border:#5F5E5A;
+  --color-text-primary:#EDECE7;--color-text-secondary:#A6A49C;
+  --color-background-primary:#171613;--color-background-secondary:#211F1B;
+  --color-border-primary:rgba(255,255,255,0.35);--color-border-secondary:rgba(255,255,255,0.18);--color-border-tertiary:rgba(255,255,255,0.10)
+}
+body{font-family:var(--font-sans,-apple-system,"Segoe UI",system-ui,sans-serif);font-size:13px;line-height:1.6;color:var(--color-text-primary);background:var(--color-background-primary)}
+.wrap{max-width:860px;margin:0 auto;padding:20px 16px 32px}
+table,.mc .mv,.eps-v,.iv{font-variant-numeric:tabular-nums}
+.conf{padding:10px 16px;border-radius:8px;margin-bottom:14px;font-size:12px}
+.conf.high,.conf.moderate{background:var(--g-fill);color:var(--g-text)}
+.conf.low{background:var(--a-fill);color:var(--a-text)}
+.conf.vlow{background:var(--r-fill);color:var(--r-text)}
+.tab-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.tab-btn{padding:7px 18px;border-radius:100px;border:1px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);font-size:13px;font-weight:400;cursor:pointer;font-family:inherit;transition:border-color 0.15s,color 0.15s}
+.tab-btn:hover{border-color:var(--color-border-primary);color:var(--color-text-primary)}
+.tab-btn.active{border:1.5px solid var(--color-text-primary);color:var(--color-text-primary);font-weight:500}
+.tab-btn:focus-visible{outline:2px solid var(--b-accent);outline-offset:2px}
+.panel{display:none}.panel.on{display:block}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:12px;padding:16px 20px;margin-bottom:12px}
+.card.green{background:var(--g-fill);border-color:var(--g-border)}
+.card.amber{background:var(--a-fill);border-color:var(--a-border)}
+.card.red{background:var(--r-fill);border-color:var(--r-border)}
+.card.blue{background:var(--b-fill);border-color:var(--b-border)}
+.card.grey{background:var(--n-fill);border-color:var(--n-border)}
+.view-label{font-size:18px;font-weight:500;margin-bottom:6px}
+.view-label.green{color:var(--g-text)}.view-label.amber{color:var(--a-text)}.view-label.red{color:var(--r-text)}
+.view-reason{font-size:13px;margin-bottom:16px;color:var(--color-text-primary)}
+.sec-label{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin:14px 0 8px}
+.bullet-row{display:flex;gap:10px;align-items:flex-start;padding:6px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:13px}
+.bullet-row:last-child{border-bottom:none}
+.bicon{font-size:14px;min-width:18px;margin-top:1px}
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px;margin:8px 0;min-width:560px}
+th{text-align:left;padding:7px 10px;font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.7px;color:var(--color-text-secondary);border-bottom:0.5px solid var(--color-border-tertiary);white-space:nowrap}
+td{padding:9px 10px;color:var(--color-text-primary);border-bottom:0.5px solid var(--color-border-tertiary)}
+tr:last-child td{border-bottom:none}
+.pos{color:var(--g-accent);font-weight:500}.neg{color:var(--r-accent);font-weight:500}.neu{color:var(--color-text-secondary)}
+.badge{display:inline-block;padding:2px 9px;border-radius:100px;font-size:11px;font-weight:500;white-space:nowrap}
+.badge.ok{background:var(--g-fill);color:var(--g-text)}
+.badge.warn{background:var(--a-fill);color:var(--a-text)}
+.badge.bad{background:var(--r-fill);color:var(--r-text)}
+.badge.info{background:var(--b-fill);color:var(--b-text)}
+.badge.neu{background:var(--n-fill);color:var(--n-text)}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;margin:12px 0}
+.mc{background:var(--color-background-secondary);border-radius:8px;padding:12px 14px}
+.mc .ml{font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:var(--color-text-secondary);margin-bottom:4px}
+.mc .mv{font-size:18px;font-weight:500;color:var(--color-text-primary)}
+.mc .ms{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.info-row{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:0.5px solid var(--color-border-tertiary);gap:16px}
+.info-row:last-child{border-bottom:none}
+.il{font-size:12px;color:var(--color-text-secondary)}
+.iv{font-size:12px;color:var(--color-text-primary);font-weight:500;text-align:right}
+.flag-card{border-left:3px solid var(--a-accent);background:var(--a-fill);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:8px}
+.flag-title{font-size:13px;font-weight:500;color:var(--a-text);margin-bottom:3px}
+.flag-note{font-size:12px;color:var(--a-text)}
+.score-box{background:var(--color-background-secondary);border-radius:8px;padding:14px 16px;margin-top:14px;font-size:12px;color:var(--color-text-secondary)}
+.eps-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.eps-chip{background:var(--color-background-secondary);border-radius:8px;padding:10px 14px;text-align:center;min-width:85px}
+.eps-q{font-size:10px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.5px}
+.eps-v{font-size:16px;font-weight:500;color:var(--color-text-primary);margin:3px 0}
+.eps-y{font-size:11px}
+.peer-you{background:var(--color-background-secondary)}
+.foot{font-size:11px;color:var(--color-text-secondary);margin-top:8px;line-height:1.6}
+.disc{font-size:11px;color:var(--color-text-secondary);border-top:0.5px solid var(--color-border-tertiary);padding-top:14px;margin-top:24px;line-height:1.6}
+details summary{font-size:12px;color:var(--color-text-secondary);cursor:pointer;padding:8px 0}
+details p{font-size:12px;color:var(--color-text-secondary);padding:4px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+details p:last-child{border-bottom:none}
+details strong{color:var(--color-text-primary);font-weight:500}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="conf moderate">
+  <strong>Data confidence: MODERATE</strong><br>
+  Live metrics retrieved: 9 of 12 key sections cleanly sourced &nbsp;|&nbsp; Sources: stockanalysis.com, SEC EDGAR, Coherent Investor Relations, NVIDIA Newsroom, S&amp;P Global Ratings, Reuters (via 247wallst.com/gurufocus.com), Futurum Group, Investing.com &nbsp;|&nbsp; Coherent's Q4/full-year FY2026 results are due after market close <strong>today (Aug 12, 2026)</strong> and are NOT reflected below. A handful of metrics (interest coverage, some peer ratios, EV/EBITDA) are flagged 🚩 DATA UNAVAILABLE or show real cross-source disagreement — see Valuation and Health tabs.
+</div>
+
+<div class="tab-row">
+  <button class="tab-btn" onclick="show(0)">Snapshot</button>
+  <button class="tab-btn" onclick="show(1)">Valuation</button>
+  <button class="tab-btn" onclick="show(2)">Growth</button>
+  <button class="tab-btn" onclick="show(3)">Health</button>
+  <button class="tab-btn" onclick="show(4)">Returns</button>
+  <button class="tab-btn" onclick="show(5)">Peers</button>
+  <button class="tab-btn" onclick="show(6)">Ownership</button>
+  <button class="tab-btn active" onclick="show(7)">View</button>
+</div>
+
+<!-- ═══ TAB 0: SNAPSHOT ═══ -->
+<div class="panel" id="p0">
+
+  <div class="card">
+    <div class="info-row"><span class="il">Company</span><span class="iv">Coherent Corp. (formerly II-VI Incorporated)</span></div>
+    <div class="info-row"><span class="il">Ticker</span><span class="iv">COHR · NYSE</span></div>
+    <div class="info-row"><span class="il">Sector</span><span class="iv">Technology</span></div>
+    <div class="info-row"><span class="il">Industry</span><span class="iv">Photonics / Scientific &amp; Technical Instruments</span></div>
+    <div class="info-row"><span class="il">What it does</span><span class="iv" style="max-width:440px;text-align:right">Designs and manufactures photonics, optoelectronic components, engineered materials and laser systems across three segments — Networking (datacenter/AI optical transceivers &amp; telecom), Materials, and Lasers (industrial/electronics). Its key current growth engine is 800G/1.6T optical transceivers for AI datacenters.</span></div>
+    <div class="info-row"><span class="il">What makes it different</span><span class="iv" style="max-width:440px;text-align:right">Vertically integrated indium-phosphide (InP) wafer-to-transceiver manufacturing at scale, giving it in-house control over a scarce raw-material bottleneck rivals depend on — reinforced by a direct capacity/equity partnership with Nvidia running through 2030.</span></div>
+  </div>
+
+  <div class="mgrid">
+    <div class="mc"><div class="ml">CMP</div><div class="mv">$344.51</div><div class="ms">Aug 12, 2026 (pre-earnings) · NYSE</div></div>
+    <div class="mc"><div class="ml">52W High</div><div class="mv">$440.00</div><div class="ms">stockanalysis.com</div></div>
+    <div class="mc"><div class="ml">52W Low</div><div class="mv">$84.35</div><div class="ms">stockanalysis.com</div></div>
+    <div class="mc"><div class="ml">Market Cap</div><div class="mv">≈$67.3B</div><div class="ms">stockanalysis.com</div></div>
+    <div class="mc"><div class="ml">Par Value</div><div class="mv">No par value</div><div class="ms">Per company filings — see footnote</div></div>
+  </div>
+
+  <div class="flag-card">
+    <div class="flag-title">Q4 / FULL-YEAR FY2026 EARNINGS DUE TODAY — NOT YET REFLECTED</div>
+    <div class="flag-note">Results for the quarter ended June 30, 2026 are scheduled for release after market close today, Aug 12, 2026. Guidance was $1.91–2.05B revenue and non-GAAP EPS $1.52–1.72 (Street consensus ≈$1.43–1.62). Everything in this report reflects data through Q3 FY2026 (ended 3/31/2026) and FY2025 annual results — verify against the actual print before acting on this. Source: company IR, Yahoo Finance/Zacks.</div>
+  </div>
+  <div class="flag-card">
+    <div class="flag-title">MERGER-DISTORTED HISTORY</div>
+    <div class="flag-note">COHR is the former II-VI Incorporated, which acquired the old laser company "Coherent, Inc." in July 2022 and renamed itself Coherent Corp. in 2023. FY2021–FY2022 figures below are pre-merger, II-VI-standalone only; any "5-year" series blending these with FY2023–FY2025 post-merger combined figures is not a clean apples-to-apples trend and is flagged inline. Source: SEC EDGAR, coherent.com.</div>
+  </div>
+  <div class="flag-card">
+    <div class="flag-title">GAAP LOSSES FY2023–FY2025 DESPITE REVENUE GROWTH</div>
+    <div class="flag-note">Merger-integration costs and purchase-accounting charges drove GAAP net losses of -$403.7M (FY23), -$279.5M (FY24) and -$80.6M (FY25) even as revenue grew — the company only returned to sustained GAAP profitability starting Q1 FY2026. Source: stockanalysis.com.</div>
+  </div>
+  <div class="flag-card">
+    <div class="flag-title">VALUATION LOOKS STRETCHED</div>
+    <div class="flag-note">Trailing P/E of ≈144x is far above the semiconductor-equipment sector average (≈49.7x) and Coherent's own historical multiples (5-yr avg P/B ≈2.2x vs. current ≈5.4–6.0x; 3-yr avg EV/EBITDA ≈15.5x vs. current 41–65x). Source: FullRatio.com, valueinvesting.io, stockanalysis.com.</div>
+  </div>
+  <div class="flag-card">
+    <div class="flag-title">CHINA / INDIUM PHOSPHIDE SUPPLY RISK (CUTS BOTH WAYS)</div>
+    <div class="flag-note">China has tightened export controls/licensing on indium phosphide, Coherent's core raw material (6-inch wafer prices reportedly up ≈250%). Separately, a draft FCC proposal to ban Chinese-made optical transceiver imports into US datacenters could benefit Coherent if finalized — but it remains an unconfirmed draft, not law. Source: Mining.com, Reuters via 247wallst.com/gurufocus.com/invezz.com.</div>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 1: VALUATION ═══ -->
+<div class="panel" id="p1">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Is this stock cheap, fair, or expensive right now?</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Metric</th><th>Current</th><th>Sector avg</th><th>Stock own history</th><th>Signal</th><th>Plain English</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>P/E</td><td>≈144x trailing · 46x fwd</td><td>≈49.7x (semi-equipment)¹</td><td>🚩 DATA UNAVAILABLE²</td>
+          <td><span class="badge bad">EXPENSIVE</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Trailing multiple is ~3x the sector average; PEG of 0.91 suggests it could be justified if forecast growth holds³</td>
+        </tr>
+        <tr>
+          <td>P/B</td><td>5.44–6.02x</td><td>≈3.32x (median)⁴</td><td>≈2.22x (5Y avg)²</td>
+          <td><span class="badge bad">EXPENSIVE</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">More than double its own 5-year average and above sector median</td>
+        </tr>
+        <tr>
+          <td>EV/EBITDA</td><td>41–65x⁵</td><td>🚩 DATA UNAVAILABLE</td><td>≈15.5x (3Y avg)²</td>
+          <td><span class="badge bad">EXPENSIVE</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">2.5–4x its own recent average, whichever figure you use</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">
+      ¹ FullRatio.com, semiconductor equipment &amp; materials sector, Aug 2026. ² Coherent's own "5-year average" P/E is not meaningful — it mixes pre-merger II-VI-only earnings (FY21–22) with post-merger GAAP losses (FY23–25) driven by acquisition/integration charges (year-by-year P/E: FY21 30.9x, FY22 26.4x, FY23 -43.7x, FY24 -26.6x, FY25 -438.0x). The P/B and EV/EBITDA "own history" figures shown are the cleanest available proxies (5-yr and 3-yr averages respectively per valueinvesting.io) but still partially span the merger period — treat as directional. ³ PEG ratio of 0.91 (stockanalysis.com) implies the trailing P/E could be reasonable relative to consensus forward growth estimates — a genuine counterpoint to the "expensive" read above. ⁴ valueinvesting.io sector comparison. ⁵ Two sources disagreed materially (41.2x vs. 65.3x for similar periods), likely reflecting GAAP vs. adjusted EBITDA definitions — both shown for transparency; verify against the 10-K before relying on either.
+    </div>
+  </div>
+
+  <div class="score-box">
+    Overall valuation: <strong>OVERVALUED</strong><br>
+    <span style="margin-top:4px;display:block">Expensive on every multiple versus both the sector and Coherent's own recent history — the one meaningful counterpoint is a sub-1.0 PEG ratio, meaning the market is pricing in continued rapid earnings growth, not irrational exuberance on its own.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 2: GROWTH ═══ -->
+<div class="panel" id="p2">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Is this company growing its revenue and profits?</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Metric</th><th>3Y CAGR</th><th>5Y CAGR</th><th>Trend</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td>Revenue</td><td>20.5%*</td><td>13.3%*</td><td>📈</td><td style="color:var(--color-text-secondary);font-size:11px">stockanalysis.com</td></tr>
+        <tr><td>Net profit</td><td>n/m — loss (FY23–25) → TTM profit of +$400.6M†</td><td>n/m*†</td><td>📈</td><td style="color:var(--color-text-secondary);font-size:11px">stockanalysis.com</td></tr>
+        <tr><td>EPS</td><td>n/m — same reason†</td><td>n/m*†</td><td>📈</td><td style="color:var(--color-text-secondary);font-size:11px">stockanalysis.com</td></tr>
+        <tr><td>EBITDA margin</td><td>-2.1pts (FY22→FY25)*</td><td>-2.6pts (FY21→FY25)*</td><td>📈</td><td style="color:var(--color-text-secondary);font-size:11px">macrotrends.net (secondary-sourced)</td></tr>
+        <tr><td>Net profit margin</td><td>-8.5pts (FY22→FY25)*</td><td>-11.0pts (FY21→FY25)*</td><td>📈</td><td style="color:var(--color-text-secondary);font-size:11px">stockanalysis.com</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">* Merger-distorted: FY22 and FY21 are pre-merger II-VI-only, FY23-25 are post-merger combined — these CAGRs and point changes blend two different companies. The cleanest apples-to-apples figure is the post-merger 2-year revenue CAGR (FY23→FY25): ≈6.1%, which itself understates the current AI-driven inflection — TTM revenue (through 3/31/26) grew 18.0% YoY, and the Datacenter &amp; Communications segment specifically grew 37% YoY in the most recent quarter. † GAAP net income swung from a $403.7M loss (FY23) to losses narrowing through FY24/FY25, then to three straight profitable quarters in FY2026 (Q1 $192.9M, Q2 $145.1M, Q3 $191.4M — TTM net income +$400.6M, ≈+6.1% TTM net margin). EBITDA margin bottomed at 14.5% in FY24 and recovered to 19.0% in FY25 (adjusted/non-GAAP EBITDA margin was ≈22.6% in FY24 per an 8-K — GAAP and adjusted figures diverge, use with care).</div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">EPS — last 8 quarters (GAAP)</div>
+    <div class="eps-row">
+      <div class="eps-chip"><div class="eps-q">Q4 FY24</div><div class="eps-v">-$0.52</div><div class="eps-y neu">YoY: n/a</div></div>
+      <div class="eps-chip"><div class="eps-q">Q1 FY25</div><div class="eps-v">-$0.04</div><div class="eps-y neu">YoY: n/a</div></div>
+      <div class="eps-chip"><div class="eps-q">Q2 FY25</div><div class="eps-v">$0.44</div><div class="eps-y pos">Swung to profit</div></div>
+      <div class="eps-chip"><div class="eps-q">Q3 FY25</div><div class="eps-v">-$0.11</div><div class="eps-y pos">Loss narrowed</div></div>
+      <div class="eps-chip"><div class="eps-q">Q4 FY25</div><div class="eps-v">-$0.83</div><div class="eps-y neg">Loss widened</div></div>
+      <div class="eps-chip"><div class="eps-q">Q1 FY26</div><div class="eps-v">$1.19</div><div class="eps-y pos">Swung to profit</div></div>
+      <div class="eps-chip"><div class="eps-q">Q2 FY26</div><div class="eps-v">$0.76</div><div class="eps-y pos">+72.7% YoY</div></div>
+      <div class="eps-chip"><div class="eps-q">Q3 FY26</div><div class="eps-v">$0.97</div><div class="eps-y pos">Swung to profit</div></div>
+    </div>
+    <div class="foot">Three straight GAAP-profitable quarters (Q1–Q3 FY2026) mark a clear break from FY2024–FY2025's pattern of losses. Q4 FY2024 and Q1 FY2025 lack a verified prior-year comparator and are marked n/a rather than estimated. Q4 FY2026 (ended 6/30/2026) reports today, Aug 12, 2026, after close — not included above. Source: stockanalysis.com quarterly financials.</div>
+  </div>
+
+  <div class="score-box">
+    Growth classification: <strong>ACCELERATING</strong><br>
+    <span style="margin-top:4px;display:block">TTM revenue growth (18.0%) is well above the clean post-merger 2-year CAGR (≈6.1%), and the Datacenter &amp; Communications segment — the company's key growth driver — grew 37% year-over-year in the most recently reported quarter. Management explicitly guided that "fiscal 2027 growth rate will exceed fiscal 2026," reported here as historical fact of what was said, not a forecast of what will happen.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 3: HEALTH ═══ -->
+<div class="panel" id="p3">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Is this company financially safe and stable?</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Metric</th><th>Value</th><th>5Y trend</th><th>Signal</th><th>Plain English</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Debt / Equity</td><td>0.31 (TTM)</td><td>↓ De-levering: 0.40→0.6*→0.9(peak,FY23)→0.76→0.63→0.31</td>
+          <td><span class="badge ok">SAFE</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Peaked with merger-related debt in FY23, now well below 1.0 and falling fast</td>
+        </tr>
+        <tr>
+          <td>Interest Coverage</td><td>🚩 DATA UNAVAILABLE</td><td>—</td>
+          <td><span class="badge neu">UNKNOWN</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Could not locate a clean interest-expense figure — verify directly in the 10-K before relying on this being healthy</td>
+        </tr>
+        <tr>
+          <td>Current Ratio</td><td>3.05 (TTM)</td><td>↓ Falling from a high base: 4.15→3.40→3.2*→2.72→2.19→3.05</td>
+          <td><span class="badge ok">COMFORTABLE</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Well above the 1.5 comfortable line despite the multi-year decline</td>
+        </tr>
+        <tr>
+          <td>Free Cash Flow</td><td>$192.8M (FY25)</td><td>→ Flat: ~$198M(FY23)→$199M(FY24)→$193M(FY25)</td>
+          <td><span class="badge warn">STABLE</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Positive but essentially unchanged for 3 years as capex nearly tripled to fund InP capacity</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">* FY22/FY23-boundary D/E and current-ratio figures vary slightly (0.52–0.63 and 3.01–3.40 respectively) across two source pulls — shown as ranges. Total debt: FY23 $4,489M (post-merger peak) → TTM $3,425M. Total equity roughly doubled TTM to $11,016M, reflecting both the return to profitability and Nvidia's $2B equity investment. Sources: stockanalysis.com (two pulls).</div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Forward projections — 3 year horizon</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Scenario</th><th>Assumption</th><th>Est. revenue</th><th>Est. net profit</th><th>Est. EPS</th></tr></thead>
+      <tbody>
+        <tr><td>🐢 Bear</td><td style="color:var(--color-text-secondary);font-size:12px">Growth decelerates to ≈10%/yr (an InP supply disruption or AI-optics demand pause); margins compress from the current TTM level</td><td>≈$8.8B</td><td>≈$0.26B</td><td>≈$1.35</td></tr>
+        <tr><td>🚶 Base</td><td style="color:var(--color-text-secondary);font-size:12px">Growth continues near the current ~18% TTM pace; margins hold roughly at the current TTM level</td><td>≈$10.8B</td><td>≈$0.65B</td><td>≈$3.32</td></tr>
+        <tr><td>🚀 Bull</td><td style="color:var(--color-text-secondary);font-size:12px">Growth accelerates toward the Datacenter segment's recent ~30-37%/yr pace, consistent with management's guidance that FY27 growth exceeds FY26 and Nvidia revenue starting CY2027; margins expand toward the pre-merger FY21 peak</td><td>≈$14.5B</td><td>≈$1.39B</td><td>≈$7.12</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">Base: TTM revenue of $6.60B (through 3/31/26) and ≈195.64M shares outstanding. These are scenario calculations built from Coherent's own historical growth-rate range (≈6.1% clean post-merger 2-year CAGR to 37% in its fastest-growing segment) and historical margin range (9.58% pre-merger FY21 peak to roughly breakeven in FY23–25) — not guarantees or predictions.</div>
+  </div>
+
+  <div class="score-box">
+    Financial health: <strong>MODERATE RISK</strong><br>
+    <span style="margin-top:4px;display:block">Leverage and liquidity both look genuinely healthy and improving — but free cash flow has been flat for three straight years despite revenue growth because of heavy InP capacity capex, and interest coverage couldn't be verified this pass, so this is trending toward "safe" rather than confirmed safe.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 4: RETURNS ═══ -->
+<div class="panel" id="p4">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Is this company creating real value for shareholders?</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Metric</th><th>Current (FY25)</th><th>3Y avg*</th><th>5Y avg†</th><th>Signal</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>ROE</td><td>0.52%</td><td>-2.78%</td><td>1.67%</td>
+          <td><span class="badge bad">WEAK</span></td>
+        </tr>
+        <tr>
+          <td>ROIC (closest available to ROCE)</td><td>1.03%</td><td>0.59%</td><td>4.06%</td>
+          <td><span class="badge bad">WEAK</span></td>
+        </tr>
+        <tr>
+          <td>Dividend yield</td><td>0.00%</td><td>0.00%</td><td>0.00%</td>
+          <td><span class="badge neu">—</span></td>
+        </tr>
+        <tr>
+          <td>Dividend payout</td><td>n/a — no dividend</td><td>n/a</td><td>n/a</td>
+          <td><span class="badge neu">—</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">ROE above 15% = good &nbsp;·&nbsp; ROCE above 15% = efficient capital use. * 3-yr avg uses only post-merger fiscal years (FY23–25), the cleanest comparable window. † 5-yr avg (FY21–25) spans the merger and blends pre- and post-merger companies — flagged as directional only. These FY25 year-end figures likely understate the current trajectory: with Q1–Q3 FY2026 all GAAP-profitable (≈$529.4M combined 9-month net income), ROE/ROIC are almost certainly improving materially into FY2026, though a clean updated annual figure isn't available until FY2026 closes. Coherent has paid no dividend since December 2012 (a legacy pre-merger entity) and shows no signs of resuming one. Explicit ROCE (as distinct from ROIC) was 🚩 DATA UNAVAILABLE from sources used. Source: stockanalysis.com.</div>
+  </div>
+
+  <div class="score-box">
+    Return quality: <strong>WEAK RETURNS (RECENT INFLECTION TO PROFITABILITY)</strong><br>
+    <span style="margin-top:4px;display:block">FY25's year-end ROE/ROIC are weak, but they're a lagging snapshot — three consecutive profitable quarters through Q3 FY2026 suggest the return profile is improving faster than the annual figures above show; that improvement isn't yet proven over a full year.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 5: PEERS ═══ -->
+<div class="panel" id="p5">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">How does it compare to its 3 closest competitors?</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Company</th><th>P/E</th><th>P/B</th><th>ROE</th><th>Rev growth</th><th>D/E</th><th>Edge</th></tr></thead>
+      <tbody>
+        <tr class="peer-you">
+          <td><strong>COHR ◀ you</strong></td>
+          <td>144x</td><td>5.44–6.02</td><td>0.52%*</td><td>+18.0%†</td><td>0.31</td>
+          <td style="font-size:12px">Vertically integrated InP supply + Nvidia partnership</td>
+        </tr>
+        <tr>
+          <td>Lumentum (LITE)</td>
+          <td>n/m‡</td><td>🚩 DATA UNAVAILABLE</td><td>🚩 DATA UNAVAILABLE</td><td>+83.2%†</td><td>🚩 DATA UNAVAILABLE</td>
+          <td style="font-size:12px">Fastest revenue growth of the group</td>
+        </tr>
+        <tr>
+          <td>Fabrinet (FN)</td>
+          <td>48.48 (34.34 fwd)</td><td>🚩 DATA UNAVAILABLE</td><td>🚩 DATA UNAVAILABLE</td><td>+29.8%†</td><td>🚩 DATA UNAVAILABLE</td>
+          <td style="font-size:12px">Cheapest of the group on trailing P/E</td>
+        </tr>
+        <tr>
+          <td>Applied Optoelectronics (AAOI)</td>
+          <td>n/m (54.42 fwd)</td><td>🚩 DATA UNAVAILABLE</td><td>🚩 DATA UNAVAILABLE</td><td>+61.8%†</td><td>🚩 DATA UNAVAILABLE</td>
+          <td style="font-size:12px">Smallest, most volatile (+439% YTD 2026)</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">* FY25 year-end figure; TTM figure is likely materially higher given 3 straight profitable quarters — see Returns tab. † Most recently reported trailing-twelve-month YoY figure per company. ‡ Lumentum shows a large GAAP net loss (-$6.94B TTM including one-time items, EPS -$92.96) — likely reflects a significant one-time impairment/write-off; not comparable to a normal trailing P/E. P/B, ROE and D/E for LITE, FN and AAOI could not be extracted from sources fetched this pass — marked unavailable rather than estimated. Sources: stockanalysis.com and company releases.</div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Latest news — top 5 long-term relevant items</div>
+    <div style="padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">Q4 &amp; full-year FY2026 earnings release (today, after close)</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">Guidance was $1.91–2.05B revenue and non-GAAP EPS $1.52–1.72 — the single most important near-term catalyst confirming or denying whether the AI-optics re-rating is backed by delivered numbers.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">Aug 12, 2026 · Company IR</div>
+      </div>
+    </div>
+    <div style="padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">FCC draft proposal to ban Chinese-made optical transceiver imports into US datacenters</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">Stock jumped ~13–14% on the report; would materially benefit Coherent as a named "primary domestic beneficiary" if finalized — but remains a draft, not law.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">Aug 7, 2026 · Reuters (via 247wallst.com)</div>
+      </div>
+    </div>
+    <div style="padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">China tightens indium phosphide export controls; CEO joins US trade delegation to China</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">6-inch InP wafer prices reportedly up ~250% — a direct input-cost and supply-security risk that could offset part of the AI-demand tailwind.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">May–Jun 2026 · Mining.com, Metalnomist</div>
+      </div>
+    </div>
+    <div style="padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">S&amp;P Global upgrades Coherent's secured debt rating to 'BB'</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">Confirms the de-leveraging trend post-merger, explicitly citing strong AI demand — still sub-investment-grade, so financing costs remain elevated vs. IG semiconductor peers.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">Apr 2026 · S&amp;P Global Ratings</div>
+      </div>
+    </div>
+    <div style="padding:10px 0">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">Nvidia announces $2B equity investment and multi-year supply/purchase agreement through 2030</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">Gives Coherent unusual multi-year demand visibility from the largest AI-infrastructure buyer; revenue contribution starts CY2027 and made Nvidia a top-5 shareholder.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">Mar 2, 2026 · NVIDIA Newsroom</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="score-box">
+    Peer standing: <strong>LAGGING</strong><br>
+    <span style="margin-top:4px;display:block">Richest valuation in the group (144x trailing P/E vs. Fabrinet's 48x) despite having the slowest revenue growth of the four peers shown — though Coherent is also the largest, most diversified business here, and its Nvidia-anchored demand visibility through 2030 is unmatched by any peer.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 6: OWNERSHIP ═══ -->
+<div class="panel" id="p6">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Who owns this company — and are they buying or stepping away? (Adapted from "promoter/FII/DII" to institutions, insiders, and Coherent's new Nvidia strategic stake)</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Holder</th><th>Latest %</th><th>Recent trend</th><th>Signal</th><th>What it means</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Institutional (13F filers)</td><td>84–89.6%*</td><td>Mixed — one secondary source suggests net selling last quarter, not independently verified</td>
+          <td><span class="badge neu">STABLE</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Largest holders: FMR ≈11.6–12%, Vanguard entities ≈11% combined, BlackRock ≈7.6%</td>
+        </tr>
+        <tr>
+          <td>Insiders (officers/directors/large holders)</td><td>1.8–8.0%†</td><td>↓ Net selling over trailing 12mo and 3mo (modest $ amounts, ~$1.1M in 90 days per one source)</td>
+          <td><span class="badge warn">SELLING</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Carl J. Johnson (3.42%) and Thomas E. Mistler (2.28%) are the largest named individual holders</td>
+        </tr>
+        <tr>
+          <td>Nvidia (strategic investor)</td><td>≈3.98%</td><td>New in 2026 — became a top-5 holder via the March 2026 $2B equity investment</td>
+          <td><span class="badge info">STRATEGIC</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Ties Coherent's most important customer relationship directly to its cap table through 2030</td>
+        </tr>
+        <tr>
+          <td>Insider pledging</td><td>🚩 DATA UNAVAILABLE</td><td>—</td>
+          <td><span class="badge neu">UNKNOWN</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Not a standard US disclosure item the way it is on NSE/BSE — no evidence found either way</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">* Range across Yahoo Finance (84%) and WallStreetZen (89.56%). † Sources disagree materially (1.8% vs. 8.03%), likely reflecting different definitions of "insider" (officers/directors only vs. all large individual Schedule 13D/G filers) — not reconciled to one authoritative figure. Sources: wallstreetzen.com, Yahoo Finance.</div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Latest earnings call — Q3 FY2026</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>What management said</th><th>What it means for you</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Datacenter &amp; Communications segment revenue +37% YoY / +13% QoQ to $1.4B, driven by the 1.6T transceiver ramp plus OCS/early CPO revenue</td>
+          <td style="color:var(--color-text-secondary);font-size:12px">The AI-datacenter optics business is the clear growth engine right now, and it's accelerating</td>
+        </tr>
+        <tr>
+          <td>Gross margin expanded to 39.6% (+105bps YoY) on cost reduction, 6-inch InP yield improvements, and pricing optimization</td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Margin gains are coming from real operational improvements, not just volume</td>
+        </tr>
+        <tr>
+          <td>"We expect fiscal 2027 growth rate to exceed our fiscal 2026 growth rate"</td>
+          <td style="color:var(--color-text-secondary);font-size:12px">An explicit acceleration signal from management — worth checking against actual results as they land</td>
+        </tr>
+        <tr>
+          <td>Manufacturing/InP supply throughput, not demand, is the gating factor — a multi-month lag exists between device output and transceiver shipment</td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Execution and yield risk, not order risk, is the key thing to watch</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:12px;color:var(--color-text-secondary);margin-top:8px">
+      Management tone: <strong style="color:var(--color-text-primary)">CONFIDENT</strong> — explicit forward acceleration guidance framed around capacity, not demand, as the constraint
+    </div>
+  </div>
+
+  <div class="score-box">
+    Ownership signal: <strong>HOLDING STEADY</strong><br>
+    <span style="margin-top:4px;display:block">Institutional ownership remains very high with an unclear near-term trend, and insider selling has been modest in dollar terms — the standout structural development is Nvidia's arrival as a new top-5 strategic holder in 2026, tying Coherent's largest customer relationship directly to its ownership base.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 7: VIEW (default active) ═══ -->
+<div class="panel on" id="p7">
+
+  <div class="card amber">
+    <div class="view-label amber">MODERATE FUNDAMENTALS</div>
+    <div class="view-reason">Coherent's fundamentals show a company that spent three fiscal years working through a debt-funded merger integration — with GAAP losses every year from FY2023 through FY2025 — before swinging decisively back to profitability in the three most recently reported quarters, on the back of accelerating AI-datacenter optical transceiver demand, even as the stock now trades at a rich premium to both its sector and its own history.</div>
+
+    <div class="sec-label">What works for this stock</div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--g-accent)">✓</span><span>Three consecutive GAAP-profitable quarters (Q1–Q3 FY2026: $192.9M, $145.1M, $191.4M) — a clear inflection from FY2023–FY2025's merger-integration losses, driven by the Datacenter &amp; Communications segment growing 37% YoY in the most recently reported quarter.</span></div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--g-accent)">✓</span><span>Leverage has fallen sharply — debt-to-equity dropped from a post-merger peak of ≈0.90x (FY2023) to 0.31x (TTM) — while liquidity stayed comfortable (current ratio 3.05x TTM) and S&amp;P upgraded Coherent's secured debt rating to 'BB' in April 2026, citing AI-demand strength.</span></div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--g-accent)">✓</span><span>Nvidia's March 2026 $2 billion equity investment and multi-year, multi-product supply/purchase commitment through 2030 gives Coherent unusual multi-year demand visibility from the largest buyer in AI infrastructure, and made Nvidia a top-5 shareholder.</span></div>
+
+    <div class="sec-label">What to watch</div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--a-accent)">⚠</span><span>The stock trades at roughly 144x trailing earnings and well above its own 3-5 year historical average multiples (P/B ≈5.4-6.0x now vs. ≈2.2x historical average; EV/EBITDA 41-65x vs. ≈15.5x historical average) — a rich valuation that leaves little room for error if growth decelerates or margins disappoint.</span></div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--a-accent)">⚠</span><span>Coherent's core raw material, indium phosphide, is exposed to Chinese export-control tightening (6-inch wafer prices reportedly up ≈250%), and a separate FCC proposal that could benefit Coherent by restricting Chinese-made transceiver imports remains an unconfirmed draft, not law — both add real near-term uncertainty on top of the pending Q4 FY2026 results due today.</span></div>
+
+    <div class="sec-label">Track this going forward</div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--color-text-secondary)">→</span><span>Whether the Q4/full-year FY2026 results (due after market close today, guided at $1.91–2.05B revenue and non-GAAP EPS $1.52–1.72) confirm the recent profitability inflection, and whether management's guidance that "fiscal 2027 growth will exceed fiscal 2026" is validated by subsequent quarters.</span></div>
+
+    <div style="margin-top:16px;font-size:11px;color:var(--color-text-secondary);font-style:italic">
+      This is a VIEW based on fundamentals only. Not a buy/sell recommendation. The decision is always yours.
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px">
+    <div class="card green">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--g-text);margin-bottom:8px">Opportunities</div>
+      <div class="bullet-row" style="border-color:var(--g-border)"><span class="bicon" style="color:var(--g-accent)">+</span><span style="color:var(--g-text);font-size:12px">Datacenter/AI optical interconnect demand is forecast to grow the broader AI-cluster-optics market ~60% to $26B in 2026 (LightCounting), and Coherent is doubling its internal InP capacity by end of calendar 2026 — a quarter ahead of schedule — specifically to capture this</span></div>
+      <div class="bullet-row" style="border-color:var(--g-border)"><span class="bicon" style="color:var(--g-accent)">+</span><span style="color:var(--g-text);font-size:12px">The 1.6T transceiver ramp and early Co-Packaged Optics (CPO) revenue are new, higher-margin growth vectors management flagged as still in the early innings</span></div>
+      <div class="bullet-row" style="border-color:var(--g-border);border-bottom:none"><span class="bicon" style="color:var(--g-accent)">+</span><span style="color:var(--g-text);font-size:12px">A draft FCC proposal to restrict Chinese-made optical transceiver imports into US datacenters, if finalized, would directly benefit Coherent as a named "primary domestic beneficiary"</span></div>
+    </div>
+    <div class="card red">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--r-text);margin-bottom:8px">Risks</div>
+      <div class="bullet-row" style="border-color:var(--r-border)"><span class="bicon" style="color:var(--r-accent)">−</span><span style="color:var(--r-text);font-size:12px">Valuation is stretched on nearly every measure relative to both the sector and Coherent's own history, leaving the stock vulnerable to a sharp re-rating if the AI-optics growth narrative disappoints even modestly</span></div>
+      <div class="bullet-row" style="border-color:var(--r-border)"><span class="bicon" style="color:var(--r-accent)">−</span><span style="color:var(--r-text);font-size:12px">Competitors (Lumentum, Fabrinet, Applied Optoelectronics) are all growing revenue faster than Coherent right now and are racing to capture the same AI-datacenter optics opportunity — this is not a market Coherent has to itself</span></div>
+      <div class="bullet-row" style="border-color:var(--r-border);border-bottom:none"><span class="bicon" style="color:var(--r-accent)">−</span><span style="color:var(--r-text);font-size:12px">Heavy, sustained capex (nearly tripled since FY2021) has kept free cash flow essentially flat around $190-200M for three straight years despite revenue growth — a capital-intensity risk that an unverified interest coverage ratio makes harder to fully assess</span></div>
+    </div>
+  </div>
+
+</div>
+
+<details style="margin-top:20px;padding:0 4px">
+  <summary>Definitions — tap to expand</summary>
+  <p><strong>P/E ratio</strong> — What you pay per $1 of profit. Lower vs. history and sector = cheaper.</p>
+  <p><strong>P/B ratio</strong> — Price vs. what the company actually owns. Below 1 = buying at a discount to assets.</p>
+  <p><strong>EV/EBITDA</strong> — Full business value check including debt. Lower = better value, all else equal.</p>
+  <p><strong>PEG ratio</strong> — P/E divided by expected earnings growth rate. Below 1 suggests a high P/E could still be reasonable if growth delivers.</p>
+  <p><strong>ROE</strong> — For every $100 shareholders invested, how much profit the company made. Above 15% = good.</p>
+  <p><strong>ROIC / ROCE</strong> — How efficiently the whole business uses capital, including borrowed money. Above 15% = healthy.</p>
+  <p><strong>Free Cash Flow</strong> — Cash left after all expenses and investments. Positive and growing = genuinely healthy business.</p>
+  <p><strong>13F filing</strong> — A quarterly SEC disclosure large institutional investors must file showing their US equity holdings.</p>
+  <p><strong>CAGR</strong> — Compound Annual Growth Rate. Not meaningful when the underlying figure swings from positive to negative, or when it spans a major corporate merger.</p>
+</details>
+
+<div class="disc">
+  This is a fundamental screening and education tool only. Data sourced from SEC EDGAR, Coherent Investor Relations, stockanalysis.com, and other public financial databases and news outlets as cited inline. This is NOT investment advice, a buy/sell recommendation, or research from a registered investment adviser or broker-dealer. AI can make errors — verify all numbers directly against SEC filings (10-K/10-Q/8-K) or Coherent's own investor relations site before making any decision, especially given that Q4/full-year FY2026 results were not yet released at the time this was compiled. Past performance does not guarantee future results. Investing carries risk, including loss of principal. Consult a licensed financial advisor before investing.
+</div>
+
+</div>
+
+<script>
+function show(n){
+  var panels=document.querySelectorAll('.panel');
+  var tabs=document.querySelectorAll('.tab-btn');
+  for(var i=0;i<panels.length;i++){
+    panels[i].className='panel'+(i===n?' on':'');
+    tabs[i].className='tab-btn'+(i===n?' active':'');
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nokia (NOK) Fundamental Analysis — Aug 12, 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --g-fill:#EAF3DE;--g-text:#27500A;--g-border:#C0DD97;--g-accent:#639922;
+  --a-fill:#FAEEDA;--a-text:#854F0B;--a-border:#FAC775;--a-accent:#EF9F27;
+  --r-fill:#FCEBEB;--r-text:#A32D2D;--r-border:#F7C1C1;--r-accent:#E24B4A;
+  --b-fill:#E6F1FB;--b-text:#185FA5;--b-border:#B5D4F4;--b-accent:#378ADD;
+  --n-fill:#F1EFE8;--n-text:#444441;--n-border:#D3D1C7;
+  --color-text-primary:#1C1B18;--color-text-secondary:#6B6A64;
+  --color-background-primary:#FFFFFF;--color-background-secondary:#F5F4F0;
+  --color-border-primary:rgba(0,0,0,0.35);--color-border-secondary:rgba(0,0,0,0.18);--color-border-tertiary:rgba(0,0,0,0.10)
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --g-fill:#173404;--g-text:#C0DD97;--g-border:#3B6D11;--g-accent:#97C459;
+  --a-fill:#412402;--a-text:#FAC775;--a-border:#854F0B;--a-accent:#EF9F27;
+  --r-fill:#501313;--r-text:#F09595;--r-border:#A32D2D;--r-accent:#E24B4A;
+  --b-fill:#042C53;--b-text:#85B7EB;--b-border:#185FA5;--b-accent:#378ADD;
+  --n-fill:#2C2C2A;--n-text:#D3D1C7;--n-border:#5F5E5A;
+  --color-text-primary:#EDECE7;--color-text-secondary:#A6A49C;
+  --color-background-primary:#171613;--color-background-secondary:#211F1B;
+  --color-border-primary:rgba(255,255,255,0.35);--color-border-secondary:rgba(255,255,255,0.18);--color-border-tertiary:rgba(255,255,255,0.10)
+}}
+:root[data-theme="dark"]{
+  --g-fill:#173404;--g-text:#C0DD97;--g-border:#3B6D11;--g-accent:#97C459;
+  --a-fill:#412402;--a-text:#FAC775;--a-border:#854F0B;--a-accent:#EF9F27;
+  --r-fill:#501313;--r-text:#F09595;--r-border:#A32D2D;--r-accent:#E24B4A;
+  --b-fill:#042C53;--b-text:#85B7EB;--b-border:#185FA5;--b-accent:#378ADD;
+  --n-fill:#2C2C2A;--n-text:#D3D1C7;--n-border:#5F5E5A;
+  --color-text-primary:#EDECE7;--color-text-secondary:#A6A49C;
+  --color-background-primary:#171613;--color-background-secondary:#211F1B;
+  --color-border-primary:rgba(255,255,255,0.35);--color-border-secondary:rgba(255,255,255,0.18);--color-border-tertiary:rgba(255,255,255,0.10)
+}
+body{font-family:var(--font-sans,-apple-system,"Segoe UI",system-ui,sans-serif);font-size:13px;line-height:1.6;color:var(--color-text-primary);background:var(--color-background-primary)}
+.wrap{max-width:860px;margin:0 auto;padding:20px 16px 32px}
+table,.mc .mv,.eps-v,.iv{font-variant-numeric:tabular-nums}
+.conf{padding:10px 16px;border-radius:8px;margin-bottom:14px;font-size:12px}
+.conf.high,.conf.moderate{background:var(--g-fill);color:var(--g-text)}
+.conf.low{background:var(--a-fill);color:var(--a-text)}
+.conf.vlow{background:var(--r-fill);color:var(--r-text)}
+.tab-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.tab-btn{padding:7px 18px;border-radius:100px;border:1px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);font-size:13px;font-weight:400;cursor:pointer;font-family:inherit;transition:border-color 0.15s,color 0.15s}
+.tab-btn:hover{border-color:var(--color-border-primary);color:var(--color-text-primary)}
+.tab-btn.active{border:1.5px solid var(--color-text-primary);color:var(--color-text-primary);font-weight:500}
+.tab-btn:focus-visible{outline:2px solid var(--b-accent);outline-offset:2px}
+.panel{display:none}.panel.on{display:block}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:12px;padding:16px 20px;margin-bottom:12px}
+.card.green{background:var(--g-fill);border-color:var(--g-border)}
+.card.amber{background:var(--a-fill);border-color:var(--a-border)}
+.card.red{background:var(--r-fill);border-color:var(--r-border)}
+.card.blue{background:var(--b-fill);border-color:var(--b-border)}
+.card.grey{background:var(--n-fill);border-color:var(--n-border)}
+.view-label{font-size:18px;font-weight:500;margin-bottom:6px}
+.view-label.green{color:var(--g-text)}.view-label.amber{color:var(--a-text)}.view-label.red{color:var(--r-text)}
+.view-reason{font-size:13px;margin-bottom:16px;color:var(--color-text-primary)}
+.sec-label{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin:14px 0 8px}
+.bullet-row{display:flex;gap:10px;align-items:flex-start;padding:6px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:13px}
+.bullet-row:last-child{border-bottom:none}
+.bicon{font-size:14px;min-width:18px;margin-top:1px}
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px;margin:8px 0;min-width:560px}
+th{text-align:left;padding:7px 10px;font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.7px;color:var(--color-text-secondary);border-bottom:0.5px solid var(--color-border-tertiary);white-space:nowrap}
+td{padding:9px 10px;color:var(--color-text-primary);border-bottom:0.5px solid var(--color-border-tertiary)}
+tr:last-child td{border-bottom:none}
+.pos{color:var(--g-accent);font-weight:500}.neg{color:var(--r-accent);font-weight:500}.neu{color:var(--color-text-secondary)}
+.badge{display:inline-block;padding:2px 9px;border-radius:100px;font-size:11px;font-weight:500;white-space:nowrap}
+.badge.ok{background:var(--g-fill);color:var(--g-text)}
+.badge.warn{background:var(--a-fill);color:var(--a-text)}
+.badge.bad{background:var(--r-fill);color:var(--r-text)}
+.badge.info{background:var(--b-fill);color:var(--b-text)}
+.badge.neu{background:var(--n-fill);color:var(--n-text)}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;margin:12px 0}
+.mc{background:var(--color-background-secondary);border-radius:8px;padding:12px 14px}
+.mc .ml{font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:var(--color-text-secondary);margin-bottom:4px}
+.mc .mv{font-size:18px;font-weight:500;color:var(--color-text-primary)}
+.mc .ms{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.info-row{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:0.5px solid var(--color-border-tertiary);gap:16px}
+.info-row:last-child{border-bottom:none}
+.il{font-size:12px;color:var(--color-text-secondary)}
+.iv{font-size:12px;color:var(--color-text-primary);font-weight:500;text-align:right}
+.flag-card{border-left:3px solid var(--a-accent);background:var(--a-fill);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:8px}
+.flag-title{font-size:13px;font-weight:500;color:var(--a-text);margin-bottom:3px}
+.flag-note{font-size:12px;color:var(--a-text)}
+.score-box{background:var(--color-background-secondary);border-radius:8px;padding:14px 16px;margin-top:14px;font-size:12px;color:var(--color-text-secondary)}
+.eps-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.eps-chip{background:var(--color-background-secondary);border-radius:8px;padding:10px 14px;text-align:center;min-width:85px}
+.eps-q{font-size:10px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.5px}
+.eps-v{font-size:16px;font-weight:500;color:var(--color-text-primary);margin:3px 0}
+.eps-y{font-size:11px}
+.peer-you{background:var(--color-background-secondary)}
+.foot{font-size:11px;color:var(--color-text-secondary);margin-top:8px;line-height:1.6}
+.disc{font-size:11px;color:var(--color-text-secondary);border-top:0.5px solid var(--color-border-tertiary);padding-top:14px;margin-top:24px;line-height:1.6}
+details summary{font-size:12px;color:var(--color-text-secondary);cursor:pointer;padding:8px 0}
+details p{font-size:12px;color:var(--color-text-secondary);padding:4px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+details p:last-child{border-bottom:none}
+details strong{color:var(--color-text-primary);font-weight:500}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="conf high">
+  <strong>Data confidence: HIGH</strong><br>
+  Live metrics retrieved: 10 of 12 key sections &nbsp;|&nbsp; Sources: stockanalysis.com, Nokia Investor Relations/press releases (SEC 6-K), SEC EDGAR, MarketBeat, Solidium.fi, lightreading.com, Motley Fool transcripts &nbsp;|&nbsp; Nokia reports primary financials in EUR (it files a 20-F, not a 10-K); this report labels EUR vs. USD figures throughout — FX rate used ≈1.1546 EUR/USD (Aug 12, 2026). A few sub-metrics are flagged 🚩 DATA UNAVAILABLE below.
+</div>
+
+<div class="tab-row">
+  <button class="tab-btn" onclick="show(0)">Snapshot</button>
+  <button class="tab-btn" onclick="show(1)">Valuation</button>
+  <button class="tab-btn" onclick="show(2)">Growth</button>
+  <button class="tab-btn" onclick="show(3)">Health</button>
+  <button class="tab-btn" onclick="show(4)">Returns</button>
+  <button class="tab-btn" onclick="show(5)">Peers</button>
+  <button class="tab-btn" onclick="show(6)">Ownership</button>
+  <button class="tab-btn active" onclick="show(7)">View</button>
+</div>
+
+<!-- ═══ TAB 0: SNAPSHOT ═══ -->
+<div class="panel" id="p0">
+
+  <div class="card">
+    <div class="info-row"><span class="il">Company</span><span class="iv">Nokia Corporation (Nokia Oyj)</span></div>
+    <div class="info-row"><span class="il">Ticker</span><span class="iv">NOK (ADR) · NYSE — home listing NOKIA · Nasdaq Helsinki</span></div>
+    <div class="info-row"><span class="il">Sector</span><span class="iv">Technology</span></div>
+    <div class="info-row"><span class="il">Industry</span><span class="iv">Communication Equipment</span></div>
+    <div class="info-row"><span class="il">What it does</span><span class="iv" style="max-width:440px;text-align:right">Sells telecom network infrastructure equipment (Mobile Networks/RAN, Network Infrastructure — optical &amp; IP routing, Cloud &amp; Network Services) to carriers and, increasingly, hyperscalers/AI datacenter operators. A separate high-margin Nokia Technologies unit licenses Nokia's cellular/multimedia patents (≈26,000 patent families) to device makers.</span></div>
+    <div class="info-row"><span class="il">What makes it different</span><span class="iv" style="max-width:440px;text-align:right">One of only three global-scale "trusted" (non-Chinese) full-stack telecom vendors alongside Ericsson and Huawei, combined with one of the industry's largest 5G-essential patent portfolios (≈8,253 declared patents, second only to Qualcomm) — a royalty stream largely uncorrelated with network-capex cycles.</span></div>
+  </div>
+
+  <div class="mgrid">
+    <div class="mc"><div class="ml">CMP (ADR, USD)</div><div class="mv">$10.36</div><div class="ms">Aug 12, 2026, 10:28am ET (+9.7% intraday) · NYSE</div></div>
+    <div class="mc"><div class="ml">52W High</div><div class="mv">$17.45</div><div class="ms">stockanalysis.com</div></div>
+    <div class="mc"><div class="ml">52W Low</div><div class="mv">$4.11</div><div class="ms">stockanalysis.com</div></div>
+    <div class="mc"><div class="ml">Market Cap</div><div class="mv">≈$53.1B</div><div class="ms">USD, ADR basis · stockanalysis.com</div></div>
+    <div class="mc"><div class="ml">Par Value</div><div class="mv">€0.06</div><div class="ms">Per share · hl.co.uk listing</div></div>
+  </div>
+
+  <div class="flag-card">
+    <div class="flag-title">HUGE INTRADAY MOVE TODAY — TREAT PRICE AS A SNAPSHOT</div>
+    <div class="flag-note">The stock is up ≈9.7% intraday on Aug 12, 2026, driven by AI order-intake news (AI &amp; Cloud order intake reported at 6.3x quarterly revenue) plus analyst target raises. Verify against a live quote before relying on the CMP above. Source: ts2.tech, timothysykes.com.</div>
+  </div>
+  <div class="flag-card">
+    <div class="flag-title">MULTI-YEAR TURNAROUND — REVENUE HAS SHRUNK, NOT GROWN</div>
+    <div class="flag-note">Revenue declined on both a 3-year (-5.8%/yr, 2022→2025) and 5-year (-1.9%/yr, 2020→2025) basis, and reported diluted EPS has swung wildly — €-0.43 (2020) to €0.74 (2022) to €0.12 (2025). Source: stockanalysis.com, Nokia press releases.</div>
+  </div>
+  <div class="flag-card">
+    <div class="flag-title">DIVIDEND WAS SUSPENDED 2019–2021; LOST TWO MAJOR US CARRIERS</div>
+    <div class="flag-note">The dividend was fully suspended from Oct 2019 through 2021, reinstated Feb 2022 at €0.08/share. Separately, Verizon switched to Samsung (2020, $6.6B deal) and AT&amp;T shifted to Ericsson (2023, $14B deal) — T-Mobile is now Nokia's only remaining major US "Big 3" customer. Source: Nokia press releases/SEC 6-K, lightreading.com, fierce-network.com.</div>
+  </div>
+  <div class="flag-card">
+    <div class="flag-title">RETURN METRICS SIT NEAR CYCLICAL LOWS</div>
+    <div class="flag-note">ROE fell from 21.6% (FY2022) to 3.05% (FY2025); ROIC from 27.6% to 3.40% over the same period. The AI-datacenter growth narrative driving today's rally is not yet reflected in these trailing return figures. Source: stockanalysis.com.</div>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 1: VALUATION ═══ -->
+<div class="panel" id="p1">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Is this stock cheap, fair, or expensive right now?</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Metric</th><th>Current</th><th>Peer comparators¹</th><th>Stock 5Y avg</th><th>Signal</th><th>Plain English</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>P/E</td><td>65.7x trailing² · 21.7x fwd</td><td>Ericsson 12.3x/15.5x fwd · Cisco 32.2x</td><td>≈23.0x</td>
+          <td><span class="badge warn">EXPENSIVE</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Trailing multiple is inflated by near-breakeven TTM earnings; forward P/E is closer to (though still above) its own history</td>
+        </tr>
+        <tr>
+          <td>P/B</td><td>≈1.47x (FY25, EUR)³</td><td>Cisco 7.19x (very different margin profile)</td><td>≈1.26x</td>
+          <td><span class="badge ok">FAIR</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Modestly above its own 5-year average, not dramatically so</td>
+        </tr>
+        <tr>
+          <td>EV/EBITDA</td><td>≈14.4x (FY25, EUR)³</td><td>🚩 DATA UNAVAILABLE</td><td>≈8.13x</td>
+          <td><span class="badge warn">EXPENSIVE</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Nearly double its own 5-year average — the market is already pricing in a meaningful AI-driven recovery</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">
+      ¹ No single authoritative "telecom equipment sector average" was found — Ericsson and Cisco shown as the closest comparators instead. ² TTM net income is near breakeven, which mechanically inflates the trailing P/E — not necessarily a sign of overvaluation on a normalized-earnings basis. ³ Live USD/ADR-basis P/B and EV/EBITDA weren't available this pass; FY2025 year-end EUR-basis figures are used as the best current proxy. 5-year averages are computed from Nokia's own FY2021–FY2025 annual multiples.
+    </div>
+  </div>
+
+  <div class="score-box">
+    Overall valuation: <strong>MIXED</strong><br>
+    <span style="margin-top:4px;display:block">Trailing earnings multiples look stretched, largely because TTM profit is near breakeven, while P/B is only modestly above its own history — today's ≈10% rally makes this a moving target, and the market is already pricing in a real AI-driven earnings recovery that hasn't fully shown up in the numbers yet.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 2: GROWTH ═══ -->
+<div class="panel" id="p2">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Is this company growing its revenue and profits?</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Metric</th><th>3Y CAGR</th><th>5Y CAGR</th><th>Trend</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td>Revenue</td><td>-5.8%</td><td>-1.9%</td><td>📉</td><td style="color:var(--color-text-secondary);font-size:11px">stockanalysis.com</td></tr>
+        <tr><td>Net profit</td><td>-46.5%*</td><td>n/m*</td><td>📉</td><td style="color:var(--color-text-secondary);font-size:11px">stockanalysis.com</td></tr>
+        <tr><td>EPS</td><td>-45.5%*</td><td>n/m*</td><td>📉</td><td style="color:var(--color-text-secondary);font-size:11px">stockanalysis.com</td></tr>
+        <tr><td>EBITDA margin</td><td>🚩 DATA UNAVAILABLE†</td><td>🚩 DATA UNAVAILABLE†</td><td>📈</td><td style="color:var(--color-text-secondary);font-size:11px">—</td></tr>
+        <tr><td>Net profit margin</td><td>-14.5pts</td><td>-4.2pts</td><td>➡️</td><td style="color:var(--color-text-secondary);font-size:11px">stockanalysis.com</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">All figures fiscal/calendar-year (EUR, company reporting). * The 2022→2025 profit/EPS CAGRs are distorted by 2022 being an unusually strong one-off-gain year (net income €4,250M vs. €651M in 2025); the 5-year figure isn't meaningful at all since 2020 was a net-loss year from a one-off €2.9B deferred-tax-asset derecognition, not an operating loss. † EBITDA-margin trend was structurally unavailable this pass (source blocked); as a proxy, operating margin was ≈4.60% at FY2025 year-end against a company FY2026 target of ≥13%. Net profit margin has been genuinely volatile (7.45% → 17.68% → 3.07% → 8.90% → 3.21%, FY2021–25) rather than trending cleanly in one direction.</div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">EPS — last 8 quarters (reported/IFRS diluted, EUR)</div>
+    <div class="eps-row">
+      <div class="eps-chip"><div class="eps-q">Q3 FY24</div><div class="eps-v">€0.03</div><div class="eps-y pos">Up vs Q3'23 (€0.02)</div></div>
+      <div class="eps-chip"><div class="eps-q">Q4 FY24</div><div class="eps-v">€0.15</div><div class="eps-y pos">Up vs Q4'23 (€0.10)</div></div>
+      <div class="eps-chip"><div class="eps-q">Q1 FY25</div><div class="eps-v">-€0.01</div><div class="eps-y neu">YoY: n/a</div></div>
+      <div class="eps-chip"><div class="eps-q">Q2 FY25</div><div class="eps-v">€0.02</div><div class="eps-y pos">Improved vs -€0.03</div></div>
+      <div class="eps-chip"><div class="eps-q">Q3 FY25</div><div class="eps-v">€0.01</div><div class="eps-y neg">Down vs €0.03</div></div>
+      <div class="eps-chip"><div class="eps-q">Q4 FY25</div><div class="eps-v">€0.10</div><div class="eps-y neg">Down vs €0.15</div></div>
+      <div class="eps-chip"><div class="eps-q">Q1 FY26</div><div class="eps-v">€0.02</div><div class="eps-y pos">Improved vs -€0.01</div></div>
+      <div class="eps-chip"><div class="eps-q">Q2 FY26</div><div class="eps-v">≈€0.00</div><div class="eps-y pos">Roughly flat vs -€0.01</div></div>
+    </div>
+    <div class="foot">Reported (IFRS) diluted EPS — Nokia's "comparable" (non-IFRS) EPS, which strips out restructuring/PPA amortization/one-offs, runs materially higher in most quarters (e.g. Q2 FY26 comparable was €0.07 vs. ≈€0.00 reported) — always check which figure a source is quoting. Q1 FY25 and Q3 FY24's exact prior-year comparators were not both independently confirmed and are marked accordingly. Source: stockanalysis.com, Nokia press releases.</div>
+  </div>
+
+  <div class="score-box">
+    Growth classification: <strong>DECLINING</strong><br>
+    <span style="margin-top:4px;display:block">Trailing 3- and 5-year revenue, profit and EPS trends are all negative or not meaningful — a genuine multi-year decline, not noise. The clear exception on record is the most recently reported quarter, where AI &amp; Cloud segment revenue more than doubled year-over-year to €446M and order intake reached €2.8B (6.3x that quarter's revenue) — reported here as historical fact, not projected forward.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 3: HEALTH ═══ -->
+<div class="panel" id="p3">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Is this company financially safe and stable?</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Metric</th><th>Value</th><th>5Y trend</th><th>Signal</th><th>Plain English</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Debt / Equity</td><td>0.20 (FY25)</td><td>↓ Steadily falling: 0.31→0.25→0.24→0.22→0.20</td>
+          <td><span class="badge ok">SAFE</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Consistently de-leveraging for five straight years</td>
+        </tr>
+        <tr>
+          <td>Interest Coverage</td><td>7.0–22.6x*</td><td>→ Comfortable either way</td>
+          <td><span class="badge ok">HEALTHY</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Sources disagree on the exact figure, but even the lower estimate clears the 3x healthy line comfortably</td>
+        </tr>
+        <tr>
+          <td>Current Ratio</td><td>1.58 (FY25)</td><td>→ Stable: 1.62→1.59→1.65→1.58→1.58</td>
+          <td><span class="badge ok">COMFORTABLE</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Consistently above the 1.5 comfortable line</td>
+        </tr>
+        <tr>
+          <td>Free Cash Flow</td><td>€2,071M (FY25)</td><td>→ Positive every year: €2.07B→€0.87B→€1.32B→€2.49B→€2.07B</td>
+          <td><span class="badge ok">STRONG</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Net cash position of ≈€2.0–2.8B — Q2 2026 alone was briefly negative on AI/optical order-related working-capital build</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">* GuruFocus/finbox.com cite a 5-yr average interest coverage of 8.2x with FY2025 at 7.0x; a separate methodology implied ≈22.6x — both shown for transparency. Sources: stockanalysis.com, GuruFocus, Motley Fool Q2 2026 transcript.</div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Forward projections — 3 year horizon</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Scenario</th><th>Assumption</th><th>Est. revenue</th><th>Est. net profit</th><th>Est. EPS</th></tr></thead>
+      <tbody>
+        <tr><td>🐢 Bear</td><td style="color:var(--color-text-secondary);font-size:12px">Revenue keeps shrinking slightly (≈-2%/yr) as the turnaround stalls and AI orders don't convert to revenue as fast as hoped; margins stay near FY2025 lows</td><td>≈€18.7B</td><td>≈€0.56B</td><td>≈€0.10</td></tr>
+        <tr><td>🚶 Base</td><td style="color:var(--color-text-secondary);font-size:12px">Revenue grows ≈6%/yr, blending continued strong AI/optical growth with a roughly flat core business — below management's own raised FY2026 segment guidance (12-20%); margins recover toward the ≥13% operating-margin target</td><td>≈€23.7B</td><td>≈€1.9B</td><td>≈€0.34</td></tr>
+        <tr><td>🚀 Bull</td><td style="color:var(--color-text-secondary);font-size:12px">Revenue grows ≈12%/yr as AI &amp; Cloud scales toward a much larger share of the mix, consistent with the raised Optical+IP guidance of 18-20%; margins expand toward (a conservative estimate of) the FY2022 peak</td><td>≈€27.9B</td><td>≈€3.9B</td><td>≈€0.70</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">Base: FY2025 revenue of €19.89B and ≈5.60B shares outstanding. These are scenario calculations built from Nokia's own disclosed FY2026 segment guidance (Network Infrastructure 12-14%, Optical+IP 18-20%) and historical growth/margin range — not guarantees or predictions.</div>
+  </div>
+
+  <div class="score-box">
+    Financial health: <strong>SAFE</strong><br>
+    <span style="margin-top:4px;display:block">The strongest balance sheet in this batch of reports — low and falling leverage, comfortable liquidity, and consistently positive free cash flow that has kept Nokia in a net cash position throughout its multi-year operational turnaround.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 4: RETURNS ═══ -->
+<div class="panel" id="p4">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Is this company creating real value for shareholders?</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Metric</th><th>Current (FY25)</th><th>3Y avg</th><th>5Y avg</th><th>Signal</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>ROE</td><td>3.05%</td><td>4.80%</td><td>9.41%</td>
+          <td><span class="badge bad">WEAK</span></td>
+        </tr>
+        <tr>
+          <td>ROIC / ROCE</td><td>3.40% / 3.20%</td><td>5.59% / 5.34%</td><td>11.86% / 6.43%</td>
+          <td><span class="badge bad">WEAK</span></td>
+        </tr>
+        <tr>
+          <td>Dividend yield</td><td>1.06% (ADR trailing)</td><td>🚩 DATA UNAVAILABLE*</td><td>🚩 DATA UNAVAILABLE*</td>
+          <td><span class="badge neu">—</span></td>
+        </tr>
+        <tr>
+          <td>Dividend payout</td><td>🚩 DATA UNAVAILABLE*</td><td>n/a</td><td>n/a</td>
+          <td><span class="badge neu">—</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">ROE above 15% = good &nbsp;·&nbsp; ROCE above 15% = efficient capital use. * A clean 3Y/5Y average yield series wasn't found, and the current payout ratio isn't meaningful since TTM earnings are near breakeven — but the more important dividend fact for a long-term investor is the history: the dividend was fully suspended from Oct 2019 through 2021, then reinstated at €0.08/share in Feb 2022, and has been maintained or modestly grown every year since (€0.04 + €0.03 in 2024; €0.04 + €0.04 in 2025; €0.04 resolved Jul 2026) — four consecutive stable years post-reinstatement. Source: stockanalysis.com, Nokia press releases/SEC 6-K.</div>
+  </div>
+
+  <div class="score-box">
+    Return quality: <strong>WEAK RETURNS, STABLE DIVIDEND SINCE 2022 REINSTATEMENT</strong><br>
+    <span style="margin-top:4px;display:block">ROE and ROIC both sit well below their FY2022 peak and below the 10% threshold that would signal healthy capital efficiency — but unlike some peers in this batch, Nokia has actually delivered on a dividend promise for four straight years since its 2022 reinstatement, worth noting given the earlier cut history.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 5: PEERS ═══ -->
+<div class="panel" id="p5">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">How does it compare to its closest competitors?</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Company</th><th>P/E</th><th>P/B</th><th>ROE</th><th>Rev growth</th><th>D/E</th><th>Edge</th></tr></thead>
+      <tbody>
+        <tr class="peer-you">
+          <td><strong>NOK ◀ you</strong></td>
+          <td>65.7x* · 21.7x fwd</td><td>≈1.47</td><td>3.05%</td><td>+9%†</td><td>0.20</td>
+          <td style="font-size:12px">AI/optical order surge + patent-licensing annuity</td>
+        </tr>
+        <tr>
+          <td>Ericsson (ERIC)</td>
+          <td>12.29x · 15.49x fwd</td><td>🚩 DATA UNAVAILABLE</td><td>26.64%</td><td>-1% organic†</td><td>0.43</td>
+          <td style="font-size:12px">Cheaper multiple, stronger ROE, no dividend-cut history this decade</td>
+        </tr>
+        <tr>
+          <td>Cisco Systems (CSCO)</td>
+          <td>32.16x</td><td>7.19x</td><td>25.23%</td><td>+10%†</td><td>0.60</td>
+          <td style="font-size:12px">Broader enterprise/datacenter networking diversification</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">* Inflated by near-breakeven TTM earnings — see Valuation tab. † Most recently reported quarter, YoY. A third comparator, HPE (which completed a $14B acquisition of Juniper Networks in July 2025, doubling its networking business), is increasingly relevant but its detailed P/E/P/B/ROE/D/E figures weren't pulled in this research pass — flagged as 🚩 DATA UNAVAILABLE rather than estimated. Huawei remains private and is a qualitative/geopolitical competitor only, not a financial comparator. Sources: stockanalysis.com, gurufocus.com.</div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Latest news — top 5 long-term relevant items</div>
+    <div style="padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">Nokia stock surges ≈8-10% as AI orders reach 6.3x quarterly revenue</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">Direct market validation of the AI-datacenter pivot; BofA raised its target to $18.50 and SEB Equities upgraded to Buy.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">Aug 11–12, 2026 · ts2.tech</div>
+      </div>
+    </div>
+    <div style="padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">Q2 &amp; H1 2026 results: AI &amp; Cloud revenue +105% YoY to €446M; FY2026 growth guidance raised</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">First hard quarterly evidence the AI/data-center strategy is converting into real revenue, not just orders.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">Jul 23, 2026 · Nokia newsroom</div>
+      </div>
+    </div>
+    <div style="padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">Nokia acquires NXP's Chandler, Arizona semiconductor fab for InP conversion</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">Secures scarce US-based indium phosphide optical-chip supply for AI datacenter transceivers, reinforcing a US-manufacturing/onshoring position.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">Early Aug 2026 · semiconductor-today.com</div>
+      </div>
+    </div>
+    <div style="padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">Nokia to sell Fixed Wireless Access CPE business to Inseego</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">Portfolio simplification and capital reallocation toward AI infrastructure priorities; expected to close Q4 2026.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">Apr 30, 2026 · Nokia newsroom</div>
+      </div>
+    </div>
+    <div style="padding:10px 0">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">EU Commission moves toward mandating removal of Huawei/ZTE from EU telecom networks</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">A structural, multi-year regulatory tailwind for Nokia/Ericsson's addressable market — Chinese vendors still hold 33-40% share in Europe.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">≈Jan 2026 · lightreading.com</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="score-box">
+    Peer standing: <strong>LAGGING</strong><br>
+    <span style="margin-top:4px;display:block">Weakest ROE and the most expensive trailing P/E of the three named peers — though it also has, by a wide margin, the most exciting near-term order-growth story of any peer shown, which the market is actively re-rating in real time.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 6: OWNERSHIP ═══ -->
+<div class="panel" id="p6">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Who owns this company — and are they buying or stepping away? (Adapted from "promoter/FII/DII" — Nokia's closest analog to a strategic/government holder is Finland's Solidium Oy)</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Holder</th><th>Latest %</th><th>Recent trend</th><th>Signal</th><th>What it means</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Institutional (US 13F-tracked, ADR only)*</td><td>5.28%</td><td>↑ Increasing — 256 buyers vs. 153 sellers past 12mo (≈$487M net inflows)</td>
+          <td><span class="badge ok">INCREASING</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Largest ADR-tracked holders: Pzena, Arrowstreet Capital, ARGA, Renaissance Technologies</td>
+        </tr>
+        <tr>
+          <td>Solidium Oy (Finnish state investment co.)</td><td>≈5.7%</td><td>→ Stable — largest single registered shareholder since 2018-2020</td>
+          <td><span class="badge info">STRATEGIC</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Closest analog to a "government/strategic holder" for this Finnish company</td>
+        </tr>
+        <tr>
+          <td>Insiders</td><td>🚩 DATA UNAVAILABLE</td><td>→ "No insider buy or sell activity in the past three months" per MarketBeat</td>
+          <td><span class="badge neu">STABLE</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Clean percentage not disclosed by sources checked</td>
+        </tr>
+        <tr>
+          <td>Insider pledging</td><td>—</td><td>—</td>
+          <td><span class="badge ok">N/A</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">No evidence found — not applicable for a Finnish blue-chip issuer</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">* This ADR-only figure almost certainly undercounts true global institutional ownership, since most Nokia shares trade as Helsinki-listed ordinary shares held by non-US institutions that don't file 13Fs. Sources: MarketBeat, Solidium.fi, Bloomberg.</div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Latest earnings call — Q2 FY2026</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>What management said</th><th>What it means for you</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>CEO Justin Hotard: the company is "focused on maximizing our opportunity in the AI super cycle" — AI &amp; Cloud net sales +105% YoY</td>
+          <td style="color:var(--color-text-secondary);font-size:12px">A new CEO with direct AI-infrastructure pedigree (ex-Intel Data Center &amp; AI Group) is putting real weight behind the pivot</td>
+        </tr>
+        <tr>
+          <td>Management flagged memory/leading-edge silicon supply constraints, pushing for better customer order visibility</td>
+          <td style="color:var(--color-text-secondary);font-size:12px">A real, near-term execution constraint on converting the order surge into delivered revenue</td>
+        </tr>
+        <tr>
+          <td>Launched an AI-RAN platform on Nvidia Aerial technology — a shift from hardware- to software-defined radio</td>
+          <td style="color:var(--color-text-secondary);font-size:12px">A longer-term product bet that could reshape how Nokia's core RAN business competes and monetizes over time</td>
+        </tr>
+        <tr>
+          <td>Manufacturing self-sufficiency push: 10x expansion of Pennsylvania optical testing capacity plus the NXP Arizona fab acquisition for InP chips; divesting the lower-margin FWA CPE business to Inseego</td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Concrete capital reallocation toward the AI-infrastructure priority, not just messaging</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:12px;color:var(--color-text-secondary);margin-top:8px">
+      Management tone: <strong style="color:var(--color-text-primary)">CONFIDENT</strong> — raised guidance twice this year on the back of the AI order surge
+    </div>
+  </div>
+
+  <div class="score-box">
+    Ownership signal: <strong>HOLDING STEADY</strong><br>
+    <span style="margin-top:4px;display:block">US-tracked institutional ownership has been net increasing over the past year, and Finland's Solidium Oy has held a stable, long-standing strategic stake since 2018-2020 — no unusual insider selling or ownership-structure changes were found.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 7: VIEW (default active) ═══ -->
+<div class="panel on" id="p7">
+
+  <div class="card amber">
+    <div class="view-label amber">MODERATE FUNDAMENTALS</div>
+    <div class="view-reason">Nokia's trailing financials show a multi-year telecom-equipment turnaround that hasn't yet delivered growth — revenue has shrunk over both the 3- and 5-year window and returns on capital sit near cyclical lows — but the balance sheet is genuinely strong (low debt, consistent free cash flow, a net cash position) and the most recent quarter shows a real, order-book-validated inflection toward AI-datacenter optical and IP networking demand.</div>
+
+    <div class="sec-label">What works for this stock</div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--g-accent)">✓</span><span>The balance sheet is the strongest in this batch of reports: debt-to-equity has fallen steadily to 0.20 (FY2025), interest coverage is comfortably healthy even at the lower of two conflicting estimates (7.0x), and free cash flow has been positive every year for at least five years, leaving Nokia in a net cash position (≈€2.0-2.8B).</span></div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--g-accent)">✓</span><span>AI &amp; Cloud segment revenue more than doubled year-over-year to €446M in Q2 2026, with order intake reaching €2.8B in the quarter alone — roughly 6.3 times that quarter's revenue — and management raised FY2026 growth guidance for both Network Infrastructure (to 12-14%) and combined Optical+IP (to 18-20%) on the back of it.</span></div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--g-accent)">✓</span><span>Nokia has not cut its dividend since reinstating it in February 2022, maintaining or modestly growing the payout across four consecutive years despite the earnings volatility below, and its patent-licensing business now has over €800M/year contracted through 2030.</span></div>
+
+    <div class="sec-label">What to watch</div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--a-accent)">⚠</span><span>Revenue has genuinely shrunk over both the 3-year (-5.8%/yr) and 5-year (-1.9%/yr) windows, and return metrics (ROE, ROIC, ROCE) are all well below their FY2022 peak — the "AI supercycle" narrative is real but has not yet shown up in trailing multi-year growth or returns data.</span></div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--a-accent)">⚠</span><span>Nokia has already lost two of its three major US carrier customers this decade — Verizon to Samsung (2020) and AT&amp;T to Ericsson (2023) — leaving T-Mobile as its only remaining major US "Big 3" relationship, a reminder that a strong balance sheet doesn't insulate against real competitive losses in its core RAN business.</span></div>
+
+    <div class="sec-label">Track this going forward</div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--color-text-secondary)">→</span><span>Whether the AI &amp; Cloud order intake (€2.8B in Q2 2026 alone) actually converts into delivered revenue and profit over the next several quarters, and whether new CEO Justin Hotard's AI-infrastructure background translates into sustained execution beyond his first ≈16 months in the role.</span></div>
+
+    <div style="margin-top:16px;font-size:11px;color:var(--color-text-secondary);font-style:italic">
+      This is a VIEW based on fundamentals only. Not a buy/sell recommendation. The decision is always yours.
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px">
+    <div class="card green">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--g-text);margin-bottom:8px">Opportunities</div>
+      <div class="bullet-row" style="border-color:var(--g-border)"><span class="bicon" style="color:var(--g-accent)">+</span><span style="color:var(--g-text);font-size:12px">The EU Commission is moving toward legally mandating removal of Huawei/ZTE from EU telecom networks, and Chinese vendors still hold 33-40% share in Europe — a structural, multi-year addressable-market opportunity if enacted</span></div>
+      <div class="bullet-row" style="border-color:var(--g-border)"><span class="bicon" style="color:var(--g-accent)">+</span><span style="color:var(--g-text);font-size:12px">The NXP Arizona fab acquisition (for indium phosphide optical chips) and 10x expansion of Pennsylvania optical testing capacity position Nokia to control its own supply chain for components in high demand across the sector</span></div>
+      <div class="bullet-row" style="border-color:var(--g-border);border-bottom:none"><span class="bicon" style="color:var(--g-accent)">+</span><span style="color:var(--g-text);font-size:12px">Nokia Technologies' patent-licensing annuity (≈8,253 declared 5G patents) now has over €800M/year contracted recurring revenue through 2030, providing a profit cushion largely uncorrelated with network-equipment capex cycles</span></div>
+    </div>
+    <div class="card red">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--r-text);margin-bottom:8px">Risks</div>
+      <div class="bullet-row" style="border-color:var(--r-border)"><span class="bicon" style="color:var(--r-accent)">−</span><span style="color:var(--r-text);font-size:12px">The stock jumped roughly 10% intraday on the day this report was compiled, on AI order-intake news — a reminder that a large part of the current price already reflects optimism about a growth story that is real but still early</span></div>
+      <div class="bullet-row" style="border-color:var(--r-border)"><span class="bicon" style="color:var(--r-accent)">−</span><span style="color:var(--r-text);font-size:12px">Nokia's core Mobile Networks/RAN business continues to face intense, lower-cost competition from Chinese vendors where they aren't banned, and has already lost meaningful US carrier market share this decade</span></div>
+      <div class="bullet-row" style="border-color:var(--r-border);border-bottom:none"><span class="bicon" style="color:var(--r-accent)">−</span><span style="color:var(--r-text);font-size:12px">Carrier capex is inherently cyclical and lumpy quarter to quarter, and Nokia's own Q2 2026 free cash flow briefly turned negative (-€732M) on working-capital build for the AI/optical order surge — converting a strong order book into cash isn't automatic</span></div>
+    </div>
+  </div>
+
+</div>
+
+<details style="margin-top:20px;padding:0 4px">
+  <summary>Definitions — tap to expand</summary>
+  <p><strong>P/E ratio</strong> — What you pay per €1/$1 of profit. Can look inflated when trailing earnings are near breakeven, as here.</p>
+  <p><strong>P/B ratio</strong> — Price vs. what the company actually owns. Below 1 = buying at a discount to assets.</p>
+  <p><strong>EV/EBITDA</strong> — Full business value check including debt. Lower = better value, all else equal.</p>
+  <p><strong>ROE</strong> — For every €100/$100 shareholders invested, how much profit the company made. Above 15% = good.</p>
+  <p><strong>ROIC / ROCE</strong> — How efficiently the whole business uses capital, including borrowed money. Above 15% = healthy.</p>
+  <p><strong>Free Cash Flow</strong> — Cash left after all expenses and investments. Positive and growing = genuinely healthy business.</p>
+  <p><strong>ADR</strong> — American Depositary Receipt: a US-listed instrument representing shares of a foreign company (here, 1 ADR = 1 Nokia ordinary share), letting US investors buy it in USD on the NYSE instead of on the home exchange.</p>
+  <p><strong>13F filing</strong> — A quarterly SEC disclosure large US institutional investors must file showing their US-listed equity holdings — doesn't capture non-US institutional ownership.</p>
+  <p><strong>CAGR</strong> — Compound Annual Growth Rate. Not meaningful when the underlying figure includes a one-time item or swings from positive to negative.</p>
+</details>
+
+<div class="disc">
+  This is a fundamental screening and education tool only. Data sourced from Nokia's SEC 20-F/6-K filings, Nokia Investor Relations, stockanalysis.com, and other public financial databases and news outlets as cited inline. This is NOT investment advice, a buy/sell recommendation, or research from a registered investment adviser or broker-dealer. AI can make errors — verify all numbers directly against Nokia's SEC filings or its own investor relations site before making any decision, especially given the currency conversions and the unusually large single-day price move flagged above. Past performance does not guarantee future results. Investing carries risk, including loss of principal, and currency movements (EUR/USD) can affect returns for a USD-based investor independent of the underlying business. Consult a licensed financial advisor before investing.
+</div>
+
+</div>
+
+<script>
+function show(n){
+  var panels=document.querySelectorAll('.panel');
+  var tabs=document.querySelectorAll('.tab-btn');
+  for(var i=0;i<panels.length;i++){
+    panels[i].className='panel'+(i===n?' on':'');
+    tabs[i].className='tab-btn'+(i===n?' active':'');
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+# Deny all direct web access to this directory.
+# Reports must be served through investments/index.php, which enforces
+# login + access-level checks before streaming a file.
+Require all denied

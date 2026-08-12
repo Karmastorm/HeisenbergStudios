@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CoreWeave (CRWV) Fundamental Analysis — Aug 12, 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --g-fill:#EAF3DE;--g-text:#27500A;--g-border:#C0DD97;--g-accent:#639922;
+  --a-fill:#FAEEDA;--a-text:#854F0B;--a-border:#FAC775;--a-accent:#EF9F27;
+  --r-fill:#FCEBEB;--r-text:#A32D2D;--r-border:#F7C1C1;--r-accent:#E24B4A;
+  --b-fill:#E6F1FB;--b-text:#185FA5;--b-border:#B5D4F4;--b-accent:#378ADD;
+  --n-fill:#F1EFE8;--n-text:#444441;--n-border:#D3D1C7;
+  --color-text-primary:#1C1B18;--color-text-secondary:#6B6A64;
+  --color-background-primary:#FFFFFF;--color-background-secondary:#F5F4F0;
+  --color-border-primary:rgba(0,0,0,0.35);--color-border-secondary:rgba(0,0,0,0.18);--color-border-tertiary:rgba(0,0,0,0.10)
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --g-fill:#173404;--g-text:#C0DD97;--g-border:#3B6D11;--g-accent:#97C459;
+  --a-fill:#412402;--a-text:#FAC775;--a-border:#854F0B;--a-accent:#EF9F27;
+  --r-fill:#501313;--r-text:#F09595;--r-border:#A32D2D;--r-accent:#E24B4A;
+  --b-fill:#042C53;--b-text:#85B7EB;--b-border:#185FA5;--b-accent:#378ADD;
+  --n-fill:#2C2C2A;--n-text:#D3D1C7;--n-border:#5F5E5A;
+  --color-text-primary:#EDECE7;--color-text-secondary:#A6A49C;
+  --color-background-primary:#171613;--color-background-secondary:#211F1B;
+  --color-border-primary:rgba(255,255,255,0.35);--color-border-secondary:rgba(255,255,255,0.18);--color-border-tertiary:rgba(255,255,255,0.10)
+}}
+:root[data-theme="dark"]{
+  --g-fill:#173404;--g-text:#C0DD97;--g-border:#3B6D11;--g-accent:#97C459;
+  --a-fill:#412402;--a-text:#FAC775;--a-border:#854F0B;--a-accent:#EF9F27;
+  --r-fill:#501313;--r-text:#F09595;--r-border:#A32D2D;--r-accent:#E24B4A;
+  --b-fill:#042C53;--b-text:#85B7EB;--b-border:#185FA5;--b-accent:#378ADD;
+  --n-fill:#2C2C2A;--n-text:#D3D1C7;--n-border:#5F5E5A;
+  --color-text-primary:#EDECE7;--color-text-secondary:#A6A49C;
+  --color-background-primary:#171613;--color-background-secondary:#211F1B;
+  --color-border-primary:rgba(255,255,255,0.35);--color-border-secondary:rgba(255,255,255,0.18);--color-border-tertiary:rgba(255,255,255,0.10)
+}
+body{font-family:var(--font-sans,-apple-system,"Segoe UI",system-ui,sans-serif);font-size:13px;line-height:1.6;color:var(--color-text-primary);background:var(--color-background-primary)}
+.wrap{max-width:860px;margin:0 auto;padding:20px 16px 32px}
+table,.mc .mv,.eps-v,.iv{font-variant-numeric:tabular-nums}
+.conf{padding:10px 16px;border-radius:8px;margin-bottom:14px;font-size:12px}
+.conf.high,.conf.moderate{background:var(--g-fill);color:var(--g-text)}
+.conf.low{background:var(--a-fill);color:var(--a-text)}
+.conf.vlow{background:var(--r-fill);color:var(--r-text)}
+.tab-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.tab-btn{padding:7px 18px;border-radius:100px;border:1px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);font-size:13px;font-weight:400;cursor:pointer;font-family:inherit;transition:border-color 0.15s,color 0.15s}
+.tab-btn:hover{border-color:var(--color-border-primary);color:var(--color-text-primary)}
+.tab-btn.active{border:1.5px solid var(--color-text-primary);color:var(--color-text-primary);font-weight:500}
+.tab-btn:focus-visible{outline:2px solid var(--b-accent);outline-offset:2px}
+.panel{display:none}.panel.on{display:block}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:12px;padding:16px 20px;margin-bottom:12px}
+.card.green{background:var(--g-fill);border-color:var(--g-border)}
+.card.amber{background:var(--a-fill);border-color:var(--a-border)}
+.card.red{background:var(--r-fill);border-color:var(--r-border)}
+.card.blue{background:var(--b-fill);border-color:var(--b-border)}
+.card.grey{background:var(--n-fill);border-color:var(--n-border)}
+.view-label{font-size:18px;font-weight:500;margin-bottom:6px}
+.view-label.green{color:var(--g-text)}.view-label.amber{color:var(--a-text)}.view-label.red{color:var(--r-text)}
+.view-reason{font-size:13px;margin-bottom:16px;color:var(--color-text-primary)}
+.sec-label{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin:14px 0 8px}
+.bullet-row{display:flex;gap:10px;align-items:flex-start;padding:6px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:13px}
+.bullet-row:last-child{border-bottom:none}
+.bicon{font-size:14px;min-width:18px;margin-top:1px}
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px;margin:8px 0;min-width:560px}
+th{text-align:left;padding:7px 10px;font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.7px;color:var(--color-text-secondary);border-bottom:0.5px solid var(--color-border-tertiary);white-space:nowrap}
+td{padding:9px 10px;color:var(--color-text-primary);border-bottom:0.5px solid var(--color-border-tertiary)}
+tr:last-child td{border-bottom:none}
+.pos{color:var(--g-accent);font-weight:500}.neg{color:var(--r-accent);font-weight:500}.neu{color:var(--color-text-secondary)}
+.badge{display:inline-block;padding:2px 9px;border-radius:100px;font-size:11px;font-weight:500;white-space:nowrap}
+.badge.ok{background:var(--g-fill);color:var(--g-text)}
+.badge.warn{background:var(--a-fill);color:var(--a-text)}
+.badge.bad{background:var(--r-fill);color:var(--r-text)}
+.badge.info{background:var(--b-fill);color:var(--b-text)}
+.badge.neu{background:var(--n-fill);color:var(--n-text)}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;margin:12px 0}
+.mc{background:var(--color-background-secondary);border-radius:8px;padding:12px 14px}
+.mc .ml{font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:var(--color-text-secondary);margin-bottom:4px}
+.mc .mv{font-size:18px;font-weight:500;color:var(--color-text-primary)}
+.mc .ms{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.info-row{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:0.5px solid var(--color-border-tertiary);gap:16px}
+.info-row:last-child{border-bottom:none}
+.il{font-size:12px;color:var(--color-text-secondary)}
+.iv{font-size:12px;color:var(--color-text-primary);font-weight:500;text-align:right}
+.flag-card{border-left:3px solid var(--a-accent);background:var(--a-fill);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:8px}
+.flag-title{font-size:13px;font-weight:500;color:var(--a-text);margin-bottom:3px}
+.flag-note{font-size:12px;color:var(--a-text)}
+.score-box{background:var(--color-background-secondary);border-radius:8px;padding:14px 16px;margin-top:14px;font-size:12px;color:var(--color-text-secondary)}
+.eps-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.eps-chip{background:var(--color-background-secondary);border-radius:8px;padding:10px 14px;text-align:center;min-width:85px}
+.eps-q{font-size:10px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.5px}
+.eps-v{font-size:16px;font-weight:500;color:var(--color-text-primary);margin:3px 0}
+.eps-y{font-size:11px}
+.peer-you{background:var(--color-background-secondary)}
+.foot{font-size:11px;color:var(--color-text-secondary);margin-top:8px;line-height:1.6}
+.disc{font-size:11px;color:var(--color-text-secondary);border-top:0.5px solid var(--color-border-tertiary);padding-top:14px;margin-top:24px;line-height:1.6}
+details summary{font-size:12px;color:var(--color-text-secondary);cursor:pointer;padding:8px 0}
+details p{font-size:12px;color:var(--color-text-secondary);padding:4px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+details p:last-child{border-bottom:none}
+details strong{color:var(--color-text-primary);font-weight:500}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="conf moderate">
+  <strong>Data confidence: MODERATE</strong><br>
+  Live metrics retrieved: 8 of 12 key sections cleanly sourced &nbsp;|&nbsp; Sources: stockanalysis.com, macrotrends.net, CoreWeave Investor Relations, SEC EDGAR (10-Q/13G), CNBC, Bloomberg, Yahoo Finance, GuruFocus &nbsp;|&nbsp; CoreWeave has been public only since March 2025 (~17 months), so several multi-year averages are structurally unavailable rather than merely unfound, and post-earnings volatility on the compilation date (Aug 12, 2026) produced wide cross-source disagreement on some ratios — both are flagged inline with 🚩.
+</div>
+
+<div class="tab-row">
+  <button class="tab-btn" onclick="show(0)">Snapshot</button>
+  <button class="tab-btn" onclick="show(1)">Valuation</button>
+  <button class="tab-btn" onclick="show(2)">Growth</button>
+  <button class="tab-btn" onclick="show(3)">Health</button>
+  <button class="tab-btn" onclick="show(4)">Returns</button>
+  <button class="tab-btn" onclick="show(5)">Peers</button>
+  <button class="tab-btn" onclick="show(6)">Ownership</button>
+  <button class="tab-btn active" onclick="show(7)">View</button>
+</div>
+
+<!-- ═══ TAB 0: SNAPSHOT ═══ -->
+<div class="panel" id="p0">
+
+  <div class="card">
+    <div class="info-row"><span class="il">Company</span><span class="iv">CoreWeave, Inc.</span></div>
+    <div class="info-row"><span class="il">Ticker</span><span class="iv">CRWV · NASDAQ</span></div>
+    <div class="info-row"><span class="il">Sector</span><span class="iv">Technology</span></div>
+    <div class="info-row"><span class="il">Industry</span><span class="iv">Cloud Infrastructure / AI Data Centers</span></div>
+    <div class="info-row"><span class="il">What it does</span><span class="iv" style="max-width:440px;text-align:right">Builds and rents out large-scale clusters of Nvidia GPUs as "AI hyperscale cloud infrastructure" — customers (AI labs, enterprises, hyperscalers) pay for compute capacity under long-term contracts. Nvidia is simultaneously CoreWeave's primary chip supplier, an equity investor (~11–11.5% stake), and a backstop buyer of unsold capacity through 2032 (~$6.3B commitment).</span></div>
+    <div class="info-row"><span class="il">What makes it different</span><span class="iv" style="max-width:440px;text-align:right">Purpose-built, GPU-optimized infrastructure and orchestration software that reportedly deploys faster and at better price-performance than legacy hyperscalers for AI workloads — though the moat is debated since GPUs themselves are a commoditized input available to every "neocloud" competitor.</span></div>
+  </div>
+
+  <div class="mgrid">
+    <div class="mc"><div class="ml">CMP</div><div class="mv">$88.19</div><div class="ms">Close Aug 11, 2026 (pre-earnings) · NASDAQ</div></div>
+    <div class="mc"><div class="ml">52W High</div><div class="mv">$153.20</div><div class="ms">stockanalysis.com</div></div>
+    <div class="mc"><div class="ml">52W Low</div><div class="mv">$60.55</div><div class="ms">stockanalysis.com</div></div>
+    <div class="mc"><div class="ml">Market Cap</div><div class="mv">≈$48.1B</div><div class="ms">CMP × ~545.6M shares — see flag, highly volatile week</div></div>
+    <div class="mc"><div class="ml">Par Value</div><div class="mv">$0.000005</div><div class="ms">Per share (Class A &amp; B) · SEC 10-Q</div></div>
+  </div>
+
+  <div class="flag-card">
+    <div class="flag-title">EXTREME PRICE VOLATILITY AROUND THIS REPORT'S DATE</div>
+    <div class="flag-note">Q2 2026 earnings released after close Aug 11, 2026; the stock jumped an estimated 15–22% intraday on Aug 12 with reported prints ranging from ~$88 to over $110 the same day. CMP above uses the last confirmed close (Aug 11, pre-earnings) — verify the current live quote before using this for any decision. Source: stockanalysis.com, Investing.com, Yahoo Finance.</div>
+  </div>
+  <div class="flag-card">
+    <div class="flag-title">EXTREME CUSTOMER CONCENTRATION</div>
+    <div class="flag-note">Microsoft was 67% of FY2025 revenue; OpenAI represents roughly a third of total contracted future revenue (&gt;$22B of backlog) via up to $6.5B in contract commitments. A new $21B Meta deal (Aug 2026, on top of an earlier $14B agreement) is diversifying this, but concentration remains extreme by normal cloud/SaaS standards. Source: company filings, Forbes.</div>
+  </div>
+  <div class="flag-card">
+    <div class="flag-title">MASSIVE, FAST-GROWING DEBT LOAD &amp; CREDIT MARKET STRESS</div>
+    <div class="flag-note">Total debt reached ≈$35B as of June 30, 2026, up from under $8B in 2024. Credit-default-swap markets reportedly priced in an ~50% five-year default probability in late July 2026, and the stock fell 9% on that news. Source: Capacity Media, TechTimes.</div>
+  </div>
+  <div class="flag-card">
+    <div class="flag-title">WEAK LIQUIDITY &amp; INTEREST COVERAGE</div>
+    <div class="flag-note">Current ratio was just 0.32 in Q1 2026, and interest coverage was roughly 0.20x (operating earnings covered only about a fifth of interest expense) — the company had to negotiate reduced minimum-liquidity covenants for early-2026 payment dates. Source: macrotrends.net-derived ratio analysis.</div>
+  </div>
+  <div class="flag-card">
+    <div class="flag-title">LOCKUP EXPIRY, HEAVY INSIDER SELLING &amp; GPU DEPRECIATION SCHEDULE</div>
+    <div class="flag-note">The original post-IPO lockup expired Aug 14, 2025; the stock fell ~20% that week and as much as ~51% from its Aug 12, 2025 peak. Founders have sold &gt;$2.3B in stock since, via 10b5-1 plans. Separately, GPUs are depreciated straight-line over 6 years, while independent estimates suggest real economic useful life under heavy AI workloads may be closer to 1–3 years — a gap that could understate true depreciation expense. Source: CNBC, Barchart, Bloomberg, Seeking Alpha.</div>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 1: VALUATION ═══ -->
+<div class="panel" id="p1">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Is this stock cheap, fair, or expensive right now?</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Metric</th><th>Current</th><th>Sector / peer avg</th><th>Stock 5Y avg</th><th>Signal</th><th>Plain English</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>P/E</td><td>n/m — GAAP loss¹</td><td>n/a — most peers also unprofitable</td><td>🚩 DATA UNAVAILABLE²</td>
+          <td><span class="badge neu">N/M</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">No trailing profit to price against — not unusual at this growth stage</td>
+        </tr>
+        <tr>
+          <td>P/S (TTM)</td><td>8.2–10.0x³</td><td>Peer Nebius (NBIS): 65.5x⁴</td><td>🚩 DATA UNAVAILABLE²</td>
+          <td><span class="badge ok">CHEAP</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Far cheaper than its fastest-growing pure-play peer on a sales basis</td>
+        </tr>
+        <tr>
+          <td>P/B</td><td>12.8–20.8x⁵</td><td>🚩 DATA UNAVAILABLE</td><td>🚩 DATA UNAVAILABLE²</td>
+          <td><span class="badge neu">UNCLEAR</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Wide source disagreement — see footnote before relying on this</td>
+        </tr>
+        <tr>
+          <td>EV/EBITDA</td><td>14.2x (late Jul 2026)⁶</td><td>~20–35x (directional, AI/data-infra sector)⁷</td><td>🚩 DATA UNAVAILABLE²</td>
+          <td><span class="badge ok">CHEAP</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Cheap vs. sector on this measure, but the multiple itself swung from 36.4x to 14.2x within months</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">
+      ¹ Some sources compute a nominal trailing P/E of -36.2x off the GAAP loss — not economically meaningful. ² Structurally unavailable: CoreWeave has traded publicly only since March 28, 2025 (~17 months), so no genuine "5-year average" exists yet. ³ multiples.vc and stockanalysis.com disagree on exact TTM P/S (8.2x vs 10.0x). ⁴ Nebius's own historical median P/S is 6.79x — its current 65.5x is itself elevated, so this comparison should be read with caution. ⁵ Sources ranged from 12.76x to 20.77x depending on exact date within this highly volatile week — treat as directional only. ⁶ A different pull in mid-April 2026 showed 36.4x — EBITDA scaled faster than enterprise value between those two dates, or vice versa; both figures are shown for transparency. ⁷ No single authoritative "AI infrastructure sector average" source was found; this is a directional range compiled from sector research summaries, not a named index.
+    </div>
+  </div>
+
+  <div class="score-box">
+    Overall valuation: <strong>MIXED</strong><br>
+    <span style="margin-top:4px;display:block">Looks cheap relative to peers on sales and EV/EBITDA, but the underlying data is unusually unstable — multiples have swung 2-3x within months as both the stock price and adjusted EBITDA scale rapidly, and there's no earnings multiple to anchor on yet.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 2: GROWTH ═══ -->
+<div class="panel" id="p2">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Is this company growing its revenue and profits?</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Metric</th><th>3Y CAGR</th><th>5Y CAGR</th><th>Trend</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td>Revenue</td><td>🚩 DATA UNAVAILABLE*</td><td>🚩 DATA UNAVAILABLE*</td><td>📈</td><td style="color:var(--color-text-secondary);font-size:11px">stockanalysis.com</td></tr>
+        <tr><td>Net profit</td><td>n/m — loss every quarter since IPO</td><td>n/m*</td><td>📉</td><td style="color:var(--color-text-secondary);font-size:11px">stockanalysis.com</td></tr>
+        <tr><td>EPS</td><td>n/m — loss every quarter since IPO</td><td>n/m*</td><td>📉</td><td style="color:var(--color-text-secondary);font-size:11px">stockanalysis.com</td></tr>
+        <tr><td>Adj. EBITDA margin</td><td>🚩 DATA UNAVAILABLE*</td><td>🚩 DATA UNAVAILABLE*</td><td>📉</td><td style="color:var(--color-text-secondary);font-size:11px">Company earnings materials</td></tr>
+        <tr><td>Net profit margin</td><td>🚩 DATA UNAVAILABLE*</td><td>🚩 DATA UNAVAILABLE*</td><td>📉</td><td style="color:var(--color-text-secondary);font-size:11px">stockanalysis.com</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">* Structurally unavailable — CoreWeave has been public only since March 2025, so no genuine 3- or 5-year public-market CAGR exists. For context: annual revenue grew from $229M (FY2023) to $1.92B (FY2024) to $5.13B (FY2025, +167.9% YoY) per S-1/10-K disclosures spanning mostly the pre-IPO period, and TTM revenue (through Q2 2026) is $7.59B, +115.3% YoY — extraordinary growth from a small base, not comparable to a mature-company CAGR. Gross margin compressed from 74.3% (FY2024) to 67.4% (TTM); net margin is -18.0% TTM; adjusted (non-GAAP) EBITDA margin narrowed from 62% (Q2 2025) to 59% (Q2 2026) as lower-margin capacity came online.</div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">EPS — every quarter reported since IPO (GAAP; only 6 exist)</div>
+    <div class="eps-row">
+      <div class="eps-chip"><div class="eps-q">Q1 FY25</div><div class="eps-v">-$1.49</div><div class="eps-y neu">YoY: n/a — 1st reported qtr</div></div>
+      <div class="eps-chip"><div class="eps-q">Q2 FY25</div><div class="eps-v">-$0.60</div><div class="eps-y neu">YoY: n/a</div></div>
+      <div class="eps-chip"><div class="eps-q">Q3 FY25</div><div class="eps-v">-$0.22</div><div class="eps-y neu">YoY: n/a</div></div>
+      <div class="eps-chip"><div class="eps-q">Q4 FY25</div><div class="eps-v">-$0.89</div><div class="eps-y neu">YoY: n/a</div></div>
+      <div class="eps-chip"><div class="eps-q">Q1 FY26</div><div class="eps-v">-$1.40</div><div class="eps-y pos">Loss narrowed vs Q1 FY25</div></div>
+      <div class="eps-chip"><div class="eps-q">Q2 FY26</div><div class="eps-v">-$1.14*</div><div class="eps-y neg">Loss widened vs Q2 FY25</div></div>
+    </div>
+    <div class="foot">CoreWeave IPO'd March 28, 2025, so only 6 quarters of public EPS history exist — there is no "last 8 quarters" to show yet. * Q2 FY26 GAAP EPS is reported as -$1.14 by one source and adjusted (non-GAAP) EPS as -$1.03 by another; treat the exact GAAP figure as provisional pending the filed 10-Q. Source: stockanalysis.com quarterly financials.</div>
+  </div>
+
+  <div class="score-box">
+    Growth classification: <strong>STEADY (AT AN EXTREMELY HIGH LEVEL)</strong><br>
+    <span style="margin-top:4px;display:block">Revenue growth has been remarkably consistent at roughly +112% year-over-year in both of the two most recently reported quarters — though that is a deceleration from FY2025's full-year pace of +167.9%. Losses have continued every quarter since the IPO, though they've narrowed slightly as a share of revenue even as their dollar size stays large.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 3: HEALTH ═══ -->
+<div class="panel" id="p3">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Is this company financially safe and stable?</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Metric</th><th>Value</th><th>Trend</th><th>Signal</th><th>Plain English</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Debt / Equity</td><td>4.5–10.3*</td><td>↑ Rising — debt load quadrupled since 2024</td>
+          <td><span class="badge bad">LEVERAGED</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Every source-reported figure is well above the "above 2 = leveraged" line</td>
+        </tr>
+        <tr>
+          <td>Interest Coverage</td><td>≈0.20x</td><td>— (only ~17mo of public data)</td>
+          <td><span class="badge bad">RISK</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Operating earnings cover only about a fifth of interest expense</td>
+        </tr>
+        <tr>
+          <td>Current Ratio</td><td>0.32 (Q1 FY26)</td><td>— (only ~17mo of public data)</td>
+          <td><span class="badge bad">RISK</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Well below the 1.0 line — company had to renegotiate liquidity covenants</td>
+        </tr>
+        <tr>
+          <td>Free Cash Flow</td><td>-$5.7B (Q2 FY26 alone)</td><td>→ Deeply negative every period, TTM -$13.7B</td>
+          <td><span class="badge bad">CONCERN</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Capex ($9.4B in Q2 alone; FY26 guidance $35–39B) far outpaces operating cash generated</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">* D/E is genuinely disputed across sources (4.46 to 10.27) depending on how leases and convertible instruments are treated — every version is well into "leveraged" territory regardless. Total debt reached ≈$35B as of June 30, 2026 (from under $8B in 2024), including an $8.5B GPU-collateralized facility (Moody's A3, DBRS A-low — first investment-grade HPC-infrastructure debt of its kind) and a further $3.1B facility in May 2026. Sources: Capacity Media, macrotrends.net, gurufocus.com, CoreWeave IR.</div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Forward projections — 3 year horizon</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Scenario</th><th>Assumption</th><th>Est. revenue</th><th>Est. net profit</th><th>Est. EPS</th></tr></thead>
+      <tbody>
+        <tr><td>🐢 Bear</td><td style="color:var(--color-text-secondary);font-size:12px">Growth decelerates sharply to ≈15%/yr (an AI/hyperscaler capex pullback slows backlog conversion); margins stay deeply negative, similar to today</td><td>≈$11.5B</td><td>≈-$2.3B</td><td>≈-$4.21</td></tr>
+        <tr><td>🚶 Base</td><td style="color:var(--color-text-secondary);font-size:12px">Growth moderates to ≈35%/yr — well below the current ~112% pace but consistent with converting a meaningful share of the disclosed $104B backlog; margins approach breakeven as scale and refinancing reduce the interest-expense drag</td><td>≈$18.7B</td><td>≈$0.4B</td><td>≈$0.68</td></tr>
+        <tr><td>🚀 Bull</td><td style="color:var(--color-text-secondary);font-size:12px">Growth holds near ≈55%/yr as backlog conversion accelerates; margins expand toward the ~59% adjusted-EBITDA level translating into real GAAP profit</td><td>≈$28.3B</td><td>≈$2.8B</td><td>≈$5.18</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">Base: TTM revenue of $7.59B (through Q2 2026) and ≈545.6M shares outstanding. These are scenario calculations anchored to CoreWeave's own disclosed $104.2B revenue backlog (of which ≈36% is expected to convert within 2 years) and its historical growth-rate range — not guarantees or predictions.</div>
+  </div>
+
+  <div class="score-box">
+    Financial health: <strong>LEVERAGED</strong><br>
+    <span style="margin-top:4px;display:block">By every conventional balance-sheet measure — leverage, liquidity, interest coverage, free cash flow — CoreWeave is under real financial stress; this is the flip side of financing a ~$35B GPU buildout mostly with debt rather than retained earnings.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 4: RETURNS ═══ -->
+<div class="panel" id="p4">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Is this company creating real value for shareholders?</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Metric</th><th>Current</th><th>3Y avg</th><th>5Y avg</th><th>Signal</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>ROE</td><td>-40.7% to -43.6% (TTM)</td><td>🚩 DATA UNAVAILABLE*</td><td>🚩 DATA UNAVAILABLE*</td>
+          <td><span class="badge bad">WEAK</span></td>
+        </tr>
+        <tr>
+          <td>ROIC / ROCE</td><td>-0.34% to -1.02%</td><td>🚩 DATA UNAVAILABLE*</td><td>🚩 DATA UNAVAILABLE*</td>
+          <td><span class="badge bad">WEAK</span></td>
+        </tr>
+        <tr>
+          <td>Dividend yield</td><td>0.00%</td><td>n/a</td><td>n/a</td>
+          <td><span class="badge neu">—</span></td>
+        </tr>
+        <tr>
+          <td>Dividend payout</td><td>n/a — no dividend</td><td>n/a</td><td>n/a</td>
+          <td><span class="badge neu">—</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">ROE above 15% = good &nbsp;·&nbsp; ROCE above 15% = efficient capital use. * Structurally unavailable: CoreWeave has only ~5-6 quarters of public-company return-on-capital data, and it has been consistently and deeply negative on both metrics throughout its public life — there isn't yet a multi-year average to compute. CoreWeave has never paid a dividend, typical for a growth-stage company reinvesting all cash into GPU capex. Sources: CNBC, macrotrends, gurufocus, alphaspread.</div>
+  </div>
+
+  <div class="score-box">
+    Return quality: <strong>WEAK RETURNS (HYPERGROWTH / PRE-PROFITABILITY STAGE)</strong><br>
+    <span style="margin-top:4px;display:block">None of the standard "quality compounder," "capital-light," or "dividend play" labels fit — CoreWeave is a young, capital-intensive company converting nearly all its cash and a large amount of debt into GPU capacity, with deeply negative returns on both equity and invested capital so far.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 5: PEERS ═══ -->
+<div class="panel" id="p5">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">How does it compare to its 3 closest competitors?</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Company</th><th>P/E</th><th>P/B</th><th>ROE</th><th>Rev growth</th><th>D/E</th><th>Edge</th></tr></thead>
+      <tbody>
+        <tr class="peer-you">
+          <td><strong>CRWV ◀ you</strong></td>
+          <td>n/m</td><td>12.8–20.8</td><td>-40.7% to -43.6%</td><td>+112%¹</td><td>4.5–10.3</td>
+          <td style="font-size:12px">Backlog-anchored scale &amp; diversifying customers</td>
+        </tr>
+        <tr>
+          <td>Nebius (NBIS)</td>
+          <td>n/m</td><td>🚩 DATA UNAVAILABLE</td><td>🚩 DATA UNAVAILABLE</td><td>+684%²</td><td>🚩 DATA UNAVAILABLE</td>
+          <td style="font-size:12px">Fastest-growing pure-play neocloud</td>
+        </tr>
+        <tr>
+          <td>IREN Limited</td>
+          <td>54–119</td><td>🚩 DATA UNAVAILABLE</td><td>🚩 DATA UNAVAILABLE</td><td>+38.5%³</td><td>1.49</td>
+          <td style="font-size:12px">Much healthier liquidity (current ratio 3.72)</td>
+        </tr>
+        <tr>
+          <td>Nvidia (NVDA)</td>
+          <td>34.30</td><td>23.84</td><td>114.29%</td><td>+70.7%¹</td><td>0.07</td>
+          <td style="font-size:12px">Supplier &amp; ~11.5% shareholder — sector profitability benchmark</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">¹ Most recently reported quarter, YoY. ² Q1 2026 total revenue YoY (AI cloud revenue specifically grew +841% YoY); P/S is 65.5x vs. Nebius's own historical median of 6.79x. ³ Forecast annual growth rate, not a trailing YoY figure — TSMC-style trailing-quarter YoY was 🚩 DATA UNAVAILABLE in this research pass. IREN originated as a bitcoin miner pivoting into AI compute, the same origin story as CoreWeave itself. Sources: stockanalysis.com, gurufocus.com, company filings.</div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Latest news — top 5 long-term relevant items</div>
+    <div style="padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">Q2 2026 earnings beat; backlog surges to $104.2B; stock jumps ~15–20%</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">Revenue $2.58B (+112% YoY), adjusted EBITDA margin narrowed to 59% from 62%, FY2026 guidance raised — confirms demand durability but shows growth isn't yet translating to GAAP profitability.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">Aug 11–12, 2026 · CNBC / CoreWeave IR</div>
+      </div>
+    </div>
+    <div style="padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">$21B Meta agreement announced alongside Q2 results (adds to a prior $14B deal)</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">Meaningfully diversifies revenue away from Microsoft/OpenAI concentration, addressing the single biggest known risk factor.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">Aug 11, 2026 · CNBC</div>
+      </div>
+    </div>
+    <div style="padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">CDS markets imply ~50% five-year default probability; stock fell 9%</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">Signals bond/credit markets are pricing real distress risk into CoreWeave's massive debt load — a solvency-relevant signal for a multi-year holder.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">Jul 29–30, 2026 · TechTimes</div>
+      </div>
+    </div>
+    <div style="padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">$8.5B DDTL 4.0 facility closes with first investment-grade ratings for HPC-infrastructure debt</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">Moody's A3 / DBRS A-low — shows institutional credit markets are willing to underwrite GPU-collateralized debt at investment-grade terms, a positive financing-access signal despite the overall debt load.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">Mar 31, 2026 · CoreWeave IR</div>
+      </div>
+    </div>
+    <div style="padding:10px 0">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px">Expansion into Indonesia (first Asia-Pacific data center) and a CoreWeave Federal / Leidos defense-cloud partnership</div>
+          <div style="font-size:12px;color:var(--color-text-secondary)">Geographic and end-market diversification — away from a handful of hyperscaler/AI-lab customers and into new geographies and government, relevant to long-run addressable market.</div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">Aug 4, 2026 · Bloomberg / CoreWeave Newsroom</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="score-box">
+    Peer standing: <strong>MID-PACK</strong><br>
+    <span style="margin-top:4px;display:block">Near the top of the group on growth and backlog visibility — behind only Nebius on revenue growth — but clearly the weakest of the four on balance-sheet health (leverage, liquidity, interest coverage all worse than IREN or Nvidia).</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 6: OWNERSHIP ═══ -->
+<div class="panel" id="p6">
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Who owns this company — and are they buying or stepping away? (Adapted from "promoter/FII/DII" to founders, institutions, and CoreWeave's unusual dual-class + strategic-investor structure)</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Holder</th><th>Latest %</th><th>Recent trend</th><th>Signal</th><th>What it means</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Founders — economic stake</td><td>≈17.7–18%</td><td>↓ Selling — &gt;$2.3B sold combined since Aug 2025 lockup expiry via 10b5-1 plans</td>
+          <td><span class="badge warn">SELLING</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Intrator (CEO), Venturo, McBee — Venturo alone has sold &gt;$1.1B</td>
+        </tr>
+        <tr>
+          <td>Founders — voting power*</td><td>≈73.6%</td><td>→ Structurally stable despite economic-stake sales</td>
+          <td><span class="badge info">CONTROL</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Class B shares carry 10 votes each — founders retain effective control regardless of how much stock they sell</td>
+        </tr>
+        <tr>
+          <td>Institutional (13F filers)</td><td>≈22.9%</td><td>— (quarter-over-quarter trend 🚩 DATA UNAVAILABLE)</td>
+          <td><span class="badge neu">—</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Point-in-time snapshot only in this research pass</td>
+        </tr>
+        <tr>
+          <td>Nvidia (supplier &amp; strategic investor)</td><td>≈11–11.5%</td><td>↑ Increasing — added a $2B stake in Jan 2026 at $87.20/share, up from ~7% pre-IPO</td>
+          <td><span class="badge ok">INCREASING</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Nvidia is simultaneously chip supplier, investor, and a capacity backstop buyer through 2032</td>
+        </tr>
+        <tr>
+          <td>Magnetar Capital (early backer)</td><td>≈14.9%†</td><td>↓ Decreasing — net seller through 2026 via multiple $26–164M share sales</td>
+          <td><span class="badge warn">DECREASING</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Early convertible-note investor; an older filing showed ~23%, since reduced</td>
+        </tr>
+        <tr>
+          <td>Insider pledging</td><td>🚩 DATA UNAVAILABLE</td><td>—</td>
+          <td><span class="badge neu">UNKNOWN</span></td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Not found in this research pass — check the current DEF 14A proxy directly</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="foot">* CoreWeave has a dual-class structure: Class A (1 vote/share, publicly traded) and Class B (10 votes/share, held by founders, convertible to Class A). Combined founder voting power (Intrator 38.70%, Venturo 20.30%, McBee 14.59%) as of Apr 15, 2026. † Sources disagree materially on Magnetar's exact stake (14.9% per the most recent 13G/A vs. ~23% in an older filing, likely reflecting large 2026 sales) — the 14.9% figure is used as the more current one. Sources: StockTitan/SEC 13G filings, Bloomberg, Investing.com.</div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--color-text-secondary);margin-bottom:10px">Latest earnings call — Q2 FY2026</div>
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>What management said</th><th>What it means for you</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Raised exit-ARR guidance to $18.5B–$19.5B for 2026; FY2026 revenue guidance raised to $12.4B–$13.2B</td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Management is publicly committing to a much larger near-term run-rate than a year ago</td>
+        </tr>
+        <tr>
+          <td>Signed a $21B agreement with Meta through 2032, layering on a prior $14B commitment</td>
+          <td style="color:var(--color-text-secondary);font-size:12px">A major, credit-worthy customer meaningfully diversifying revenue away from Microsoft/OpenAI</td>
+        </tr>
+        <tr>
+          <td>Framed margin expansion as coming from infrastructure quality/reliability giving pricing power, citing early margin strength on the new "Vera Rubin" GPU SKU</td>
+          <td style="color:var(--color-text-secondary);font-size:12px">A claim worth testing against actual reported margins in coming quarters rather than taking at face value</td>
+        </tr>
+        <tr>
+          <td>Disclosed &gt;$25B of net-new customer commitments signed in early Q3 2026, not yet reflected in the $104.2B backlog figure</td>
+          <td style="color:var(--color-text-secondary);font-size:12px">Suggests the backlog number, already large, is a lagging (not current) indicator of order momentum</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="font-size:12px;color:var(--color-text-secondary);margin-top:8px">
+      Management tone: <strong style="color:var(--color-text-primary)">CONFIDENT</strong> — tempered by continued large GAAP losses and heavy insider selling
+    </div>
+  </div>
+
+  <div class="score-box">
+    Ownership signal: <strong>TRIMMING</strong><br>
+    <span style="margin-top:4px;display:block">The dominant recent activity is heavy selling by both founders (&gt;$2.3B since the 2025 lockup) and Magnetar Capital, even as Nvidia has been adding to its stake — founders retain effective control regardless via 10-vote Class B shares, so this reads more as early backers realizing gains than a loss of confidence in the business.</span>
+  </div>
+
+</div>
+
+<!-- ═══ TAB 7: VIEW (default active) ═══ -->
+<div class="panel on" id="p7">
+
+  <div class="card red">
+    <div class="view-label red">WEAK FUNDAMENTALS</div>
+    <div class="view-reason">CoreWeave's trailing financials show a company burning cash at extraordinary scale — a negative GAAP result every quarter since its March 2025 IPO, a current ratio of just 0.32, interest coverage of roughly 0.2x, and a debt load that quadrupled to ≈$35B in about 18 months — even as its revenue backlog has grown to a record $104.2B and quarterly revenue keeps expanding well over 100% year-over-year.</div>
+
+    <div class="sec-label">What works for this stock</div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--g-accent)">✓</span><span>Revenue backlog (RPO) reached $104.2B in Q2 2026, up 246% year-over-year, providing multi-year revenue visibility; roughly 36% is expected to convert to revenue within 2 years.</span></div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--g-accent)">✓</span><span>Revenue has grown from $229M (FY2023) to $5.13B (FY2025) to a $7.59B trailing-twelve-month run rate, with the two most recently reported quarters both growing ≈112% year-over-year.</span></div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--g-accent)">✓</span><span>Customer concentration is genuinely improving — Microsoft's share of revenue fell from roughly 72% to 65–67% over the past year — and a new $21B Meta agreement (on top of an earlier $14B deal) adds a major, credit-worthy customer diversifying the base.</span></div>
+
+    <div class="sec-label">What to watch</div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--a-accent)">⚠</span><span>The balance sheet is under real stress by conventional measures: a current ratio of 0.32, interest coverage of roughly 0.2x, total debt of ≈$35B as of June 2026 (from under $8B in 2024), and credit-default-swap markets that priced in an estimated 50% five-year default probability in July 2026.</span></div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--a-accent)">⚠</span><span>Revenue remains extremely concentrated — Microsoft and OpenAI together still likely account for the large majority of both current revenue and backlog — and GPUs are depreciated straight-line over 6 years even though independent estimates suggest real economic useful life under heavy AI workloads may be closer to 1–3 years, a gap that could understate true depreciation expense.</span></div>
+
+    <div class="sec-label">Track this going forward</div>
+    <div class="bullet-row"><span class="bicon" style="color:var(--color-text-secondary)">→</span><span>Whether the $104.2B backlog actually converts into improving liquidity and interest-coverage ratios on the timeline management is guiding to, given the current ratio (0.32) and interest coverage (≈0.2x) leave very little room for error.</span></div>
+
+    <div style="margin-top:16px;font-size:11px;color:var(--color-text-secondary);font-style:italic">
+      This is a VIEW based on fundamentals only. Not a buy/sell recommendation. The decision is always yours.
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px">
+    <div class="card green">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--g-text);margin-bottom:8px">Opportunities</div>
+      <div class="bullet-row" style="border-color:var(--g-border)"><span class="bicon" style="color:var(--g-accent)">+</span><span style="color:var(--g-text);font-size:12px">$104.2B backlog (+246% YoY), plus &gt;$25B of net-new commitments signed in early Q3 2026 not yet reflected in that figure</span></div>
+      <div class="bullet-row" style="border-color:var(--g-border)"><span class="bicon" style="color:var(--g-accent)">+</span><span style="color:var(--g-text);font-size:12px">Investment-grade ratings secured on GPU-collateralized debt (Moody's A3, DBRS A-low) show institutional credit markets are willing to underwrite this asset class at scale</span></div>
+      <div class="bullet-row" style="border-color:var(--g-border);border-bottom:none"><span class="bicon" style="color:var(--g-accent)">+</span><span style="color:var(--g-text);font-size:12px">Geographic and end-market expansion (first Asia-Pacific data center in Indonesia; a CoreWeave Federal / Leidos defense-cloud partnership) broadens the long-run addressable market</span></div>
+    </div>
+    <div class="card red">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--r-text);margin-bottom:8px">Risks</div>
+      <div class="bullet-row" style="border-color:var(--r-border)"><span class="bicon" style="color:var(--r-accent)">−</span><span style="color:var(--r-text);font-size:12px">Extreme leverage and weak liquidity (current ratio 0.32, interest coverage ≈0.2x, ≈$35B total debt) leave little margin for error if growth or financing conditions turn</span></div>
+      <div class="bullet-row" style="border-color:var(--r-border)"><span class="bicon" style="color:var(--r-accent)">−</span><span style="color:var(--r-text);font-size:12px">Hyperscaler competition (AWS Trainium, Google TPUs) and total dependence on Nvidia GPU allocation and pricing mean CoreWeave's value proposition rests on factors largely outside its control</span></div>
+      <div class="bullet-row" style="border-color:var(--r-border);border-bottom:none"><span class="bicon" style="color:var(--r-accent)">−</span><span style="color:var(--r-text);font-size:12px">Heavy insider selling since the August 2025 lockup expiry (&gt;$2.3B by founders) alongside a dual-class structure concentrating ≈73.6% of voting power in three founders despite their falling economic stake is a governance structure worth watching closely</span></div>
+    </div>
+  </div>
+
+</div>
+
+<details style="margin-top:20px;padding:0 4px">
+  <summary>Definitions — tap to expand</summary>
+  <p><strong>P/E ratio</strong> — What you pay per $1 of profit. Not meaningful when a company has no trailing profit.</p>
+  <p><strong>P/S ratio</strong> — Price vs. revenue. Often used instead of P/E for growth-stage companies that aren't yet profitable.</p>
+  <p><strong>EV/EBITDA</strong> — Full business value check including debt. Lower = better value, all else equal.</p>
+  <p><strong>ROE</strong> — For every $100 shareholders invested, how much profit (or loss) the company made. Above 15% = good.</p>
+  <p><strong>ROIC / ROCE</strong> — How efficiently the whole business uses capital, including borrowed money. Above 15% = healthy.</p>
+  <p><strong>Free Cash Flow</strong> — Cash left after all expenses and investments. Deeply negative here because the company is spending heavily on GPU capex.</p>
+  <p><strong>Backlog / RPO</strong> — Remaining Performance Obligations: contracted future revenue not yet recognized. The single most-watched CoreWeave-specific metric — high backlog signals demand, but doesn't guarantee the cash to fund the capex needed to deliver it.</p>
+  <p><strong>Dual-class shares</strong> — Some shares (here, Class B, held by founders) carry more votes per share than the publicly traded Class A shares, letting founders retain control even as their economic ownership percentage falls.</p>
+  <p><strong>13F filing</strong> — A quarterly SEC disclosure large institutional investors must file showing their US equity holdings.</p>
+  <p><strong>CAGR</strong> — Compound Annual Growth Rate. Not meaningful, or not yet calculable, for a company with under 3 years of public-market history or a negative earnings base.</p>
+</details>
+
+<div class="disc">
+  This is a fundamental screening and education tool only. Data sourced from SEC EDGAR, CoreWeave Investor Relations, stockanalysis.com, macrotrends.net, and other public financial databases and news outlets as cited inline. This is NOT investment advice, a buy/sell recommendation, or research from a registered investment adviser or broker-dealer. AI can make errors — verify all numbers directly against SEC filings (10-K/10-Q/8-K) or CoreWeave's own investor relations site before making any decision, especially given the wide cross-source disagreement flagged on several ratios above and this stock's unusually high volatility. Past performance does not guarantee future results. Investing carries risk, including loss of principal, and this is an early-stage, highly leveraged company — that risk is elevated here. Consult a licensed financial advisor before investing.
+</div>
+
+</div>
+
+<script>
+function show(n){
+  var panels=document.querySelectorAll('.panel');
+  var tabs=document.querySelectorAll('.tab-btn');
+  for(var i=0;i<panels.length;i++){
+    panels[i].className='panel'+(i===n?' on':'');
+    tabs[i].className='tab-btn'+(i===n?' active':'');
+  }
+}
+</script>
+</body>
+</html>
