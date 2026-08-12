@@ -80,8 +80,8 @@ $accessNames = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HEISENBER STUDIOS</title>
-    <link rel="stylesheet" href="assets/css/themes.css?v=3">
-    <link rel="stylesheet" href="assets/css/main.css?v=3">
+    <link rel="stylesheet" href="assets/css/themes.css?v=4">
+    <link rel="stylesheet" href="assets/css/main.css?v=4">
 </head>
 <body data-theme="default">
     <?php include __DIR__ . '/includes/header.php'; ?>

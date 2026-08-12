@@ -152,8 +152,8 @@ $allCards = $cardsStmt->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Cards - My Toolbox Site</title>
-    <link rel="stylesheet" href="../assets/css/themes.css">
-    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/themes.css?v=4">
+    <link rel="stylesheet" href="../assets/css/main.css?v=4">
     <style>
         .admin-form { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; padding: 1.25rem; margin-bottom: 2rem; max-width: 700px; }
         .admin-form label { display: block; font-size: 0.85rem; color: var(--color-text-soft); margin-bottom: 0.25rem; margin-top: 0.75rem; }
