@@ -2,3 +2,13 @@
 # All files must be served through download.php / browse.php,
 # which enforce login + access-level checks.
 Require all denied
+
+# Exception: browse.php and download.php themselves must stay reachable
+# since they live in this same directory (unlike investments/index.php,
+# which serves its protected folder from one level up).
+<Files "browse.php">
+    Require all granted
+</Files>
+<Files "download.php">
+    Require all granted
+</Files>
