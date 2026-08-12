@@ -9,7 +9,7 @@ require_access('restricted');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Market Trend Reports - My Toolbox Site</title>
+    <title>Trade Log - Heisenberg Studios</title>
     <link rel="stylesheet" href="../assets/css/themes.css?v=5">
     <link rel="stylesheet" href="../assets/css/fonts.css?v=5">
     <link rel="stylesheet" href="../assets/css/main.css?v=5">
@@ -19,9 +19,10 @@ require_access('restricted');
     <?php include __DIR__ . '/../includes/nav.php'; ?>
 
     <main class="main-content">
-        <h1 class="page-title">Market Trend Reports</h1>
-        <p>Weekly summaries of market trends gathered from scraped pricing data.</p>
-        <p>Content for this page goes here.</p>
+        <h1 class="page-title">Trade Log</h1>
+        <p>Quantitative results of trades, pulled from uploaded spreadsheets and connected-account APIs.
+           No balances or personal account details are shown here &mdash; only trade outcomes and allocation figures.</p>
+        <p>Data pipeline coming soon.</p>
     </main>
 
     <?php include __DIR__ . '/../includes/footer.php'; ?>

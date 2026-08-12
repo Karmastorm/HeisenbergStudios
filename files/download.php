@@ -1,6 +1,6 @@
 <?php
 /**
- * files/download.php?folder=everquest/macroquest&file=somefile.zip
+ * files/download.php?folder=analysis/research&file=somefile.pdf
  *
  * Streams a file to the browser only if:
  *  - the folder exists in file_folders

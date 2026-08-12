@@ -1,6 +1,6 @@
 <?php
 /**
- * files/browse.php?folder=everquest/macroquest
+ * files/browse.php?folder=analysis/research
  *
  * Lists the contents of a protected folder. Access is checked
  * against the file_folders table. Actual file downloads go

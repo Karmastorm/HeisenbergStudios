@@ -2,14 +2,14 @@
 require_once __DIR__ . '/../includes/auth.php';
 start_secure_session();
 
-require_access('read_only');
+require_access('restricted');
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Excel Tracker Sheets - My Toolbox Site</title>
+    <title>Portfolio Allocations - Heisenberg Studios</title>
     <link rel="stylesheet" href="../assets/css/themes.css?v=5">
     <link rel="stylesheet" href="../assets/css/fonts.css?v=5">
     <link rel="stylesheet" href="../assets/css/main.css?v=5">
@@ -19,9 +19,9 @@ require_access('read_only');
     <?php include __DIR__ . '/../includes/nav.php'; ?>
 
     <main class="main-content">
-        <h1 class="page-title">Excel Tracker Sheets</h1>
-        <p>Spreadsheets for tracking loot, raid attendance, and item progression.</p>
-        <p>Download files from the <a href="/files/browse.php?folder=documents/excel">Excel Docs folder</a>.</p>
+        <h1 class="page-title">Portfolio Allocations</h1>
+        <p>Current allocation breakdowns across asset classes and holdings.</p>
+        <p>Content for this page goes here.</p>
     </main>
 
     <?php include __DIR__ . '/../includes/footer.php'; ?>

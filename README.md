@@ -22,14 +22,14 @@ includes/
   footer.php           Sitemap + copyright
 
 sections/              One PHP page per content card
-  eq_macros.php, eq_e3.php, py_webscrapper.php, py_marketresearch.php,
-  py_fileautomation.php, doc_excel.php, doc_word.php, doc_readmes.php
+  portfolio_allocations.php, portfolio_strategies.php,
+  metrics_tradelog.php, metrics_assetallocation.php
 
 files/
   .htaccess            Denies direct web access to everything here
   browse.php           Lists a folder's files (access-checked)
   download.php         Streams a file (access-checked, no path traversal)
-  everquest/ python/ documents/   FTP-uploaded files live in these subfolders
+  analysis/research/   FTP-uploaded research documents live here
 
 admin/
   cards.php            Add/edit/delete content cards (editor+)
@@ -46,6 +46,9 @@ setup/                 NOT deployed — local helpers only
 1. Import `setup/schema.sql` then `setup/schema_additions.sql` (if not already).
 2. Run `setup/fix_card_links.sql` once so card links resolve correctly
    from any page (fixes the /sections/sections/ doubled-path issue).
+3. Run `setup/schema_additions_investment_fundamentals.sql`, then
+   `setup/schema_additions_financial_rebrand.sql` to rebrand the nav to
+   Analysis / Portfolio / Metrics.
 
 ## Deployment
 `.github/workflows/deploy.yml` deploys via SFTP on push to `main`.
