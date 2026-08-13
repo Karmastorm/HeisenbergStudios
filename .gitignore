@@ -9,6 +9,9 @@ error_log
 Thumbs.db
 node_modules/
 
+# Subagent-driven-development scratch workspace (ledgers, briefs, review packages)
+.superpowers/
+
 # Setup helpers and DB dumps are kept in /setup but never deployed.
 # (They stay in the repo for reference; the deploy workflow excludes them.)
 
