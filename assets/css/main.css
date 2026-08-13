@@ -288,6 +288,15 @@ select:focus-visible {
     line-height: 1.4;
 }
 
+.card-date {
+    align-self: flex-end;
+    margin-top: auto;
+    padding-top: 0.4rem;
+    font-size: 0.7rem;
+    color: var(--color-text-soft);
+    opacity: 0.75;
+}
+
 /* ---- Card top banner (shows the category, colored by access level) ---- */
 .card-banner {
     padding: 0.4rem 0.9rem;

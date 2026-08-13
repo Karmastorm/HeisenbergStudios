@@ -109,6 +109,7 @@ $accessNames = [
                         <div class="card-body">
                             <div class="card-headline"><?php echo htmlspecialchars($card['title']); ?></div>
                             <div class="card-synopsis"><?php echo htmlspecialchars($card['synopsis']); ?></div>
+                            <div class="card-date"><?php echo htmlspecialchars(date('Y.m.d', strtotime($card['created_at']))); ?></div>
                         </div>
                     </a>
                 <?php endforeach; ?>
