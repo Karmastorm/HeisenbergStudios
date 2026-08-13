@@ -14,6 +14,7 @@
 body[data-theme="light"] {
     --color-bg:        #fafafa;
     --color-surface:   #ffffff;
+    --color-surface-elevated: #ffffff;
     --color-primary:   #18181b;
     --color-accent:    #27272a;
     --color-accent-fg: #ffffff;
@@ -33,6 +34,7 @@ body[data-theme="light"] {
 body[data-theme="dark"] {
     --color-bg:        #09090b;
     --color-surface:   #18181b;
+    --color-surface-elevated: #1f1f23;
     --color-primary:   #fafafa;
     --color-accent:    #e4e4e7;
     --color-accent-fg: #09090b;
