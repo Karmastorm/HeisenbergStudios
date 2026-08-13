@@ -175,6 +175,33 @@ $selectedAccountIds = isset($_GET['accounts']) && is_array($_GET['accounts'])
 
 $stats = fetch_trade_stats($pdo, $selectedAccountIds);
 
+$balanceHistory = fetch_balance_history($pdo, $selectedAccountIds);
+$avgWinSparkline = fetch_recent_trade_values($pdo, $selectedAccountIds, 'win');
+$avgLossSparkline = fetch_recent_trade_values($pdo, $selectedAccountIds, 'loss');
+$winRateSparkline = fetch_win_rate_trend($pdo, $selectedAccountIds);
+
+function sparkline_trend_class(array $values): string {
+    if (count($values) < 2) {
+        return 'sparkline-trend-flat';
+    }
+    $first = reset($values);
+    $last = end($values);
+    if ($last > $first) return 'sparkline-trend-up';
+    if ($last < $first) return 'sparkline-trend-down';
+    return 'sparkline-trend-flat';
+}
+
+function sparkline_trend_arrow(array $values): string {
+    if (count($values) < 2) {
+        return '&ndash;';
+    }
+    $first = reset($values);
+    $last = end($values);
+    if ($last > $first) return '&#9650;';
+    if ($last < $first) return '&#9660;';
+    return '&ndash;';
+}
+
 $page = max(1, (int)($_GET['page'] ?? 1));
 $perPage = 25;
 $totalTrades = fetch_trades_count($pdo, $selectedAccountIds);
@@ -327,30 +354,61 @@ function format_percent(?float $value): string {
             <div class="trade-stat-tile">
                 <div class="stat-label">Win Rate</div>
                 <div class="stat-value"><?php echo format_percent($stats['overview']['win_rate']); ?></div>
+                <?php if (!empty($winRateSparkline)): ?>
+                    <div class="sparkline-wrap sparkline-neutral">
+                        <?php echo render_sparkline_svg($winRateSparkline); ?>
+                        <span class="<?php echo sparkline_trend_class($winRateSparkline); ?>"><?php echo sparkline_trend_arrow($winRateSparkline); ?></span>
+                    </div>
+                <?php endif; ?>
             </div>
-            <div class="trade-stat-tile">
+            <div class="trade-stat-tile <?php echo trade_stat_class($stats['overview']['net_pnl_dollars']); ?>">
                 <div class="stat-label">Net PnL</div>
                 <div class="stat-value <?php echo trade_stat_class($stats['overview']['net_pnl_dollars']); ?>"><?php echo format_money($stats['overview']['net_pnl_dollars']); ?></div>
             </div>
-            <div class="trade-stat-tile">
+            <div class="trade-stat-tile trade-stat-positive">
                 <div class="stat-label">Avg Win</div>
                 <div class="stat-value trade-stat-positive"><?php echo format_money($stats['overview']['avg_win_dollars']); ?></div>
+                <?php if (!empty($avgWinSparkline)): ?>
+                    <div class="sparkline-wrap sparkline-positive">
+                        <?php echo render_sparkline_svg($avgWinSparkline); ?>
+                        <span class="<?php echo sparkline_trend_class($avgWinSparkline); ?>"><?php echo sparkline_trend_arrow($avgWinSparkline); ?></span>
+                    </div>
+                <?php endif; ?>
             </div>
-            <div class="trade-stat-tile">
+            <div class="trade-stat-tile trade-stat-negative">
                 <div class="stat-label">Avg Loss</div>
                 <div class="stat-value trade-stat-negative"><?php echo format_money($stats['overview']['avg_loss_dollars']); ?></div>
+                <?php if (!empty($avgLossSparkline)): ?>
+                    <div class="sparkline-wrap sparkline-negative">
+                        <?php echo render_sparkline_svg($avgLossSparkline); ?>
+                        <span class="<?php echo sparkline_trend_class($avgLossSparkline); ?>"><?php echo sparkline_trend_arrow($avgLossSparkline); ?></span>
+                    </div>
+                <?php endif; ?>
             </div>
             <div class="trade-stat-tile">
                 <div class="stat-label">Avg R-Multiple</div>
                 <div class="stat-value"><?php echo $stats['overview']['avg_r_multiple'] === null ? '&mdash;' : number_format($stats['overview']['avg_r_multiple'], 2) . 'R'; ?></div>
             </div>
             <?php if ($stats['account_growth_percent'] !== null): ?>
-                <div class="trade-stat-tile">
+                <div class="trade-stat-tile <?php echo trade_stat_class($stats['account_growth_percent']); ?>">
                     <div class="stat-label">Account Growth</div>
                     <div class="stat-value <?php echo trade_stat_class($stats['account_growth_percent']); ?>"><?php echo format_percent($stats['account_growth_percent']); ?></div>
                 </div>
             <?php endif; ?>
         </section>
+
+        <?php if (count($balanceHistory) >= 2): ?>
+            <section class="balance-chart-wrap">
+                <h2>Account Balance</h2>
+                <canvas id="balance-chart" role="img" aria-label="Account balance over time"></canvas>
+                <script type="application/json" id="balance-chart-data"><?php echo json_encode($balanceHistory); ?></script>
+            </section>
+        <?php else: ?>
+            <section class="balance-chart-wrap">
+                <h2>Account Balance</h2>
+                <p>Log a closed trade to see your balance history.</p>
+            </section>
+        <?php endif; ?>
 
         <section class="trade-breakdowns">
             <table class="admin-table">
@@ -565,5 +623,7 @@ function format_percent(?float $value): string {
 
     <?php include __DIR__ . '/../includes/footer.php'; ?>
     <script src="../assets/js/theme-switcher.js"></script>
+    <script src="../assets/js/chart.min.js"></script>
+    <script src="../assets/js/trade-balance-chart.js"></script>
 </body>
 </html>
