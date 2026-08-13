@@ -88,6 +88,27 @@ $editAccount = null;
 if (isset($_GET['edit_account'])) {
     $editAccount = trade_log_get_account($pdo, (int)$_GET['edit_account'], $userId);
 }
+
+$userAccountIds = trade_log_user_account_ids($pdo, $userId);
+$selectedAccountIds = isset($_GET['accounts']) && is_array($_GET['accounts'])
+    ? array_values(array_intersect($userAccountIds, array_map('intval', $_GET['accounts'])))
+    : $userAccountIds;
+
+$stats = fetch_trade_stats($pdo, $selectedAccountIds);
+
+function trade_stat_class(float $value): string {
+    if ($value > 0.0001) return 'trade-stat-positive';
+    if ($value < -0.0001) return 'trade-stat-negative';
+    return '';
+}
+
+function format_money(?float $value): string {
+    return $value === null ? '&mdash;' : '$' . number_format($value, 2);
+}
+
+function format_percent(?float $value): string {
+    return $value === null ? '&mdash;' : number_format($value, 1) . '%';
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -179,6 +200,120 @@ if (isset($_GET['edit_account'])) {
                     </tbody>
                 </table>
             <?php endif; ?>
+        </section>
+
+        <?php if (count($accounts) > 1): ?>
+            <form method="get" class="account-filter">
+                <?php foreach ($accounts as $account): ?>
+                    <label>
+                        <input type="checkbox" name="accounts[]" value="<?php echo (int)$account['id']; ?>"
+                               <?php echo in_array((int)$account['id'], $selectedAccountIds, true) ? 'checked' : ''; ?>>
+                        <?php echo htmlspecialchars($account['brokerage_name'] . ' — ' . $account['account_label']); ?>
+                    </label>
+                <?php endforeach; ?>
+                <button type="submit" class="admin-form-inline-submit" style="padding:0.3rem 0.9rem; background:var(--color-accent); color:var(--color-accent-fg); border:none; border-radius:4px; cursor:pointer;">Apply Filter</button>
+            </form>
+        <?php endif; ?>
+
+        <section class="trade-dashboard">
+            <div class="trade-stat-tile">
+                <div class="stat-label">Total Trades</div>
+                <div class="stat-value"><?php echo (int)$stats['overview']['total_trades']; ?></div>
+            </div>
+            <div class="trade-stat-tile">
+                <div class="stat-label">Open Trades</div>
+                <div class="stat-value"><?php echo (int)$stats['overview']['open_trades']; ?></div>
+            </div>
+            <div class="trade-stat-tile">
+                <div class="stat-label">Win Rate</div>
+                <div class="stat-value"><?php echo format_percent($stats['overview']['win_rate']); ?></div>
+            </div>
+            <div class="trade-stat-tile">
+                <div class="stat-label">Net PnL</div>
+                <div class="stat-value <?php echo trade_stat_class($stats['overview']['net_pnl_dollars']); ?>"><?php echo format_money($stats['overview']['net_pnl_dollars']); ?></div>
+            </div>
+            <div class="trade-stat-tile">
+                <div class="stat-label">Avg Win</div>
+                <div class="stat-value trade-stat-positive"><?php echo format_money($stats['overview']['avg_win_dollars']); ?></div>
+            </div>
+            <div class="trade-stat-tile">
+                <div class="stat-label">Avg Loss</div>
+                <div class="stat-value trade-stat-negative"><?php echo format_money($stats['overview']['avg_loss_dollars']); ?></div>
+            </div>
+            <div class="trade-stat-tile">
+                <div class="stat-label">Avg R-Multiple</div>
+                <div class="stat-value"><?php echo $stats['overview']['avg_r_multiple'] === null ? '&mdash;' : number_format($stats['overview']['avg_r_multiple'], 2) . 'R'; ?></div>
+            </div>
+            <?php if ($stats['account_growth_percent'] !== null): ?>
+                <div class="trade-stat-tile">
+                    <div class="stat-label">Account Growth</div>
+                    <div class="stat-value <?php echo trade_stat_class($stats['account_growth_percent']); ?>"><?php echo format_percent($stats['account_growth_percent']); ?></div>
+                </div>
+            <?php endif; ?>
+        </section>
+
+        <section class="trade-breakdowns">
+            <table class="admin-table">
+                <caption style="text-align:left; font-weight:600; padding:0.5rem 0;">Day of Week</caption>
+                <thead><tr><th>Day</th><th>Trades</th><th>PnL</th></tr></thead>
+                <tbody>
+                    <?php foreach ($stats['by_day_of_week'] as $day => $row): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($day); ?></td>
+                            <td><?php echo (int)$row['trades']; ?></td>
+                            <td class="<?php echo trade_stat_class($row['pnl']); ?>"><?php echo format_money($row['pnl']); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+
+            <table class="admin-table">
+                <caption style="text-align:left; font-weight:600; padding:0.5rem 0;">Long vs. Short</caption>
+                <thead><tr><th>Side</th><th>Trades</th><th>PnL</th></tr></thead>
+                <tbody>
+                    <?php foreach ($stats['by_side'] as $side => $row): ?>
+                        <tr>
+                            <td><?php echo ucfirst($side); ?></td>
+                            <td><?php echo (int)$row['trades']; ?></td>
+                            <td class="<?php echo trade_stat_class($row['pnl']); ?>"><?php echo format_money($row['pnl']); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+
+            <table class="admin-table">
+                <caption style="text-align:left; font-weight:600; padding:0.5rem 0;">Day vs. Swing</caption>
+                <thead><tr><th>Type</th><th>Trades</th><th>PnL</th></tr></thead>
+                <tbody>
+                    <?php foreach ($stats['by_trade_type'] as $type => $row): ?>
+                        <tr>
+                            <td><?php echo ucfirst($type); ?></td>
+                            <td><?php echo (int)$row['trades']; ?></td>
+                            <td class="<?php echo trade_stat_class($row['pnl']); ?>"><?php echo format_money($row['pnl']); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+
+            <table class="admin-table">
+                <caption style="text-align:left; font-weight:600; padding:0.5rem 0;">By Strategy</caption>
+                <thead><tr><th>Strategy</th><th>Trades</th><th>Win Rate</th><th>Net PnL</th><th>Avg Gain</th><th>Avg Loss</th></tr></thead>
+                <tbody>
+                    <?php foreach ($stats['by_strategy'] as $strategy => $row): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($strategy); ?></td>
+                            <td><?php echo (int)$row['trades']; ?></td>
+                            <td><?php echo format_percent($row['win_rate']); ?></td>
+                            <td class="<?php echo trade_stat_class($row['net_pnl']); ?>"><?php echo format_money($row['net_pnl']); ?></td>
+                            <td class="trade-stat-positive"><?php echo format_money($row['avg_gain']); ?></td>
+                            <td class="trade-stat-negative"><?php echo format_money($row['avg_loss']); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    <?php if (empty($stats['by_strategy'])): ?>
+                        <tr><td colspan="6">No trades logged yet.</td></tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
         </section>
     </main>
 
