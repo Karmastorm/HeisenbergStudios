@@ -69,9 +69,13 @@ function require_access(int|string $required): void {
 }
 
 /**
- * Attempt to log a user in. Returns true on success.
+ * Attempt to log a user in.
+ * Returns 'ok' on success, 'pending' if the credentials are correct but the
+ * account is awaiting admin approval (is_active = 0), or 'invalid' otherwise.
+ * Password is checked before the is_active check so a wrong password never
+ * reveals whether a pending account exists.
  */
-function attempt_login(string $username, string $password): bool {
+function attempt_login(string $username, string $password): string {
     $pdo = get_db_connection();
     $stmt = $pdo->prepare(
         'SELECT id, username, password_hash, access_level, theme, is_active
@@ -80,8 +84,12 @@ function attempt_login(string $username, string $password): bool {
     $stmt->execute(['username' => $username]);
     $user = $stmt->fetch();
 
-    if (!$user || !$user['is_active'] || !password_verify($password, $user['password_hash'])) {
-        return false;
+    if (!$user || !password_verify($password, $user['password_hash'])) {
+        return 'invalid';
+    }
+
+    if (!$user['is_active']) {
+        return 'pending';
     }
 
     // Prevent session fixation
@@ -95,7 +103,7 @@ function attempt_login(string $username, string $password): bool {
     $update = $pdo->prepare('UPDATE users SET last_login = NOW() WHERE id = :id');
     $update->execute(['id' => $user['id']]);
 
-    return true;
+    return 'ok';
 }
 
 function logout(): void {
@@ -111,18 +119,22 @@ function logout(): void {
 
 /**
  * Create a new user with a securely hashed password.
+ * $isActive controls whether the account can log in immediately (used for
+ * admin-created accounts) or must wait for admin approval (public
+ * self-registration passes false -- see register.php and admin/users.php).
  */
-function create_user(string $username, string $password, string $email, int $accessLevel = 1): bool {
+function create_user(string $username, string $password, string $email, int $accessLevel = 1, bool $isActive = true): bool {
     $pdo = get_db_connection();
     $hash = password_hash($password, PASSWORD_DEFAULT);
     $stmt = $pdo->prepare(
-        'INSERT INTO users (username, password_hash, email, access_level)
-         VALUES (:username, :hash, :email, :access_level)'
+        'INSERT INTO users (username, password_hash, email, access_level, is_active)
+         VALUES (:username, :hash, :email, :access_level, :is_active)'
     );
     return $stmt->execute([
         'username'     => $username,
         'hash'         => $hash,
         'email'        => $email,
         'access_level' => $accessLevel,
+        'is_active'    => $isActive ? 1 : 0,
     ]);
 }

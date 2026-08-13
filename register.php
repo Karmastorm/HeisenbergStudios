@@ -3,6 +3,7 @@ require_once __DIR__ . '/includes/auth.php';
 start_secure_session();
 
 $error = '';
+$submitted = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Honeypot: real users never see or fill this field. If it's filled,
@@ -38,17 +39,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = 'Username already taken.';
         } elseif ($existing) {
             $error = 'Email already registered.';
-        } elseif (!create_user($username, $password, $email, ACCESS_LEVELS['read_only'])) {
+        } elseif (!create_user($username, $password, $email, ACCESS_LEVELS['read_only'], isActive: false)) {
             $error = 'Something went wrong creating your account. Please try again.';
         } else {
-            attempt_login($username, $password);
-            header('Location: index.php');
-            exit;
+            $submitted = true;
         }
     }
 }
 
-if (is_logged_in()) {
+if (!$submitted && is_logged_in()) {
     header('Location: index.php');
     exit;
 }
@@ -69,29 +68,34 @@ if (is_logged_in()) {
     <div class="login-page-wrapper">
         <div class="login-card">
             <h2>Register</h2>
-            <?php if ($error): ?>
-                <div class="error-msg"><?php echo htmlspecialchars($error); ?></div>
+            <?php if ($submitted): ?>
+                <div class="success-msg">Registration submitted &mdash; an admin will review your account before you can log in.</div>
+                <p><a href="login.php">Return to Log In</a></p>
+            <?php else: ?>
+                <?php if ($error): ?>
+                    <div class="error-msg"><?php echo htmlspecialchars($error); ?></div>
+                <?php endif; ?>
+                <form method="post" action="register.php">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($_POST['username'] ?? ''); ?>" required>
+
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>" required>
+
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+
+                    <label for="confirm_password">Confirm Password</label>
+                    <input type="password" id="confirm_password" name="confirm_password" required>
+
+                    <div class="honeypot-field" aria-hidden="true">
+                        <label for="website">Website</label>
+                        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                    </div>
+
+                    <button type="submit">Register</button>
+                </form>
             <?php endif; ?>
-            <form method="post" action="register.php">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($_POST['username'] ?? ''); ?>" required>
-
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>" required>
-
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
-
-                <label for="confirm_password">Confirm Password</label>
-                <input type="password" id="confirm_password" name="confirm_password" required>
-
-                <div class="honeypot-field" aria-hidden="true">
-                    <label for="website">Website</label>
-                    <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
-                </div>
-
-                <button type="submit">Register</button>
-            </form>
         </div>
     </div>
 

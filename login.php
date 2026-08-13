@@ -10,11 +10,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($username === '' || $password === '') {
         $error = 'Please enter both username and password.';
-    } elseif (attempt_login($username, $password)) {
-        header('Location: index.php');
-        exit;
     } else {
-        $error = 'Invalid username or password.';
+        $result = attempt_login($username, $password);
+        if ($result === 'ok') {
+            header('Location: index.php');
+            exit;
+        } elseif ($result === 'pending') {
+            $error = 'Your account is awaiting admin approval.';
+        } else {
+            $error = 'Invalid username or password.';
+        }
     }
 } elseif (isset($_GET['denied'])) {
     $error = 'You must log in with an account that has sufficient access to view that page.';

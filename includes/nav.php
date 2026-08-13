@@ -67,6 +67,7 @@ foreach ($rows as $row) {
                     <li><a href="/admin/cards.php">Manage Cards</a></li>
                     <?php if ($userLevel >= 5): // Webmaster only ?>
                         <li><a href="/admin/folders.php">Manage Folders</a></li>
+                        <li><a href="/admin/users.php">Manage Users</a></li>
                     <?php endif; ?>
                 </ul>
             </li>
