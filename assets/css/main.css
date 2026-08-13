@@ -590,7 +590,15 @@ select:focus-visible {
 .msg-error { background: #fdecea; color: #b3261e; padding: 0.6rem 0.9rem; border-radius: 4px; margin-bottom: 1rem; font-size: 0.9rem; }
 
 /* ---------------- Trade Log ---------------- */
-.trade-dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+.trade-dashboard { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+
+@media (max-width: 1100px) {
+    .trade-dashboard { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+    .trade-dashboard { grid-template-columns: 1fr; }
+}
 .trade-stat-tile { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 8px; padding: 0.9rem 1rem; }
 .trade-stat-tile .stat-label { font-size: 0.75rem; color: var(--color-text-soft); text-transform: uppercase; letter-spacing: 0.04em; }
 .trade-stat-tile .stat-value { font-size: 1.4rem; font-family: 'Bebas Neue', 'Nunito', sans-serif; margin-top: 0.2rem; }
