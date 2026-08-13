@@ -53,7 +53,7 @@ unset($f);
         .admin-table th, .admin-table td { padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--color-border); text-align: left; font-size: 0.88rem; }
         .admin-table th { background: var(--color-bg); }
         .admin-table select { padding: 0.3rem 0.5rem; border-radius: 4px; border: 1px solid var(--color-border); }
-        .admin-table button { padding: 0.3rem 0.8rem; background: var(--color-accent); color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+        .admin-table button { padding: 0.3rem 0.8rem; background: var(--color-accent); color: var(--color-accent-fg); border: none; border-radius: 4px; cursor: pointer; }
         .msg-success { background: #e6f4ea; color: #1e7e34; padding: 0.6rem 0.9rem; border-radius: 4px; margin-bottom: 1rem; font-size: 0.9rem; }
         .msg-error { background: #fdecea; color: #b3261e; padding: 0.6rem 0.9rem; border-radius: 4px; margin-bottom: 1rem; font-size: 0.9rem; }
         .badge-ok { color: #1e7e34; }

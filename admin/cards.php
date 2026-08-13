@@ -163,7 +163,7 @@ $allCards = $cardsStmt->fetchAll();
         }
         .admin-form textarea { resize: vertical; min-height: 80px; }
         .admin-form button {
-            margin-top: 1rem; padding: 0.55rem 1.2rem; background: var(--color-accent); color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 0.95rem;
+            margin-top: 1rem; padding: 0.55rem 1.2rem; background: var(--color-accent); color: var(--color-accent-fg); border: none; border-radius: 4px; cursor: pointer; font-size: 0.95rem;
         }
         .admin-table { width: 100%; border-collapse: collapse; background: var(--color-surface); border: 1px solid var(--color-border); }
         .admin-table th, .admin-table td { padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--color-border); text-align: left; font-size: 0.88rem; }
