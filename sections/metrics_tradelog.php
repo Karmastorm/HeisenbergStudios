@@ -77,6 +77,85 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'add_a
     } else {
         $error = 'Account not found.';
     }
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && in_array($_POST['action'] ?? '', ['add_trade', 'edit_trade'], true)) {
+    $isEdit = $_POST['action'] === 'edit_trade';
+    $accountId = (int)($_POST['account_id'] ?? 0);
+    $account = trade_log_get_account($pdo, $accountId, $userId);
+
+    if (!$account) {
+        $error = 'Select a valid account.';
+    } else {
+        $ticker = strtoupper(trim($_POST['ticker'] ?? ''));
+        $side = $_POST['side'] ?? '';
+        $tradeType = $_POST['trade_type'] ?? '';
+        $strategy = trim($_POST['strategy'] ?? '') ?: null;
+        $openDate = $_POST['open_date'] ?? '';
+        $openPrice = trim($_POST['open_price'] ?? '');
+        $openQty = trim($_POST['open_qty'] ?? '');
+        $openFees = trim($_POST['open_fees'] ?? '') ?: '0';
+        $closeDate = trim($_POST['close_date'] ?? '') ?: null;
+        $closePrice = trim($_POST['close_price'] ?? '') ?: null;
+        $closeFees = trim($_POST['close_fees'] ?? '') ?: null;
+        $stopLoss = trim($_POST['stop_loss'] ?? '') ?: null;
+        $takeProfit = trim($_POST['take_profit'] ?? '') ?: null;
+        $notes = trim($_POST['notes'] ?? '') ?: null;
+
+        if ($ticker === '' || !in_array($side, ['long', 'short'], true) || !in_array($tradeType, ['day', 'swing'], true)
+            || $openDate === '' || $openPrice === '' || $openQty === '') {
+            $error = 'Ticker, side, trade type, open date, open price, and quantity are required.';
+        } elseif ($isEdit) {
+            $tradeId = (int)($_POST['trade_id'] ?? 0);
+            $existingTrade = trade_log_get_trade($pdo, $tradeId, $userId);
+            if (!$existingTrade) {
+                $error = 'Trade not found.';
+            } else {
+                $stmt = $pdo->prepare(
+                    'UPDATE trades SET account_id = :account_id, ticker = :ticker, side = :side,
+                            trade_type = :trade_type, strategy = :strategy, open_date = :open_date,
+                            open_price = :open_price, open_qty = :open_qty, open_fees = :open_fees,
+                            close_date = :close_date, close_price = :close_price, close_fees = :close_fees,
+                            stop_loss = :stop_loss, take_profit = :take_profit, notes = :notes
+                     WHERE id = :id'
+                );
+                $stmt->execute([
+                    'account_id' => $accountId, 'ticker' => $ticker, 'side' => $side,
+                    'trade_type' => $tradeType, 'strategy' => $strategy, 'open_date' => $openDate,
+                    'open_price' => $openPrice, 'open_qty' => $openQty, 'open_fees' => $openFees,
+                    'close_date' => $closeDate, 'close_price' => $closePrice, 'close_fees' => $closeFees,
+                    'stop_loss' => $stopLoss, 'take_profit' => $takeProfit, 'notes' => $notes,
+                    'id' => $tradeId,
+                ]);
+                $message = 'Trade updated.';
+            }
+        } else {
+            $stmt = $pdo->prepare(
+                "INSERT INTO trades (account_id, ticker, side, trade_type, strategy, open_date,
+                        open_price, open_qty, open_fees, close_date, close_price, close_fees,
+                        stop_loss, take_profit, notes, source)
+                 VALUES (:account_id, :ticker, :side, :trade_type, :strategy, :open_date,
+                        :open_price, :open_qty, :open_fees, :close_date, :close_price, :close_fees,
+                        :stop_loss, :take_profit, :notes, 'manual')"
+            );
+            $stmt->execute([
+                'account_id' => $accountId, 'ticker' => $ticker, 'side' => $side,
+                'trade_type' => $tradeType, 'strategy' => $strategy, 'open_date' => $openDate,
+                'open_price' => $openPrice, 'open_qty' => $openQty, 'open_fees' => $openFees,
+                'close_date' => $closeDate, 'close_price' => $closePrice, 'close_fees' => $closeFees,
+                'stop_loss' => $stopLoss, 'take_profit' => $takeProfit, 'notes' => $notes,
+            ]);
+            $message = 'Trade added.';
+        }
+    }
+} elseif (isset($_GET['delete_trade'])) {
+    $tradeId = (int)$_GET['delete_trade'];
+    $existingTrade = trade_log_get_trade($pdo, $tradeId, $userId);
+    if ($existingTrade) {
+        $stmt = $pdo->prepare('DELETE FROM trades WHERE id = :id');
+        $stmt->execute(['id' => $tradeId]);
+        $message = 'Trade deleted.';
+    } else {
+        $error = 'Trade not found.';
+    }
 }
 
 $accounts = [];
@@ -95,6 +174,27 @@ $selectedAccountIds = isset($_GET['accounts']) && is_array($_GET['accounts'])
     : $userAccountIds;
 
 $stats = fetch_trade_stats($pdo, $selectedAccountIds);
+
+$page = max(1, (int)($_GET['page'] ?? 1));
+$perPage = 25;
+$totalTrades = fetch_trades_count($pdo, $selectedAccountIds);
+$totalPages = max(1, (int)ceil($totalTrades / $perPage));
+$trades = fetch_trades_page($pdo, $selectedAccountIds, $page, $perPage);
+
+$editTrade = null;
+if (isset($_GET['edit_trade'])) {
+    $editTrade = trade_log_get_trade($pdo, (int)$_GET['edit_trade'], $userId);
+}
+
+$strategySuggestions = [];
+if (!empty($userAccountIds)) {
+    $placeholders = implode(',', array_fill(0, count($userAccountIds), '?'));
+    $stmt = $pdo->prepare(
+        "SELECT DISTINCT strategy FROM trades WHERE account_id IN ($placeholders) AND strategy IS NOT NULL AND strategy != ''"
+    );
+    $stmt->execute($userAccountIds);
+    $strategySuggestions = $stmt->fetchAll(PDO::FETCH_COLUMN);
+}
 
 function trade_stat_class(float $value): string {
     if ($value > 0.0001) return 'trade-stat-positive';
@@ -314,6 +414,152 @@ function format_percent(?float $value): string {
                     <?php endif; ?>
                 </tbody>
             </table>
+        </section>
+
+        <section class="trade-journal">
+            <h2>Journal</h2>
+
+            <?php if (empty($accounts)): ?>
+                <p>Add a brokerage account above before logging trades.</p>
+            <?php else: ?>
+                <div class="admin-form">
+                    <h3><?php echo $editTrade ? 'Edit Trade' : 'Add Trade'; ?></h3>
+                    <form method="post" action="metrics_tradelog.php<?php echo $editTrade ? '?edit_trade=' . (int)$editTrade['id'] : ''; ?>">
+                        <input type="hidden" name="action" value="<?php echo $editTrade ? 'edit_trade' : 'add_trade'; ?>">
+                        <?php if ($editTrade): ?>
+                            <input type="hidden" name="trade_id" value="<?php echo (int)$editTrade['id']; ?>">
+                        <?php endif; ?>
+
+                        <label for="account_id">Account</label>
+                        <select id="account_id" name="account_id" required>
+                            <?php foreach ($accounts as $account): ?>
+                                <option value="<?php echo (int)$account['id']; ?>"
+                                    <?php echo (isset($editTrade['account_id']) && (int)$editTrade['account_id'] === (int)$account['id']) ? 'selected' : ''; ?>>
+                                    <?php echo htmlspecialchars($account['brokerage_name'] . ' — ' . $account['account_label']); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+
+                        <label for="ticker">Ticker</label>
+                        <input type="text" id="ticker" name="ticker" required
+                               value="<?php echo htmlspecialchars($editTrade['ticker'] ?? ''); ?>">
+
+                        <label for="side">Side</label>
+                        <select id="side" name="side" required>
+                            <option value="long" <?php echo (($editTrade['side'] ?? '') === 'long') ? 'selected' : ''; ?>>Long</option>
+                            <option value="short" <?php echo (($editTrade['side'] ?? '') === 'short') ? 'selected' : ''; ?>>Short</option>
+                        </select>
+
+                        <label for="trade_type">Trade Type</label>
+                        <select id="trade_type" name="trade_type" required>
+                            <option value="day" <?php echo (($editTrade['trade_type'] ?? '') === 'day') ? 'selected' : ''; ?>>Day</option>
+                            <option value="swing" <?php echo (($editTrade['trade_type'] ?? '') === 'swing') ? 'selected' : ''; ?>>Swing</option>
+                        </select>
+
+                        <label for="strategy">Strategy</label>
+                        <input type="text" id="strategy" name="strategy" list="strategy-suggestions"
+                               value="<?php echo htmlspecialchars($editTrade['strategy'] ?? ''); ?>">
+                        <datalist id="strategy-suggestions">
+                            <?php foreach ($strategySuggestions as $s): ?>
+                                <option value="<?php echo htmlspecialchars($s); ?>">
+                            <?php endforeach; ?>
+                        </datalist>
+
+                        <label for="open_date">Open Date</label>
+                        <input type="date" id="open_date" name="open_date" required
+                               value="<?php echo htmlspecialchars($editTrade['open_date'] ?? ''); ?>">
+
+                        <label for="open_price">Open Price</label>
+                        <input type="number" step="0.0001" id="open_price" name="open_price" required
+                               value="<?php echo htmlspecialchars($editTrade['open_price'] ?? ''); ?>">
+
+                        <label for="open_qty">Quantity</label>
+                        <input type="number" step="0.0001" id="open_qty" name="open_qty" required
+                               value="<?php echo htmlspecialchars($editTrade['open_qty'] ?? ''); ?>">
+
+                        <label for="open_fees">Open Fees</label>
+                        <input type="number" step="0.01" id="open_fees" name="open_fees"
+                               value="<?php echo htmlspecialchars($editTrade['open_fees'] ?? '0'); ?>">
+
+                        <label for="close_date">Close Date (leave blank if still open)</label>
+                        <input type="date" id="close_date" name="close_date"
+                               value="<?php echo htmlspecialchars($editTrade['close_date'] ?? ''); ?>">
+
+                        <label for="close_price">Close Price</label>
+                        <input type="number" step="0.0001" id="close_price" name="close_price"
+                               value="<?php echo htmlspecialchars($editTrade['close_price'] ?? ''); ?>">
+
+                        <label for="close_fees">Close Fees</label>
+                        <input type="number" step="0.01" id="close_fees" name="close_fees"
+                               value="<?php echo htmlspecialchars($editTrade['close_fees'] ?? ''); ?>">
+
+                        <label for="stop_loss">Stop Loss</label>
+                        <input type="number" step="0.0001" id="stop_loss" name="stop_loss"
+                               value="<?php echo htmlspecialchars($editTrade['stop_loss'] ?? ''); ?>">
+
+                        <label for="take_profit">Take Profit</label>
+                        <input type="number" step="0.0001" id="take_profit" name="take_profit"
+                               value="<?php echo htmlspecialchars($editTrade['take_profit'] ?? ''); ?>">
+
+                        <label for="notes">Notes</label>
+                        <textarea id="notes" name="notes"><?php echo htmlspecialchars($editTrade['notes'] ?? ''); ?></textarea>
+
+                        <button type="submit"><?php echo $editTrade ? 'Update Trade' : 'Add Trade'; ?></button>
+                        <?php if ($editTrade): ?>
+                            <a href="metrics_tradelog.php" style="margin-left: 1rem; font-size: 0.9rem;">Cancel</a>
+                        <?php endif; ?>
+                    </form>
+                </div>
+
+                <table class="trade-journal-table">
+                    <thead>
+                        <tr>
+                            <th>Account</th><th>Ticker</th><th>Side</th><th>Type</th><th>Strategy</th>
+                            <th>Open</th><th>Close</th><th>PnL $</th><th>PnL %</th><th>R</th><th>Result</th><th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($trades as $trade): ?>
+                            <?php $pnl = compute_trade_pnl($trade); ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($trade['brokerage_name'] . ' — ' . $trade['account_label']); ?></td>
+                                <td><?php echo htmlspecialchars($trade['ticker']); ?></td>
+                                <td><?php echo ucfirst($trade['side']); ?></td>
+                                <td><?php echo ucfirst($trade['trade_type']); ?></td>
+                                <td><?php echo htmlspecialchars($trade['strategy'] ?? ''); ?></td>
+                                <td><?php echo htmlspecialchars($trade['open_date']); ?></td>
+                                <td><?php echo htmlspecialchars($trade['close_date'] ?? 'Open'); ?></td>
+                                <td class="<?php echo $pnl ? trade_stat_class($pnl['pnl_dollars']) : ''; ?>"><?php echo $pnl ? format_money($pnl['pnl_dollars']) : '&mdash;'; ?></td>
+                                <td><?php echo $pnl ? format_percent($pnl['pnl_percent']) : '&mdash;'; ?></td>
+                                <td><?php echo ($pnl && $pnl['r_multiple'] !== null) ? number_format($pnl['r_multiple'], 2) . 'R' : '-'; ?></td>
+                                <td><?php echo $pnl ? ucfirst($pnl['result']) : 'Open'; ?></td>
+                                <td class="admin-actions">
+                                    <a href="metrics_tradelog.php?edit_trade=<?php echo (int)$trade['id']; ?>">Edit</a>
+                                    <a href="metrics_tradelog.php?delete_trade=<?php echo (int)$trade['id']; ?>"
+                                       onclick="return confirm('Delete this trade?');">Delete</a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        <?php if (empty($trades)): ?>
+                            <tr><td colspan="12">No trades logged yet.</td></tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+
+                <?php if ($totalPages > 1): ?>
+                    <div class="trade-pagination">
+                        <?php for ($p = 1; $p <= $totalPages; $p++): ?>
+                            <?php if ($p === $page): ?>
+                                <strong><?php echo $p; ?></strong>
+                            <?php else: ?>
+                                <a href="metrics_tradelog.php?page=<?php echo $p; ?><?php foreach ($selectedAccountIds as $aid) echo '&accounts[]=' . (int)$aid; ?>"><?php echo $p; ?></a>
+                            <?php endif; ?>
+                        <?php endfor; ?>
+                    </div>
+                <?php endif; ?>
+
+                <p style="margin-top:1rem;"><a href="metrics_trade_import.php">Import trades from a CSV file</a></p>
+            <?php endif; ?>
         </section>
     </main>
 
