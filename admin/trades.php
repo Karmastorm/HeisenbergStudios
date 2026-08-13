@@ -38,9 +38,11 @@ if ($selectedUserId !== null) {
 
     $accountIds = array_map(fn($a) => (int)$a['id'], $accounts);
     $stats = fetch_trade_stats($pdo, $accountIds);
+    $balanceHistory = [];
 
     if (!empty($accountIds)) {
         $trades = fetch_trades_page($pdo, $accountIds, 1, 100);
+        $balanceHistory = fetch_balance_history($pdo, $accountIds);
     }
 }
 ?>
@@ -98,6 +100,14 @@ if ($selectedUserId !== null) {
                 <?php endif; ?>
             </section>
 
+            <?php if (count($balanceHistory) >= 2): ?>
+                <section class="balance-chart-wrap">
+                    <h2>Account Balance</h2>
+                    <canvas id="balance-chart" role="img" aria-label="Account balance over time"></canvas>
+                    <script type="application/json" id="balance-chart-data"><?php echo json_encode($balanceHistory); ?></script>
+                </section>
+            <?php endif; ?>
+
             <table class="trade-journal-table">
                 <thead>
                     <tr><th>Account</th><th>Ticker</th><th>Side</th><th>Open</th><th>Close</th><th>PnL $</th><th>Result</th></tr>
@@ -125,5 +135,7 @@ if ($selectedUserId !== null) {
 
     <?php include __DIR__ . '/../includes/footer.php'; ?>
     <script src="../assets/js/theme-switcher.js"></script>
+    <script src="../assets/js/chart.min.js"></script>
+    <script src="../assets/js/trade-balance-chart.js"></script>
 </body>
 </html>
