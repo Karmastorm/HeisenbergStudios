@@ -40,6 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($header === false) {
                 $error = 'The file appears to be empty.';
             } else {
+                if (isset($header[0])) {
+                    $header[0] = ltrim($header[0], "\xEF\xBB\xBF");
+                }
                 $header = array_map(fn($h) => strtolower(trim($h)), $header);
                 $colIndex = [];
                 foreach ($expectedColumns as $col) {
@@ -100,6 +103,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             continue;
                         }
 
+                        $closeFees = $get('close_fees');
+                        $openFees = $get('open_fees');
+                        $stopLoss = $get('stop_loss');
+                        $takeProfit = $get('take_profit');
+
+                        if ($closePrice !== '' && !is_numeric($closePrice)) {
+                            $importErrors[] = "row $rowNum: close_price must be a number";
+                            continue;
+                        }
+                        if ($closeFees !== '' && !is_numeric($closeFees)) {
+                            $importErrors[] = "row $rowNum: close_fees must be a number";
+                            continue;
+                        }
+                        if ($openFees !== '' && !is_numeric($openFees)) {
+                            $importErrors[] = "row $rowNum: open_fees must be a number";
+                            continue;
+                        }
+                        if ($stopLoss !== '' && !is_numeric($stopLoss)) {
+                            $importErrors[] = "row $rowNum: stop_loss must be a number";
+                            continue;
+                        }
+                        if ($takeProfit !== '' && !is_numeric($takeProfit)) {
+                            $importErrors[] = "row $rowNum: take_profit must be a number";
+                            continue;
+                        }
+
                         $insertStmt->execute([
                             'account_id' => $accountId,
                             'ticker' => $ticker,
@@ -109,12 +138,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             'open_date' => date('Y-m-d', strtotime($openDate)),
                             'open_price' => $openPrice,
                             'open_qty' => $openQty,
-                            'open_fees' => $get('open_fees') !== '' ? $get('open_fees') : 0,
+                            'open_fees' => $openFees !== '' ? $openFees : 0,
                             'close_date' => $closeDate !== '' ? date('Y-m-d', strtotime($closeDate)) : null,
                             'close_price' => $closePrice !== '' ? $closePrice : null,
-                            'close_fees' => $get('close_fees') !== '' ? $get('close_fees') : null,
-                            'stop_loss' => $get('stop_loss') !== '' ? $get('stop_loss') : null,
-                            'take_profit' => $get('take_profit') !== '' ? $get('take_profit') : null,
+                            'close_fees' => $closeFees !== '' ? $closeFees : null,
+                            'stop_loss' => $stopLoss !== '' ? $stopLoss : null,
+                            'take_profit' => $takeProfit !== '' ? $takeProfit : null,
                             'notes' => $get('notes') ?: null,
                         ]);
                         $importedCount++;

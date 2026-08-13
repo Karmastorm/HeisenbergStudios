@@ -49,6 +49,8 @@ setup/                 NOT deployed — local helpers only
 3. Run `setup/schema_additions_investment_fundamentals.sql`, then
    `setup/schema_additions_financial_rebrand.sql` to rebrand the nav to
    Analysis / Portfolio / Metrics.
+4. Run `setup/schema_additions_trade_log.sql` to add the brokerage_accounts
+   and trades tables and fix the Trade Log pages' access level.
 
 ## Deployment
 `.github/workflows/deploy.yml` deploys via SFTP on push to `main`.
