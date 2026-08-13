@@ -36,9 +36,9 @@ if (is_logged_in()) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log In - My Toolbox Site</title>
-    <link rel="stylesheet" href="assets/css/themes.css?v=5">
-    <link rel="stylesheet" href="assets/css/fonts.css?v=5">
-    <link rel="stylesheet" href="assets/css/main.css?v=5">
+    <link rel="stylesheet" href="assets/css/themes.css?v=6">
+    <link rel="stylesheet" href="assets/css/fonts.css?v=6">
+    <link rel="stylesheet" href="assets/css/main.css?v=6">
 </head>
 <body data-theme="light">
     <?php include __DIR__ . '/includes/header.php'; ?>

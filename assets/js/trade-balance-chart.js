@@ -24,10 +24,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 fill: true,
                 tension: 0.2,
                 pointRadius: 0,
+                pointHoverRadius: 4,
             }],
         },
         options: {
             responsive: true,
+            interaction: { mode: 'index', intersect: false },
             plugins: {
                 legend: { display: false },
                 tooltip: {

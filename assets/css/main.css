@@ -599,7 +599,7 @@ select:focus-visible {
 @media (max-width: 640px) {
     .trade-dashboard { grid-template-columns: 1fr; }
 }
-.trade-stat-tile { background: var(--color-surface-elevated); border: 1px solid var(--color-border); border-radius: 8px; padding: 0.9rem 1rem; }
+.trade-stat-tile { background: var(--color-surface-elevated, var(--color-surface)); border: 1px solid var(--color-border); border-radius: 8px; padding: 0.9rem 1rem; }
 .trade-stat-tile .stat-label { font-size: 0.75rem; color: var(--color-text-soft); text-transform: uppercase; letter-spacing: 0.04em; }
 .trade-stat-tile .stat-value { font-size: 1.4rem; font-family: 'Bebas Neue', 'Nunito', sans-serif; margin-top: 0.2rem; }
 .trade-stat-positive { color: #2e7d46; }
@@ -624,6 +624,6 @@ select:focus-visible {
 .sparkline-trend-down { color: #b3261e; font-size: 0.75rem; }
 .sparkline-trend-flat { color: var(--color-text-soft); font-size: 0.75rem; }
 
-.balance-chart-wrap { background: var(--color-surface-elevated); border: 1px solid var(--color-border); border-radius: 8px; padding: 1.25rem; margin-bottom: 2rem; }
+.balance-chart-wrap { background: var(--color-surface-elevated, var(--color-surface)); border: 1px solid var(--color-border); border-radius: 8px; padding: 1.25rem; margin-bottom: 2rem; }
 .balance-chart-wrap h2 { margin-bottom: 1rem; }
 .balance-chart-wrap canvas { max-height: 280px; width: 100%; }

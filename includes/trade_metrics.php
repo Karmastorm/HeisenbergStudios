@@ -242,6 +242,10 @@ function fetch_balance_history(PDO $pdo, array $accountIds): array {
         return [];
     }
 
+    if ($trades[0]['close_date'] < $startDate) {
+        $startDate = $trades[0]['close_date'];
+    }
+
     $points = [['date' => $startDate, 'balance' => $runningBalance]];
     $currentDate = $startDate;
     foreach ($trades as $trade) {
