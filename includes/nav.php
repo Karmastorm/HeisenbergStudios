@@ -68,6 +68,7 @@ foreach ($rows as $row) {
                     <?php if ($userLevel >= 5): // Webmaster only ?>
                         <li><a href="/admin/folders.php">Manage Folders</a></li>
                         <li><a href="/admin/users.php">Manage Users</a></li>
+                        <li><a href="/admin/trades.php">Trade Oversight</a></li>
                     <?php endif; ?>
                 </ul>
             </li>
