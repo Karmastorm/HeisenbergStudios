@@ -73,9 +73,9 @@ Google Sheets) was read in full to derive the data model. It has:
 ## Non-goals (explicitly deferred)
 
 - The spreadsheet's monthly calendar heatmap view.
-- Brokerage API integration / automated trade import. The `trades.source`
-  column exists so API-sourced rows can slot in later without a schema
-  change, but no API client is built in this pass.
+- Brokerage API integration / automated trade import — see "Future:
+  brokerage API integration" under Data model for what's already
+  accommodated vs. what will need its own additive migration later.
 - The "Asset Allocation" Metrics sub-item — untouched, stays a stub.
 - Editing another user's trades (even the admin view is read-only).
 
@@ -136,6 +136,22 @@ so ownership can't drift out of sync between the two.
 
 Nothing is stored for PnL $, PnL %, R-multiple, or win/loss result — all
 computed at query time (see Calculations).
+
+### Future: brokerage API integration (not built now)
+
+The ability to add multiple accounts across multiple brokerages is not a
+future add-on — it's the base data model above, available from this
+migration onward. What's genuinely deferred is the *connection* to each
+brokerage's API to auto-import trades. `trades.source` already has an
+`'api'` value ready for those rows. When that gets built, the additive
+migration would likely add nullable columns to `brokerage_accounts` such
+as `api_provider` (which connector to use), `sync_status`, and
+`last_synced_at` — none of which are needed, and so aren't added, until
+that work actually starts. One thing to flag now rather than discover
+later: raw API keys/tokens should never live in this table in plaintext —
+that work will need its own encrypted-credential storage (e.g. referenced
+by ID from `brokerage_accounts`, not stored inline), which is a security
+decision for that future design pass, not this one.
 
 ### Access level correction
 
