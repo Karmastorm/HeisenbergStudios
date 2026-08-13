@@ -213,3 +213,127 @@ function fetch_trades_page(PDO $pdo, array $accountIds, int $page, int $perPage 
     $stmt->execute($accountIds);
     return $stmt->fetchAll();
 }
+
+function fetch_balance_history(PDO $pdo, array $accountIds): array {
+    if (empty($accountIds)) {
+        return [];
+    }
+
+    $placeholders = implode(',', array_fill(0, count($accountIds), '?'));
+
+    $balStmt = $pdo->prepare(
+        "SELECT SUM(beginning_balance) AS total, MIN(created_at) AS earliest
+         FROM brokerage_accounts WHERE id IN ($placeholders)"
+    );
+    $balStmt->execute($accountIds);
+    $balRow = $balStmt->fetch();
+    $runningBalance = (float)($balRow['total'] ?? 0);
+    $startDate = $balRow['earliest'] ? substr($balRow['earliest'], 0, 10) : date('Y-m-d');
+
+    $tradesStmt = $pdo->prepare(
+        "SELECT * FROM trades
+         WHERE account_id IN ($placeholders) AND close_date IS NOT NULL AND close_price IS NOT NULL
+         ORDER BY close_date ASC, id ASC"
+    );
+    $tradesStmt->execute($accountIds);
+    $trades = $tradesStmt->fetchAll();
+
+    if (empty($trades)) {
+        return [];
+    }
+
+    $points = [['date' => $startDate, 'balance' => $runningBalance]];
+    $currentDate = $startDate;
+    foreach ($trades as $trade) {
+        $runningBalance += compute_trade_pnl($trade)['pnl_dollars'];
+
+        if ($trade['close_date'] === $currentDate) {
+            $points[count($points) - 1]['balance'] = $runningBalance;
+        } else {
+            $points[] = ['date' => $trade['close_date'], 'balance' => $runningBalance];
+            $currentDate = $trade['close_date'];
+        }
+    }
+
+    return $points;
+}
+
+function fetch_recent_trade_values(PDO $pdo, array $accountIds, string $result, int $limit = 10): array {
+    if (empty($accountIds)) {
+        return [];
+    }
+
+    $placeholders = implode(',', array_fill(0, count($accountIds), '?'));
+    $stmt = $pdo->prepare(
+        "SELECT * FROM trades
+         WHERE account_id IN ($placeholders) AND close_date IS NOT NULL AND close_price IS NOT NULL
+         ORDER BY close_date DESC, id DESC"
+    );
+    $stmt->execute($accountIds);
+
+    $values = [];
+    while (($trade = $stmt->fetch()) !== false && count($values) < $limit) {
+        $pnl = compute_trade_pnl($trade);
+        if ($pnl['result'] === $result) {
+            $values[] = $pnl['pnl_dollars'];
+        }
+    }
+
+    return array_reverse($values);
+}
+
+function fetch_win_rate_trend(PDO $pdo, array $accountIds, int $limit = 10): array {
+    if (empty($accountIds)) {
+        return [];
+    }
+
+    $placeholders = implode(',', array_fill(0, count($accountIds), '?'));
+    $stmt = $pdo->prepare(
+        "SELECT * FROM trades
+         WHERE account_id IN ($placeholders) AND close_date IS NOT NULL AND close_price IS NOT NULL
+         ORDER BY close_date ASC, id ASC"
+    );
+    $stmt->execute($accountIds);
+    $trades = $stmt->fetchAll();
+
+    $wins = 0;
+    $decided = 0;
+    $trend = [];
+    foreach ($trades as $trade) {
+        $pnl = compute_trade_pnl($trade);
+        if ($pnl['result'] === 'win') {
+            $wins++;
+            $decided++;
+        } elseif ($pnl['result'] === 'loss') {
+            $decided++;
+        }
+        $trend[] = $decided > 0 ? ($wins / $decided) * 100 : 0.0;
+    }
+
+    return array_slice($trend, -$limit);
+}
+
+function render_sparkline_svg(array $values, int $width = 80, int $height = 24): string {
+    if (count($values) < 2) {
+        return '';
+    }
+
+    $min = min($values);
+    $max = max($values);
+    $range = $max - $min;
+    $count = count($values);
+
+    $points = [];
+    foreach ($values as $i => $value) {
+        $x = ($i / ($count - 1)) * $width;
+        $y = $range > 0 ? $height - (($value - $min) / $range) * $height : $height / 2;
+        $points[] = round($x, 1) . ',' . round($y, 1);
+    }
+
+    $pointsAttr = htmlspecialchars(implode(' ', $points));
+
+    return '<svg width="' . $width . '" height="' . $height . '" viewBox="0 0 ' . $width . ' ' . $height . '" '
+        . 'class="sparkline-svg" aria-hidden="true">'
+        . '<polyline points="' . $pointsAttr . '" fill="none" stroke="currentColor" stroke-width="2" '
+        . 'stroke-linecap="round" stroke-linejoin="round" /></svg>';
+}
