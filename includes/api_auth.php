@@ -33,6 +33,25 @@ function require_api_token(): void {
     }
 }
 
+/**
+ * Appends a one-line audit record for a successfully authenticated Schwab
+ * Sync API request. Only call this after require_api_token() has already
+ * confirmed the bearer token -- never log failed-auth attempts here (the
+ * request may carry sensitive/garbage header content). account_id lives
+ * in the JSON body, not $_POST/$_GET, so callers pass it in once they've
+ * parsed the body via read_json_body().
+ */
+function log_api_request(string $endpoint, $accountId): void {
+    $line = sprintf(
+        "[%s] %s account_id=%s ip=%s\n",
+        date('Y-m-d H:i:s'),
+        $endpoint,
+        $accountId,
+        $_SERVER['REMOTE_ADDR'] ?? 'unknown'
+    );
+    @file_put_contents(__DIR__ . '/../logs/api_sync.log', $line, FILE_APPEND);
+}
+
 function read_json_body(): array {
     $raw = file_get_contents('php://input');
     $data = json_decode($raw, true);

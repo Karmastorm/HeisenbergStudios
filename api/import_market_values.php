@@ -8,6 +8,7 @@ $pdo = get_db_connection();
 $data = read_json_body();
 
 $accountId = (int)($data['account_id'] ?? 0);
+log_api_request(basename(__FILE__), $accountId);
 require_valid_account($pdo, $accountId);
 
 $rows = $data['rows'] ?? null;

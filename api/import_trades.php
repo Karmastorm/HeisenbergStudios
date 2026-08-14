@@ -8,6 +8,7 @@ $pdo = get_db_connection();
 $data = read_json_body();
 
 $accountId = (int)($data['account_id'] ?? 0);
+log_api_request(basename(__FILE__), $accountId);
 require_valid_account($pdo, $accountId);
 
 $rows = $data['rows'] ?? null;
@@ -27,13 +28,9 @@ $upsertStmt = $pdo->prepare(
             :close_date, :close_price, :close_fees, :stop_loss, :take_profit,
             :notes, 'api')
      ON DUPLICATE KEY UPDATE
-         ticker = VALUES(ticker), side = VALUES(side), trade_type = VALUES(trade_type),
-         strategy = VALUES(strategy), open_date = VALUES(open_date),
-         open_price = VALUES(open_price), open_qty = VALUES(open_qty),
-         open_fees = VALUES(open_fees), close_date = VALUES(close_date),
-         close_price = VALUES(close_price), close_fees = VALUES(close_fees),
-         stop_loss = VALUES(stop_loss), take_profit = VALUES(take_profit),
-         notes = VALUES(notes)"
+         close_date = VALUES(close_date),
+         close_price = VALUES(close_price),
+         close_fees = VALUES(close_fees)"
 );
 
 $imported = 0;
