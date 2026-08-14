@@ -42,7 +42,9 @@ if ($selectedUserId !== null) {
 
     if (!empty($accountIds)) {
         $trades = fetch_trades_page($pdo, $accountIds, 1, 100);
-        $balanceHistory = fetch_balance_history($pdo, $accountIds);
+        $balanceHistory = has_daily_snapshots($pdo, $accountIds)
+            ? fetch_daily_snapshots($pdo, $accountIds)
+            : fetch_balance_history($pdo, $accountIds);
     }
 }
 ?>

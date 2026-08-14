@@ -341,3 +341,50 @@ function render_sparkline_svg(array $values, int $width = 80, int $height = 24):
         . '<polyline points="' . $pointsAttr . '" fill="none" stroke="currentColor" stroke-width="2" '
         . 'stroke-linecap="round" stroke-linejoin="round" /></svg>';
 }
+
+/**
+ * True when every one of the given accounts has at least one imported
+ * daily snapshot row. Used to decide whether the balance chart can use
+ * real daily mark-to-market values (fetch_daily_snapshots) or must fall
+ * back to the trade-event-only calculation (fetch_balance_history) --
+ * deliberately all-or-nothing per selection, not a partial mix, since a
+ * per-date SUM() across a set where only some accounts have data would
+ * silently undercount on any date the others are missing.
+ */
+function has_daily_snapshots(PDO $pdo, array $accountIds): bool {
+    if (empty($accountIds)) {
+        return false;
+    }
+    $placeholders = implode(',', array_fill(0, count($accountIds), '?'));
+    $stmt = $pdo->prepare(
+        "SELECT COUNT(DISTINCT account_id) FROM account_value_snapshots WHERE account_id IN ($placeholders)"
+    );
+    $stmt->execute($accountIds);
+    return (int)$stmt->fetchColumn() === count($accountIds);
+}
+
+/**
+ * Daily total account value (cash + mark-to-market value of held
+ * positions) summed across the given accounts, one point per date that
+ * has a snapshot for every account -- only call this after
+ * has_daily_snapshots() confirms full coverage.
+ */
+function fetch_daily_snapshots(PDO $pdo, array $accountIds): array {
+    if (empty($accountIds)) {
+        return [];
+    }
+    $placeholders = implode(',', array_fill(0, count($accountIds), '?'));
+    $stmt = $pdo->prepare(
+        "SELECT snapshot_date, SUM(total_value) AS total
+         FROM account_value_snapshots
+         WHERE account_id IN ($placeholders)
+         GROUP BY snapshot_date
+         ORDER BY snapshot_date ASC"
+    );
+    $stmt->execute($accountIds);
+    $rows = $stmt->fetchAll();
+    return array_map(
+        fn($row) => ['date' => $row['snapshot_date'], 'balance' => (float)$row['total']],
+        $rows
+    );
+}

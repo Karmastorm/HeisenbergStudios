@@ -175,7 +175,9 @@ $selectedAccountIds = isset($_GET['accounts']) && is_array($_GET['accounts'])
 
 $stats = fetch_trade_stats($pdo, $selectedAccountIds);
 
-$balanceHistory = fetch_balance_history($pdo, $selectedAccountIds);
+$balanceHistory = has_daily_snapshots($pdo, $selectedAccountIds)
+    ? fetch_daily_snapshots($pdo, $selectedAccountIds)
+    : fetch_balance_history($pdo, $selectedAccountIds);
 $avgWinSparkline = fetch_recent_trade_values($pdo, $selectedAccountIds, 'win');
 $avgLossSparkline = fetch_recent_trade_values($pdo, $selectedAccountIds, 'loss');
 $winRateSparkline = fetch_win_rate_trend($pdo, $selectedAccountIds);
@@ -616,7 +618,11 @@ function format_percent(?float $value): string {
                     </div>
                 <?php endif; ?>
 
-                <p style="margin-top:1rem;"><a href="metrics_trade_import.php">Import trades from a CSV file</a></p>
+                <p style="margin-top:1rem;">
+                    <a href="metrics_trade_import.php">Import trades from a CSV file</a>
+                    &middot;
+                    <a href="metrics_snapshot_import.php">Import daily account values for a more accurate balance chart</a>
+                </p>
             <?php endif; ?>
         </section>
     </main>
