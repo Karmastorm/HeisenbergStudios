@@ -630,4 +630,11 @@ select:focus-visible {
 
 .allocation-ring-wrap { background: var(--color-surface-elevated, var(--color-surface)); border: 1px solid var(--color-border); border-radius: 8px; padding: 1.25rem; margin-bottom: 2rem; }
 .allocation-ring-wrap h2 { margin-bottom: 1rem; }
-.allocation-ring-wrap canvas { max-height: 280px; }
+.allocation-ring-layout { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+.allocation-ring-layout canvas { max-width: 200px; max-height: 200px; flex-shrink: 0; }
+.allocation-legend { list-style: none; flex: 1 1 200px; min-width: 180px; display: flex; flex-direction: column; gap: 0.45rem; }
+.allocation-legend li { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; cursor: pointer; }
+.allocation-legend li.legend-hidden { opacity: 0.4; }
+.allocation-legend .legend-swatch { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+.allocation-legend .legend-ticker { flex: 1; color: var(--color-text); }
+.allocation-legend .legend-pct { font-variant-numeric: tabular-nums; text-align: right; min-width: 3.5em; color: var(--color-text-soft); }

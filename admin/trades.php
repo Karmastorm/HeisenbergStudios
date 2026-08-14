@@ -115,7 +115,10 @@ if ($selectedUserId !== null) {
             <?php if (!empty($allocation)): ?>
                 <section class="allocation-ring-wrap">
                     <h2>Allocation</h2>
-                    <canvas id="allocation-ring-chart" role="img" aria-label="Portfolio allocation by cost basis"></canvas>
+                    <div class="allocation-ring-layout">
+                        <canvas id="allocation-ring-chart" role="img" aria-label="Portfolio allocation by cost basis"></canvas>
+                        <ul id="allocation-ring-legend" class="allocation-legend"></ul>
+                    </div>
                     <script type="application/json" id="allocation-ring-data"><?php echo json_encode($allocation); ?></script>
                 </section>
             <?php endif; ?>
