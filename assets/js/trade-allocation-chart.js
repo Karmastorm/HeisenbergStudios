@@ -19,11 +19,15 @@ document.addEventListener('DOMContentLoaded', function () {
     var colors = slices.map(function (s, i) {
         return s.ticker === 'Other' ? otherColor : categoryColors[i % categoryColors.length];
     });
+    var pctLabels = slices.map(function (s) {
+        var pct = total > 0 ? (s.value / total * 100) : 0;
+        return s.ticker + ' — ' + pct.toFixed(1) + '%';
+    });
 
     new Chart(canvas, {
         type: 'doughnut',
         data: {
-            labels: slices.map(function (s) { return s.ticker; }),
+            labels: pctLabels,
             datasets: [{
                 data: slices.map(function (s) { return s.value; }),
                 backgroundColor: colors,
@@ -48,12 +52,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     borderWidth: 1,
                     callbacks: {
                         label: function (context) {
-                            var value = context.parsed;
-                            var pct = total > 0 ? (value / total * 100) : 0;
-                            return context.label + ': $' + value.toLocaleString(undefined, {
+                            return context.label + ': $' + context.parsed.toLocaleString(undefined, {
                                 minimumFractionDigits: 2,
                                 maximumFractionDigits: 2,
-                            }) + ' (' + pct.toFixed(1) + '%)';
+                            });
                         },
                     },
                 },
