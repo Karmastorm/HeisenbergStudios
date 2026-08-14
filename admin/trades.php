@@ -40,6 +40,7 @@ if ($selectedUserId !== null) {
     $stats = fetch_trade_stats($pdo, $accountIds);
     $balanceHistory = [];
     $allocation = [];
+    $marketValueAllocation = [];
 
     if (!empty($accountIds)) {
         $trades = fetch_trades_page($pdo, $accountIds, 1, 100);
@@ -47,6 +48,7 @@ if ($selectedUserId !== null) {
             ? fetch_daily_snapshots($pdo, $accountIds)
             : fetch_balance_history($pdo, $accountIds);
         $allocation = fetch_allocation_by_cost_basis($pdo, $accountIds);
+        $marketValueAllocation = fetch_allocation_by_market_value($pdo, $accountIds);
     }
 }
 ?>
@@ -112,14 +114,35 @@ if ($selectedUserId !== null) {
                 </section>
             <?php endif; ?>
 
-            <?php if (!empty($allocation)): ?>
+            <?php if (!empty($allocation) || !empty($marketValueAllocation)): ?>
                 <section class="allocation-ring-wrap">
                     <h2>Allocation</h2>
-                    <div class="allocation-ring-layout">
-                        <canvas id="allocation-ring-chart" role="img" aria-label="Portfolio allocation by cost basis"></canvas>
-                        <ul id="allocation-ring-legend" class="allocation-legend"></ul>
+                    <div class="allocation-rings-row">
+                        <div class="allocation-ring-block">
+                            <h3>By Cost Basis</h3>
+                            <?php if (!empty($allocation)): ?>
+                                <div class="allocation-ring-layout">
+                                    <canvas id="allocation-ring-chart" role="img" aria-label="Portfolio allocation by cost basis"></canvas>
+                                    <ul id="allocation-ring-legend" class="allocation-legend"></ul>
+                                </div>
+                                <script type="application/json" id="allocation-ring-data"><?php echo json_encode($allocation); ?></script>
+                            <?php else: ?>
+                                <p>No open trades logged.</p>
+                            <?php endif; ?>
+                        </div>
+                        <div class="allocation-ring-block">
+                            <h3>By Market Value</h3>
+                            <?php if (!empty($marketValueAllocation)): ?>
+                                <div class="allocation-ring-layout">
+                                    <canvas id="allocation-market-ring-chart" role="img" aria-label="Portfolio allocation by market value"></canvas>
+                                    <ul id="allocation-market-ring-legend" class="allocation-legend"></ul>
+                                </div>
+                                <script type="application/json" id="allocation-market-ring-data"><?php echo json_encode($marketValueAllocation); ?></script>
+                            <?php else: ?>
+                                <p>No position values imported yet.</p>
+                            <?php endif; ?>
+                        </div>
                     </div>
-                    <script type="application/json" id="allocation-ring-data"><?php echo json_encode($allocation); ?></script>
                 </section>
             <?php endif; ?>
 

@@ -1,7 +1,13 @@
-document.addEventListener('DOMContentLoaded', function () {
-    var canvas = document.getElementById('allocation-ring-chart');
-    var dataTag = document.getElementById('allocation-ring-data');
-    var legendList = document.getElementById('allocation-ring-legend');
+/**
+ * Renders one allocation ring (canvas + custom HTML legend) given the IDs
+ * of its three elements. Called once per ring on the page -- the Trade
+ * Log currently has two: by cost basis and by market value, sharing this
+ * same renderer since they only differ in which data-tag feeds them.
+ */
+function renderAllocationRing(canvasId, dataTagId, legendId) {
+    var canvas = document.getElementById(canvasId);
+    var dataTag = document.getElementById(dataTagId);
+    var legendList = document.getElementById(legendId);
     if (!canvas || !dataTag || typeof Chart === 'undefined') {
         return;
     }
@@ -93,4 +99,9 @@ document.addEventListener('DOMContentLoaded', function () {
             legendList.appendChild(li);
         });
     }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    renderAllocationRing('allocation-ring-chart', 'allocation-ring-data', 'allocation-ring-legend');
+    renderAllocationRing('allocation-market-ring-chart', 'allocation-market-ring-data', 'allocation-market-ring-legend');
 });

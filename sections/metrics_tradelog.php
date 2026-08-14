@@ -182,6 +182,7 @@ $avgWinSparkline = fetch_recent_trade_values($pdo, $selectedAccountIds, 'win');
 $avgLossSparkline = fetch_recent_trade_values($pdo, $selectedAccountIds, 'loss');
 $winRateSparkline = fetch_win_rate_trend($pdo, $selectedAccountIds);
 $allocation = fetch_allocation_by_cost_basis($pdo, $selectedAccountIds);
+$marketValueAllocation = fetch_allocation_by_market_value($pdo, $selectedAccountIds);
 
 function sparkline_trend_class(array $values): string {
     if (count($values) < 2) {
@@ -341,21 +342,38 @@ function format_percent(?float $value): string {
             </section>
         <?php endif; ?>
 
-        <?php if (!empty($allocation)): ?>
-            <section class="allocation-ring-wrap">
-                <h2>Allocation</h2>
-                <div class="allocation-ring-layout">
-                    <canvas id="allocation-ring-chart" role="img" aria-label="Portfolio allocation by cost basis"></canvas>
-                    <ul id="allocation-ring-legend" class="allocation-legend"></ul>
+        <section class="allocation-ring-wrap">
+            <h2>Allocation</h2>
+            <div class="allocation-rings-row">
+                <div class="allocation-ring-block">
+                    <h3>By Cost Basis</h3>
+                    <?php if (!empty($allocation)): ?>
+                        <div class="allocation-ring-layout">
+                            <canvas id="allocation-ring-chart" role="img" aria-label="Portfolio allocation by cost basis"></canvas>
+                            <ul id="allocation-ring-legend" class="allocation-legend"></ul>
+                        </div>
+                        <script type="application/json" id="allocation-ring-data"><?php echo json_encode($allocation); ?></script>
+                    <?php else: ?>
+                        <p>Log an open trade to see your allocation.</p>
+                    <?php endif; ?>
                 </div>
-                <script type="application/json" id="allocation-ring-data"><?php echo json_encode($allocation); ?></script>
-            </section>
-        <?php else: ?>
-            <section class="allocation-ring-wrap">
-                <h2>Allocation</h2>
-                <p>Log an open trade to see your allocation.</p>
-            </section>
-        <?php endif; ?>
+                <div class="allocation-ring-block">
+                    <h3>By Market Value</h3>
+                    <?php if (!empty($marketValueAllocation)): ?>
+                        <div class="allocation-ring-layout">
+                            <canvas id="allocation-market-ring-chart" role="img" aria-label="Portfolio allocation by market value"></canvas>
+                            <ul id="allocation-market-ring-legend" class="allocation-legend"></ul>
+                        </div>
+                        <script type="application/json" id="allocation-market-ring-data"><?php echo json_encode($marketValueAllocation); ?></script>
+                    <?php else: ?>
+                        <p>
+                            <a href="metrics_market_value_import.php">Import current position values</a>
+                            to see allocation by real market value.
+                        </p>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </section>
 
         <section class="trade-breakdowns">
             <table class="admin-table">

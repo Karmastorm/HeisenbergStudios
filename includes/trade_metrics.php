@@ -390,12 +390,32 @@ function fetch_daily_snapshots(PDO $pdo, array $accountIds): array {
 }
 
 /**
+ * Takes ticker => value rows (already sorted descending by value) and
+ * folds anything beyond the first 8 (the categorical palette's slot
+ * count) into a trailing "Other" row, rather than returning an unbounded
+ * list -- matches how a ring chart's palette is meant to be used (a 9th
+ * slice is never a new hue). Shared by both allocation-ring data sources.
+ */
+function fold_allocation_rows_to_eight(array $rows): array {
+    $top = array_slice($rows, 0, 8);
+    $rest = array_slice($rows, 8);
+
+    $result = array_map(
+        fn($row) => ['ticker' => $row['ticker'], 'value' => (float)$row['value']],
+        $top
+    );
+
+    if (!empty($rest)) {
+        $result[] = ['ticker' => 'Other', 'value' => array_sum(array_map(fn($row) => (float)$row['value'], $rest))];
+    }
+
+    return $result;
+}
+
+/**
  * Current asset allocation by cost basis (qty x open price) across the
  * given accounts' still-open trades, one row per ticker, sorted by value
- * descending. Beyond the first 8 tickers (the categorical palette's slot
- * count), the remainder are folded into a trailing "Other" row rather
- * than returning an unbounded list -- matches how a ring chart's palette
- * is meant to be used (a 9th slice is never a new hue).
+ * descending.
  */
 function fetch_allocation_by_cost_basis(PDO $pdo, array $accountIds): array {
     if (empty($accountIds)) {
@@ -410,19 +430,28 @@ function fetch_allocation_by_cost_basis(PDO $pdo, array $accountIds): array {
          ORDER BY value DESC"
     );
     $stmt->execute($accountIds);
-    $rows = $stmt->fetchAll();
+    return fold_allocation_rows_to_eight($stmt->fetchAll());
+}
 
-    $top = array_slice($rows, 0, 8);
-    $rest = array_slice($rows, 8);
-
-    $result = array_map(
-        fn($row) => ['ticker' => $row['ticker'], 'value' => (float)$row['value']],
-        $top
-    );
-
-    if (!empty($rest)) {
-        $result[] = ['ticker' => 'Other', 'value' => array_sum(array_map(fn($row) => (float)$row['value'], $rest))];
+/**
+ * Current asset allocation by real market value, one row per ticker,
+ * summed across the given accounts and sorted descending. Reads from
+ * position_market_values, a table of imported snapshots ("as of the
+ * last import", not a history) rather than anything computed from
+ * trades -- this site has no live price feed of its own.
+ */
+function fetch_allocation_by_market_value(PDO $pdo, array $accountIds): array {
+    if (empty($accountIds)) {
+        return [];
     }
-
-    return $result;
+    $placeholders = implode(',', array_fill(0, count($accountIds), '?'));
+    $stmt = $pdo->prepare(
+        "SELECT ticker, SUM(market_value) AS value
+         FROM position_market_values
+         WHERE account_id IN ($placeholders)
+         GROUP BY ticker
+         ORDER BY value DESC"
+    );
+    $stmt->execute($accountIds);
+    return fold_allocation_rows_to_eight($stmt->fetchAll());
 }
