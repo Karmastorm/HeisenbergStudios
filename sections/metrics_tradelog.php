@@ -181,6 +181,7 @@ $balanceHistory = has_daily_snapshots($pdo, $selectedAccountIds)
 $avgWinSparkline = fetch_recent_trade_values($pdo, $selectedAccountIds, 'win');
 $avgLossSparkline = fetch_recent_trade_values($pdo, $selectedAccountIds, 'loss');
 $winRateSparkline = fetch_win_rate_trend($pdo, $selectedAccountIds);
+$allocation = fetch_allocation_by_cost_basis($pdo, $selectedAccountIds);
 
 function sparkline_trend_class(array $values): string {
     if (count($values) < 2) {
@@ -337,6 +338,19 @@ function format_percent(?float $value): string {
             <section class="balance-chart-wrap">
                 <h2>Account Balance</h2>
                 <p>Log a closed trade to see your balance history.</p>
+            </section>
+        <?php endif; ?>
+
+        <?php if (!empty($allocation)): ?>
+            <section class="allocation-ring-wrap">
+                <h2>Allocation</h2>
+                <canvas id="allocation-ring-chart" role="img" aria-label="Portfolio allocation by cost basis"></canvas>
+                <script type="application/json" id="allocation-ring-data"><?php echo json_encode($allocation); ?></script>
+            </section>
+        <?php else: ?>
+            <section class="allocation-ring-wrap">
+                <h2>Allocation</h2>
+                <p>Log an open trade to see your allocation.</p>
             </section>
         <?php endif; ?>
 
@@ -631,5 +645,6 @@ function format_percent(?float $value): string {
     <script src="../assets/js/theme-switcher.js"></script>
     <script src="../assets/js/chart.min.js"></script>
     <script src="../assets/js/trade-balance-chart.js"></script>
+    <script src="../assets/js/trade-allocation-chart.js"></script>
 </body>
 </html>

@@ -388,3 +388,41 @@ function fetch_daily_snapshots(PDO $pdo, array $accountIds): array {
         $rows
     );
 }
+
+/**
+ * Current asset allocation by cost basis (qty x open price) across the
+ * given accounts' still-open trades, one row per ticker, sorted by value
+ * descending. Beyond the first 8 tickers (the categorical palette's slot
+ * count), the remainder are folded into a trailing "Other" row rather
+ * than returning an unbounded list -- matches how a ring chart's palette
+ * is meant to be used (a 9th slice is never a new hue).
+ */
+function fetch_allocation_by_cost_basis(PDO $pdo, array $accountIds): array {
+    if (empty($accountIds)) {
+        return [];
+    }
+    $placeholders = implode(',', array_fill(0, count($accountIds), '?'));
+    $stmt = $pdo->prepare(
+        "SELECT ticker, SUM(open_qty * open_price) AS value
+         FROM trades
+         WHERE account_id IN ($placeholders) AND close_date IS NULL
+         GROUP BY ticker
+         ORDER BY value DESC"
+    );
+    $stmt->execute($accountIds);
+    $rows = $stmt->fetchAll();
+
+    $top = array_slice($rows, 0, 8);
+    $rest = array_slice($rows, 8);
+
+    $result = array_map(
+        fn($row) => ['ticker' => $row['ticker'], 'value' => (float)$row['value']],
+        $top
+    );
+
+    if (!empty($rest)) {
+        $result[] = ['ticker' => 'Other', 'value' => array_sum(array_map(fn($row) => (float)$row['value'], $rest))];
+    }
+
+    return $result;
+}

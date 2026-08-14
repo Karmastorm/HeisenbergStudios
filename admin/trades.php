@@ -39,12 +39,14 @@ if ($selectedUserId !== null) {
     $accountIds = array_map(fn($a) => (int)$a['id'], $accounts);
     $stats = fetch_trade_stats($pdo, $accountIds);
     $balanceHistory = [];
+    $allocation = [];
 
     if (!empty($accountIds)) {
         $trades = fetch_trades_page($pdo, $accountIds, 1, 100);
         $balanceHistory = has_daily_snapshots($pdo, $accountIds)
             ? fetch_daily_snapshots($pdo, $accountIds)
             : fetch_balance_history($pdo, $accountIds);
+        $allocation = fetch_allocation_by_cost_basis($pdo, $accountIds);
     }
 }
 ?>
@@ -110,6 +112,14 @@ if ($selectedUserId !== null) {
                 </section>
             <?php endif; ?>
 
+            <?php if (!empty($allocation)): ?>
+                <section class="allocation-ring-wrap">
+                    <h2>Allocation</h2>
+                    <canvas id="allocation-ring-chart" role="img" aria-label="Portfolio allocation by cost basis"></canvas>
+                    <script type="application/json" id="allocation-ring-data"><?php echo json_encode($allocation); ?></script>
+                </section>
+            <?php endif; ?>
+
             <table class="trade-journal-table">
                 <thead>
                     <tr><th>Account</th><th>Ticker</th><th>Side</th><th>Open</th><th>Close</th><th>PnL $</th><th>Result</th></tr>
@@ -139,5 +149,6 @@ if ($selectedUserId !== null) {
     <script src="../assets/js/theme-switcher.js"></script>
     <script src="../assets/js/chart.min.js"></script>
     <script src="../assets/js/trade-balance-chart.js"></script>
+    <script src="../assets/js/trade-allocation-chart.js"></script>
 </body>
 </html>
