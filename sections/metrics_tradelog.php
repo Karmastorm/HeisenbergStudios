@@ -173,6 +173,13 @@ $selectedAccountIds = isset($_GET['accounts']) && is_array($_GET['accounts'])
     ? array_values(array_intersect($userAccountIds, array_map('intval', $_GET['accounts'])))
     : $userAccountIds;
 
+// Which tab a fresh page load lands on -- Metrics once there's actually
+// something to show, otherwise the onboarding flow (accounts/journal).
+// Uses all of the user's accounts/trades, not the (possibly filtered)
+// $selectedAccountIds, so a bookmarked filtered URL can't skew this.
+$hasAnyTrades = fetch_trades_count($pdo, $userAccountIds) > 0;
+$defaultTab = (!empty($accounts) && $hasAnyTrades) ? 'metrics' : 'journal';
+
 $stats = fetch_trade_stats($pdo, $selectedAccountIds);
 
 $balanceHistory = has_daily_snapshots($pdo, $selectedAccountIds)
@@ -247,9 +254,9 @@ function format_percent(?float $value): string {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trade Log - Heisenberg Studios</title>
-    <link rel="stylesheet" href="../assets/css/themes.css?v=6">
-    <link rel="stylesheet" href="../assets/css/fonts.css?v=6">
-    <link rel="stylesheet" href="../assets/css/main.css?v=6">
+    <link rel="stylesheet" href="../assets/css/themes.css?v=7">
+    <link rel="stylesheet" href="../assets/css/fonts.css?v=7">
+    <link rel="stylesheet" href="../assets/css/main.css?v=7">
 </head>
 <body data-theme="light">
     <?php include __DIR__ . '/../includes/header.php'; ?>
@@ -260,6 +267,14 @@ function format_percent(?float $value): string {
 
         <?php if ($message): ?><div class="msg-success"><?php echo htmlspecialchars($message); ?></div><?php endif; ?>
         <?php if ($error): ?><div class="msg-error"><?php echo htmlspecialchars($error); ?></div><?php endif; ?>
+
+        <div class="trade-tabs" data-default-tab="<?php echo $defaultTab; ?>">
+            <div class="trade-tabs-bar" role="tablist">
+                <button type="button" class="trade-tab-btn" data-tab="journal" role="tab">Accounts &amp; Journal</button>
+                <button type="button" class="trade-tab-btn" data-tab="metrics" role="tab">Metrics</button>
+            </div>
+
+            <div class="trade-tab-panel" data-tab-panel="metrics" role="tabpanel" <?php echo $defaultTab !== 'metrics' ? 'hidden' : ''; ?>>
 
         <?php if (count($accounts) > 1): ?>
             <form method="get" class="account-filter">
@@ -438,6 +453,10 @@ function format_percent(?float $value): string {
                 </tbody>
             </table>
         </section>
+
+            </div>
+
+            <div class="trade-tab-panel" data-tab-panel="journal" role="tabpanel" <?php echo $defaultTab !== 'journal' ? 'hidden' : ''; ?>>
 
         <section class="trade-accounts">
             <h2>Your Brokerage Accounts</h2>
@@ -660,10 +679,14 @@ function format_percent(?float $value): string {
                 </p>
             <?php endif; ?>
         </section>
+
+            </div>
+        </div>
     </main>
 
     <?php include __DIR__ . '/../includes/footer.php'; ?>
     <script src="../assets/js/theme-switcher.js"></script>
+    <script src="../assets/js/trade-log-tabs.js"></script>
     <script src="../assets/js/chart.min.js"></script>
     <script src="../assets/js/trade-balance-chart.js"></script>
     <script src="../assets/js/trade-allocation-chart.js"></script>

@@ -45,9 +45,9 @@ unset($f);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Folders - My Toolbox Site</title>
-    <link rel="stylesheet" href="../assets/css/themes.css?v=6">
-    <link rel="stylesheet" href="../assets/css/fonts.css?v=6">
-    <link rel="stylesheet" href="../assets/css/main.css?v=6">
+    <link rel="stylesheet" href="../assets/css/themes.css?v=7">
+    <link rel="stylesheet" href="../assets/css/fonts.css?v=7">
+    <link rel="stylesheet" href="../assets/css/main.css?v=7">
     <style>
         .admin-table { width: 100%; border-collapse: collapse; background: var(--color-surface); border: 1px solid var(--color-border); }
         .admin-table th, .admin-table td { padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--color-border); text-align: left; font-size: 0.88rem; }

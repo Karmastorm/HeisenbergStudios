@@ -641,3 +641,13 @@ select:focus-visible {
 .allocation-legend .legend-swatch { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
 .allocation-legend .legend-ticker { min-width: 4em; color: var(--color-text); }
 .allocation-legend .legend-pct { font-variant-numeric: tabular-nums; text-align: right; min-width: 3.5em; color: var(--color-text-soft); }
+
+/* ---------------- Trade Log Tabs ---------------- */
+.trade-tabs-bar { display: flex; gap: 0.5rem; border-bottom: 1px solid var(--color-border); margin-bottom: 1.5rem; }
+.trade-tab-btn {
+    padding: 0.6rem 1.1rem; background: none; border: none; border-bottom: 2px solid transparent;
+    color: var(--color-text-soft); font-size: 0.95rem; font-weight: 600; cursor: pointer; margin-bottom: -1px;
+}
+.trade-tab-btn:hover { color: var(--color-text); }
+.trade-tab-btn.active { color: var(--color-accent); border-bottom-color: var(--color-accent); }
+.trade-tab-panel[hidden] { display: none; }
