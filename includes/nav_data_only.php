@@ -20,6 +20,16 @@ $stmt = $pdo->prepare(
 $stmt->execute(['userLevel1' => $userLevel, 'userLevel2' => $userLevel]);
 $rows = $stmt->fetchAll();
 
+// Mirrors nav.php: menu items with exactly one card link straight to it.
+$linkStmt = $pdo->query(
+    'SELECT menu_item_id, MIN(link_url) AS link_url
+     FROM cards
+     WHERE menu_item_id IS NOT NULL
+     GROUP BY menu_item_id
+     HAVING COUNT(*) = 1'
+);
+$directLinks = $linkStmt->fetchAll(PDO::FETCH_KEY_PAIR);
+
 $menu = [];
 foreach ($rows as $row) {
     $catId = $row['cat_id'];
@@ -27,6 +37,10 @@ foreach ($rows as $row) {
         $menu[$catId] = ['name' => $row['cat_name'], 'items' => []];
     }
     if ($row['item_id'] !== null) {
-        $menu[$catId]['items'][] = ['name' => $row['item_name'], 'slug' => $row['item_slug']];
+        $menu[$catId]['items'][] = [
+            'name' => $row['item_name'],
+            'slug' => $row['item_slug'],
+            'link' => $directLinks[$row['item_id']] ?? null,
+        ];
     }
 }

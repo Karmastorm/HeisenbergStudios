@@ -22,6 +22,18 @@ $stmt = $pdo->prepare(
 $stmt->execute(['userLevel1' => $userLevel, 'userLevel2' => $userLevel]);
 $rows = $stmt->fetchAll();
 
+// Menu items with exactly one card go straight to that card's page instead
+// of the /index.php?section= grid -- the grid only earns its click when
+// there's actually more than one piece of content to choose from.
+$linkStmt = $pdo->query(
+    'SELECT menu_item_id, MIN(link_url) AS link_url
+     FROM cards
+     WHERE menu_item_id IS NOT NULL
+     GROUP BY menu_item_id
+     HAVING COUNT(*) = 1'
+);
+$directLinks = $linkStmt->fetchAll(PDO::FETCH_KEY_PAIR);
+
 // Group rows into categories => items
 $menu = [];
 foreach ($rows as $row) {
@@ -36,6 +48,7 @@ foreach ($rows as $row) {
         $menu[$catId]['items'][] = [
             'name' => $row['item_name'],
             'slug' => $row['item_slug'],
+            'link' => $directLinks[$row['item_id']] ?? null,
         ];
     }
 }
@@ -50,7 +63,7 @@ foreach ($rows as $row) {
                     <ul class="dropdown">
                         <?php foreach ($category['items'] as $item): ?>
                             <li>
-                                <a href="/index.php?section=<?php echo urlencode($item['slug']); ?>">
+                                <a href="<?php echo $item['link'] ? htmlspecialchars($item['link']) : '/index.php?section=' . urlencode($item['slug']); ?>">
                                     <?php echo htmlspecialchars($item['name']); ?>
                                 </a>
                             </li>

@@ -25,7 +25,7 @@ $year = date('Y');
                         <ul>
                             <?php foreach ($category['items'] as $item): ?>
                                 <li>
-                                    <a href="/index.php?section=<?php echo urlencode($item['slug']); ?>">
+                                    <a href="<?php echo $item['link'] ? htmlspecialchars($item['link']) : '/index.php?section=' . urlencode($item['slug']); ?>">
                                         <?php echo htmlspecialchars($item['name']); ?>
                                     </a>
                                 </li>
