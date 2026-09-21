@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bash \"/c/Users/metma/.claude/plugins/cache/claude-plugins-official/superpowers/6.3.0/skills/subagent-driven-development/scripts/review-package\" \"docs/superpowers/plans/2026-08-13-schwab-sync-api.md\" 5d0cf8b30dac96ea7ee4a365ffda0e290f7e391e e48e82e942368a79147f9783135a50fcc846a4ab \"/c/GitHub/AI-Coding/HeisenbergStudios/.superpowers/sdd/2026-08-13-schwab-sync-api/fixwave-1-review-heisenbergstudios.diff\")",
+      "Bash(bash \"/c/Users/metma/.claude/plugins/cache/claude-plugins-official/superpowers/6.3.0/skills/subagent-driven-development/scripts/review-package\" \"/c/GitHub/AI-Coding/HeisenbergStudios/docs/superpowers/plans/2026-08-13-schwab-sync-api.md\" 991399b33d09f11f5064494448fcadb32f1c653e a14c699de59076cf83dad0cb723c6eba3a48cbc7 \"/c/GitHub/AI-Coding/HeisenbergStudios/.superpowers/sdd/2026-08-13-schwab-sync-api/fixwave-1-review-ian.diff\")",
+      "Bash(\"c:/xampp/php/php.exe\" -l \"c:/GitHub/AI-Coding/HeisenbergStudios/includes/nav.php\")",
+      "Bash(\"c:/xampp/php/php.exe\" -l \"c:/GitHub/AI-Coding/HeisenbergStudios/includes/nav_data_only.php\")",
+      "Bash(\"c:/xampp/php/php.exe\" -l \"c:/GitHub/AI-Coding/HeisenbergStudios/includes/footer.php\")",
+      "Bash(DB_HOST=162.241.224.233 \"c:/xampp/php/php.exe\" -S 127.0.0.1:8899)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://127.0.0.1:8899/index.php)",
+      "Bash(DB_HOST=162.241.224.233 \"c:/xampp/php/php.exe\" \"C:/Users/metma/AppData/Local/Temp/claude/c--GitHub-AI-Coding-HeisenbergStudios/f06b8e15-736e-4400-88c3-8fd4630702bb/scratchpad/nav_check.php\")",
+      "Bash(DB_HOST=162.241.224.233 \"c:/xampp/php/php.exe\" \"C:/Users/metma/AppData/Local/Temp/claude/c--GitHub-AI-Coding-HeisenbergStudios/f06b8e15-736e-4400-88c3-8fd4630702bb/scratchpad/nav_fallback_check.php\")",
+      "Bash(xargs sed -i 's/\\\\.css?v=6/.css?v=7/g')",
+      "Bash(echo \"started pid $!\")",
+      "Bash(DB_HOST=162.241.224.233 \"c:/xampp/php/php.exe\" \"C:/Users/metma/AppData/Local/Temp/claude/c--GitHub-AI-Coding-HeisenbergStudios/f06b8e15-736e-4400-88c3-8fd4630702bb/scratchpad/tradelog_check.php\")",
+      "Bash(DB_HOST=162.241.224.233 \"c:/xampp/php/php.exe\" \"C:/Users/metma/AppData/Local/Temp/claude/c--GitHub-AI-Coding-HeisenbergStudios/f06b8e15-736e-4400-88c3-8fd4630702bb/scratchpad/tradelog_check_empty.php\")"
+    ]
+  }
+}
