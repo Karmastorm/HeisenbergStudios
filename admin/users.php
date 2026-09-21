@@ -39,6 +39,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute(['id' => $id]);
             $message = 'Account deactivated.';
         }
+    } elseif ($action === 'deny') {
+        if ($id === $currentUserId) {
+            $error = 'You cannot deny your own account.';
+        } else {
+            // Only ever deletes still-pending (never-approved) registrations --
+            // an already-active account must go through Deactivate instead, so
+            // this can't be used to erase a real account's history.
+            $stmt = $pdo->prepare('DELETE FROM users WHERE id = :id AND is_active = 0');
+            $stmt->execute(['id' => $id]);
+            $message = $stmt->rowCount() > 0 ? 'Registration request denied and removed.' : 'That account is no longer pending.';
+        }
     } elseif ($action === 'set_level') {
         $level = (int)($_POST['access_level'] ?? 1);
         if ($level < 1 || $level > 5) {
@@ -73,6 +84,7 @@ $users = $pdo->query(
         .admin-table th { background: var(--color-bg); }
         .admin-table select { padding: 0.3rem 0.5rem; border-radius: 4px; border: 1px solid var(--color-border); }
         .admin-table button { padding: 0.3rem 0.8rem; background: var(--color-accent); color: var(--color-accent-fg); border: none; border-radius: 4px; cursor: pointer; }
+        .admin-table button.btn-deny { background: #b3261e; color: #fff; }
         .admin-table .row-actions { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
         .msg-success { background: #e6f4ea; color: #1e7e34; padding: 0.6rem 0.9rem; border-radius: 4px; margin-bottom: 1rem; font-size: 0.9rem; }
         .msg-error { background: #fdecea; color: #b3261e; padding: 0.6rem 0.9rem; border-radius: 4px; margin-bottom: 1rem; font-size: 0.9rem; }
@@ -88,7 +100,8 @@ $users = $pdo->query(
         <h1 class="page-title">Manage Users</h1>
         <p style="margin-bottom:1rem; color:var(--color-text-soft); font-size:0.9rem;">
             New self-registered accounts start inactive and cannot log in until approved here.
-            Deactivating an account (including a rejected registration) can be reversed later by approving it again.
+            Denying a pending request permanently deletes it (the username/email become available again).
+            Deactivating an already-active account can be reversed later by approving it again.
         </p>
 
         <?php if ($message): ?><div class="msg-success"><?php echo htmlspecialchars($message); ?></div><?php endif; ?>
@@ -155,6 +168,11 @@ $users = $pdo->query(
                                             <?php endforeach; ?>
                                         </select>
                                         <button type="submit">Approve</button>
+                                    </form>
+                                    <form method="post" onsubmit="return confirm('Deny and permanently remove this registration request?');">
+                                        <input type="hidden" name="action" value="deny">
+                                        <input type="hidden" name="id" value="<?php echo (int)$u['id']; ?>">
+                                        <button type="submit" class="btn-deny">Deny</button>
                                     </form>
                                 <?php endif; ?>
                             </div>
