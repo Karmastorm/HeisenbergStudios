@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — HD</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">The Home Depot, Inc.</h1>
+      <div class="ticker-line">HD &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Consumer Discretionary / Home Improvement Retail</div>
+    </div>
+    <div class="report-date">September 15, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#4caf50;">BUY</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">~$307–$311</span></div>
+      <div class="reco-stat"><span class="label">Target Price (Consensus)</span><span class="value">~$375–$378 (36–63 analysts)</span></div>
+      <div class="reco-stat"><span class="label">Market Cap</span><span class="value">~$308 billion</span></div>
+      <div class="reco-stat"><span class="label">Implied Upside</span><span class="value">~21–23%</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">HD</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Consumer Discretionary</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Home Improvement Retail</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$289.10 – $426.75</td></tr>
+      <tr><td class="k">P/E Ratio (TTM)</td><td class="v">~21.6–22.0x</td></tr>
+      <tr><td class="k">PEG Ratio</td><td class="v">~3.40 (one source)</td></tr>
+      <tr><td class="k">Dividend Yield</td><td class="v">~3% (one source)</td></tr>
+      <tr><td class="k">Beta</td><td class="v">~0.95</td></tr>
+      <tr><td class="k">Return on Equity</td><td class="v">~106–128% (varies by source) — reflects a leveraged balance sheet (debt-to-equity ~2.64x per one source) rather than purely operational efficiency</td></tr>
+      <tr><td class="k">Employees</td><td class="v">&gt;470,000</td></tr>
+      <tr><td class="k">Footprint</td><td class="v">2,364 retail stores + &gt;1,340 SRS (Pro-focused distribution) locations across all 50 U.S. states, D.C., Puerto Rico, U.S. Virgin Islands, Guam, 10 Canadian provinces, and Mexico</td></tr>
+      <tr><td class="k">CEO Status</td><td class="v">CEO Ted Decker on temporary medical leave (announced Aug. 2026, expected to last a few months); Ann-Marie Campbell leading store/field operations, CFO Richard McPhail assuming financial and Pro-business responsibilities during his absence</td></tr>
+      <tr><td class="k">Headquarters</td><td class="v">Atlanta, Georgia</td></tr>
+      <tr><td class="k">Analyst Ratings</td><td class="v">"Buy"/"Moderate Buy" consensus across sources (e.g., 59% Buy/Strong Buy of 63 analysts in one source)</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Home Depot continues to execute well and gain market share despite what CFO Richard McPhail repeatedly describes as "frozen housing market conditions" — Q2 fiscal 2026 sales rose 5.7% to $47.9 billion (beating consensus of ~$47.2 billion) with comparable sales up 1.7% globally (the highest since Q3 fiscal 2022), driven by broad-based demand across both professional and DIY customers, strong SRS (the company's Pro-distribution business) performance above the company average in every vertical, and a fourth consecutive quarter of double-digit online comp growth. Management specifically noted customers "have the means to spend, they're just hesitant" about larger projects, with housing turnover stuck near historic lows (~3% of housing stock) and no clear sign yet that recent interest-rate moves have shifted that dynamic. The company reaffirmed rather than raised full-year 2026 guidance given this macro uncertainty, and absorbed a temporary CEO medical leave (Ted Decker, expected back within a few months) with an orderly interim-leadership plan. Tariff refunds ($730 million received in Q2, with the "vast majority" of expected refunds now in hand) have been a genuine, disclosed tailwind helping offset input-cost pressure and "maintain value" for customers. Given consistent execution, share gains, and a stock trading meaningfully below both its 52-week high and consensus analyst targets (implying ~21-23% upside), this supports a constructive stance, though the housing-market "frozen" characterization from management itself is a real signal that the eventual catalyst (rate-driven housing turnover recovery) remains unrealized.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Home Depot reported Q2 fiscal 2026 (quarter ended August 2, 2026) net sales of $47.86 billion (+5.7% YoY, beating the ~$47.2–47.24 billion consensus), with GAAP EPS of $4.79–$4.92 (sources vary slightly; one cites $4.79 diluted EPS versus $4.58 a year earlier, +4.6% YoY, while another cites $4.92, beating a $4.73 consensus by $0.19). Net income was $4.77 billion versus $4.55 billion a year earlier. Comparable sales rose 1.7% globally (U.S. comps up 1.3%), the highest comp-sales growth since Q3 fiscal 2022; customer transactions fell 1% while average ticket rose to $92.50 from $90.01. Total company online comparable sales grew over 10% year-over-year — a fourth consecutive quarter of double-digit digital growth. SRS (the company's professional-contractor distribution business) comped above the company average with positive comps in all verticals, which management specifically characterized as evidence of "significant market share gains"; Canada and Mexico also outcomped the overall company average. CFO Richard McPhail described the housing market as "frozen," noting housing turnover remains near historic lows (~3% of housing stock) with "no sign of an inflection point yet" despite recent rate step-downs. Home Depot received $730 million in tariff refunds during Q2 — described as "the vast majority" of what the company expects in total — using $685 million to reduce cost of goods sold and leaving $45 million in inventory; these refunds are expected to partially offset unplanned fuel, energy, and other input-cost pressures, and management indicated tariff refunds would continue offsetting costs through Q2 and Q3, with Q4 gross margin expected roughly flat year-over-year. Given broader macro uncertainty, the company reaffirmed rather than raised its full fiscal 2026 guidance. Separately, on August 12, 2026, Home Depot announced CEO Ted Decker is on a temporary medical leave of absence expected to last a few months (reason undisclosed), with Ann-Marie Campbell taking charge of store/field operations and Richard McPhail assuming responsibility for financial matters and the professional-customer business units during his absence; the board expects Decker to return. The company also announced an organizational realignment (July 30, 2026) aimed at providing a more seamless customer experience.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Home Depot reaffirmed full-year fiscal 2026 guidance: total sales growth of approximately 2.5–4.5%, comparable sales growth of flat to +2.0%, SRS mid-single-digit organic sales growth, gross margin of approximately 33.1%, operating margin of approximately 12.4–12.6% (adjusted operating margin ~12.8–13.0%), effective tax rate of approximately 24.3%, net interest expense of approximately $2.3 billion, diluted and adjusted diluted EPS both roughly flat to +4% versus fiscal 2025, capital expenditures of approximately 2.5% of sales, and plans to open approximately 15 new Home Depot stores and 40–50 new SRS locations. Full-year EPS guidance was set at $14.690–$15.278 per one source. Share repurchases are expected to resume by mid-2027 per one source's commentary, reflecting continued but currently paused capital-return activity.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Home Depot trades at a trailing P/E around 21.6–22.0x with a consensus analyst price target clustering around $375–$378 (across sources with 18–63 analysts each), implying roughly 21–23% upside from the ~$307–$311 price range seen in mid-September 2026 sources. Individual analyst target moves in the days immediately preceding this report showed some divergence: UBS lowered its target to $420 (from $430), RBC lowered to $342 (from $343), and Truist raised to $373 (from $369) — while Bernstein separately lowered its target to $344 (from $354) on September 9, 2026, citing a "more cautious stance on valuation despite solid operating results," and Stifel reiterated a Hold at $346, specifically flagging that the stock "trades at a valuation premium versus peers" with limited upside if big-ticket consumer spending softens further. This represents a genuinely mixed, actively-revised picture rather than settled bullish consensus.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">The Home Depot, Inc., headquartered in Atlanta, Georgia, is the largest home improvement retailer in North America, operating 2,364 retail stores and more than 1,340 SRS (professional-contractor-focused distribution) locations across the U.S., Canada, and Mexico. The company sells building materials, home improvement products, lawn and garden products, décor products, and facilities maintenance/repair/operations products, serving both do-it-yourself (DIY) consumers and professional contractors (Pro customers). The SRS Distribution acquisition (completed in 2024) significantly expanded Home Depot's presence in the professional-contractor distribution channel, a business management specifically highlights as comping above the overall company average and driving meaningful market-share gains.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>SRS (professional/Pro distribution) segment growth, comping above company average with positive comps in all verticals — the single strongest-performing part of the business</li>
+      <li>Online/digital comparable sales, up more than 10% YoY for a fourth consecutive quarter</li>
+      <li>International operations (Canada and Mexico), both outcomping the overall company average, with Canada showing positive comps in both transactions and units</li>
+      <li>Average ticket growth ($92.50 from $90.01 YoY) even as transaction counts declined modestly, suggesting customers are spending more per visit on smaller, more affordable projects rather than larger renovations</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Tariff-related input costs, substantially offset in 2026 by $730 million in received tariff refunds (with the "vast majority" of expected total refunds now received)</li>
+      <li>Rising transportation, fuel, and energy costs, which management specifically noted reduced Q2 fiscal 2026 EPS by approximately $0.22</li>
+      <li>Continued capital expenditure (~2.5% of sales) supporting new store/SRS location openings (~15 new Home Depot stores, 40–50 new SRS locations planned for the year) and technology/AI investment</li>
+      <li>Net interest expense of approximately $2.3 billion, reflecting the company's leveraged balance sheet (debt-to-equity ~2.64x)</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Home Depot operates in the mature, oligopolistic U.S. home improvement retail industry, competing most directly against Lowe's (see separate LOW report in this series). The industry's central current dynamic is a "frozen" housing market — historically low housing turnover (~3% of housing stock) suppressing large-project/renovation demand even as smaller-project DIY and Pro-contractor spending remains resilient. Both major players in the category have pursued Pro-customer expansion (Home Depot via SRS Distribution) as a growth lever less dependent on the broader housing-turnover cycle.</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — the scale of physical retail footprint, supply-chain relationships, and Pro-contractor distribution infrastructure required to compete at Home Depot's scale represents a very high barrier to entry.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Low-to-moderate — Home Depot's purchasing scale gives it meaningful negotiating leverage, though tariff policy has been a disclosed, material input-cost factor requiring active management (refunds, pricing) in 2026.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate — DIY consumers have some choice among home improvement retailers, but Pro/contractor customers, once integrated into SRS's distribution and service relationships, likely face higher switching costs.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Low-to-moderate — online-only retailers (Amazon) compete for some product categories, but large-format physical retail with in-store expertise and immediate availability remains difficult to fully replicate online for many home-improvement purchases.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High but essentially duopolistic — Lowe's is Home Depot's primary direct competitor; both companies are pursuing similar Pro-customer-expansion and digital-investment strategies in response to the same "frozen" housing macro backdrop.</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Home Depot's moat rests on its unmatched physical retail scale (2,364 stores) combined with the SRS Distribution acquisition's deep penetration into professional-contractor distribution — a business management specifically credits with driving genuine market-share gains rather than merely riding a favorable macro cycle. Continued double-digit digital comp growth for four consecutive quarters also suggests the company's omnichannel/technology investments are translating into durable share gains rather than one-time pandemic-era pull-forward.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major home improvement retailers. See separate LOW report in this series.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>Home Depot</td><td>HD</td><td>Market cap ~$308B; P/E ~21.6–22.0x; SRS Pro-distribution comping above company average</td></tr>
+      <tr><td>Lowe's</td><td>LOW</td><td>See separate LOW research report in this series (Consumer Discretionary batch)</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled — the central question is when/whether housing turnover normalizes from its current ~3% historic-low rate, which would be a significant terminal-growth driver if it occurs}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td class="placeholder">{{No third-party DCF estimate was clearly isolated in sources reviewed}}</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">Home Depot's PEG ratio of ~3.4 and P/E near 22x reflect a premium valuation for a mature retailer, priced on the expectation of continued share gains (SRS, digital) even absent a housing-turnover recovery, plus optionality if rates eventually do unlock pent-up renovation demand. The genuinely mixed recent analyst target revisions (some raised, some lowered, within the same week) suggest the Street is actively debating how much of the current multiple is already pricing in the eventual housing recovery versus how much reflects durable, housing-cycle-independent share gains from SRS and digital.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q2 FY2025</th><th>Q2 FY2026</th><th>FY2026 Guidance</th></tr>
+      <tr><td>Net Sales</td><td class="placeholder">{{Implied ~$45.3B based on 5.7% YoY growth}}</td><td>$47.86B (+5.7% YoY)</td><td>Total sales +2.5–4.5% (full year)</td></tr>
+      <tr><td>Comparable Sales</td><td class="placeholder">{{Not directly sourced}}</td><td>+1.7% global; +1.3% U.S. (highest since Q3 FY2022)</td><td>Flat to +2.0% (full year)</td></tr>
+      <tr><td>Diluted EPS</td><td>$4.58</td><td>$4.79–$4.92 (source-dependent)</td><td>Roughly flat to +4% vs. FY2025</td></tr>
+      <tr><td>Net Income</td><td>$4.55B</td><td>$4.77B</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Online Comp Growth</td><td class="placeholder">{{Prior quarters also double-digit}}</td><td>&gt;10% YoY (4th consecutive quarter)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Gross Margin</td><td class="placeholder">{{Not directly sourced}}</td><td class="placeholder">{{Aided by $685M of tariff-refund COGS reduction}}</td><td>~33.1% (full year)</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">Home Depot's Q2 fiscal 2026 results benefited from a disclosed, largely one-time item: $730 million in tariff refunds, of which $685 million was used to directly reduce cost of goods sold — a clean, well-itemized disclosure by management, but one that should not be extrapolated as a recurring gross-margin tailwind at the same magnitude into future quarters (management itself guided Q4 gross margin roughly flat YoY, implying this tailwind normalizes). Transportation, fuel, and energy cost increases specifically reduced Q2 EPS by approximately $0.22 — a useful, disclosed offsetting item worth tracking for persistence. Return on equity figures (106–128% across sources) are inflated by Home Depot's leveraged capital structure (debt-to-equity ~2.64x) rather than reflecting unusually efficient operations alone — a distinction worth keeping in mind when comparing ROE across retailers with different balance-sheet structures.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>CEO Ted Decker's temporary medical leave (undisclosed reason, expected to last "a few months") introduces near-term leadership-continuity considerations, though the interim management structure (Campbell on operations, McPhail on finance/Pro business) appears orderly and board-endorsed.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>A leveraged balance sheet (debt-to-equity ~2.64x, net interest expense ~$2.3B guided for FY2026) means Home Depot is more sensitive to interest-rate and credit-market conditions than a less-leveraged peer. The Q2 2026 tariff-refund tailwind is disclosed as largely non-recurring at that magnitude.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span>Tariff policy remains a live, disclosed cost factor requiring active management (refunds received, pricing actions); trade-policy volatility is explicitly listed among the company's own forward-looking risk factors.</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against Home Depot's most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in sources reviewed — verify directly against Home Depot's 10-K/10-Q auditor opinion. CEO medical leave reason was not disclosed by the company per sources reviewed — a legitimate, respected privacy choice, but one that leaves genuine uncertainty about duration/outcome.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul class="placeholder"><li>{{ESG_ENV — not independently sourced in this summary}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul class="placeholder"><li>{{ESG_SOC — not independently sourced in this summary; note the company's ~470,000-employee workforce as a scale-relevant labor consideration}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul><li>The orderly, board-communicated interim-leadership transition during CEO Decker's medical leave (with clearly designated responsibilities split between two named executives) reflects sound governance/succession practice</li><li class="placeholder">{{ESG_GOV — board composition and executive compensation structure not sourced beyond the above}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 15, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (Yahoo Finance, TipRanks, CNBC, StockTitan, LuxAlgo, CNN, StockAnalysis.com, TheCerbatGem, TickerNerd, MarketBeat, Barchart, ad-hoc-news.de, and company earnings materials) that may be delayed or inconsistent. All figures should be independently verified against Home Depot's 10-K/10-Q filings before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

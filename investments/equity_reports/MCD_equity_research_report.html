@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — MCD</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">McDonald's Corporation</h1>
+      <div class="ticker-line">MCD &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Consumer Discretionary / Restaurants (Quick-Service)</div>
+    </div>
+    <div class="report-date">September 15, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#4caf50;">BUY</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">~$253 (Sept 16, 2026)</span></div>
+      <div class="reco-stat"><span class="label">Target Price (Consensus)</span><span class="value">~$313 (20 analysts)</span></div>
+      <div class="reco-stat"><span class="label">Market Cap</span><span class="value">~$191 billion</span></div>
+      <div class="reco-stat"><span class="label">Implied Upside</span><span class="value">~24%</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">MCD</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Consumer Discretionary</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Restaurants (Quick-Service / Fast Food)</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$252.15 – $341.75 — the stock is currently trading near its 52-week low</td></tr>
+      <tr><td class="k">2026 YTD Performance</td><td class="v">Down more than 11% (as of early August 2026 snapshot), dragging market cap down to roughly $191 billion</td></tr>
+      <tr><td class="k">Employees</td><td class="v">150,000</td></tr>
+      <tr><td class="k">Stock Splits</td><td class="v">11 splits historically</td></tr>
+      <tr><td class="k">Segments</td><td class="v">U.S., International Operated Markets, International Developmental Licensed Markets</td></tr>
+      <tr><td class="k">CEO / Headquarters</td><td class="v">Chris Kempczinski (Chairman and CEO); headquartered in Chicago, Illinois</td></tr>
+      <tr><td class="k">Upcoming Catalyst</td><td class="v">Investor Day scheduled September 23, 2026 to detail "McDonald's > NEXT" strategy; next earnings report October 22, 2026</td></tr>
+      <tr><td class="k">Analyst Ratings</td><td class="v">"Buy" consensus (19 Buy / 1 Sell per one source, dated Sept. 16, 2026); note a technical "Strong Sell" signal from moving-average/momentum indicators in the same source — a purely technical reading distinct from fundamental analyst ratings</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      McDonald's shares have fallen more than 20% from their 52-week high and are now trading near their 52-week low, reflecting a genuine, company-acknowledged execution slowdown in its largest market (the U.S.) even as the broader "playbook" continues working internationally. Q2 2026 U.S. comparable sales rose just 0.8%, a meaningful deceleration CEO Chris Kempczinski attributed two-thirds to value-execution problems (inconsistent, complicated pricing/promotions that slowed operations and hurt customer satisfaction scores) and the remainder to a weak FIFA World Cup marketing campaign against a difficult prior-year comparison (the "Minecraft" movie tie-in). Management has been unusually direct in owning these as execution failures rather than strategic flaws, with CFO pledging McDonald's "will not get beaten on value," and the company has already delayed its 50,000-restaurant global target to 2028 (from 2027) and trimmed FX tailwind guidance. A genuine bright spot — a new beverage platform (refreshers, crafted sodas, and a forthcoming Red Bull Energizers launch) — is exceeding expectations in the U.S., Canada, Germany, and Australia, introducing new visits and lifting average check. With management explicitly targeting a return to expected U.S. same-store-sales performance in 2027, and a September 23, 2026 investor day set to detail the company's "McDonald's > NEXT" strategy in more depth, this is a name where the current depressed valuation (near 52-week lows, ~24% below consensus target) may already discount much of the disclosed execution shortfall — supporting a BUY for investors willing to wait through the acknowledged 2026-into-2027 recovery window, tempered by the reality that management itself has now missed its own expectations in consecutive quarters.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">McDonald's reported Q2 2026 (quarter ended June 30, 2026) adjusted EPS of $3.38 (beating the $3.32 consensus by ~1.2%), with GAAP EPS of $3.32 (in line with estimates) and net income of $2.36 billion (up from $2.25 billion/$3.14 per share a year earlier). Net revenue rose 3.7–4% YoY to $7.10 billion, slightly missing the ~$7.13 billion consensus. Global comparable sales rose 1.3% YoY (versus 3.8% in the same quarter last year), meeting Wall Street's expectations, with positive comparable sales growth across every segment. However, U.S. comparable sales rose just 0.8%, a significant deceleration Kempczinski attributed roughly two-thirds to "value execution problems" — he specifically cited "a fairly significant amount of price [increases]" taken in Q2 and noted that "too many complicated launches slowed down restaurant operations," adding to service times and hurting customer satisfaction scores — and the remainder to a weak FIFA World Cup marketing campaign that underperformed expectations against a difficult comparison to the prior year's popular "Minecraft" movie tie-in promotion. Operating margin held steady at 47%, in line with the same quarter last year. A bright spot: the company's new beverage platform (refreshers and crafted sodas) is exceeding expectations in the U.S., Canada, Germany, and Australia, introducing new visits and lifting average customer check; Red Bull Energizers were set to be added to the beverage lineup in the following weeks. Management lowered full-year FX tailwind guidance to $0.15/share (from a prior $0.20–0.30/share range) and delayed its global 50,000-restaurant target to 2028 (from a prior 2027 target). Kempczinski framed the issues as execution-focused rather than strategic, stating "while our playbook is working around the world, we see an opportunity to raise the bar in the U.S. and accelerate performance in our largest market," and indicated the company expects U.S. same-store sales to be back in line with expectations in 2027. An investor day was scheduled for September 23, 2026 to detail the company's "McDonald's > NEXT" strategy in greater depth. Shares closed about 1% higher on the earnings day itself despite the mixed print, though the stock has continued to underperform since, trading near its 52-week low as of mid-September 2026.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Sell-side consensus (per one source) expects McDonald's revenue to grow approximately 5.2% over the next 12 months, similar to its roughly 4.2% compound annual growth rate over the trailing seven years, though this projected growth rate is described as still below the broader restaurant-sector average. Management's own stated expectation is for U.S. same-store sales to return to their originally expected trajectory in 2027, implying continued softness is anticipated through the remainder of 2026 before a clearer recovery.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">McDonald's average 12-month analyst price target of approximately $312.84–$313 (19–20 analysts, per the most current source reviewed) implies roughly 23.8–24% upside from the current ~$252.78 price, with individual targets ranging from a low of $250 to a high of $407. The stock's "Buy" consensus rating (19 Buy / 1 Sell) sits in some tension with a purely technical "Strong Sell" signal cited in the same source — a reminder that momentum/technical indicators and fundamental analyst views can diverge meaningfully, particularly for a stock trading near 52-week lows after a disclosed operational miss.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">McDonald's Corporation, headquartered in Chicago, Illinois, owns, operates, and franchises restaurants under the McDonald's brand in the United States and internationally, reporting through three segments: U.S., International Operated Markets (company-operated and franchised restaurants in major international markets), and International Developmental Licensed Markets (markets operated primarily by developmental licensees and affiliates, which have historically shown stronger growth than the core U.S. and Operated Markets segments). McDonald's operates the world's largest quick-service restaurant chain by revenue, with a predominantly franchised business model that generates the majority of its profitability from rent and royalty payments rather than direct restaurant operations, providing a relatively capital-light, high-margin revenue base even during periods of same-store-sales softness (evidenced by the company's steady 47% operating margin even amid the Q2 2026 U.S. comp deceleration).</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>U.S. comparable sales performance, currently the company's most significant near-term challenge (just +0.8% in Q2 2026) and the focus of management's stated turnaround priority</li>
+      <li>International Operated and Developmental Licensed Markets, both currently outperforming the U.S. and contributing to the "playbook working around the world" narrative</li>
+      <li>New beverage platform (refreshers, crafted sodas, and the incoming Red Bull Energizers), exceeding expectations in multiple markets and lifting both visit frequency and average check</li>
+      <li>Value-meal and affordable-bundle promotions, though management itself flagged execution complexity in recent launches as a specific detractor from performance rather than a driver</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Operational complexity from "too many complicated launches," which management specifically identified as slowing restaurant service times and hurting customer satisfaction — a self-inflicted cost the company is actively working to correct</li>
+      <li>Marketing spend on major campaigns (e.g., the FIFA World Cup tie-in), with returns that can vary significantly year to year versus difficult prior-year comparisons</li>
+      <li>Continued global restaurant expansion, though the pace has been tempered by the delayed 50,000-restaurant target (now 2028, from 2027)</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">McDonald's operates in the highly competitive global quick-service restaurant (QSR) industry, where value positioning has become an especially significant competitive battleground amid consumer sensitivity to food and household budget pressures. Management's explicit commitment that McDonald's "will not get beaten on value" reflects the intensity of this dynamic, as lower-income and budget-conscious consumers — historically a core McDonald's demographic — have shown increased price sensitivity across the broader restaurant sector.</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low at McDonald's global scale — brand recognition, franchise-network density, and supply-chain scale represent enormous barriers, though smaller, more agile QSR and fast-casual concepts continue to emerge and compete for specific customer segments.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Low — McDonald's massive global purchasing scale gives it substantial negotiating leverage with food and packaging suppliers.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>High and rising — value-conscious consumers can readily switch among QSR competitors, a dynamic management itself flagged as central to the Q2 2026 U.S. comp shortfall.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate-to-high — other QSR chains, fast-casual concepts, grocery/convenience "meal solutions," and at-home cooking all compete for the same consumer spending, particularly during periods of budget pressure.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — Yum! Brands (KFC, Taco Bell, Pizza Hut), Restaurant Brands International (Burger King), Wendy's, Chick-fil-A, and numerous regional/international QSR competitors all compete directly for value-conscious traffic.</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">McDonald's moat rests on unmatched global brand recognition, an enormous and highly franchised restaurant network providing steady royalty/rent-based cash flow even during operating softness (evidenced by the steady 47% operating margin despite the Q2 2026 U.S. slowdown), and significant purchasing/supply-chain scale. The current U.S. execution challenges are explicitly framed by management as fixable operational issues (complicated launches, inconsistent value messaging) rather than a structural erosion of this underlying brand and franchise-economics moat, a distinction worth taking seriously given management's specificity and directness in the Q2 2026 disclosure.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major global QSR chains. Figures approximate; verify against a current source.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Notes</th></tr>
+      <tr><td>McDonald's (MCD)</td><td>Trading near 52-week low; U.S. comp growth decelerated sharply to +0.8% in Q2 2026</td></tr>
+      <tr><td>Restaurant Brands International (Burger King)</td><td>Not independently researched in this series</td></tr>
+      <tr><td>Yum! Brands (KFC, Taco Bell, Pizza Hut)</td><td>Not independently researched in this series</td></tr>
+      <tr><td>Starbucks (SBUX)</td><td>See separate SBUX report in this series (Consumer Discretionary batch)</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled — the central question is whether U.S. comps recover to management's targeted 2027 trajectory or whether the value-execution issues reflect a more durable competitive/consumer shift}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — recommend an explicit forecast bridging through the company's own stated 2027 U.S. recovery target}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td class="placeholder">{{No third-party DCF estimate was clearly isolated in sources reviewed}}</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">McDonald's trading near its 52-week low, combined with a ~24% gap to the average analyst target and a still-solid 47% operating margin even amid the U.S. slowdown, suggests the market has priced in meaningful skepticism about the near-term U.S. turnaround. The September 23, 2026 investor day is a specific, near-term catalyst worth monitoring closely, as it should provide more detail on management's confidence in the 2027 recovery timeline and the "McDonald's > NEXT" strategy referenced in sources reviewed.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q2 2025</th><th>Q2 2026</th><th>Notes</th></tr>
+      <tr><td>Revenue</td><td>$6.8B</td><td>$7.10B (+3.7–4% YoY)</td><td>Slightly missed ~$7.13B consensus</td></tr>
+      <tr><td>Adjusted EPS</td><td class="placeholder">{{Not directly sourced}}</td><td>$3.38 (beat $3.32 est. by ~1.2%)</td><td class="placeholder">{{GAAP EPS $3.32, in line}}</td></tr>
+      <tr><td>Net Income</td><td>$2.25B ($3.14/share)</td><td>$2.36B ($3.32/share)</td><td class="placeholder">{{GAAP basis}}</td></tr>
+      <tr><td>Global Comparable Sales</td><td>+3.8%</td><td>+1.3%</td><td>Met expectations; positive across every segment</td></tr>
+      <tr><td>U.S. Comparable Sales</td><td class="placeholder">{{Higher, per continued deceleration trend}}</td><td>+0.8%</td><td>Significant deceleration; ~2/3 attributed to value-execution issues by management</td></tr>
+      <tr><td>Operating Margin</td><td>47%</td><td>47% (in line)</td><td>Steady despite U.S. comp softness</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">McDonald's Q2 2026 results show a useful, disclosed distinction worth carrying forward: the revenue/comp miss is attributed by management specifically and quantitatively (roughly two-thirds value-execution, one-third weak marketing-campaign comparison) rather than left as a vague "macro" explanation — a positive earnings-quality/disclosure signal, since it gives analysts something concrete to track for recovery evidence (simplification of launches, more consistent value messaging) rather than waiting passively for broader consumer-spending conditions to improve. The steady 47% operating margin despite the U.S. comp slowdown indicates the franchise-model cash-flow base remains intact even as top-line growth has decelerated — an important distinction between "growth is slowing" and "the business model is impaired."</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>Management has explicitly acknowledged "too many complicated launches" slowed restaurant operations and hurt customer satisfaction — an operational execution risk that requires sustained correction, not a one-quarter fix, to validate the company's own 2027 U.S. recovery target.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>Reduced FX tailwind guidance ($0.15/share, down from $0.20–0.30/share) and a delayed global restaurant-expansion target (2028, from 2027) both represent modest, disclosed downward revisions to near-term financial expectations.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span class="placeholder">{{No specific major regulatory risk was identified in the sources reviewed for this summary beyond general QSR industry considerations (labor, food safety, franchise-relationship regulation).}}</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against McDonald's most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in sources reviewed — verify directly against McDonald's 10-K/10-Q auditor opinion. A technical "Strong Sell" signal (moving averages and momentum indicators) cited in one source is a purely quantitative/technical reading distinct from fundamental analyst ratings and should not be conflated with analyst sentiment.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul class="placeholder"><li>{{ESG_ENV — not independently sourced in this summary}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul class="placeholder"><li>{{ESG_SOC — value positioning for budget-conscious consumers (a core part of McDonald's historical customer base) is directly relevant to the company's Q2 2026 execution narrative; broader labor/franchise-relations data not independently sourced}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul><li>Management's unusually direct, quantified public accounting of the Q2 2026 shortfall (attributing it to specific, named execution failures rather than vague macro explanations) reflects a transparent disclosure approach</li><li class="placeholder">{{ESG_GOV — board composition and executive compensation structure not sourced beyond the above}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 15, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (Investing.com, CNBC, Yahoo Finance, Trefis, TradingKey, Barchart, and various financial media) that may be delayed or inconsistent. All figures should be independently verified against McDonald's 10-K/10-Q filings before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

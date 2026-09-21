@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — TMUS</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #e9edf2;
+    color: var(--text);
+    font-family: "Georgia", "Times New Roman", serif;
+    line-height: 1.55;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.12);
+    padding: 40px 50px 60px;
+  }
+
+  .report-header {
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .firm-name {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .company-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+  }
+
+  .reco-banner {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .reco-main {
+    flex: 0 0 170px;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .reco-main .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+
+  .reco-main .value {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+
+  .reco-stats {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--gray-bg);
+  }
+
+  .reco-stat {
+    padding: 10px 14px;
+    border-left: 1px solid var(--border);
+  }
+
+  .reco-stat .label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    display: block;
+  }
+
+  .reco-stat .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .basic-info {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+
+  .basic-info td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .basic-info td.k {
+    color: var(--muted);
+    width: 38%;
+  }
+
+  .basic-info td.v {
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  section { margin-bottom: 32px; }
+
+  h2.section-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: var(--navy);
+    padding: 8px 14px;
+    margin: 0 0 14px 0;
+    border-left: 5px solid var(--accent);
+  }
+
+  h3.sub-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    margin: 18px 0 10px;
+  }
+
+  p.body-text { font-size: 15px; margin: 0 0 12px; }
+
+  ul.bullet-list { margin: 0 0 12px 0; padding-left: 20px; }
+  ul.bullet-list li { margin-bottom: 6px; font-size: 15px; }
+
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  .thesis-box .thesis-label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-dark);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  table.data-table th {
+    background: var(--navy);
+    color: #fff;
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  table.data-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background: var(--gray-bg); }
+
+  .risk-item { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+
+  .risk-tag {
+    flex: 0 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    background: var(--red);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .risk-tag.op { background: #b8860b; }
+  .risk-tag.fin { background: var(--red); }
+  .risk-tag.reg { background: #6a3d9a; }
+  .risk-tag.legal { background: #444; }
+
+  .esg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
+  .esg-card {
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: 4px;
+    padding: 12px 14px;
+  }
+
+  .esg-card.environmental { border-top-color: #2e7d32; }
+  .esg-card.social { border-top-color: #1565c0; }
+  .esg-card.governance { border-top-color: #6a1b9a; }
+
+  .esg-card h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px;
+    color: var(--navy);
+  }
+
+  .esg-card ul { margin: 0; padding-left: 16px; font-size: 13px; }
+  .esg-card li { margin-bottom: 4px; }
+
+  .peer-note {
+    font-size: 12.5px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: -6px;
+    margin-bottom: 12px;
+  }
+
+  footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  footer .analyst-line { margin-bottom: 8px; font-size: 12px; color: var(--text); }
+
+  @media (max-width: 700px) {
+    .page { padding: 24px 18px; }
+    .reco-banner { flex-direction: column; }
+    .reco-stats { grid-template-columns: repeat(2, 1fr); }
+    .esg-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">T-Mobile US, Inc.</h1>
+      <div class="ticker-line">TMUS &nbsp;|&nbsp; NASDAQ &nbsp;|&nbsp; Communication Services / Telecom Services</div>
+    </div>
+    <div class="report-date">
+      September 15, 2026<br>
+      Analyst: [Name Not Specified]
+    </div>
+  </div>
+
+  <!-- ============ RECOMMENDATION BANNER ============ -->
+  <div class="reco-banner">
+    <div class="reco-main">
+      <span class="label">Recommendation</span>
+      <span class="value" style="color:#4caf50;">BUY</span>
+    </div>
+    <div class="reco-stats">
+      <div class="reco-stat">
+        <span class="label">Current Price</span>
+        <span class="value">~$182–$229 (see note below)</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Target Price (Consensus)</span>
+        <span class="value">~$230–$265 (range across sources)</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Market Cap</span>
+        <span class="value">~$196–258 billion (see note below)</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Dividend Yield</span>
+        <span class="value">~1.8–2.2%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BASIC INFORMATION ============ -->
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">TMUS</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NASDAQ</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Communication Services</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Telecom Services</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">Cited as either $208.39–$276.49 or $224.96–$259.01 (50-day) across sources — see note below on data inconsistency</td></tr>
+      <tr><td class="k">Shares Outstanding</td><td class="v">~1.07 billion (per one Q2 2026 earnings source)</td></tr>
+      <tr><td class="k">P/E Ratio (TTM)</td><td class="v">~21.6x (one source)</td></tr>
+      <tr><td class="k">Dividend (Quarterly / Yield)</td><td class="v">~$1.02/quarter / ~1.8–2.2% (varies by source)</td></tr>
+      <tr><td class="k">Beta</td><td class="v">~−0.06 (near zero, per one source) — unusually low, suggesting minimal correlation with broad market moves</td></tr>
+      <tr><td class="k">Employees</td><td class="v">~75,000 (per one source)</td></tr>
+      <tr><td class="k">Institutional / Insider Ownership</td><td class="v">~42.5% institutional ownership; only ~0.37% insider-held (per one source); insiders reportedly sold significantly more stock than they bought over a recent 3-month period</td></tr>
+      <tr><td class="k">Headquarters</td><td class="v">Bellevue, Washington; founded 1994</td></tr>
+      <tr><td class="k">Float</td><td class="v placeholder">{{Not independently sourced in this summary — verify against T-Mobile's most recent proxy statement}}</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted); margin-top:-14px;">Note: Sources searched showed a wide and hard-to-reconcile spread on current price and market cap — figures ranged from a price of ~$182 (implied by one 33%-upside-to-$243 target calculation) to ~$229 (one direct quote source), with market cap correspondingly ranging from ~$196B to ~$258B. This spread is larger than typical day-to-day movement would explain and likely reflects different snapshot dates or data-provider errors across the sources reviewed. Verify against a single live, dated data source before use.</p>
+  </section>
+
+  <!-- ============ INVESTMENT SUMMARY ============ -->
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      T-Mobile continues to deliver the strongest fundamental growth profile among the three major U.S. wireless carriers, with Q2 2026 postpaid service revenue up 13% year-over-year and core adjusted EBITDA up 12% YoY — both "at multiples to our competition" per management's own characterization. The company has pivoted its growth strategy from raw subscriber-volume gains toward higher-value account and ARPA growth (60% of new customers now choosing premium plans, ex-M&A ARPA growth of 3.7% YoY), supporting continued double-digit service-revenue and EBITDA growth even as reported postpaid net additions decelerate (277,000 in Q2 2026, down 13% YoY, with Q3 guided even lower to ~250,000). Free cash flow generation remains industry-leading (25% margin) and management raised full-year 2026 adjusted free cash flow guidance to $18.4–$18.8 billion. The primary near-term overhang is a customer-facing "rate plan modernization" — effectively a price increase on legacy plans — that has generated measurable consumer backlash, FCC and state-attorney-general complaints, and at least one class-action lawsuit, testing whether T-Mobile's "un-carrier"/value positioning can survive its transition into the industry's largest and most profitable player. The mispricing thesis depends on whether the market is appropriately weighing durable ARPA/EBITDA growth and successful UScellular integration against the reputational and regulatory risk of behaving more like a traditional "legacy" carrier — the very dynamic Morningstar and other analysts have flagged as eroding T-Mobile's historical "maverick" positioning.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">T-Mobile reported Q2 2026 total service revenue of $19.0 billion (+9% YoY) and postpaid service revenue of $15.9 billion (+13% YoY, or +12.6% per one precise source). Diluted EPS was $2.99 (+5% YoY), beating consensus of $2.59, though EPS growth lagged core EBITDA growth (+12% YoY) due to $146 million after-tax ($0.14/share) of UScellular merger-related costs and $46 million after-tax ($0.04/share) of network restructuring costs. Net income was roughly flat to up slightly (+0.5% to +1% YoY, source-dependent) at approximately $3.2 billion. Postpaid net account additions were 277,000 (above the ~259,000–264,000 analyst estimate range but down 13% YoY from 318,000 in the prior-year quarter), with postpaid ARPA of $152.91 (+2% YoY headline, or +3.7% YoY excluding M&A-related dilution from UScellular and fiber joint-venture customers). Postpaid account churn was 0.99%, up from 0.92% a year earlier. The company raised full-year 2026 adjusted free cash flow guidance to $18.4–$18.8 billion (from $18.1–$18.7 billion), citing lower cash taxes, working-capital benefits, and efficiencies from AI tools, while reiterating full-year guidance for postpaid net account additions (950,000–1,050,000), core adjusted EBITDA ($37.1–$37.5 billion, ~10% growth), and service revenue (~$77 billion, ~8% growth). Management also disclosed a leadership transition: CFO Peter Osvaldik will step down in February 2027, succeeded by Jessica Uhl, and longtime marketing/strategy executive Mike Katz is departing after 28 years with the company. Separately, T-Mobile and Verizon resolved lawsuits accusing each other of deceptive advertising around carrier-switching savings claims.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Full-year 2026 guidance calls for service revenue of approximately $77 billion (~8% growth), core adjusted EBITDA of $37.1–$37.5 billion (~10% growth at the midpoint), postpaid ARPA growth of 2.5–3% (with management indicating they are tracking toward the higher end), cash capex of approximately $10 billion, and adjusted free cash flow of $18.4–$18.8 billion. Q3 2026 guidance specifically calls for approximately $19.3 billion in service revenue (+6% YoY), core adjusted EBITDA of approximately $9.4 billion (+8% YoY), and a temporary slowdown to approximately 250,000 postpaid net account additions, which management attributes explicitly to a churn spike tied to the ongoing rate-plan migration rather than a change in underlying competitive positioning.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">T-Mobile trades at a P/E in the low-to-mid 20s (TTM), with analyst consensus price targets clustering in the $230–$265 range across sources reviewed (implying roughly 25–35% upside depending on which current-price data point is used, given the price/market-cap inconsistencies noted above). The "Buy"/"Moderate Buy" consensus rating from 27+ analysts in most sources, combined with T-Mobile's superior growth profile relative to AT&T and Verizon, suggests continued analyst conviction despite the near-term rate-plan-migration controversy and decelerating net-add momentum.</p>
+  </section>
+
+  <!-- ============ BUSINESS DESCRIPTION ============ -->
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">T-Mobile US, Inc., headquartered in Bellevue, Washington, provides wireless communications services in the United States, Puerto Rico, and the U.S. Virgin Islands under the T-Mobile and MetroPCS brands. The company offers postpaid, prepaid, and wholesale wireless voice, messaging, and data services, along with wireless devices (smartphones, wearables, tablets, home broadband gateways), equipment financing through installment plans, and device-insurance-related reinsurance. T-Mobile has built its business around a "value and network" strategy — combining a historically disruptive ("Un-carrier") pricing and marketing approach with what the company and multiple third-party sources describe as an industry-leading 5G network (record wireless Net Promoter Score of 46 in Q2 2026, multiple third-party network awards). The company has grown significantly through M&A, most notably its 2020 merger with Sprint and its more recent, smaller-scale acquisition of UScellular's wireless operations and spectrum assets, alongside a fiber broadband joint venture. Founded in 1994, T-Mobile has evolved from the historical "low-cost disruptor" position into the largest wireless carrier by several growth and profitability metrics, a transition that itself is becoming a notable strategic and reputational consideration (see Investment Risks).</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Postpaid account and ARPA growth, increasingly driven by premium-plan mix shift (~60% of new customers choosing premium plans) rather than pure subscriber-count growth</li>
+      <li>5G home broadband (fixed wireless access), cited as growing strongly with fiber-equivalent speeds and a 70% bundle rate with mobile service</li>
+      <li>T-Life app engagement (over 30 million monthly active users, record momentum per management commentary), supporting cross-sell and retention</li>
+      <li>UScellular acquisition integration, adding new postpaid and prepaid customers and spectrum assets, though currently a near-term drag on reported GAAP net income due to merger-related and restructuring costs</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Equipment subsidies — Q2 2026 equipment costs ($5.05 billion) exceeded equipment revenue ($3.52 billion), a widening gap reflecting aggressive device-upgrade incentives used to drive premium-plan adoption and account growth</li>
+      <li>UScellular merger-related and network-restructuring costs ($146 million and $46 million after-tax, respectively, in Q2 2026 alone), which are currently suppressing GAAP EPS growth relative to core EBITDA growth</li>
+      <li>Capital expenditures on network buildout and spectrum, with cash capex guided at approximately $10 billion for full-year 2026, alongside continued investment ahead of anticipated 2027–2028 spectrum opportunities (C-band 2.0 and 2.7 GHz)</li>
+      <li>Share repurchases — an incremental $2.5 billion in Q2 2026 alone (through July 17), with 253 million shares repurchased since late 2022</li>
+    </ul>
+  </section>
+
+  <!-- ============ INDUSTRY OVERVIEW & COMPETITIVE POSITIONING ============ -->
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">T-Mobile operates in the mature, oligopolistic U.S. wireless telecommunications industry alongside Verizon and AT&T, with cable companies (Comcast, Charter) increasingly competing for mobile subscribers as a fourth competitive force. T-Mobile has been the primary share gainer among the three national carriers in recent years, a trend Morningstar and other analysts expect to continue for at least the next couple of years before market share stabilizes among the three carriers as Verizon and AT&T close the network/value gap. The industry is currently navigating two notable simultaneous dynamics: continued industry consolidation (T-Mobile's own UScellular acquisition, alongside broader industry M&A activity) and a shift among all major carriers toward "value" and bundled convergence strategies (mobile plus home broadband) as a retention and ARPA-growth lever.</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — spectrum scarcity and the capital intensity of national network buildout make new large-scale entry into the national wireless market highly unlikely; the relevant competitive dynamic is instead ongoing consolidation among existing regional/smaller players (e.g., UScellular) into the three national carriers.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — network equipment vendors and device manufacturers hold some leverage, though T-Mobile's scale provides negotiating power; spectrum holders (including the U.S. government via FCC auctions) are a unique "supplier" category relevant to future growth (2027–2028 C-band 2.0 and 2.7 GHz opportunities specifically flagged by management).</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Rising and currently a live, visible risk — the ongoing legacy-plan "rate plan modernization" (effectively a price increase) has triggered documented customer complaints, regulatory complaints (FCC, state attorneys general), and at least one class-action lawsuit, indicating consumers retain meaningful switching leverage and are actively exercising it in response to pricing changes.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Rising — cable companies (Comcast, Charter) have been reported to show significant mobile subscriber growth, and satellite-based connectivity (e.g., SpaceX's ambitions in the cellphone market) is an emerging, though currently downplayed by T-Mobile's own CFO, longer-term substitute threat.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — T-Mobile competes directly with Verizon and AT&T on network quality, pricing, and bundled convergence offers; Morningstar specifically expects Verizon and AT&T to narrow T-Mobile's current network/value advantage over the medium term, leading to more stable, rational three-way competition.</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">T-Mobile's moat has historically rested on superior mid-band 5G spectrum coverage and speed (330 million people covered, per one source) combined with a consumer-friendly "Un-carrier" brand reputation built over roughly a decade of disruptive, consumer-favorable pricing and policy moves. Morningstar explicitly frames the current environment as a "virtuous cycle" driven by T-Mobile's strong brand and network position. However, several sources — including Morningstar itself and TD Cowen analysts — note that this differentiation is eroding as T-Mobile becomes "very 'carrier'-like" through recent fee increases, price hikes, and the current rate-plan modernization, raising a genuine strategic question about whether the moat can persist once the company no longer occupies the low-cost disruptor position that originally built its brand loyalty.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: the three major U.S. national wireless carriers. Figures are approximate and vary meaningfully by source — verify against a single consistent data source before use.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>T-Mobile US</td><td>TMUS</td><td>P/E ~21.6x; dividend yield ~1.8–2.2%; industry-leading service-revenue and EBITDA growth rates among the three national carriers per multiple sources</td></tr>
+      <tr><td>Verizon Communications</td><td>VZ</td><td>Higher dividend yield (~5.5–6.6%) but historically slower growth; recently showing its own operational improvement (see separate Verizon research report); net unsecured debt/EBITDA of 2.6x per one source</td></tr>
+      <tr><td>AT&amp;T</td><td>T</td><td>FY2025 revenue $138.2B (+2.5% YoY); net income $17.2B (12.4% net margin); free cash flow $20.1B in FY2025, per one comparison source; also expanding fiber footprint and pursuing its own convergence strategy</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted);">Note: AT&amp;T and Verizon figures above are drawn from sources originally comparing those two companies to each other, not directly to T-Mobile — cross-reference against a single consistent data source before using in a formal three-way valuation comparison.</p>
+  </section>
+
+  <!-- ============ VALUATION ============ -->
+  <section>
+    <h2 class="section-title">Valuation</h2>
+
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified cost of capital assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled — mature wireless industry growth suggests a terminal rate near or slightly above long-run GDP growth once T-Mobile's current above-peer growth normalizes}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — recommend explicit forecast through at least 2028, given management's own stated focus on preserving capital-allocation flexibility for 2027–2028 spectrum opportunities}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td class="placeholder">{{Not modeled — no third-party DCF-based fair-value estimate was found in the sources reviewed for this summary}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Relative Valuation</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>T-Mobile (TMUS)</th><th>Peer Reference (AT&amp;T / Verizon)</th></tr>
+      <tr><td>P/E (TTM)</td><td>~21.6x</td><td class="placeholder">{{Not independently sourced for AT&amp;T; Verizon reported separately at ~11–13x in a dedicated VZ report}}</td></tr>
+      <tr><td>Dividend Yield</td><td>~1.8–2.2%</td><td>Verizon ~5.5–6.6% (per separate VZ research); AT&amp;T not independently sourced here</td></tr>
+      <tr><td>Service/EBITDA Growth Rate (2026 guided)</td><td>~8% service revenue growth; ~10% core EBITDA growth</td><td>Both AT&amp;T and Verizon guide to low-single-digit revenue growth in most sources reviewed — T-Mobile's growth profile is materially higher</td></tr>
+    </table>
+
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">T-Mobile's premium P/E relative to Verizon and lower dividend yield reflect the market correctly pricing in its superior growth profile (roughly double the service-revenue and EBITDA growth rates of its national peers per sources reviewed). The consensus price-target range of $230–$265 implies meaningful further upside, though the size of that implied return is sensitive to which current-price data point is used given the inconsistency noted in the Basic Information section — this discrepancy itself should be resolved with a single live data source before finalizing any target-return calculation. The central open question for valuation is durability: whether T-Mobile can sustain above-peer growth once the current legacy-plan rate modernization cycle completes and UScellular integration costs roll off, or whether — as several analysts have suggested — its growth advantage narrows as Verizon and AT&T close the network/value gap.</p>
+  </section>
+
+  <!-- ============ FINANCIAL ANALYSIS ============ -->
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q2 2025</th><th>Q2 2026</th><th>FY2026 Guidance</th></tr>
+      <tr><td>Total Service Revenue</td><td class="placeholder">{{Implied ~$17.4B based on 9% YoY growth}}</td><td>$19.0B (+9% YoY)</td><td>~$77B (~8% growth)</td></tr>
+      <tr><td>Postpaid Service Revenue</td><td class="placeholder">{{Implied ~$14.1B based on 12.6–13% YoY growth}}</td><td>$15.9B (+12.6–13% YoY)</td><td class="placeholder">{{Not separately guided as a dollar figure}}</td></tr>
+      <tr><td>Core Adjusted EBITDA</td><td class="placeholder">{{Implied ~$8.5B based on 11.7–12% YoY growth}}</td><td>$9.5B (+11.7–12% YoY)</td><td>$37.1B–$37.5B (~10% growth)</td></tr>
+      <tr><td>Net Income</td><td class="placeholder">{{Implied roughly flat given +0.5–1% YoY growth}}</td><td>$3.2B (+0.5–1% YoY)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Diluted EPS</td><td class="placeholder">{{Implied ~$2.85 based on 5% YoY growth}}</td><td>$2.99 (+5% YoY)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Postpaid Net Account Additions</td><td>318,000</td><td>277,000 (−13% YoY)</td><td>950,000–1,050,000 (full year)</td></tr>
+      <tr><td>Adjusted Free Cash Flow</td><td class="placeholder">{{Implied roughly $4.6B based on 4% YoY growth}}</td><td>$4.80B (quarter, +4% YoY)</td><td>$18.4B–$18.8B (full year, raised from $18.1B–$18.7B)</td></tr>
+    </table>
+
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">T-Mobile's Q2 2026 results show a clear and well-documented divergence between reported GAAP net income/EPS growth (roughly flat to +5%) and underlying operating growth (core EBITDA +12% YoY, service revenue +9% YoY), driven specifically and transparently by $146 million after-tax of UScellular merger-related costs and $46 million after-tax of network restructuring costs — both clearly itemized by the company itself, which is a positive earnings-quality signal (clean disclosure) even though it complicates simple YoY comparisons. Headline postpaid ARPA growth of 2% also understates the underlying trend once M&A-driven dilution (lower-ARPA customers added via UScellular and the fiber joint venture) is excluded — ex-M&A ARPA growth was 3.7% YoY per management's own disclosure, a distinction analysts should carry forward rather than relying on the unadjusted headline figure. Equipment-cost economics warrant separate monitoring: Q2 2026 equipment costs ($5.05 billion) exceeded equipment revenue ($3.52 billion), a widening gap reflecting aggressive device-subsidy spending to drive premium-plan and account growth — a deliberate strategic choice per management commentary, but one that bears watching for sustainability if competitive intensity on device subsidies increases further.</p>
+
+    <h3 class="sub-title">Industry-Specific Ratios</h3>
+    <table class="data-table">
+      <tr><th>Ratio</th><th>Value</th></tr>
+      <tr><td>Postpaid ARPA</td><td>$152.91 (+2% YoY headline; +3.7% YoY ex-M&amp;A)</td></tr>
+      <tr><td>Postpaid account churn</td><td>0.99% (up from 0.92% YoY)</td></tr>
+      <tr><td>Total postpaid accounts</td><td>34.7 million</td></tr>
+      <tr><td>Wireless Net Promoter Score (NPS)</td><td>46 (record, industry-leading per company)</td></tr>
+      <tr><td>Free cash flow margin</td><td>25% (industry-leading per company commentary)</td></tr>
+      <tr><td>T-Life app monthly active users</td><td>&gt;30 million</td></tr>
+      <tr><td>Premium-plan adoption among new customers</td><td>~60%</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT RISKS ============ -->
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+
+    <div class="risk-item">
+      <span class="risk-tag op">Operational</span>
+      <span>The ongoing "rate plan modernization" (retirement of legacy plans, including "Simple Choice" and "Home Internet Plus") has generated documented customer backlash, with affected customers filing complaints with the FCC and state attorneys general and pursuing at least one class-action lawsuit (Oddo v. T-Mobile); Q3 2026 postpaid net additions are explicitly guided lower (to ~250,000) due to an anticipated churn spike tied to this migration. A near-term CFO transition (Peter Osvaldik departing February 2027) and the departure of a 28-year veteran marketing/strategy executive (Mike Katz) also introduce leadership-continuity considerations.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag fin">Financial</span>
+      <span>UScellular merger-related and network-restructuring costs are currently suppressing GAAP net income and EPS growth relative to underlying core EBITDA growth; equipment-cost economics show costs exceeding equipment revenue by a widening margin, reflecting continued aggressive device-subsidy spending to drive premium-plan adoption.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag reg">Regulatory</span>
+      <span>A broad coalition of industry groups, public interest organizations, and a national labor union urged the FCC to closely scrutinize the T-Mobile/UScellular transaction, citing concerns about spectrum concentration among the three national carriers, potential rural tower shutdowns, and the historical pattern (following the 2020 Sprint merger) of T-Mobile raising rates roughly five years after merger-related price-hike commitments expired. U.S. senators separately urged the DOJ and FCC to scrutinize the deal on similar competition grounds. The rate-plan-modernization consumer complaints described above (FCC, state AG complaints) also represent an active regulatory-attention risk.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag legal">Legal</span>
+      <span>T-Mobile faces an active class-action lawsuit (Oddo v. T-Mobile) tied to the rate-plan-modernization price increases and alleged violation of price-lock guarantees; a separate, older class action alleged that reduced competition from T-Mobile's 2020 Sprint merger caused AT&amp;T and Verizon customers to pay billions of dollars more, illustrating a pattern of merger-related antitrust/consumer litigation risk that could recur around the UScellular transaction. T-Mobile has also faced historical shareholder-alert notices regarding potential breach-of-duty claims against officers and directors (per one source, dated 2022) and a large 2021 data-breach settlement valued at over $500 million — both older matters, but indicative of the company's litigation and cybersecurity risk profile as a large, high-profile consumer data holder. T-Mobile and Verizon have recently and mutually resolved lawsuits accusing each other of deceptive advertising, which appears to have been settled amicably.</span>
+    </div>
+
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or disclosed material weaknesses in internal controls were identified in the sources reviewed for this summary — verify directly against T-Mobile's most recent 10-K/10-Q auditor opinion before relying on this. One source specifically noted that in the past three months, T-Mobile insiders sold approximately $620 million in company stock with no offsetting purchases — a notable pattern worth investigating directly via SEC Form 4 filings rather than relying on a secondary source's characterization.}}</p>
+  </section>
+
+  <!-- ============ ESG ============ -->
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental">
+        <h4>Environmental</h4>
+        <ul class="placeholder">
+          <li>{{ESG_ENV — no specific emissions, energy-use, or network-infrastructure environmental-footprint metrics were independently sourced in this summary; recommend reviewing T-Mobile's own sustainability disclosures directly, particularly given the scale of its network buildout and spectrum-related infrastructure investment}}</li>
+        </ul>
+      </div>
+      <div class="esg-card social">
+        <h4>Social</h4>
+        <ul>
+          <li>Consumer-facing pricing transparency and fair-dealing practices are the most prominent current Social/ESG issue for T-Mobile: the rate-plan-modernization backlash directly concerns whether customers received the price protections they were promised, a matter now subject to FCC complaints, state attorney general complaints, and litigation</li>
+          <li>T-Mobile publicizes community-facing initiatives such as "Friday Night 5G Lights," providing network support for small-town high school sports broadcasts — a positive community-relations program, though its scale and impact were not independently assessed in this summary</li>
+          <li class="placeholder">{{ESG_SOC — broader labor standards and workforce diversity data not sourced in this summary; note the coalition opposing the UScellular merger specifically raised concerns about potential rural job/tower-site losses, a labor-adjacent consideration worth investigating further}}</li>
+        </ul>
+      </div>
+      <div class="esg-card governance">
+        <h4>Governance</h4>
+        <ul>
+          <li>Very low insider ownership (~0.37% per one source) combined with reported net insider stock sales of approximately $620 million over a recent three-month period with no offsetting purchases — worth independent verification and monitoring, though not unusual for a company of this scale and ownership structure</li>
+          <li>Ongoing CFO succession (Peter Osvaldik to Jessica Uhl, effective February 2027) represents a disclosed, orderly leadership transition rather than an abrupt departure, a modestly positive governance signal</li>
+          <li class="placeholder">{{ESG_GOV — board composition and executive compensation structure not sourced in this summary; note Deutsche Telekom's majority ownership stake in T-Mobile (a well-known but not independently re-confirmed structural fact) is a relevant governance consideration for control and related-party dynamics that was not directly addressed in the sources reviewed for this report}}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER / DISCLOSURES ============ -->
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 15, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party financial data sources (Yahoo Finance, CNBC, CNN, TradingView, StockAnalysis.com, Morningstar, MarketBeat, TipRanks, company earnings materials and SEC filings, and various financial media) that may be delayed, inconsistent, or subject to revision. Current price and market capitalization figures showed an unusually wide spread across sources searched (roughly $182 to $229 per share, and $196 billion to $258 billion in market cap) — this discrepancy is flagged explicitly throughout this report rather than resolved by arbitrarily selecting one figure, and should be reconciled against a single live data source before this report is used for any decision. All figures should be independently verified against primary sources (T-Mobile's 10-K/10-Q filings and investor relations disclosures) before being used for any actual investment decision. This is not a research report from a registered investment adviser or broker-dealer, does not constitute investment advice, and should not be relied upon as such.
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — PG&amp;E Corporation (PCG)</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--text);
+    background: #ffffff;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+  }
+  .report-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 48px;
+  }
+  .report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+  }
+  .firm-name {
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .company-title {
+    font-size: 26px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .reco-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--gray-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+  }
+  .reco-main .label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+  }
+  .reco-main .value {
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .reco-stats {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 28px;
+  }
+  .reco-stats div .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+  .reco-stats div .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+  }
+  h2.section-title {
+    font-size: 18px;
+    color: var(--navy);
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 6px;
+    margin-top: 40px;
+    margin-bottom: 16px;
+  }
+  h3 {
+    font-size: 15px;
+    color: var(--navy);
+    margin-top: 22px;
+    margin-bottom: 8px;
+  }
+  table.basic-info, table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+  table.basic-info td, table.basic-info th,
+  table.data-table td, table.data-table th {
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    text-align: left;
+  }
+  table.basic-info th, table.data-table th {
+    background: var(--gray-bg);
+    color: var(--navy);
+    font-weight: bold;
+  }
+  table.basic-info td:first-child {
+    font-weight: bold;
+    color: var(--muted);
+    width: 32%;
+  }
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 14.5px;
+  }
+  ul {
+    margin-top: 4px;
+    padding-left: 22px;
+  }
+  li {
+    margin-bottom: 6px;
+  }
+  .peer-note {
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 8px;
+  }
+  .risk-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+  }
+  .risk-item .risk-tag {
+    display: inline-block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: bold;
+    color: #fff;
+    background: var(--muted);
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .esg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 12px;
+  }
+  .esg-card {
+    background: var(--gray-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+  .esg-card h4 {
+    margin-top: 0;
+    color: var(--navy);
+    font-size: 14px;
+  }
+  .placeholder {
+    color: #8a8fa3;
+    font-style: italic;
+  }
+  footer {
+    margin-top: 48px;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .analyst-line {
+    margin-bottom: 6px;
+  }
+  p { font-size: 14.5px; }
+</style>
+</head>
+<body>
+<div class="report-container">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">PG&amp;E Corporation</h1>
+      <div class="ticker-line">NYSE: PCG &nbsp;|&nbsp; Sector: Utilities &nbsp;|&nbsp; Industry: Regulated Electric</div>
+    </div>
+    <div class="report-date">
+      Report Date: September 19, 2026<br>
+      Analyst: Equity Research Desk
+    </div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main">
+      <div class="label">Recommendation</div>
+      <div class="value" style="color:#b8860b;">HOLD</div>
+    </div>
+    <div class="reco-stats">
+      <div>
+        <div class="label">Current Price</div>
+        <div class="value">$13.20</div>
+      </div>
+      <div>
+        <div class="label">Target Price</div>
+        <div class="value">$19.66</div>
+      </div>
+      <div>
+        <div class="label">Market Cap</div>
+        <div class="value">$29.07B</div>
+      </div>
+      <div>
+        <div class="label">Implied Upside/Downside</div>
+        <div class="value" style="color:var(--green);">+48.94%</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Basic Information</h2>
+  <table class="basic-info">
+    <tr><td>Ticker</td><td>PCG (NYSE)</td></tr>
+    <tr><td>Exchange</td><td>New York Stock Exchange</td></tr>
+    <tr><td>Sector</td><td>Utilities</td></tr>
+    <tr><td>Industry</td><td>Regulated Electric</td></tr>
+    <tr><td>52-Week Range</td><td>$12.59 – $19.16</td></tr>
+    <tr><td>Average Daily Volume</td><td>37,281,775 shares</td></tr>
+    <tr><td>Float</td><td class="placeholder">{{FLOAT_SHARES}}</td></tr>
+    <tr><td>Shares Outstanding</td><td>2.20 billion</td></tr>
+    <tr><td>Major Shareholders</td><td class="placeholder">{{MAJOR_SHAREHOLDERS — institutional ownership detail not independently verified; primarily held by index funds and institutional asset managers (e.g., Vanguard, BlackRock, State Street per typical large-cap utility ownership patterns)}}</td></tr>
+  </table>
+
+  <h2 class="section-title">Investment Summary</h2>
+  <div class="thesis-box">
+    <strong>Investment Thesis:</strong> PG&amp;E Corporation is a regulated electric and gas utility serving Northern and Central California, having emerged from Chapter 11 bankruptcy in 2020 following wildfire liability claims and continuing a multi-year turnaround focused on wildfire mitigation and grid safety investment. We rate the stock HOLD. The 17-analyst rating distribution has Hold as the single largest bucket (8 of 17, 47.1%), narrowly exceeding Strong Buy (7 of 17, 41.2%), and the source itself notes "declining strong buy ratings and increasing hold recommendations" over 2026 — a negative ratings migration trend. While the average price target of $19.66 implies a substantial +48.94% upside from the current low-priced $13.20, the deep valuation discount and negative ratings trend reflect ongoing wildfire liability and regulatory overhang specific to PG&amp;E. We flag a likely TTM data-aggregation error in third-party financial data (see Earnings Quality Notes).
+  </div>
+
+  <h3>Recent Developments</h3>
+  <p>PG&amp;E reported FY2025 revenue of $24,935 million, up 2.11% year-over-year from $24,419 million in FY2024, with net income growing modestly to $2,593 million from $2,475 million and EPS rising slightly from $1.15 to $1.18. The company continues to trade at a deep discount to peers (P/E of 9.51x versus double-digit multiples for most regulated utilities), reflecting the market's ongoing pricing of California wildfire liability risk, regulatory complexity, and the legacy of PG&amp;E's 2019 bankruptcy filing, even as underlying operating results have stabilized. We note the source data's own observation of a negative ratings migration trend (declining Strong Buy, rising Hold) over 2026 as a signal warranting independent monitoring.</p>
+
+  <h3>Earnings Forecast</h3>
+  <p>We expect continued modest EPS growth driven by regulated rate-base investment in wildfire mitigation infrastructure (undergrounding power lines, vegetation management, grid hardening), though the pace of earnings growth remains constrained relative to peers given PG&amp;E's substantial wildfire mitigation capital spending and ongoing liability overhang.</p>
+
+  <h3>Valuation Summary</h3>
+  <p>At $13.20, PCG trades at a P/E of 9.51x, a substantial discount to virtually all other utility peers in this series, reflecting the market's continued caution around California wildfire liability and regulatory risk. The stock trades near the low end of its 52-week range of $12.59–$19.16. While the average price target of $19.66 implies substantial theoretical upside, the negative ratings migration trend and Hold as the largest single bucket support a more cautious HOLD rating pending further evidence of sustained risk reduction.</p>
+
+  <h2 class="section-title">Business Description</h2>
+  <p>PG&amp;E Corporation, through its subsidiary Pacific Gas and Electric Company, is a regulated electric and natural gas utility serving approximately 16 million people across Northern and Central California. The company generates power through a diversified mix including nuclear (Diablo Canyon), hydroelectric, and renewable sources. Following its 2019 Chapter 11 bankruptcy filing related to wildfire liability claims, PG&amp;E has undertaken a substantial, multi-year wildfire mitigation program, including undergrounding power lines, enhanced vegetation management, and grid hardening, while operating under heightened regulatory and legal scrutiny.</p>
+  <h3>Key Revenue Drivers</h3>
+  <ul>
+    <li>Regulated electric and gas utility revenue across PG&amp;E's Northern and Central California service territory, driven by customer growth, rate base expansion, and approved rate case outcomes.</li>
+    <li>Wildfire mitigation capital investment, which is recovered through rate base once approved by the California Public Utilities Commission.</li>
+    <li>Nuclear (Diablo Canyon) and renewable generation output.</li>
+    <li>Growing electricity demand from data centers and electrification in California.</li>
+  </ul>
+  <h3>Key Expense Drivers</h3>
+  <ul>
+    <li>Substantial capital expenditure on wildfire mitigation infrastructure, including undergrounding power lines and grid hardening.</li>
+    <li>Wildfire liability insurance and claims-related costs, including contributions to the California wildfire fund.</li>
+    <li>Interest expense on debt used to fund the company's large capital investment and post-bankruptcy restructuring obligations.</li>
+    <li>Operations and maintenance costs across a large, wildfire-risk-exposed California service territory.</li>
+  </ul>
+
+  <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+  <p>PG&amp;E operates in a uniquely challenging segment of the U.S. regulated utility industry, given California's extreme wildfire risk exposure and the legacy of the company's 2019 bankruptcy. While regulated utilities generally enjoy stable, rate-regulated returns, PG&amp;E's ongoing wildfire mitigation spending and liability exposure create a materially different risk profile than most peers, reflected in its persistently discounted valuation multiple.</p>
+  <h3>Porter's Five Forces</h3>
+  <table class="data-table">
+    <tr><th>Force</th><th>Assessment</th></tr>
+    <tr><td>Threat of New Entrants</td><td>Low — regulated utilities operate in protected service territories with high barriers to entry from regulatory franchise structures.</td></tr>
+    <tr><td>Bargaining Power of Suppliers</td><td>Moderate — construction and equipment suppliers have some pricing power, particularly for wildfire mitigation infrastructure.</td></tr>
+    <tr><td>Bargaining Power of Buyers</td><td>Low — regulated ratepayers have limited alternatives to grid electricity and gas within the utility's service territory.</td></tr>
+    <tr><td>Threat of Substitutes</td><td>Low-to-Moderate — behind-the-meter solar and distributed generation are a growing substitute, potentially more attractive to California customers given PG&amp;E's history of public safety power shutoffs.</td></tr>
+    <tr><td>Competitive Rivalry</td><td>Low — regulated utilities generally do not face direct competition within their assigned service territories.</td></tr>
+  </table>
+  <h3>Competitive Advantage</h3>
+  <p>PG&amp;E's scale across Northern and Central California and its substantial post-bankruptcy investment in wildfire mitigation infrastructure provide a path toward risk normalization over time, though the company's valuation discount reflects the market's continued skepticism about the pace and completeness of that risk reduction relative to less wildfire-exposed peers.</p>
+  <div class="peer-note">Peer companies shown for comparative context; figures sourced from public financial data as of report date.</div>
+  <table class="data-table">
+    <tr><th>Company</th><th>Ticker</th><th>Market Cap</th><th>P/E</th><th>Net Margin</th></tr>
+    <tr><td>PG&amp;E Corporation</td><td>PCG</td><td>$29.07B</td><td>9.51x</td><td>10.40%</td></tr>
+    <tr><td>Sempra</td><td>SRE</td><td>$53.17B</td><td>23.49x</td><td>13.11%</td></tr>
+    <tr><td>Xcel Energy</td><td>XEL</td><td>$45.16B</td><td>19.82x</td><td>13.76%</td></tr>
+  </table>
+
+  <h2 class="section-title">Valuation</h2>
+  <h3>Absolute Valuation — Discounted Cash Flow (Illustrative)</h3>
+  <table class="data-table">
+    <tr><th>Assumption</th><th>Value</th></tr>
+    <tr><td>Terminal Growth Rate</td><td class="placeholder">{{TERMINAL_GROWTH}}</td></tr>
+    <tr><td>Discount Rate (WACC)</td><td class="placeholder">{{WACC}}</td></tr>
+    <tr><td>Implied Fair Value / Share</td><td class="placeholder">{{DCF_FAIR_VALUE}}</td></tr>
+  </table>
+  <h3>Relative Valuation</h3>
+  <table class="data-table">
+    <tr><th>Metric</th><th>PCG</th><th>Peer Average</th></tr>
+    <tr><td>P/E (TTM)</td><td>9.51x</td><td class="placeholder">{{PEER_AVG_PE}}</td></tr>
+    <tr><td>Dividend Yield</td><td>1.52%</td><td class="placeholder">{{PEER_AVG_YIELD}}</td></tr>
+  </table>
+  <h3>Valuation Conclusion</h3>
+  <p>PCG's steep valuation discount to virtually all utility peers reflects the market's persistent wariness of California wildfire liability risk, despite the company's substantial mitigation investment since its 2020 bankruptcy emergence. The theoretical upside to the average price target is large, but the negative ratings migration trend and Hold as the largest single analyst bucket lead us to rate the shares HOLD, pending clearer evidence of sustained wildfire risk normalization.</p>
+
+  <h2 class="section-title">Financial Analysis</h2>
+  <h3>Historical &amp; Forecast Summary</h3>
+  <table class="data-table">
+    <tr><th>Metric</th><th>FY2024</th><th>FY2025</th><th>FY2027E</th></tr>
+    <tr><td>Revenue ($M)</td><td>24,419</td><td>24,935</td><td class="placeholder">{{REV_2027E}}</td></tr>
+    <tr><td>Net Income ($M)</td><td>2,475</td><td>2,593</td><td class="placeholder">{{NI_2027E}}</td></tr>
+    <tr><td>EPS ($)</td><td>1.15</td><td>1.18</td><td class="placeholder">{{EPS_2027E}}</td></tr>
+    <tr><td>Net Margin</td><td>10.14%</td><td>10.40%</td><td class="placeholder">{{NETMARGIN_2027E}}</td></tr>
+  </table>
+  <h3>Earnings Quality Notes</h3>
+  <p>Trailing-twelve-month (TTM) figures pulled from third-party data reported revenue of approximately $99.4 billion and net income of approximately $10.8 billion — both approximately 3.99x and 4.16x the corresponding FY2025 annual figures ($24,935 million revenue and $2,593 million net income), respectively. This ratio is consistent with the recurring data-aggregation error pattern observed across multiple tickers in this series, notwithstanding the source tool's own assessment that the net income figure "appears reasonable." We have excluded these TTM figures from the summary table above and used FY2024/FY2025 annual figures as the analytical base. Readers should independently verify actual TTM performance via PCG's most recent 10-Q and 10-K filings before relying on any trailing-twelve-month figures from automated data aggregators.</p>
+  <h3>Industry-Specific Ratios</h3>
+  <table class="data-table">
+    <tr><th>Ratio</th><th>Value</th></tr>
+    <tr><td>Wildfire Mitigation Capital Spending</td><td class="placeholder">{{WILDFIRE_CAPEX}}</td></tr>
+    <tr><td>Population Served</td><td>~16 million</td></tr>
+    <tr><td>California Wildfire Fund Participation</td><td class="placeholder">{{WILDFIRE_FUND_STATUS}}</td></tr>
+    <tr><td>Debt / EBITDA</td><td class="placeholder">{{DEBT_EBITDA}}</td></tr>
+  </table>
+
+  <h2 class="section-title">Investment Risks</h2>
+  <div class="risk-item">
+    <span class="risk-tag">Operational</span>
+    <p>Substantial ongoing California wildfire risk, including potential for public safety power shutoffs and equipment-caused ignition events, remains the company's most significant operational and reputational risk despite extensive mitigation investment.</p>
+  </div>
+  <div class="risk-item">
+    <span class="risk-tag">Financial</span>
+    <p>Large, ongoing wildfire mitigation capital expenditure and potential liability claims create sensitivity to interest rates, capital market access, and the adequacy of California's wildfire fund and liability cap framework.</p>
+  </div>
+  <div class="risk-item">
+    <span class="risk-tag">Regulatory</span>
+    <p>Rate case outcomes with the California Public Utilities Commission, along with evolving state wildfire liability and safety certification frameworks, directly affect both cost recovery and the company's overall risk profile.</p>
+  </div>
+  <div class="risk-item">
+    <span class="risk-tag">Legal</span>
+    <p>The company faces ongoing legal risk related to wildfire liability claims and potential future litigation stemming from equipment-caused fires, a legacy risk that led to its 2019 Chapter 11 bankruptcy filing.</p>
+  </div>
+  <h3>Disclosure Flags</h3>
+  <p>We flag for readers that Hold is the largest single bucket in the 17-analyst rating distribution (8 of 17, 47.1%), narrowly exceeding Strong Buy (7 of 17), despite the source's headline "Buy" consensus label; the source data itself also notes a negative ratings migration trend (declining Strong Buy ratings, rising Hold recommendations) over 2026, which we treat as a signal supporting caution. We also flag the likely TTM data-aggregation error described above as a data-quality risk for any analysis relying on automated trailing-twelve-month feeds for this ticker.</p>
+
+  <h2 class="section-title">Environmental, Social &amp; Governance</h2>
+  <div class="esg-grid">
+    <div class="esg-card">
+      <h4>Environmental</h4>
+      <p class="placeholder">{{ESG_ENVIRONMENTAL — wildfire mitigation program details, vegetation management, and emissions reduction targets not independently verified for this report}}</p>
+    </div>
+    <div class="esg-card">
+      <h4>Social</h4>
+      <p class="placeholder">{{ESG_SOCIAL — wildfire victim compensation trust status, customer affordability, and public safety power shutoff impact not independently verified for this report}}</p>
+    </div>
+    <div class="esg-card">
+      <h4>Governance</h4>
+      <p class="placeholder">{{ESG_GOVERNANCE — board composition, executive compensation, and post-bankruptcy governance reforms not independently verified for this report}}</p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="analyst-line">Prepared by the Equity Research Desk — publicly sourced information only.</div>
+    <div>This report is for informational purposes only and does not constitute investment advice or a solicitation to buy or sell any security. All data is sourced from publicly available third-party sources believed to be reliable but not independently audited; figures marked with placeholders indicate data points that could not be verified as of the report date. Past performance is not indicative of future results. Readers should conduct their own due diligence and consult a licensed financial advisor before making investment decisions.</div>
+  </footer>
+
+</div>
+</body>
+</html>

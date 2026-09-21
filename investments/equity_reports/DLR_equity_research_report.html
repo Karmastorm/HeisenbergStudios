@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — DLR</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #e9edf2;
+    color: var(--text);
+    font-family: "Georgia", "Times New Roman", serif;
+    line-height: 1.55;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.12);
+    padding: 40px 50px 60px;
+  }
+
+  /* ---------- Header ---------- */
+  .report-header {
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .firm-name {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .company-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+  }
+
+  /* ---------- Recommendation banner ---------- */
+  .reco-banner {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .reco-main {
+    flex: 0 0 170px;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .reco-main .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+
+  .reco-main .value {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+
+  .reco-stats {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--gray-bg);
+  }
+
+  .reco-stat {
+    padding: 10px 14px;
+    border-left: 1px solid var(--border);
+  }
+
+  .reco-stat .label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    display: block;
+  }
+
+  .reco-stat .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* ---------- Basic info table ---------- */
+  .basic-info {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+
+  .basic-info td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .basic-info td.k {
+    color: var(--muted);
+    width: 38%;
+  }
+
+  .basic-info td.v {
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  /* ---------- Section styling ---------- */
+  section {
+    margin-bottom: 32px;
+  }
+
+  h2.section-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: var(--navy);
+    padding: 8px 14px;
+    margin: 0 0 14px 0;
+    border-left: 5px solid var(--accent);
+  }
+
+  h3.sub-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    margin: 18px 0 10px;
+  }
+
+  p.body-text {
+    font-size: 15px;
+    margin: 0 0 12px;
+  }
+
+  .placeholder {
+    color: #8a8fa3;
+    font-style: italic;
+  }
+
+  ul.bullet-list {
+    margin: 0 0 12px 0;
+    padding-left: 20px;
+  }
+
+  ul.bullet-list li {
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+
+  /* ---------- Investment Summary callout ---------- */
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  .thesis-box .thesis-label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-dark);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  /* ---------- Valuation table ---------- */
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  table.data-table th {
+    background: var(--navy);
+    color: #fff;
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  table.data-table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  table.data-table tr:nth-child(even) td {
+    background: var(--gray-bg);
+  }
+
+  /* ---------- Risk list ---------- */
+  .risk-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+  }
+
+  .risk-tag {
+    flex: 0 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    background: var(--red);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .risk-tag.op { background: #b8860b; }
+  .risk-tag.fin { background: var(--red); }
+  .risk-tag.reg { background: #6a3d9a; }
+  .risk-tag.legal { background: #444; }
+
+  /* ---------- ESG grid ---------- */
+  .esg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .esg-card {
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: 4px;
+    padding: 12px 14px;
+  }
+
+  .esg-card.environmental { border-top-color: #2e7d32; }
+  .esg-card.social { border-top-color: #1565c0; }
+  .esg-card.governance { border-top-color: #6a1b9a; }
+
+  .esg-card h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px;
+    color: var(--navy);
+  }
+
+  .esg-card ul {
+    margin: 0;
+    padding-left: 16px;
+    font-size: 13px;
+  }
+
+  .esg-card li { margin-bottom: 4px; }
+
+  /* ---------- Peer comparison ---------- */
+  .peer-note {
+    font-size: 12.5px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: -6px;
+    margin-bottom: 12px;
+  }
+
+  /* ---------- Footer / disclosures ---------- */
+  footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  footer .analyst-line {
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  @media (max-width: 700px) {
+    .page { padding: 24px 18px; }
+    .reco-banner { flex-direction: column; }
+    .reco-stats { grid-template-columns: repeat(2, 1fr); }
+    .esg-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research &middot; Equity Research</div>
+      <h1 class="company-title">Digital Realty Trust, Inc.</h1>
+      <div class="ticker-line">DLR &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Real Estate / REIT &mdash; Data Center</div>
+    </div>
+    <div class="report-date">
+      September 19, 2026<br>
+      Analyst: Equity Research Desk
+    </div>
+  </div>
+
+  <!-- ============ RECOMMENDATION BANNER ============ -->
+  <div class="reco-banner">
+    <div class="reco-main">
+      <span class="label">Recommendation</span>
+      <span class="value" style="color:#1e7e34;">BUY</span>
+    </div>
+    <div class="reco-stats">
+      <div class="reco-stat">
+        <span class="label">Current Price</span>
+        <span class="value">$182.12</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Target Price</span>
+        <span class="value">$223.48</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Market Cap</span>
+        <span class="value">$68.78B</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Implied Upside/Downside</span>
+        <span class="value">+22.7%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BASIC INFORMATION ============ -->
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">DLR</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Real Estate</td></tr>
+      <tr><td class="k">Industry</td><td class="v">REIT &mdash; Data Center</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$146.23 &ndash; $208.14</td></tr>
+      <tr><td class="k">Average Daily Volume (Liquidity)</td><td class="v">~4,561,189 shares</td></tr>
+      <tr><td class="k">Float</td><td class="v"><span class="placeholder">{{FLOAT — not independently sourced; effectively equal to shares outstanding less insider holdings}}</span></td></tr>
+      <tr><td class="k">Shares Outstanding</td><td class="v">~377.66 million</td></tr>
+      <tr><td class="k">Major Shareholders</td><td class="v"><span class="placeholder">{{MAJOR_SHAREHOLDERS — Vanguard and BlackRock are known large institutional holders; exact stakes not independently verified in this pass}}</span></td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT SUMMARY ============ -->
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Digital Realty Trust is a leading global data center REIT, providing colocation and interconnection solutions to enterprises, cloud providers, and network operators across a worldwide platform, directly competing with Equinix in the data center real estate space. FY2025 revenue grew 11.9% to $6,081M, with net income more than doubling (+125.8%) to $1,268M and net margin expanding from 10.34% to 20.85%; while this is a genuine and significant improvement, a jump of this magnitude should be independently verified against the 10-K, as it may include one-time items such as gains on asset dispositions or joint-venture transactions common in the data center REIT sector. A TTM data query for this report returned revenue of $26.6B and net income of $4.9B &mdash; roughly 4x and 4x the FY2025 annual base respectively &mdash; which this report treats as a likely data-extraction/aggregation error and excludes from the analysis below in favor of the FY annual figures. The 33-analyst distribution (23 Strong Buy / 5 Buy / 5 Hold / 0 Sell / 0 Strong Sell) shows Strong Buy alone constituting an outright 69.7% majority (84.8% Buy-or-better), supporting a high-conviction BUY rating consistent with the average price target of $223.48, which implies a substantial +22.7% upside from the current price.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text placeholder">{{RECENT_DEVELOPMENTS — most recent quarterly results, AI/hyperscale-driven data center demand trends, joint-venture and capital-recycling activity (a common source of one-time gains in the sector), and capacity expansion plans should be sourced from the most recent 10-Q/8-K and verified independently}}</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text placeholder">{{EARNINGS_FORECAST_SUMMARY — forward AFFO and revenue estimates for FY2027E, reflecting continued AI/cloud-driven data center demand against a heavy capital expenditure program, should be sourced from consensus data and verified independently}}</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">At $182.12, DLR trades at a rich 87.64x trailing P/E, below the midpoint of its 52-week range of $146.23&ndash;$208.14. The average analyst price target of $223.48 implies a substantial +22.7% upside, with a wide dispersion of individual targets ($190 low to $250 high), reflecting strong analyst conviction in continued AI/hyperscale-driven data center demand growth.</p>
+  </section>
+
+  <!-- ============ BUSINESS DESCRIPTION ============ -->
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Digital Realty Trust, Inc. is a real estate investment trust that owns and operates a global platform of data centers, providing colocation, interconnection, and hyperscale data center solutions to enterprises, cloud service providers, and network operators. The company competes directly with Equinix in the global data center REIT space and has increasingly emphasized capital recycling through joint ventures and asset dispositions to fund its substantial hyperscale capacity expansion program while managing balance sheet leverage.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Data center leasing revenue growth driven by cabinet/space utilization and pricing, particularly for hyperscale and AI-workload-driven capacity</li>
+      <li>Interconnection revenue, a high-margin business benefiting from network-effect dynamics similar to peer data center REITs</li>
+      <li>Capacity expansion and new data center development to meet accelerating AI and hyperscale cloud infrastructure demand</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Power costs, a significant and rising operating expense given the energy intensity of data center operations, particularly with AI workload growth</li>
+      <li>Capital expenditure on new data center development and capacity expansion, partially funded through joint-venture and capital-recycling transactions</li>
+    </ul>
+  </section>
+
+  <!-- ============ INDUSTRY OVERVIEW & COMPETITIVE POSITIONING ============ -->
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text placeholder">{{INDUSTRY_OVERVIEW — the global data center industry is experiencing significant demand acceleration driven by AI workload growth and continued enterprise cloud migration, though rising power costs and grid capacity constraints in key markets represent emerging industry-wide considerations; current market conditions should be independently verified against recent industry sources}}</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Moderate — data center development requires significant capital and access to power infrastructure, though substantial capital has flowed into the sector given AI-driven demand growth</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate-to-High — power utilities and specialized data center hardware suppliers hold meaningful leverage amid industry-wide capacity constraints</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate — large hyperscale customers can negotiate favorable terms given the scale of their capacity requirements, though supply constraints in key markets have shifted some leverage back to landlords</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Low-to-Moderate — hyperscale cloud providers' own data centers compete for some workloads, though Digital Realty's colocation and interconnection model serves distinct enterprise and hybrid-cloud use cases</td></tr>
+      <tr><td>Competitive Rivalry</td><td>Moderate — direct competition with Equinix and other data center operators for hyperscale and enterprise customers</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Digital Realty's moat is rooted in its large global footprint of well-located, power-secured data center sites, established hyperscale customer relationships, and an active capital-recycling program that allows continued capacity expansion while managing leverage.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set used for relative valuation and competitive benchmarking.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Market Cap</th><th>P/E</th><th>EV/EBITDA</th></tr>
+      <tr><td>Digital Realty Trust, Inc.</td><td>DLR</td><td>$68.78B</td><td>87.64x</td><td class="placeholder">{{EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">Equinix, Inc.</td><td class="placeholder">EQIX</td><td class="placeholder">{{PEER_1_MCAP}}</td><td class="placeholder">{{PEER_1_PE}}</td><td class="placeholder">{{PEER_1_EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">American Tower Corporation</td><td class="placeholder">AMT</td><td class="placeholder">{{PEER_2_MCAP}}</td><td class="placeholder">{{PEER_2_PE}}</td><td class="placeholder">{{PEER_2_EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">Iron Mountain Incorporated</td><td class="placeholder">IRM</td><td class="placeholder">{{PEER_3_MCAP}}</td><td class="placeholder">{{PEER_3_PE}}</td><td class="placeholder">{{PEER_3_EV_EBITDA}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ VALUATION ============ -->
+  <section>
+    <h2 class="section-title">Valuation</h2>
+
+    <h3 class="sub-title">Absolute Valuation &mdash; Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{WACC — not independently modeled in this pass; typical large-cap data center REIT WACC range 7-9%}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{TERMINAL_GROWTH — typically 2-3% for a mature-stage terminal assumption}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{FORECAST_PERIOD — should explicitly model the trajectory of AI/hyperscale-driven demand against the heavy capital expenditure program required to meet it}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td class="placeholder">{{DCF_INTRINSIC_VALUE — not independently modeled in this pass; note that REIT valuation is more commonly anchored to AFFO multiples than a traditional DCF}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Relative Valuation</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Digital Realty Trust, Inc.</th><th>Peer Average</th><th>Industry Average</th></tr>
+      <tr><td>P/E (Trailing)</td><td>87.64x</td><td class="placeholder">{{PEER_PE_AVG}}</td><td class="placeholder">{{INDUSTRY_PE_AVG}}</td></tr>
+      <tr><td>P/AFFO</td><td class="placeholder">{{PAFFO_RATIO — not independently sourced in this pass; the more standard REIT valuation metric than P/E}}</td><td class="placeholder">{{PEER_PAFFO_AVG}}</td><td class="placeholder">{{INDUSTRY_PAFFO_AVG}}</td></tr>
+      <tr><td>P/Sales</td><td class="placeholder">~11.3x (estimated from market cap/FY2025 revenue)</td><td class="placeholder">{{PEER_PS_AVG}}</td><td class="placeholder">{{INDUSTRY_PS_AVG}}</td></tr>
+      <tr><td>P/Book Value</td><td class="placeholder">{{PB_RATIO}}</td><td class="placeholder">{{PEER_PB_AVG}}</td><td class="placeholder">{{INDUSTRY_PB_AVG}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">With Strong Buy alone representing an outright 69.7% majority of covering analysts and 84.8% Buy-or-better with zero Sell-side ratings, this report assigns a high-conviction BUY rating. The substantial +22.7% implied upside from the average price target reflects strong analyst confidence in continued AI/hyperscale-driven data center demand growth, tempered by the need to independently verify the sustainability of the large FY2025 net income jump.</p>
+  </section>
+
+  <!-- ============ FINANCIAL ANALYSIS ============ -->
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+
+    <h3 class="sub-title">Historical &amp; Forecast Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>FY2023</th><th>FY2024</th><th>FY2025</th><th>FY2027E</th></tr>
+      <tr><td>Revenue</td><td class="placeholder">{{REV_Y0 — not independently sourced in this pass}}</td><td>$5,435M</td><td>$6,081M</td><td class="placeholder">{{REV_Y3}}</td></tr>
+      <tr><td>EBITDA</td><td class="placeholder">{{EBITDA_Y0}}</td><td class="placeholder">{{EBITDA_Y1}}</td><td class="placeholder">{{EBITDA_Y2}}</td><td class="placeholder">{{EBITDA_Y3}}</td></tr>
+      <tr><td>Net Income</td><td class="placeholder">{{NI_Y0 — not independently sourced in this pass}}</td><td>$561.8M</td><td>$1,268M</td><td class="placeholder">{{NI_Y3}}</td></tr>
+      <tr><td>EPS (Diluted)</td><td class="placeholder">{{EPS_Y0}}</td><td>$1.61</td><td>$3.58</td><td class="placeholder">{{EPS_Y3}}</td></tr>
+      <tr><td>Free Cash Flow</td><td class="placeholder">{{FCF_Y0}}</td><td class="placeholder">{{FCF_Y1}}</td><td class="placeholder">{{FCF_Y2}}</td><td class="placeholder">{{FCF_Y3}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text"><strong>A TTM data query for this report returned revenue of $26.6B and net income of $4.9B &mdash; roughly 4x the corresponding FY2025 annual figures ($6.08B revenue, $1.27B net income) &mdash; which this report treats as a likely data-extraction/aggregation error rather than a genuine trailing-twelve-month result, and excludes from the summary table above.</strong> Readers should independently verify current TTM figures directly from Digital Realty's most recent 10-Q. Separately, the FY2025 net income more than doubling (+125.8%) against a smaller 11.9% revenue increase is a large enough divergence that it should be independently reconciled against the 10-K; data center REITs frequently recognize gains on joint-venture formations or asset dispositions as part of their capital-recycling strategy, and such one-time items may account for a meaningful portion of the reported net income growth.</p>
+
+    <h3 class="sub-title">Industry-Specific Ratios</h3>
+    <table class="data-table">
+      <tr><th>Ratio</th><th>Value</th></tr>
+      <tr><td>Data Center Utilization Rate</td><td class="placeholder">{{INDUSTRY_RATIO_1_VALUE — a key operating metric for a data center REIT; not independently sourced in this pass}}</td></tr>
+      <tr><td>Backlog of Signed-but-not-Commenced Leases</td><td class="placeholder">{{INDUSTRY_RATIO_2_VALUE — a leading indicator of future revenue for data center REITs; not independently sourced in this pass}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT RISKS ============ -->
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+
+    <div class="risk-item">
+      <span class="risk-tag op">Operational</span>
+      <span>Power availability and grid capacity constraints in key data center markets could limit Digital Realty's ability to expand capacity fast enough to meet accelerating AI-driven demand.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag fin">Financial</span>
+      <span>The large FY2025 net income increase should be independently reconciled against potential one-time joint-venture or disposition gains; at 87.64x trailing earnings, DLR also carries meaningful valuation risk if growth decelerates.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag reg">Regulatory</span>
+      <span>Data localization, privacy, and energy-use regulation across the company's global footprint of markets represents an ongoing consideration requiring independent monitoring.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag legal">Legal</span>
+      <span>Standard commercial real estate and technology infrastructure litigation typical of a large global data center operator; outcomes should be independently monitored via the company's most recent 10-K legal proceedings disclosure.</span>
+    </div>
+
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text"><strong>This report flags the implausible TTM revenue and net income figures returned in this research pass (approximately 4x the FY2025 annual base), and the large FY2025 net income increase relative to revenue growth, as material items requiring independent verification before this report is relied upon for an investment decision.</strong> <span class="placeholder">{{AUDITOR_FLAGS — no material weaknesses or qualified audit opinions are otherwise known to this analyst as of the report date; this should be independently confirmed against Digital Realty's most recent 10-K auditor's report}}</span></p>
+  </section>
+
+  <!-- ============ ESG ============ -->
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental">
+        <h4>Environmental</h4>
+        <ul>
+          <li class="placeholder">{{ESG_ENV_1 — renewable energy procurement and data center energy efficiency (PUE) metrics should be sourced from Digital Realty's sustainability report}}</li>
+          <li class="placeholder">{{ESG_ENV_2 — specific corporate carbon-reduction targets not independently verified in this pass}}</li>
+          <li class="placeholder">{{ESG_ENV_3 — water usage and cooling technology practices not independently verified in this pass}}</li>
+        </ul>
+      </div>
+      <div class="esg-card social">
+        <h4>Social</h4>
+        <ul>
+          <li class="placeholder">{{ESG_SOC_1 — community relations regarding data center siting and local power grid impact should be sourced from Digital Realty's disclosures}}</li>
+          <li class="placeholder">{{ESG_SOC_2 — workforce diversity metrics not independently verified in this pass}}</li>
+          <li class="placeholder">{{ESG_SOC_3 — data privacy and security practices for hosted customer infrastructure not independently verified in this pass}}</li>
+        </ul>
+      </div>
+      <div class="esg-card governance">
+        <h4>Governance</h4>
+        <ul>
+          <li class="placeholder">{{ESG_GOV_1 — board composition not independently verified in this pass; should be sourced from the most recent proxy statement}}</li>
+          <li><strong>Transparency around the composition of the large FY2025 net income increase (organic growth versus one-time joint-venture or disposition gains) is a governance and disclosure consideration warranting independent review.</strong></li>
+          <li class="placeholder">{{ESG_GOV_2 — executive compensation structure should be sourced from the most recent proxy statement}}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER / DISCLOSURES ============ -->
+  <footer>
+    <div class="analyst-line">Prepared by Equity Research Desk, Equity Analyst — Independent Equity Research</div>
+    This report is compiled from publicly available data sources believed to be reliable but not independently audited. Figures marked as placeholders require independent verification before use in an investment decision. This report does not constitute investment advice, an offer, or a solicitation to buy or sell any security. Ratings: BUY = expected to outperform the market over the next 12 months; HOLD = expected to perform in line with the market; SELL = expected to underperform the market. The analyst(s) preparing this report may or may not hold a position in the subject security. Past performance is not indicative of future results.
+  </footer>
+
+</div>
+</body>
+</html>

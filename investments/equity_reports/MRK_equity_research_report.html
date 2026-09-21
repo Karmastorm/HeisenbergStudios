@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — MRK</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  .placeholder { color:#8a8fa3; font-style:italic; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Merck &amp; Co., Inc.</h1>
+      <div class="ticker-line">MRK &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Health Care / Pharmaceuticals</div>
+    </div>
+    <div class="report-date">September 18, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#b8860b;">HOLD</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">$147.15</span></div>
+      <div class="reco-stat"><span class="label">Target Price</span><span class="value">$152.96 (avg.)</span></div>
+      <div class="reco-stat"><span class="label">Market Cap</span><span class="value">$363.0B</span></div>
+      <div class="reco-stat"><span class="label">Implied Upside</span><span class="value">~+4.0%</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">MRK</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Health Care</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Pharmaceuticals</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$77.58 – $156.92</td></tr>
+      <tr><td class="k">Consensus Rating (Headline)</td><td class="v">Buy</td></tr>
+      <tr><td class="k">Rating Distribution (28 analysts)</td><td class="v">15 Strong Buy, 5 Buy, 8 Hold</td></tr>
+      <tr><td class="k">TTM Revenue / Net Income</td><td class="v">$66.57 billion / $3.17 billion</td></tr>
+      <tr><td class="k">P/E (TTM)</td><td class="v">115.61x</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted); margin-top:-14px;">Note: TTM net income of $3.17 billion (down 80.7% year-over-year) sits sharply below full-year 2025 net income of $18.25 billion (up 6.64%) — an unusual divergence suggesting a significant one-time charge or write-off in a recent quarter that has not been independently identified in the sources reviewed for this report. This should be verified directly against Merck's quarterly filings before relying on the TTM figure.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Merck's trailing-twelve-month net income of $3.17 billion (down 80.7% year-over-year) diverges sharply from full-year 2025 net income of $18.25 billion (up 6.64%), pointing to a substantial one-time charge in a recent quarter — potentially an R&amp;D impairment, legal settlement, or acquisition-related write-off — that has driven the trailing P/E to an elevated 115.61x. Despite a headline "Buy" consensus rating from 28 analysts, the average price target of $152.96 implies only a modest 3.95% upside from the current price of $147.15, near the top of its 52-week range. Given the unexplained earnings volatility, the modest implied upside, and 8 of 28 analysts (29%) already at Hold, we rate MRK a HOLD pending clarification of the net income decline and confirmation that it reflects a non-recurring item rather than a deterioration in underlying franchise economics (including ongoing Keytruda patent-cliff planning).
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text placeholder">{{The specific driver of the sharp TTM net income decline (-80.7%) relative to full-year 2025 net income growth (+6.64%) was not independently identified in the sources reviewed for this report. Recommend reviewing Merck's most recent quarterly earnings release and 10-Q directly for detail on any R&amp;D impairment, legal charge, or acquisition-related write-off that may explain this divergence, as well as management's commentary on Keytruda's eventual loss of exclusivity and pipeline diversification efforts.}}</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text placeholder">{{No specific forward-quarter or full-year 2026 EPS guidance was independently sourced for this report.}}</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Consensus rating is Buy across 28 analysts (15 Strong Buy, 5 Buy, 8 Hold), a 71% Buy/Strong Buy majority. However, the average price target of $152.96 (range $105–$186) implies only approximately 3.95% upside from the current price of $147.15, which sits near the top of its 52-week range of $77.58–$156.92 — a wide range reflecting substantial volatility over the trailing year, consistent with the earnings anomaly flagged above.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Merck is a global pharmaceutical company with a portfolio anchored by its oncology blockbuster Keytruda (pembrolizumab), alongside vaccines (including Gardasil), animal health products, and a broader specialty pharmaceutical pipeline. Keytruda represents a substantial portion of Merck's total revenue, making the company's long-term outlook heavily dependent on successful pipeline diversification ahead of Keytruda's eventual patent expiration.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Keytruda oncology franchise revenue, Merck's largest single product and a key driver of overall company growth</li>
+      <li>Gardasil vaccine franchise and broader vaccine portfolio revenue</li>
+      <li>Animal health segment revenue, providing some diversification beyond human pharmaceuticals</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Research and development investment supporting pipeline diversification ahead of Keytruda's eventual loss of exclusivity</li>
+      <li class="placeholder">{{The specific one-time charge apparently driving the sharp TTM net income decline was not independently identified — verify against Merck's most recent quarterly filings}}</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Merck competes in the global pharmaceutical industry against other large diversified drug makers including Johnson &amp; Johnson, AbbVie, and Pfizer (see separate JNJ, ABBV, and PFE reports in this series), with particular competitive intensity in oncology (Keytruda vs. competing checkpoint inhibitors).</p>
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — extensive R&amp;D investment requirements, patent protection, and regulatory approval barriers limit new entrants in oncology and specialty pharmaceuticals.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Low-to-Moderate — Merck maintains diversified manufacturing capabilities across its pharmaceutical and vaccine portfolio.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate — pharmacy benefit managers, payers, and health systems can negotiate pricing and formulary placement.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>High — Keytruda's heavy revenue concentration creates significant substitution risk as its eventual patent expiration approaches, alongside competing checkpoint inhibitor therapies.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — intense competition in oncology and other key therapeutic categories against other major biopharmaceutical companies.</td></tr>
+    </table>
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Merck's moat rests on Keytruda's leading position in the immuno-oncology checkpoint inhibitor category, though this concentration also represents a key long-term risk given the product's importance to overall company revenue and its eventual patent expiration.</p>
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major U.S. health care companies. See separate UNH, JNJ, ABBV, PFE, TMO, ABT, DHR, ISRG, and AMGN reports in this series.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>Merck</td><td>MRK</td><td>Unexplained sharp TTM net income decline (-80.7%); modest ~4% implied upside</td></tr>
+      <tr><td>Johnson &amp; Johnson</td><td>JNJ</td><td>See separate JNJ report in this series</td></tr>
+      <tr><td>Pfizer</td><td>PFE</td><td>See separate PFE report in this series</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — requires explicit modeling of Keytruda's eventual loss-of-exclusivity timeline and pipeline replacement revenue}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>Average sell-side price target of $152.96 (28 analysts) as of the report date</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">We rate MRK a <strong>HOLD</strong>. The sharp, unexplained TTM net income decline, an elevated trailing P/E of 115.61x, and modest ~4% implied upside to the average target — despite a headline "Buy" label — all argue for caution pending clarification of the earnings anomaly and greater visibility into Keytruda's long-term patent-cliff planning.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>2025</th><th>TTM</th></tr>
+      <tr><td>Revenue</td><td>$65.01 billion (+1.31%)</td><td>$66.57 billion (+4.6%)</td></tr>
+      <tr><td>Net Income</td><td>$18.25 billion (+6.64%)</td><td>$3.17 billion (-80.7%)</td></tr>
+      <tr><td>P/E (TTM)</td><td class="placeholder">{{N/A}}</td><td>115.61x</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">The stark divergence between full-year 2025 net income growth (+6.64%) and TTM net income decline (-80.7%) is the single most important earnings-quality flag in this report. This pattern typically indicates either a large one-time charge (impairment, litigation, or restructuring) in a subsequent quarter, or a data inconsistency between sources. We recommend independently verifying this figure against Merck's most recent 10-Q before relying on the TTM net income or P/E figures presented here.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>Merck's substantial revenue concentration in Keytruda creates significant long-term risk as the product approaches eventual patent expiration, requiring successful pipeline diversification.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>The unexplained sharp decline in TTM net income (-80.7%) relative to full-year 2025 results is a significant earnings-quality concern that should be independently verified before this report is used for any investment decision.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span class="placeholder">{{Pharmaceutical regulatory approval processes (FDA), drug pricing policy (including Medicare drug price negotiation under the Inflation Reduction Act), represent ongoing industry-wide considerations; specific current developments not independently verified for this report.}}</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary, though the sharp net income decline flagged above could potentially relate to an unidentified legal or regulatory matter — verify against Merck's most recent 10-K/10-Q legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{The sharp, unexplained TTM net income decline relative to full-year 2025 results should be independently reconciled against Merck's 10-K/10-Q filings before this report is used for any investment decision. No qualified audit opinions or material weaknesses were otherwise identified in the sources reviewed.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul class="placeholder"><li>{{ESG_ENV — operational emissions and sustainability targets not independently sourced}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul><li>Global vaccine access initiatives (via its Gardasil and broader vaccine portfolio) and drug pricing considerations remain areas of ongoing public and investor scrutiny</li><li class="placeholder">{{ESG_SOC — specific program details not independently sourced}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul class="placeholder"><li>{{ESG_GOV — board composition and diversity not independently sourced}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 18, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (financial data aggregators and sell-side analyst rating summaries) that may be delayed or inconsistent, including a significant unexplained divergence between full-year 2025 and TTM net income figures. All figures should be independently verified against Merck's 10-K/10-Q filings and live market data before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

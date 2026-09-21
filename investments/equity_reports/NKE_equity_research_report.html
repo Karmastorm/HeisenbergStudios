@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — NKE</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">NIKE, Inc.</h1>
+      <div class="ticker-line">NKE &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Consumer Discretionary / Footwear &amp; Apparel</div>
+    </div>
+    <div class="report-date">September 15, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#b8860b;">HOLD (turnaround, unproven)</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">~$39–$42 (12-year low)</span></div>
+      <div class="reco-stat"><span class="label">Target Price (Street Range)</span><span class="value">$31 to $70 (wide split)</span></div>
+      <div class="reco-stat"><span class="label">2026 YTD Performance</span><span class="value">~ −30% to −36%</span></div>
+      <div class="reco-stat"><span class="label">Consensus Rating</span><span class="value">"Moderate Buy" (mixed — see note)</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">NKE</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Consumer Discretionary</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Footwear &amp; Apparel</td></tr>
+      <tr><td class="k">Current Trading Level</td><td class="v">Stock is at approximately a 12-year low, and down roughly 78% from its multi-year (2021-era) peak, per one source's characterization — distinct from its 2026 YTD decline of ~30–36%</td></tr>
+      <tr><td class="k">Segments</td><td class="v">North America, EMEA, Greater China, Asia Pacific &amp; Latin America — brands include Nike, Jordan, and Converse</td></tr>
+      <tr><td class="k">CEO</td><td class="v">Elliott Hill (insider CEO leading the turnaround)</td></tr>
+      <tr><td class="k">CFO Transition</td><td class="v">David M. Denton (formerly Pfizer's CFO) appointed EVP &amp; CFO effective Aug. 17, 2026, with a $7.3M new-hire bonus; outgoing CFO Matthew Friend remained through Sept. 4, 2026 with a $2M transition benefit</td></tr>
+      <tr><td class="k">Headquarters</td><td class="v">Beaverton, Oregon</td></tr>
+      <tr><td class="k">Upcoming Catalysts</td><td class="v">Q1 FY2027 earnings, Oct. 1, 2026; Investor Day, Nov. 16–17, 2026</td></tr>
+      <tr><td class="k">Analyst Ratings</td><td class="v">Genuinely split — recent individual actions include Morgan Stanley resuming coverage at Underweight ($31 target), Baird downgrading to Neutral ($44, from $70), Citi lowering to $39 (Neutral), and Telsey lowering to $44 (Market Perform) — a materially more cautious tone than the "Moderate Buy" headline consensus rating suggests</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Nike is in the middle of one of the most closely-watched corporate turnarounds in the entire report series, and the stock's roughly 30-36% decline in 2026 alone (to a 12-year low) reflects genuine, ongoing operational distress rather than a market overreaction to an otherwise-healthy business. CEO Elliott Hill (an insider brought back specifically to lead the reset) is pursuing a multi-pronged recovery: rebuilding wholesale partnerships, refocusing on core sports and running products, cutting back underperforming product lines (including "quietly shuttering" the Nike Well Collective store concept), closing some stores, and reworking its approach to China — a strategy one source compares to similar insider-led overhauls at Target and Starbucks. There are genuine, quantifiable bright spots: performance revenue grew 39% in the most recently cited quarter, running grew roughly 30%, DTC revenue grew 25%, and wholesale revenue grew 4% (with North America the sole growth geography, +3%). But these gains coexist with serious, unresolved problems: NIKE Direct revenue fell 7% (Brand Digital down 12%), Greater China revenue fell 12% (17% currency-neutral) — continuing a multi-quarter decline — and Converse revenue collapsed 32% across all territories. Reported gross margin and EPS figures have also been significantly distorted by a one-time, roughly $986 million benefit from recovered IEEPA tariffs (which alone added approximately 900 basis points to gross margin and pushed one quarter's reported EPS to $0.72 versus an operational EPS of only $0.20) — meaning headline "beats" during this period should be read with real caution. Management itself frames fiscal 2027 as the phase where "middle innings" turn into visible progress, with a gross-margin inflection expected beginning in Q1 FY2027 and earnings expected "flattish" (excluding tariff-recovery benefits) through the first half of the fiscal year. Given the combination of a genuinely uncertain turnaround trajectory, a brand-new CFO still settling in, continued China weakness, and a Street that has become noticeably more cautious in its most recent individual rating actions (several downgrades and target cuts in the weeks preceding this report) even as the headline consensus rating remains "Moderate Buy," this is a HOLD explicitly flagged as an unresolved turnaround story — the upcoming October earnings and November investor day are the two events most likely to clarify whether the recovery is genuinely gaining traction.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Nike's most recently reported quarter (fiscal Q4 2026, reported around late June 2026) showed the scale of tariff-related earnings distortion clearly: the company realized an unexpected $986 million one-time benefit from recovering past IEEPA (International Emergency Economic Powers Act) tariffs, which spiked reported EPS to $0.72 and expanded gross margins to 49.2%, though operational EPS (excluding this benefit) was significantly lower at $0.20, and core gross margin actually contracted 10 basis points when excluding the adjustment. Wholesale revenue grew 4% to $6.60 billion (reported basis, driven by North America growth, the sole geographic growth driver at +3%), partially offsetting a 7% decline in NIKE Direct revenue (Brand Digital down 12%, NIKE-owned stores down 7%). Greater China revenue declined 12% on a reported basis (17% currency-neutral), continuing a persistent multi-quarter regional weakness. Converse revenue fell 32% across all territories. Selling and administrative expense decreased 2%, reflecting lower demand-creation (marketing) spending. The effective tax rate dropped sharply to 19.6% (from 33.6%) due to stock-based compensation effects and prior-year one-time items. Management reduced short-term revenue guidance to a low-to-mid-single-digit decline, citing a sharp mid-April deceleration in retail sales driven by global consumer discretionary spending pressure, and indicated it is deliberately reducing forward buy plans and pulling back future wholesale sell-in to favor marketplace health over near-term volume — accepting lower revenue in exchange for higher gross margins and inventory discipline. Despite near-term headwinds, management expressed growing confidence in a gross-margin inflection beginning in Q1 fiscal 2027, with earnings expected to be "flattish" (excluding tariff-recovery benefits) across the cumulative period from Q4 FY2026 through the first two quarters of FY2027. In a subsequent, more recent update (around mid-September 2026), sources describe continued performance-category strength (performance revenue +39%, running +30%, Greater China sales specifically noted as +15% in this later citation — a notable, seemingly more positive figure than the reported -12% figure from the prior quarter, though this discrepancy was not reconciled in sources reviewed and may reflect a different specific metric, time period, or currency basis) alongside continued DTC growth (+25%). Nike appointed David M. Denton (formerly Pfizer's CFO) as EVP and CFO effective August 17, 2026, with a $7.3 million new-hire bonus, explicitly tied by CEO Hill to the company's multi-year turnaround effort and Denton's expected role in capital allocation and financial discipline; outgoing CFO Matthew Friend remained through September 4, 2026 with a $2 million transition benefit. Nike has been "quietly shuttering" its Nike Well Collective small-format store concept as part of the broader store-footprint rationalization. Separately, the EEOC (Equal Employment Opportunity Commission) dropped a lawsuit seeking to enforce a subpoena in an investigation of Nike's treatment of white employees.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">For fiscal 2026, analysts forecast Nike EPS of approximately $1.67 (a 22.7% decline from fiscal 2025's $2.16), with EPS expected to grow 55.1% year-over-year to approximately $2.59 in fiscal 2027 — a projection that implicitly assumes the turnaround gains real traction during the fiscal year, consistent with management's own stated "flattish" near-term earnings guidance (excluding tariff-recovery benefits) followed by an expected inflection. One source's own scenario analysis explicitly warns the investment case would weaken materially if: China continues declining at a double-digit rate through FY2027, wholesale revenue growth is not matched by improving retailer sell-through, Nike returns to heavy promotional activity to clear inventory, or Sportswear/Jordan fail to improve during the second half of FY2027 — four specific, trackable conditions worth monitoring each quarter.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Nike's analyst price targets show an unusually wide and recently-deteriorating range: Morgan Stanley's freshly resumed coverage set a $31 target (Underweight, below the current price, implying the firm sees further downside), while other targets clustered in the $39-$47 range following recent downgrades (Baird to $44 from $70, Citi to $39 from $45, Telsey to $44 from $47) — a meaningfully more cautious set of recent actions than the "Moderate Buy" headline consensus label alone would suggest. One detailed source's own conclusion was explicitly cautious: "Nike is a great brand sitting inside a weak earnings cycle, and NKE stock is not yet a compelling full-position buy" at its then-price, suggesting a better risk-reward entry point closer to a lower price band "unless the company delivers proof of recovery before the stock gets there."</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">NIKE, Inc., headquartered in Beaverton, Oregon, is a global leader in the design, development, marketing, and sale of athletic and casual footwear, apparel, equipment, and accessories, operating a portfolio of brands including Nike, Jordan, and Converse, with revenue reported across North America, EMEA, Greater China, and Asia Pacific &amp; Latin America. The company is currently executing a significant, multi-year operational turnaround under CEO Elliott Hill (an insider who returned to lead the reset), which includes rebuilding previously-damaged wholesale retail partnerships (Nike had shifted heavily toward direct-to-consumer in prior years, a strategy now being partially reversed), refocusing product development and marketing on core sports and running categories, reducing exposure to underperforming lifestyle product lines (which combined account for roughly half of total revenue per one source), closing underperforming stores (including the Nike Well Collective concept), and specifically reworking Nike's approach to the Greater China market, where sales have declined for multiple consecutive quarters.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Performance and running categories, showing strong recent growth (+39% performance, +30% running in one cited period) — evidence the turnaround's core-sports refocus is gaining traction in at least these categories</li>
+      <li>Wholesale revenue rebuilding (+4% in the most recently detailed quarter), driven by North America, as Nike intentionally repairs retail partnerships de-emphasized in prior years</li>
+      <li>DTC (direct-to-consumer) revenue growth (+25% in one cited period), even as NIKE Direct segment revenue overall declined in the most detailed quarter reviewed (a discrepancy across sources/periods worth reconciling directly against Nike's own filings)</li>
+      <li>Greater China recovery, the single most important and most closely watched swing factor — recent citations showed sharply conflicting results (-12% reported in one detailed quarter vs. +15% in a separate, later source) that should be verified directly against Nike's most recent quarterly filing before drawing conclusions</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Inventory reduction and forward-buy-plan tightening — a deliberate, margin-protective strategy that trades near-term revenue for gross-margin health and marketplace discipline</li>
+      <li>Store closures and footprint rationalization (including the Nike Well Collective wind-down), part of the broader cost and channel-strategy reset</li>
+      <li>Tariff costs, though these have been substantially offset in recent quarters by the one-time $986 million IEEPA tariff-recovery benefit — a benefit that will not recur at that scale and should not be modeled as a recurring tailwind</li>
+      <li>CFO transition costs ($7.3M new-hire bonus for Denton, $2M transition benefit for outgoing CFO Friend), disclosed, one-time items tied to the leadership change</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Nike operates in the highly competitive global athletic footwear and apparel industry, facing intensifying competition in performance sports specifically, alongside broader macro pressure on consumer discretionary spending. The company's historical strategic emphasis on direct-to-consumer channels over the past several years is now being partially reversed under CEO Hill's wholesale-rebuilding strategy — an implicit acknowledgment that the DTC-first approach damaged important retail partner relationships and contributed to the company's current competitive and operational challenges. One source specifically notes American companies broadly, including Nike, are "losing influence in China as geopolitics, domestic competition and a lack of cultural relevance reshape" that market — framing Nike's China weakness as part of a wider trend affecting U.S. brands there, not purely a Nike-specific execution failure.</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low-to-moderate — established athletic-brand scale and marketing investment represent real barriers, though domestic Chinese sportswear brands have gained meaningful share in that specific market, illustrating that scale alone does not guarantee protection in all geographies.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — global footwear/apparel manufacturing supply chains and tariff exposure (specifically the China footwear-import reduction strategy, cutting China-sourced footwear from 16% to single digits) are actively being managed by Nike to reduce cost and geopolitical risk.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>High and rising — wholesale retail partners gained leverage as Nike's prior DTC-first strategy strained those relationships, a dynamic the current turnaround is explicitly working to repair; end consumers also have abundant athletic-brand alternatives amid discretionary-spending pressure.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate-to-high — competing athletic and lifestyle brands, plus domestic Chinese sportswear competitors specifically in the China market, represent credible substitutes contributing to Nike's regional share losses.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — Adidas, Under Armour, Puma, Lululemon (in athleisure/performance apparel), and increasingly strong domestic Chinese sportswear brands (e.g., Anta, Li-Ning, not independently researched here) all compete directly with Nike across different categories and geographies.</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Nike's moat rests on unmatched global brand recognition, deep athlete/league endorsement relationships, and decades of marketing investment — assets one source explicitly describes as making Nike "a great brand sitting inside a weak earnings cycle," a distinction between brand strength and current operational execution that is central to the turnaround thesis. Performance and running category strength (+39% and +30% respectively in cited data) suggests the core athletic-performance moat remains intact even as lifestyle/casual categories and specific geographies (China, Converse) have struggled — supporting the view that this is a correctable execution problem rather than a fundamental brand-value erosion, though this remains unproven pending sustained multi-quarter evidence.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major global athletic footwear/apparel brands. Not independently researched in this series beyond Nike itself.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Notes</th></tr>
+      <tr><td>Nike (NKE)</td><td>Trading at a 12-year low; 2026 YTD decline of ~30–36%; turnaround under CEO Elliott Hill in progress</td></tr>
+      <tr><td>Adidas</td><td>Primary global competitor; not independently researched in this series</td></tr>
+      <tr><td>Lululemon</td><td>Athleisure/performance-apparel competitor; not independently researched in this series</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled — highly sensitive to whether the turnaround succeeds (implying a return to historical growth/margin levels) or China weakness and category struggles persist structurally}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — recommend explicit scenario modeling bridging through the company's own guided FY2027 gross-margin inflection point}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>One detailed source's own conclusion placed a "better risk-reward zone" around $33–$35 (below the stock's then-current price of $39), rather than a traditional DCF-derived point estimate — reflecting a cautious, margin-of-safety-oriented view rather than a base-case fair value</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">Nike's valuation is genuinely contested even among professional analysts at this moment — the Street's most recent individual rating actions (Morgan Stanley Underweight at $31, several other downgrades/target cuts) skew more cautious than the "Moderate Buy" headline consensus label suggests, and at least one detailed independent source explicitly concluded the stock was "not yet a compelling full-position buy" even after its steep decline. This is a name to size conservatively and revisit after the October 1 earnings report and November 16–17 investor day provide more concrete evidence on the turnaround's trajectory, rather than to value with confidence today.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Prior-Year Quarter</th><th>Most Recent Quarter</th><th>Notes</th></tr>
+      <tr><td>Reported EPS</td><td class="placeholder">{{Not directly sourced}}</td><td>$0.72 (incl. $986M tariff benefit)</td><td>Operational EPS excluding the benefit: only $0.20</td></tr>
+      <tr><td>Gross Margin</td><td class="placeholder">{{~40.2 bps higher core margin, implied}}</td><td>49.2% (reported, incl. tariff benefit)</td><td>Core margin (ex-benefit) contracted 10 bps YoY</td></tr>
+      <tr><td>Wholesale Revenue</td><td class="placeholder">{{Implied ~$6.35B based on 4% YoY growth}}</td><td>$6.60B (+4% reported)</td><td>North America the sole growth geography (+3%)</td></tr>
+      <tr><td>NIKE Direct Revenue</td><td class="placeholder">{{Higher, given the 7% decline}}</td><td class="placeholder">{{−7% YoY}}</td><td>Brand Digital −12%; owned stores −7%</td></tr>
+      <tr><td>Greater China Revenue</td><td class="placeholder">{{Higher, given the decline}}</td><td class="placeholder">{{−12% reported; −17% currency-neutral}}</td><td>Persistent multi-quarter weakness</td></tr>
+      <tr><td>Converse Revenue</td><td class="placeholder">{{Higher, given the 32% decline}}</td><td class="placeholder">{{−32% across all territories}}</td><td>Severely underperforming segment</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">Nike's most recently detailed quarter is a textbook case for why headline EPS and gross-margin "beats" require careful scrutiny: the $986 million one-time IEEPA tariff-recovery benefit added roughly 900 basis points to reported gross margin and pushed reported EPS to $0.72, while the underlying operational EPS (excluding this benefit) was only $0.20, and core gross margin actually contracted 10 basis points year-over-year when the benefit is excluded. Any analysis of Nike's "recovery" that relies on the headline, tariff-benefit-inclusive figures rather than the operational figures will materially overstate the turnaround's actual progress. Separately, sources reviewed showed a notable, unreconciled discrepancy in Greater China performance — one detailed quarterly breakdown showed a 12% reported decline (17% currency-neutral), while a separate, more recent source cited Greater China sales as +15% — this conflict should be resolved directly against Nike's own quarterly filings before drawing any conclusion about whether China has stabilized or is still declining.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>The multi-year turnaround (wholesale rebuilding, product-line cuts, store closures, China strategy rework) carries genuine execution risk under new CEO and now newly-appointed CFO leadership simultaneously — a significant amount of organizational change to manage concurrently. Converse's 32% revenue decline and continued Greater China weakness (on at least one recent data point) represent unresolved, serious operational problems.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>Reported EPS and gross margin figures have been substantially inflated by a one-time $986 million tariff-recovery benefit that will not recur at that scale; underlying operational profitability (EPS of $0.20 versus $0.72 reported) is far weaker than headline figures suggest, and core gross margin is still contracting year-over-year.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span>Ongoing U.S. tariff policy remains a live cost factor, and Nike's strategy to reduce China-sourced footwear imports from 16% to single digits reflects an active, disclosed effort to reduce this specific exposure. Nike also faces geopolitical/market-access headwinds in China described by one source as affecting American brands broadly, not solely Nike.</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span>The EEOC dropped a lawsuit seeking to enforce a subpoena in an investigation of Nike's treatment of white employees — this specific matter appears resolved in Nike's favor per the source reviewed, though the underlying investigation's current status was not further detailed and should be checked directly against Nike's own disclosures.</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in sources reviewed — verify directly against Nike's 10-K/10-Q auditor opinion. The Greater China revenue discrepancy noted above (−12% vs. +15% across different sources/periods) should be resolved directly against Nike's own quarterly filings before relying on either figure.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul class="placeholder"><li>{{ESG_ENV — not independently sourced in this summary}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul><li>An EEOC subpoena-enforcement lawsuit related to Nike's treatment of white employees was dropped by the agency per one source — a workplace-discrimination-investigation matter worth understanding directly rather than relying solely on this summary</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul><li>Simultaneous CEO-led turnaround and CFO transition (with disclosed new-hire and transition bonus figures) represent a significant, concurrent leadership-change period for the company, explicitly tied by management to the multi-year turnaround effort</li><li class="placeholder">{{ESG_GOV — broader board composition not sourced beyond the above}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 15, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (Simply Wall St, IndMoney, StockAnalysis.com, Google Finance, 24/7 Wall St., Barchart, iTiger, and various financial media) that may be delayed or inconsistent. A notable, unreconciled discrepancy in Greater China revenue performance was identified across sources and flagged explicitly rather than resolved. All figures should be independently verified against Nike's 10-K/10-Q filings before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

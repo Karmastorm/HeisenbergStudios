@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — GM</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  .placeholder { color:#8a8fa3; font-style:italic; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">General Motors Company</h1>
+      <div class="ticker-line">GM &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Consumer Discretionary / Automobile Manufacturing</div>
+    </div>
+    <div class="report-date">September 17, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#1e7e34;">BUY</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">~$87</span></div>
+      <div class="reco-stat"><span class="label">Target Price</span><span class="value">$101.64 (avg.)</span></div>
+      <div class="reco-stat"><span class="label">Target Range</span><span class="value">$61 – $132</span></div>
+      <div class="reco-stat"><span class="label">Implied Upside/Downside</span><span class="value">~16.5%</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">GM</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Consumer Discretionary</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Automobile Manufacturing</td></tr>
+      <tr><td class="k">CEO</td><td class="v">Mary Barra (Chair &amp; CEO)</td></tr>
+      <tr><td class="k">Headquarters</td><td class="v">Detroit, Michigan</td></tr>
+      <tr><td class="k">Consensus Rating</td><td class="v">Buy (26 analysts)</td></tr>
+      <tr><td class="k">FY2026 Adjusted EBIT Guidance</td><td class="v">$14B–$16B (raised, second raise of 2026)</td></tr>
+      <tr><td class="k">FY2026 Adjusted EPS Guidance</td><td class="v">$12–$14 (raised)</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      General Motors delivered a Q2 2026 print strong enough to trigger the company's second full-year guidance raise of the year, driven primarily by a sharp improvement in North America profitability — adjusted EBIT margin in the region expanded 2.5 percentage points year-over-year to 8.6% — alongside narrowing (though still unprofitable) EV losses. Management raised full-year adjusted EBIT guidance to $14–16 billion, adjusted EPS guidance to $12–14, and adjusted automotive free cash flow guidance to $9.5–11.5 billion, signaling confidence that the improvement in core North American truck/SUV profitability and gradually improving EV unit economics (via scale, battery cost reduction, and manufacturing efficiency) are durable trends rather than a one-quarter anomaly. Importantly, "lower EV losses" is not yet "EV profitability," and tariff policy remains a genuine swing factor for a company with substantial cross-border manufacturing exposure (Mexico, Canada) — a risk analysts continue to price in via a historically wide target range ($61 to $132). We rate GM a BUY: the combination of a resilient, higher-margin North American ICE/truck business funding a gradually improving EV transition, two consecutive guidance raises, and a below-market valuation multiple relative to the raised earnings power supports upside, even as tariff and EV-transition risks argue for a wide margin of safety in position sizing.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">General Motors' Q2 2026 results showed revenue of $48.0 billion, net income attributable to shareholders of $1.3 billion, and adjusted EBIT of $3.9 billion. North America adjusted EBIT margin expanded 2.5 percentage points year-over-year to 8.6%, the primary driver of the quarter's strength. EV losses narrowed year-over-year, reflecting improvements from scale, lower battery costs, and manufacturing changes, though the company has not disclosed a specific timeline for reaching EV profitability. This marked the company's second full-year guidance raise of 2026, reflecting management's growing confidence in North American profitability durability. Tariff policy was flagged as a continuing swing factor for the business given GM's significant cross-border (Mexico/Canada) manufacturing footprint, though specific quantified Q2 tariff impact was not disclosed in the sources reviewed for this report.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Full-year 2026 guidance was raised to adjusted EBIT of $14 billion to $16 billion, adjusted EPS of $12 to $14, and adjusted automotive free cash flow of $9.5 billion to $11.5 billion. The raise reflects confidence that improved North American margins and narrowing EV losses will persist through the remainder of the year.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Consensus rating is Buy across 26 analysts, with an average price target of $101.64 (median $102), implying roughly 16.5% upside from a current price near $87. The target range is unusually wide, spanning $61 (low) to $132 (high), reflecting genuine analyst disagreement about tariff exposure and EV-transition economics. Several sell-side firms (UBS, JPMorgan, Barclays, and Goldman Sachs among those cited) have raised targets meaningfully following the Q2 print and guidance raise.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">General Motors Company is one of the largest global automobile manufacturers, producing vehicles under the Chevrolet, GMC, Cadillac, and Buick brands, with a North American business heavily weighted toward high-margin trucks and SUVs. Under CEO Mary Barra, GM has pursued a dual-track strategy: maximizing profitability from its core internal-combustion truck and SUV franchise (its primary profit engine) while investing in an electric vehicle transition (Ultium battery platform, EV manufacturing capacity) that remains loss-making but has shown improving unit economics as scale increases. GM also maintains a financial services arm (GM Financial) supporting vehicle sales financing and leasing.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>North American truck and SUV sales, the company's primary profit engine, where adjusted EBIT margin expanded 2.5 points YoY to 8.6% in Q2 2026</li>
+      <li>Gradually improving EV unit economics as scale, battery cost reduction, and manufacturing efficiency narrow EV losses</li>
+      <li>GM Financial's vehicle financing and leasing operations, supporting overall vehicle sales</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Continued EV program investment, which remains loss-making despite narrowing losses in Q2 2026</li>
+      <li>Cross-border manufacturing exposure (Mexico, Canada) that leaves the company exposed to tariff-driven cost increases</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">General Motors competes in the global automobile manufacturing industry, most directly against Ford Motor Company given nearly identical North American truck-led profit models and parallel EV-transition challenges, alongside global competitors including Toyota, Stellantis, Tesla, and Chinese EV manufacturers in certain markets.</p>
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — capital intensity, manufacturing scale, and dealer networks create substantial barriers, though EV-focused entrants have shown entry is possible in the EV segment specifically.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — battery and semiconductor supply chains remain a point of leverage for key suppliers, though GM has invested in vertical integration (e.g., battery joint ventures) to mitigate this.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate — consumers have many brand choices, though truck/SUV brand loyalty remains relatively sticky in North America.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate — ride-sharing, public transit, and over the long term autonomous mobility services represent alternatives to vehicle ownership.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — intense competition from Ford, Stellantis, Toyota, and EV-focused entrants including Tesla and Chinese manufacturers in some markets.</td></tr>
+    </table>
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">GM's moat rests on decades of North American truck/SUV brand equity (particularly the Chevrolet Silverado/GMC Sierra franchise), an extensive dealer network, and manufacturing scale. Its EV transition lacks Tesla's first-mover cost advantages but benefits from GM's existing manufacturing footprint and dealer/service infrastructure, which can support EV sales and servicing at a scale newer entrants struggle to match.</p>
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major global automobile manufacturers. See separate TSLA report in this series.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>General Motors</td><td>GM</td><td>Average target $101.64; ~16.5% implied upside; second guidance raise of 2026</td></tr>
+      <tr><td class="placeholder">Ford Motor Company</td><td class="placeholder">F</td><td class="placeholder">{{Not independently sourced for this report — direct primary U.S. competitor, similar ICE/EV transition dynamics}}</td></tr>
+      <tr><td>Tesla</td><td>TSLA</td><td>EV-focused competitor; see separate TSLA report in this series</td></tr>
+      <tr><td class="placeholder">Stellantis N.V.</td><td class="placeholder">STLA</td><td class="placeholder">{{Not independently sourced for this report — global multi-brand automaker competitor}}</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — recommend explicit modeling of tariff sensitivity and the EV-loss glide path separately from core North American ICE profitability}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>Average sell-side price target of $101.64 (26 analysts) as of the report date</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">We rate GM a <strong>BUY</strong>. Two consecutive full-year guidance raises, meaningful North American margin expansion, and narrowing EV losses collectively support the case that GM's earnings power is improving on a durable basis, while the stock's low absolute valuation multiple (roughly 6–7x guided FY2026 adjusted EPS) provides a margin of safety. Tariff policy and the pace of EV-loss narrowing toward actual profitability remain the key swing factors to monitor.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q2 2026</th><th>FY2026 Guidance</th></tr>
+      <tr><td>Revenue</td><td>$48.0 billion</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Net Income</td><td>$1.3 billion</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Adjusted EBIT</td><td>$3.9 billion</td><td>$14B–$16B</td></tr>
+      <tr><td>North America Adjusted EBIT Margin</td><td>8.6% (+2.5 pts YoY)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Adjusted EPS</td><td class="placeholder">{{Not independently sourced}}</td><td>$12–$14</td></tr>
+      <tr><td>Adjusted Automotive Free Cash Flow</td><td class="placeholder">{{Not independently sourced}}</td><td>$9.5B–$11.5B</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">The gap between net income ($1.3B) and adjusted EBIT ($3.9B) reflects the typical automaker adjustments for interest, taxes, and one-time items; investors should track the adjusted EBIT and free cash flow guidance ranges as the more decision-relevant figures given the volatility introduced by tariffs and EV-program restructuring charges. "Narrowing EV losses" should be explicitly distinguished from EV profitability — GM has not disclosed a specific timeline in the sources reviewed for reaching breakeven on EVs.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span>GM's substantial cross-border manufacturing footprint (Mexico, Canada) leaves it exposed to U.S. tariff policy changes, a factor management explicitly flagged as a continuing swing factor for results.</span></div>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>EV losses have narrowed but remain unprofitable; the pace of the path to EV profitability is uncertain and dependent on continued scale, battery cost reduction, and consumer EV demand trends. Heavy reliance on North American truck/SUV profitability concentrates earnings risk.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>The unusually wide analyst price-target range ($61–$132) signals significant disagreement about downside risk scenarios, implying elevated potential share-price volatility.</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against GM's most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in the sources reviewed — verify directly against GM's 10-K/10-Q auditor opinion.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul><li>Active EV transition (Ultium battery platform) represents a core decarbonization initiative for the company's product portfolio</li><li class="placeholder">{{ESG_ENV — specific emissions targets/timelines not independently sourced}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul><li>Major unionized U.S. manufacturing employer (UAW), with labor relations a recurring topic in contract-negotiation cycles</li><li class="placeholder">{{ESG_SOC — current labor-relations status not independently sourced}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul><li>Mary Barra serves as Chair and CEO</li><li class="placeholder">{{ESG_GOV — board composition and diversity not independently sourced}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 17, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (company earnings releases, financial media coverage, and sell-side analyst commentary) that may be delayed or inconsistent. All figures should be independently verified against General Motors' 10-K/10-Q filings before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

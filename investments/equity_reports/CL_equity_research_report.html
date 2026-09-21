@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — CL</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Colgate-Palmolive Company</h1>
+      <div class="ticker-line">CL &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Consumer Staples / Household &amp; Personal Products</div>
+    </div>
+    <div class="report-date">September 15, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#4caf50;">BUY</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">~$90.66 (July 31, 2026)</span></div>
+      <div class="reco-stat"><span class="label">52-Week Range</span><span class="value">$74.55 – $99.33</span></div>
+      <div class="reco-stat"><span class="label">Market Cap</span><span class="value">~$20.4 billion</span></div>
+      <div class="reco-stat"><span class="label">EPS Beat Streak</span><span class="value">5 consecutive quarters</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">CL</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Consumer Staples</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Household &amp; Personal Products</td></tr>
+      <tr><td class="k">Core Categories</td><td class="v">Oral Care, Personal Care, Home Care, Pet Nutrition (Hill's); operates in over 200 countries and territories</td></tr>
+      <tr><td class="k">CEO / Headquarters</td><td class="v">Noel Wallace (Chairman, President, and CEO); headquartered in New York, NY</td></tr>
+      <tr><td class="k">Q2 2026 Gross Margin</td><td class="v">61.5% (+100–140 bps YoY, sources vary slightly)</td></tr>
+      <tr><td class="k">H1 2026 Capital Return</td><td class="v">$1.4 billion returned to shareholders; free cash flow up 18%</td></tr>
+      <tr><td class="k">Strategic Divestiture</td><td class="v">Exiting private-label pet food, creating a 0.4-point drag on organic sales growth (deliberate portfolio simplification, not a demand issue)</td></tr>
+      <tr><td class="k">FY2026 Guidance</td><td class="v">Net sales +2–6%; organic sales +1–4%; double-digit GAAP EPS growth; Base Business EPS growth raised to mid-single-digits; gross margin now guided "roughly flat" (upgraded from a prior "down" guide)</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Colgate-Palmolive delivered a genuinely strong Q2 2026 that extended its EPS beat streak to five consecutive quarters: net sales rose 4.9% to $5.361 billion, organic sales grew 2.4% (including a deliberate 0.4-point drag from the company's strategic exit from private-label pet food), Base Business EPS rose 8% to $0.99 (beating the $0.95 consensus by 4.21%), and gross margin expanded 100-140 basis points (sources vary) to 61.5% — strong enough for management to raise full-year Base Business EPS growth guidance to mid-single digits and upgrade the full-year gross margin outlook from "down" to "roughly flat." Organic volume growth accelerated for a third consecutive quarter, with growth in four of five divisions and three of four categories; emerging markets led growth (mid-single digits, driven by India, Brazil, Mexico, and China), and the Hill's Pet Nutrition business continued outperforming its category (+4% organic ex-private-label) despite a tough pet-food market. The one modest wrinkle — GAAP EPS actually declined 5% to $0.86 even as Base Business (adjusted) EPS grew 8% — reflects specific, disclosed one-time items distinct from underlying operating strength, and the stock's muted reaction (down ~1-1.3% on the report day, trading in the middle-to-upper end of its 52-week range) suggests the market had largely already anticipated the strong quarter. Management is explicitly investing for durability: advertising spend rose 15% year-over-year to support long-term brand health, and the company is scaling AI-driven promotion tools (Promo AI) and data analytics globally to enhance marketing ROI. CEO Noel Wallace expressed confidence that "the strength of our global portfolio and clear business strategy should enable us to deliver consistent, compounded earnings per share growth" despite acknowledged ongoing volatility (choppy retailer inventory behavior, geopolitical uncertainty, tariffs). Given consistent execution, accelerating volume trends, raised guidance, and a valuation that has not yet fully re-rated to reflect the improving trajectory, this supports a BUY.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Colgate-Palmolive reported Q2 2026 results (July 31, 2026) with net sales of $5.361 billion (+4.9% YoY; six-month net sales of $10.686 billion, +6.6%), organic sales growth of 2.4% (including a 0.4-point drag from the company's strategic exit from private-label pet food sales), and gross profit of $3.296 billion (gross margin 61.5%, up 100-140 basis points YoY across sources, driven by cost savings, revenue growth management, positive mix, and higher pricing, partially offset by increased raw-material costs). Operating profit was $1.016 billion (GAAP) / $1.145 billion (adjusted). Base Business EPS rose 8% to $0.99, beating the $0.95 consensus by $0.04 (4.21-4.5% surprise, sources vary), extending the company's EPS beat streak to five consecutive quarters; GAAP EPS declined 5% to $0.86, reflecting specific one-time items distinct from the underlying Base Business trend. Organic sales growth occurred in four of five divisions and three of four categories, with emerging markets leading (mid-single-digit growth, driven by strong performances in India, Brazil, Mexico, and China) even as North America sales declined. Hill's Pet Nutrition delivered solid organic growth of 4% (ex-private-label) despite a tough pet-food market, with particular strength in therapeutic, wet, cat, and small paws segments; management indicated the rollout of Hill's "Fresh" protein diets will follow a "thoughtful and methodical" phase-in, prioritizing professional veterinary backing over immediate mass volume. Advertising investment rose 15% year-over-year, supporting long-term brand health and category growth. CEO Noel Wallace specifically discussed China as "a fascinating market," noting Colgate China has consistently delivered mid-single-digit performance despite platform-shift disruption and aggressive competition, with unique innovations (Optic White Purple, developed in China with a social-first model) now rolling out globally; Hawley & Hazel (the company's other China-focused oral care brand) grew low single digits with good volume driven by B2C and dual-chamber innovation. Free cash flow rose 18% in H1 2026, with $1.4 billion returned to shareholders during the period. Management raised full-year 2026 Base Business EPS growth guidance to mid-single digits and upgraded gross margin guidance to roughly flat for the year (from a prior "down" guide), while maintaining full-year net sales growth guidance of 2-6% (including a low-single-digit positive FX impact) and organic sales growth guidance of 1-4% (reflecting the private-label pet food exit). Management expects a shift toward more volume-driven growth in the second half of 2026 as the company laps heavy pricing actions from the prior year and benefits from new product launches, while cost of goods and tariffs are projected to peak in the second half. Organic sales guidance remains cautious given "choppy" retailer inventory behaviors and global uncertainties, including ongoing wars and fluctuating consumer confidence. Shares closed at $91.60 the day before the report and traded down modestly (roughly 1-1.3%) to around $90.40-90.66 following the release, positioning the stock in the middle-to-upper range of its 52-week span between $74.55 and $99.33.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Full-year 2026 guidance (as updated following Q2) calls for net sales growth of 2-6% (including a low-single-digit positive FX impact), organic sales growth of 1-4% (reflecting the private-label pet food exit), double-digit GAAP EPS growth, and Base Business EPS growth of mid-single digits (raised from a prior guide). Gross profit margin is now expected to be roughly flat for the year, an upgrade from previous guidance calling for a margin decline — a meaningful positive revision reflecting strong first-half execution. Management expects cost of goods and tariff pressures to peak in the second half of 2026, with a shift toward more volume-driven (versus pricing-driven) growth as heavy prior-year pricing actions are lapped.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Colgate-Palmolive's stock traded down modestly on an otherwise strong Q2 2026 report, positioning shares in the middle-to-upper range of their 52-week span ($74.55-$99.33) rather than at a fresh high despite the raised guidance and extended earnings-beat streak — suggesting the market had already anticipated much of the good news, or was more focused on the GAAP EPS decline and continued margin-pressure caveats (tariffs, choppy retailer inventory) than the underlying Base Business strength. This muted reaction to genuinely positive results is itself a data point worth weighing: it may represent an attractive entry point if the improving organic-volume and gross-margin trends continue, similar in spirit (though less dramatic) to the setup seen in several other names in this report series where strong fundamentals outpaced share-price recognition.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Colgate-Palmolive Company, headquartered in New York, is a global consumer products company serving people in over 200 countries and territories, organized around four core categories: Oral Care (Colgate toothpaste and oral hygiene products, a globally dominant category leader), Personal Care, Home Care, and Pet Nutrition (Hill's Science Diet and Hill's Prescription Diet). The company's Hill's Pet Nutrition business has been a particular recent growth and margin-improvement focus, including a strategic decision to exit lower-margin private-label pet food production in favor of its own branded portfolio — a deliberate mix-shift that creates a near-term organic-sales-growth headwind (0.4 points in Q2 2026) in exchange for improved long-term profitability and brand focus. Colgate-Palmolive has significant, often-underappreciated emerging-market exposure (India, Brazil, Mexico, China among its strongest recent growth markets), which frequently outpaces its North American business.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Emerging market growth (mid-single digits in Q2 2026), led by India, Brazil, Mexico, and China, consistently the company's strongest growth geography</li>
+      <li>Hill's Pet Nutrition organic growth (+4% ex-private-label), outperforming a "tough" broader pet-food category, with the upcoming Hill's "Fresh" protein diet rollout as a further growth lever</li>
+      <li>China-specific innovation (Optic White Purple, developed via a social-first model in China and now rolling out globally) and dual-brand strategy (Colgate and Darlie/Hawley & Hazel)</li>
+      <li>Accelerating organic volume growth (third consecutive quarter of sequential improvement), supported by a 15% YoY increase in advertising investment</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Elevated advertising spend (+15% YoY), a deliberate investment in long-term brand health rather than a cost-control failure</li>
+      <li>Raw material cost increases, partially offsetting gross margin gains from cost savings and revenue-growth management initiatives</li>
+      <li>Tariffs and cost of goods, expected to peak in the second half of 2026 per management's own guidance</li>
+      <li>Strategic AI and digital-capability investments (Promo AI tools, data analytics), aimed at improving marketing ROI and organizational productivity over time</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Colgate-Palmolive operates in the global household and personal products industry, competing most directly against Procter & Gamble (see separate PG report in this series) and Kimberly-Clark (see separate KMB report) in personal/home care, and against Mars (Pedigree/Royal Canin) and Nestlé Purina in pet nutrition via Hill's. The company's oral care category leadership (Colgate is a globally dominant toothpaste brand) provides a distinct competitive anchor less directly overlapping with P&G's broader portfolio breadth.</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — Colgate's global oral care brand dominance and Hill's veterinary-endorsed pet nutrition positioning represent substantial barriers in their respective categories.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — raw material cost increases were specifically disclosed as a partial offset to gross margin gains; tariffs are an additional, disclosed cost pressure expected to peak in H2 2026.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate — "choppy" retailer inventory behaviors were specifically flagged by management as a source of organic-sales-guidance caution, indicating meaningful retail-channel negotiating dynamics.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Low-to-moderate — Colgate's oral care category leadership provides some insulation, though private-label and smaller competitors exist across all four core categories.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — P&G and Kimberly-Clark compete in personal/home care; Mars and Nestlé Purina compete directly with Hill's in premium pet nutrition; intensifying competition in China specifically (platform shifts, aggressive local competitors) was flagged by CEO Wallace.</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Colgate-Palmolive's moat rests on category-leading global brand dominance in oral care (Colgate) and premium veterinary-endorsed positioning in pet nutrition (Hill's), combined with an unusually broad and deep emerging-market distribution footprint (over 200 countries/territories) that has consistently outperformed North America in recent quarters. The company's willingness to sacrifice near-term organic-sales optics (the private-label pet food exit) for longer-term margin and brand focus reflects a disciplined, moat-reinforcing strategic approach rather than a purely growth-at-all-costs mentality.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major global household/personal products companies. See separate PG and KMB reports in this series.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>Colgate-Palmolive</td><td>CL</td><td>Market cap ~$20.4B; 5 consecutive quarterly EPS beats; emerging-market-led growth</td></tr>
+      <tr><td>Procter &amp; Gamble</td><td>PG</td><td>See separate PG report in this series</td></tr>
+      <tr><td>Kimberly-Clark</td><td>KMB</td><td>See separate KMB report in this series</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled — the private-label pet food exit should be modeled as a one-time step-down in the organic-sales base, not a sustained growth-rate depressant}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td class="placeholder">{{No third-party DCF estimate was clearly isolated in sources reviewed}}</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">Colgate-Palmolive's modest, even slightly negative, share-price reaction to a genuinely strong Q2 2026 report (raised guidance, five-quarter beat streak, accelerating volume) suggests the market may be discounting the results somewhat due to the GAAP EPS decline and ongoing tariff/margin caveats, even though the Base Business (adjusted) trend is clearly positive and improving. This combination — strong, improving fundamentals against a muted share-price reaction — is a constructive setup worth monitoring for continued confirmation in subsequent quarters.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q2 2025</th><th>Q2 2026</th><th>FY2026 Guidance</th></tr>
+      <tr><td>Net Sales</td><td>$5,110M</td><td>$5,361M (+4.9% YoY)</td><td>+2–6% (incl. low-single-digit FX benefit)</td></tr>
+      <tr><td>Organic Sales Growth</td><td class="placeholder">{{Not directly sourced}}</td><td>+2.4% (incl. −0.4pt pet food exit drag)</td><td>+1–4%</td></tr>
+      <tr><td>Gross Margin</td><td class="placeholder">{{~60.1–60.5%, implied by the 100–140bps expansion}}</td><td>61.5% (+100–140 bps YoY)</td><td>Roughly flat (upgraded from "down")</td></tr>
+      <tr><td>Base Business EPS</td><td class="placeholder">{{Implied ~$0.92 based on 8% YoY growth}}</td><td>$0.99 (+8% YoY; beat $0.95 est.)</td><td>Mid-single-digit growth (raised)</td></tr>
+      <tr><td>GAAP EPS</td><td class="placeholder">{{Implied ~$0.91 based on 5% YoY decline}}</td><td>$0.86 (−5% YoY)</td><td>Double-digit growth (full year)</td></tr>
+      <tr><td>Free Cash Flow (H1)</td><td class="placeholder">{{Lower, given the 18% YoY increase}}</td><td>+18% YoY</td><td class="placeholder">{{Not separately guided}}</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">Colgate-Palmolive's Q2 2026 results present a clean, well-itemized example of a GAAP-vs-adjusted divergence in the "less favorable" direction on the surface (GAAP EPS down 5% while Base Business EPS up 8%) — the opposite pattern from names like GOOG, META, and AMZN in this report series where GAAP figures were inflated by one-time gains. This divergence, while not fully itemized in the specific sources reviewed, is generally consistent with disclosed items such as restructuring costs common in a period of "significant investment" (advertising +15%, AI/digital scaling) — analysts should obtain Colgate's own GAAP-to-Base-Business reconciliation table to confirm the specific drivers rather than assuming pure operating deterioration. The 0.4-point organic-sales drag from the private-label pet food exit is a clean, well-disclosed one-time mix effect that should be added back when assessing underlying demand trends.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>North America sales declined in Q2 2026 even as emerging markets grew — a geographic mix consideration worth monitoring. "Choppy" retailer inventory behaviors were specifically flagged by management as an ongoing source of organic-sales-guidance uncertainty.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>GAAP EPS declined 5% year-over-year even as Base Business EPS grew 8% — a gap that should be fully understood via Colgate's own reconciliation before assuming the adjusted trend alone tells the complete profitability story. Tariffs and cost of goods are expected to peak in the second half of 2026.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span>Tariff policy remains a live, disclosed cost factor; ongoing geopolitical conflicts and general macroeconomic uncertainty were specifically cited by management as factors behind the cautious organic-sales guidance range.</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against Colgate-Palmolive's most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in sources reviewed — verify directly against Colgate-Palmolive's 10-K/10-Q auditor opinion.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul class="placeholder"><li>{{ESG_ENV — not independently sourced in this summary}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul class="placeholder"><li>{{ESG_SOC — not independently sourced in this summary}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul><li>Management's willingness to accept a near-term organic-sales-growth headwind (private-label pet food exit) in exchange for longer-term margin and brand-focus benefits reflects disciplined, long-term-oriented capital allocation</li><li class="placeholder">{{ESG_GOV — board composition and executive compensation structure not sourced beyond the above}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 15, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (Investing.com, Quartr, Yahoo Finance, Simply Wall St, 24/7 Wall St., and Colgate-Palmolive's own investor relations materials) that may be delayed or inconsistent. All figures should be independently verified against Colgate-Palmolive's 10-K/10-Q filings before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

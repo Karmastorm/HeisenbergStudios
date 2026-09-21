@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — CCI</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #e9edf2;
+    color: var(--text);
+    font-family: "Georgia", "Times New Roman", serif;
+    line-height: 1.55;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.12);
+    padding: 40px 50px 60px;
+  }
+
+  /* ---------- Header ---------- */
+  .report-header {
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .firm-name {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .company-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+  }
+
+  /* ---------- Recommendation banner ---------- */
+  .reco-banner {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .reco-main {
+    flex: 0 0 170px;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .reco-main .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+
+  .reco-main .value {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+
+  .reco-stats {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--gray-bg);
+  }
+
+  .reco-stat {
+    padding: 10px 14px;
+    border-left: 1px solid var(--border);
+  }
+
+  .reco-stat .label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    display: block;
+  }
+
+  .reco-stat .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* ---------- Basic info table ---------- */
+  .basic-info {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+
+  .basic-info td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .basic-info td.k {
+    color: var(--muted);
+    width: 38%;
+  }
+
+  .basic-info td.v {
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  /* ---------- Section styling ---------- */
+  section {
+    margin-bottom: 32px;
+  }
+
+  h2.section-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: var(--navy);
+    padding: 8px 14px;
+    margin: 0 0 14px 0;
+    border-left: 5px solid var(--accent);
+  }
+
+  h3.sub-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    margin: 18px 0 10px;
+  }
+
+  p.body-text {
+    font-size: 15px;
+    margin: 0 0 12px;
+  }
+
+  .placeholder {
+    color: #8a8fa3;
+    font-style: italic;
+  }
+
+  ul.bullet-list {
+    margin: 0 0 12px 0;
+    padding-left: 20px;
+  }
+
+  ul.bullet-list li {
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+
+  /* ---------- Investment Summary callout ---------- */
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  .thesis-box .thesis-label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-dark);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  /* ---------- Valuation table ---------- */
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  table.data-table th {
+    background: var(--navy);
+    color: #fff;
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  table.data-table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  table.data-table tr:nth-child(even) td {
+    background: var(--gray-bg);
+  }
+
+  /* ---------- Risk list ---------- */
+  .risk-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+  }
+
+  .risk-tag {
+    flex: 0 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    background: var(--red);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .risk-tag.op { background: #b8860b; }
+  .risk-tag.fin { background: var(--red); }
+  .risk-tag.reg { background: #6a3d9a; }
+  .risk-tag.legal { background: #444; }
+
+  /* ---------- ESG grid ---------- */
+  .esg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .esg-card {
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: 4px;
+    padding: 12px 14px;
+  }
+
+  .esg-card.environmental { border-top-color: #2e7d32; }
+  .esg-card.social { border-top-color: #1565c0; }
+  .esg-card.governance { border-top-color: #6a1b9a; }
+
+  .esg-card h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px;
+    color: var(--navy);
+  }
+
+  .esg-card ul {
+    margin: 0;
+    padding-left: 16px;
+    font-size: 13px;
+  }
+
+  .esg-card li { margin-bottom: 4px; }
+
+  /* ---------- Peer comparison ---------- */
+  .peer-note {
+    font-size: 12.5px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: -6px;
+    margin-bottom: 12px;
+  }
+
+  /* ---------- Footer / disclosures ---------- */
+  footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  footer .analyst-line {
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  @media (max-width: 700px) {
+    .page { padding: 24px 18px; }
+    .reco-banner { flex-direction: column; }
+    .reco-stats { grid-template-columns: repeat(2, 1fr); }
+    .esg-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research &middot; Equity Research</div>
+      <h1 class="company-title">Crown Castle Inc.</h1>
+      <div class="ticker-line">CCI &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Real Estate / REIT &mdash; Specialty (Towers)</div>
+    </div>
+    <div class="report-date">
+      September 19, 2026<br>
+      Analyst: Equity Research Desk
+    </div>
+  </div>
+
+  <!-- ============ RECOMMENDATION BANNER ============ -->
+  <div class="reco-banner">
+    <div class="reco-main">
+      <span class="label">Recommendation</span>
+      <span class="value" style="color:#1e7e34;">BUY</span>
+    </div>
+    <div class="reco-stats">
+      <div class="reco-stat">
+        <span class="label">Current Price</span>
+        <span class="value">$73.06</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Target Price</span>
+        <span class="value">$94.82</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Market Cap</span>
+        <span class="value">$31.08B</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Implied Upside/Downside</span>
+        <span class="value">+29.8%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BASIC INFORMATION ============ -->
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">CCI</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Real Estate</td></tr>
+      <tr><td class="k">Industry</td><td class="v">REIT &mdash; Specialty (Towers)</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$69.72 &ndash; $100.50</td></tr>
+      <tr><td class="k">Average Daily Volume (Liquidity)</td><td class="v">~7,111,355 shares</td></tr>
+      <tr><td class="k">Float</td><td class="v"><span class="placeholder">{{FLOAT — not independently sourced; effectively equal to shares outstanding less insider holdings}}</span></td></tr>
+      <tr><td class="k">Shares Outstanding</td><td class="v">~425.46 million</td></tr>
+      <tr><td class="k">Major Shareholders</td><td class="v"><span class="placeholder">{{MAJOR_SHAREHOLDERS — Vanguard and BlackRock are known large institutional holders; exact stakes not independently verified in this pass}}</span></td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT SUMMARY ============ -->
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Crown Castle operates approximately 40,000 cell towers across the United States and has recently completed divestitures of its fiber and small cell businesses, repositioning itself as a pure-play tower operator. This strategic repositioning explains the highly unusual multi-year net income pattern: FY2024 showed a large net loss (-$3,903M, EPS -$8.99), and the TTM data query for this report reflects a further large Q3 2025 net loss (-$4,618M) baked into an otherwise-inflated aggregate figure &mdash; both losses are most plausibly tied to real, disclosed impairment and loss-on-sale charges associated with exiting the fiber and small cell businesses, rather than core tower-leasing operating deterioration, though this should be independently verified against the 10-K. FY2025 (post-divestiture) results show revenue of $4,264M and a return to solidly positive net income of $444M. Separately, a TTM data query for this report returned revenue of $17.66B, roughly 4.1x the FY2025 annual base, which this report treats as a likely data-extraction/aggregation error and excludes from the analysis below in favor of the FY annual figures. The 22-analyst distribution (9 Strong Buy / 3 Buy / 9 Hold / 1 Sell / 0 Strong Sell) shows a tie between Strong Buy and Hold as the largest single buckets, with a 54.5% Buy-or-better share; notably, one analyst downgraded the stock to Sell on September 14, 2026, a recent negative development that should be independently monitored. This report assigns a BUY rating with reduced conviction given the tie and the recent downgrade, consistent with the average price target of $94.82, which implies a substantial +29.8% upside from the current price.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text"><strong>One analyst downgraded Crown Castle to "Sell" on September 14, 2026, a recent development running counter to the otherwise broadly positive analyst base.</strong> <span class="placeholder">{{RECENT_DEVELOPMENTS — the specific rationale for the September 14, 2026 downgrade, along with post-divestiture pure-play tower operator strategy updates and capital allocation plans (debt paydown versus buybacks using divestiture proceeds), should be sourced from the most recent 10-Q/8-K and verified independently}}</span></p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text placeholder">{{EARNINGS_FORECAST_SUMMARY — forward AFFO and revenue estimates for FY2027E, reflecting the now-simplified pure-play tower operator business model post-divestiture, should be sourced from consensus data and verified independently}}</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">At $73.06, CCI trades near the bottom of its 52-week range of $69.72&ndash;$100.50, reflecting significant market cap decline (-24.7%) likely tied to the fiber/small cell divestiture and associated charges. The average analyst price target of $94.82 implies a substantial +29.8% upside, with a wide dispersion of individual targets ($80 low to $120 high), though the tied Strong Buy/Hold distribution and recent Sell downgrade suggest genuine analyst disagreement about the post-divestiture pure-play tower story.</p>
+  </section>
+
+  <!-- ============ BUSINESS DESCRIPTION ============ -->
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Crown Castle Inc. is a real estate investment trust that owns and operates approximately 40,000 cell towers across the United States, leasing tower space to wireless carriers under long-term, contractually escalating leases. The company has recently completed divestitures of its fiber and small cell businesses, repositioning itself as a simplified pure-play tower operator, a strategic shift that should reduce capital intensity and sharpen the company's operating focus relative to its historical diversified communications infrastructure model.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Tower tenancy growth and contractual rent escalators embedded in long-term leases with wireless carrier tenants</li>
+      <li>Colocation and amendment activity as carriers add additional equipment to existing tower sites to support network densification</li>
+      <li>Post-divestiture capital allocation, including debt paydown and share buybacks using proceeds from the fiber and small cell business sales</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Ground lease and property tax expenses associated with the company's tower portfolio</li>
+      <li>Interest expense on remaining debt, a key focus area for deleveraging following the fiber and small cell divestitures</li>
+    </ul>
+  </section>
+
+  <!-- ============ INDUSTRY OVERVIEW & COMPETITIVE POSITIONING ============ -->
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text placeholder">{{INDUSTRY_OVERVIEW — the U.S. communications tower industry benefits from long-term wireless data traffic growth and carrier network densification, though carrier capital spending cycles represent an ongoing consideration; current industry conditions should be independently verified against recent industry sources}}</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — tower site acquisition, permitting, and zoning approval represent significant barriers to entry, and existing tower locations are difficult to replicate</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Low-to-Moderate — ground lease landlords have some negotiating leverage over tower site rents</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate — a concentrated wireless carrier customer base (primarily the three major U.S. carriers) has some negotiating leverage, though switching towers involves significant operational disruption</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Low-to-Moderate — alternative network architectures (e.g., small cells, DAS) could reduce macro-tower demand in dense urban areas over the long term, though towers remain the primary infrastructure for wide-area wireless coverage</td></tr>
+      <tr><td>Competitive Rivalry</td><td>Moderate — competition with American Tower and SBA Communications domestically</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Crown Castle's moat is rooted in its portfolio of well-located U.S. tower sites, long-term contracted leases with built-in rent escalators, and high tenant switching costs; the recent divestiture of its fiber and small cell businesses is intended to sharpen this moat by focusing capital and management attention on the higher-return, more predictable core tower business.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set used for relative valuation and competitive benchmarking.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Market Cap</th><th>P/E</th><th>EV/EBITDA</th></tr>
+      <tr><td>Crown Castle Inc.</td><td>CCI</td><td>$31.08B</td><td>29.82x</td><td class="placeholder">{{EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">American Tower Corporation</td><td class="placeholder">AMT</td><td class="placeholder">{{PEER_1_MCAP}}</td><td class="placeholder">{{PEER_1_PE}}</td><td class="placeholder">{{PEER_1_EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">SBA Communications Corporation</td><td class="placeholder">SBAC</td><td class="placeholder">{{PEER_2_MCAP}}</td><td class="placeholder">{{PEER_2_PE}}</td><td class="placeholder">{{PEER_2_EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">Uniti Group Inc.</td><td class="placeholder">UNIT</td><td class="placeholder">{{PEER_3_MCAP}}</td><td class="placeholder">{{PEER_3_PE}}</td><td class="placeholder">{{PEER_3_EV_EBITDA}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ VALUATION ============ -->
+  <section>
+    <h2 class="section-title">Valuation</h2>
+
+    <h3 class="sub-title">Absolute Valuation &mdash; Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{WACC — not independently modeled in this pass; typical large-cap tower REIT WACC range 6-8%}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{TERMINAL_GROWTH — typically 2-3% for a mature-stage terminal assumption}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{FORECAST_PERIOD — should explicitly model the simplified, post-divestiture pure-play tower business separately from the discontinued fiber/small cell operations}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td class="placeholder">{{DCF_INTRINSIC_VALUE — not independently modeled in this pass; note that REIT valuation is more commonly anchored to AFFO multiples than a traditional DCF}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Relative Valuation</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Crown Castle Inc.</th><th>Peer Average</th><th>Industry Average</th></tr>
+      <tr><td>P/E (Trailing)</td><td>29.82x</td><td class="placeholder">{{PEER_PE_AVG}}</td><td class="placeholder">{{INDUSTRY_PE_AVG}}</td></tr>
+      <tr><td>P/AFFO</td><td class="placeholder">{{PAFFO_RATIO — not independently sourced in this pass; the more standard REIT valuation metric than P/E}}</td><td class="placeholder">{{PEER_PAFFO_AVG}}</td><td class="placeholder">{{INDUSTRY_PAFFO_AVG}}</td></tr>
+      <tr><td>P/Sales</td><td class="placeholder">~7.3x (estimated from market cap/FY2025 revenue)</td><td class="placeholder">{{PEER_PS_AVG}}</td><td class="placeholder">{{INDUSTRY_PS_AVG}}</td></tr>
+      <tr><td>P/Book Value</td><td class="placeholder">{{PB_RATIO}}</td><td class="placeholder">{{PEER_PB_AVG}}</td><td class="placeholder">{{INDUSTRY_PB_AVG}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">With Strong Buy and Hold tied as the largest single analyst buckets (9 each of 22) and a recent Sell downgrade, this report assigns a BUY rating with reduced conviction. The substantial +29.8% implied upside from the average price target reflects confidence in the simplified, post-divestiture pure-play tower business model, balanced against genuine analyst disagreement reflected in the split rating distribution.</p>
+  </section>
+
+  <!-- ============ FINANCIAL ANALYSIS ============ -->
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+
+    <h3 class="sub-title">Historical &amp; Forecast Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>FY2023</th><th>FY2024</th><th>FY2025</th><th>FY2027E</th></tr>
+      <tr><td>Revenue</td><td class="placeholder">{{REV_Y0 — not independently sourced in this pass}}</td><td>$4,460M</td><td>$4,264M</td><td class="placeholder">{{REV_Y3}}</td></tr>
+      <tr><td>EBITDA</td><td class="placeholder">{{EBITDA_Y0}}</td><td class="placeholder">{{EBITDA_Y1}}</td><td class="placeholder">{{EBITDA_Y2}}</td><td class="placeholder">{{EBITDA_Y3}}</td></tr>
+      <tr><td>Net Income</td><td class="placeholder">{{NI_Y0 — not independently sourced in this pass}}</td><td>-$3,903M</td><td>$444M</td><td class="placeholder">{{NI_Y3}}</td></tr>
+      <tr><td>EPS (Diluted)</td><td class="placeholder">{{EPS_Y0}}</td><td>-$8.99</td><td>$1.01</td><td class="placeholder">{{EPS_Y3}}</td></tr>
+      <tr><td>Free Cash Flow</td><td class="placeholder">{{FCF_Y0}}</td><td class="placeholder">{{FCF_Y1}}</td><td class="placeholder">{{FCF_Y2}}</td><td class="placeholder">{{FCF_Y3}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text"><strong>A TTM data query for this report returned revenue of $17.66B &mdash; roughly 4.1x the corresponding FY2025 annual figure ($4.26B) &mdash; which this report treats as a likely data-extraction/aggregation error and excludes from the summary table above.</strong> The same TTM query also reflects a large negative net income figure (-$1.935B), driven substantially by a Q3 2025 quarterly net loss of -$4.618B; unlike the revenue aggregation issue, this loss (together with the FY2024 full-year net loss of -$3.903B) is most plausibly tied to real, disclosed impairment and loss-on-sale charges associated with Crown Castle's fiber and small cell business divestitures, rather than a data artifact — but this should be independently verified against the 10-K/10-Q, as the exact timing and magnitude of divestiture-related charges materially affects the interpretation of "normalized" post-divestiture earnings power. FY2025's post-divestiture net income of $444M (10.41% margin) is a reasonable base for forward modeling, pending confirmation that no further divestiture-related charges remain outstanding.</p>
+
+    <h3 class="sub-title">Industry-Specific Ratios</h3>
+    <table class="data-table">
+      <tr><th>Ratio</th><th>Value</th></tr>
+      <tr><td>Tenant Billings / Tower (Tenancy Ratio)</td><td class="placeholder">{{INDUSTRY_RATIO_1_VALUE — a key metric for tower REIT operating leverage; not independently sourced in this pass}}</td></tr>
+      <tr><td>Post-Divestiture Net Leverage Ratio</td><td class="placeholder">{{INDUSTRY_RATIO_2_VALUE — a key metric for assessing balance sheet improvement following the fiber/small cell divestiture proceeds; not independently sourced in this pass}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT RISKS ============ -->
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+
+    <div class="risk-item">
+      <span class="risk-tag op">Operational</span>
+      <span>Execution risk in fully transitioning to a simplified pure-play tower operator following the fiber and small cell divestitures, including any residual transition costs or contractual obligations.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag fin">Financial</span>
+      <span>The large historical net losses tied to the divestiture process should be independently reconciled to confirm no further charges remain outstanding; readers should also verify current leverage levels and the use of divestiture proceeds (debt paydown versus buybacks).</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag reg">Regulatory</span>
+      <span>Zoning, permitting, and telecommunications infrastructure regulation affecting the tower portfolio represents an ongoing consideration requiring independent monitoring.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag legal">Legal</span>
+      <span>Standard real estate and telecommunications infrastructure litigation typical of a large tower operator, alongside potential residual legal exposure from the recently completed fiber and small cell divestitures; outcomes should be independently monitored via the company's most recent 10-K legal proceedings disclosure.</span>
+    </div>
+
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text"><strong>This report flags the implausible TTM revenue figure returned in this research pass (approximately 4.1x the FY2025 annual base), the large historical net losses tied to the fiber/small cell divestiture process, and the recent September 14, 2026 Sell downgrade, as material items requiring independent verification before this report is relied upon for an investment decision.</strong> <span class="placeholder">{{AUDITOR_FLAGS — no material weaknesses or qualified audit opinions are otherwise known to this analyst as of the report date; this should be independently confirmed against Crown Castle's most recent 10-K auditor's report}}</span></p>
+  </section>
+
+  <!-- ============ ESG ============ -->
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental">
+        <h4>Environmental</h4>
+        <ul>
+          <li class="placeholder">{{ESG_ENV_1 — renewable energy usage at tower sites should be sourced from Crown Castle's sustainability report}}</li>
+          <li class="placeholder">{{ESG_ENV_2 — specific corporate carbon-reduction targets not independently verified in this pass}}</li>
+          <li class="placeholder">{{ESG_ENV_3 — environmental impact of tower site construction and maintenance not independently verified in this pass}}</li>
+        </ul>
+      </div>
+      <div class="esg-card social">
+        <h4>Social</h4>
+        <ul>
+          <li class="placeholder">{{ESG_SOC_1 — community relations regarding tower siting should be sourced from Crown Castle's disclosures}}</li>
+          <li class="placeholder">{{ESG_SOC_2 — worker safety metrics for tower construction and maintenance personnel not independently verified in this pass}}</li>
+          <li class="placeholder">{{ESG_SOC_3 — workforce diversity metrics not independently verified in this pass}}</li>
+        </ul>
+      </div>
+      <div class="esg-card governance">
+        <h4>Governance</h4>
+        <ul>
+          <li class="placeholder">{{ESG_GOV_1 — board composition not independently verified in this pass; should be sourced from the most recent proxy statement}}</li>
+          <li><strong>Transparency around the completion and financial impact of the fiber and small cell divestitures, and the use of proceeds, is a governance and disclosure consideration warranting independent review.</strong></li>
+          <li class="placeholder">{{ESG_GOV_2 — executive compensation structure should be sourced from the most recent proxy statement}}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER / DISCLOSURES ============ -->
+  <footer>
+    <div class="analyst-line">Prepared by Equity Research Desk, Equity Analyst — Independent Equity Research</div>
+    This report is compiled from publicly available data sources believed to be reliable but not independently audited. Figures marked as placeholders require independent verification before use in an investment decision. This report does not constitute investment advice, an offer, or a solicitation to buy or sell any security. Ratings: BUY = expected to outperform the market over the next 12 months; HOLD = expected to perform in line with the market; SELL = expected to underperform the market. The analyst(s) preparing this report may or may not hold a position in the subject security. Past performance is not indicative of future results.
+  </footer>
+
+</div>
+</body>
+</html>

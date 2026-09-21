@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — UPS</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #e9edf2;
+    color: var(--text);
+    font-family: "Georgia", "Times New Roman", serif;
+    line-height: 1.55;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.12);
+    padding: 40px 50px 60px;
+  }
+
+  /* ---------- Header ---------- */
+  .report-header {
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .firm-name {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .company-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+  }
+
+  /* ---------- Recommendation banner ---------- */
+  .reco-banner {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .reco-main {
+    flex: 0 0 170px;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .reco-main .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+
+  .reco-main .value {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+
+  .reco-stats {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--gray-bg);
+  }
+
+  .reco-stat {
+    padding: 10px 14px;
+    border-left: 1px solid var(--border);
+  }
+
+  .reco-stat .label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    display: block;
+  }
+
+  .reco-stat .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* ---------- Basic info table ---------- */
+  .basic-info {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+
+  .basic-info td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .basic-info td.k {
+    color: var(--muted);
+    width: 38%;
+  }
+
+  .basic-info td.v {
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  /* ---------- Section styling ---------- */
+  section {
+    margin-bottom: 32px;
+  }
+
+  h2.section-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: var(--navy);
+    padding: 8px 14px;
+    margin: 0 0 14px 0;
+    border-left: 5px solid var(--accent);
+  }
+
+  h3.sub-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    margin: 18px 0 10px;
+  }
+
+  p.body-text {
+    font-size: 15px;
+    margin: 0 0 12px;
+  }
+
+  .placeholder {
+    color: #8a8fa3;
+    font-style: italic;
+  }
+
+  ul.bullet-list {
+    margin: 0 0 12px 0;
+    padding-left: 20px;
+  }
+
+  ul.bullet-list li {
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+
+  /* ---------- Investment Summary callout ---------- */
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  .thesis-box .thesis-label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-dark);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  /* ---------- Valuation table ---------- */
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  table.data-table th {
+    background: var(--navy);
+    color: #fff;
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  table.data-table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  table.data-table tr:nth-child(even) td {
+    background: var(--gray-bg);
+  }
+
+  /* ---------- Risk list ---------- */
+  .risk-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+  }
+
+  .risk-tag {
+    flex: 0 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    background: var(--red);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .risk-tag.op { background: #b8860b; }
+  .risk-tag.fin { background: var(--red); }
+  .risk-tag.reg { background: #6a3d9a; }
+  .risk-tag.legal { background: #444; }
+
+  /* ---------- ESG grid ---------- */
+  .esg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .esg-card {
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: 4px;
+    padding: 12px 14px;
+  }
+
+  .esg-card.environmental { border-top-color: #2e7d32; }
+  .esg-card.social { border-top-color: #1565c0; }
+  .esg-card.governance { border-top-color: #6a1b9a; }
+
+  .esg-card h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px;
+    color: var(--navy);
+  }
+
+  .esg-card ul {
+    margin: 0;
+    padding-left: 16px;
+    font-size: 13px;
+  }
+
+  .esg-card li { margin-bottom: 4px; }
+
+  /* ---------- Peer comparison ---------- */
+  .peer-note {
+    font-size: 12.5px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: -6px;
+    margin-bottom: 12px;
+  }
+
+  /* ---------- Footer / disclosures ---------- */
+  footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  footer .analyst-line {
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  @media (max-width: 700px) {
+    .page { padding: 24px 18px; }
+    .reco-banner { flex-direction: column; }
+    .reco-stats { grid-template-columns: repeat(2, 1fr); }
+    .esg-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research &middot; Equity Research</div>
+      <h1 class="company-title">United Parcel Service, Inc.</h1>
+      <div class="ticker-line">UPS &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Industrials / Integrated Freight &amp; Logistics</div>
+    </div>
+    <div class="report-date">
+      September 18, 2026<br>
+      Analyst: Equity Research Desk
+    </div>
+  </div>
+
+  <!-- ============ RECOMMENDATION BANNER ============ -->
+  <div class="reco-banner">
+    <div class="reco-main">
+      <span class="label">Recommendation</span>
+      <span class="value" style="color:#1e7e34;">BUY</span>
+    </div>
+    <div class="reco-stats">
+      <div class="reco-stat">
+        <span class="label">Current Price</span>
+        <span class="value">$99.09</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Target Price</span>
+        <span class="value">$116.08</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Market Cap</span>
+        <span class="value">$84.30B</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Implied Upside/Downside</span>
+        <span class="value">+17.1%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BASIC INFORMATION ============ -->
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">UPS</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Industrials</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Integrated Freight &amp; Logistics</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$82.00 &ndash; $122.41</td></tr>
+      <tr><td class="k">Average Daily Volume (Liquidity)</td><td class="v">~2.00 million shares</td></tr>
+      <tr><td class="k">Float</td><td class="v"><span class="placeholder">{{FLOAT — not independently sourced; effectively equal to shares outstanding less insider holdings}}</span></td></tr>
+      <tr><td class="k">Shares Outstanding</td><td class="v">~850.78 million</td></tr>
+      <tr><td class="k">Major Shareholders</td><td class="v"><span class="placeholder">{{MAJOR_SHAREHOLDERS — Vanguard and BlackRock are known large institutional holders; the founding Casey family and related trusts are known holders of Class B shares; exact stakes not independently verified in this pass}}</span></td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT SUMMARY ============ -->
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      UPS is undergoing a strategic pivot to reduce lower-margin, high-volume Amazon delivery exposure while investing $2 billion (2024–2028) to expand higher-margin healthcare logistics and B2B supply-chain businesses, alongside executive restructuring and operating-model changes aimed at improving profitability. FY2025 revenue of $88.7B declined 2.65% versus FY2024, and FY2025 free cash flow fell 23.3% to $4.8B, reflecting the ongoing volume and mix transition. <strong>The 29-analyst distribution (14 Strong Buy / 0 Buy / 12 Hold / 2 Sell / 1 Strong Sell) is notable for its bimodal shape — no analysts in the plain "Buy" category, with ratings clustered at Strong Buy (48.3%) and Hold (41.4%) — reflecting a genuine split of opinion on whether the strategic repricing/mix-shift strategy will succeed. Strong Buy is the single largest bucket, narrowly ahead of Hold, and the headline consensus reads "Buy," supporting a BUY rating, though the unusually high dividend yield (6.62%) and declining free cash flow both warrant independent scrutiny of dividend sustainability.</strong>
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text placeholder">{{RECENT_DEVELOPMENTS — most recent quarterly results, progress on reducing Amazon volume exposure, the $2 billion healthcare/supply-chain investment initiative, and executive restructuring updates should be sourced from the most recent 10-Q/8-K and verified independently}}</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text placeholder">{{EARNINGS_FORECAST_SUMMARY — forward EPS and revenue estimates for FY2027E, reflecting the ongoing volume/mix transition, should be sourced from consensus data and verified independently; TTM diluted EPS of $5.38 provides a base}}</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">At $99.09, UPS trades at approximately 18.6x trailing earnings, a moderate multiple, with an exceptionally high 6.62% dividend yield that reflects both the depressed share price relative to its 52-week high of $122.41 and market skepticism about near-term earnings and cash flow durability during the strategic transition period.</p>
+  </section>
+
+  <!-- ============ BUSINESS DESCRIPTION ============ -->
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">United Parcel Service, Inc. provides package delivery and supply chain management services worldwide, operating through U.S. Domestic Package, International Package, and Supply Chain Solutions segments. The company is executing a strategic shift to reduce its historically large but lower-margin residential/e-commerce delivery volume from its largest customer (Amazon) while investing in higher-margin healthcare logistics (including specialized cold-chain and medical device delivery) and business-to-business supply chain solutions.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>U.S. Domestic Package volume and yield (average revenue per package), increasingly weighted toward higher-margin business-to-business and healthcare shipments as lower-margin Amazon volume is intentionally reduced</li>
+      <li>Healthcare logistics expansion, a key strategic growth investment area supported by the $2 billion 2024–2028 capital commitment</li>
+      <li>International Package segment growth, tied to global trade and e-commerce cross-border shipment volumes</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Labor costs, including unionized workforce wage agreements (Teamsters), a significant and closely watched cost line</li>
+      <li>Network restructuring and facility investment costs associated with the healthcare/supply-chain expansion and executive/operating-model changes</li>
+    </ul>
+  </section>
+
+  <!-- ============ INDUSTRY OVERVIEW & COMPETITIVE POSITIONING ============ -->
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text placeholder">{{INDUSTRY_OVERVIEW — the U.S. parcel delivery industry has seen intensifying competition and margin pressure as Amazon has increasingly built out its own in-house delivery network, reducing reliance on third-party carriers like UPS and FedEx; the healthcare logistics niche is viewed as a higher-margin, less commoditized growth category; should be independently verified with current industry data}}</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — the extensive capital investment required to build a competing national/international parcel delivery network creates very high barriers to entry</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Low-to-Moderate — labor (unionized workforce) and fuel are the primary cost inputs, both subject to negotiation and market pricing respectively</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>High — large e-commerce customers, particularly Amazon, have historically wielded significant negotiating leverage and have increasingly built in-house delivery alternatives, directly pressuring UPS's volume and pricing</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate-to-High — Amazon's in-house logistics network and regional/last-mile delivery startups represent a growing substitution threat, particularly for e-commerce parcel volume</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — intense competition with FedEx, the U.S. Postal Service, Amazon's own logistics network, and regional carriers</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">UPS's moat rests on its extensive, decades-built integrated ground and air delivery network, established enterprise and healthcare logistics customer relationships, and brand trust in time-sensitive and specialized delivery categories. This moat has narrowed somewhat as Amazon has internalized a growing share of its own delivery volume, motivating UPS's strategic pivot toward higher-margin, less commoditized business lines.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set used for relative valuation and competitive benchmarking.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Market Cap</th><th>P/E</th><th>EV/EBITDA</th></tr>
+      <tr><td>United Parcel Service, Inc.</td><td>UPS</td><td>$84.30B</td><td>18.6x</td><td class="placeholder">{{EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">FedEx Corporation</td><td class="placeholder">FDX</td><td class="placeholder">{{PEER_1_MCAP}}</td><td class="placeholder">{{PEER_1_PE}}</td><td class="placeholder">{{PEER_1_EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">Union Pacific Corporation</td><td class="placeholder">UNP</td><td class="placeholder">{{PEER_2_MCAP}}</td><td class="placeholder">{{PEER_2_PE}}</td><td class="placeholder">{{PEER_2_EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">C.H. Robinson Worldwide</td><td class="placeholder">CHRW</td><td class="placeholder">{{PEER_3_MCAP}}</td><td class="placeholder">{{PEER_3_PE}}</td><td class="placeholder">{{PEER_3_EV_EBITDA}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ VALUATION ============ -->
+  <section>
+    <h2 class="section-title">Valuation</h2>
+
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{WACC — not independently modeled in this pass; typical large-cap logistics WACC range 7-9%}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{TERMINAL_GROWTH — typically 2-3% for a mature-stage terminal assumption}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{FORECAST_PERIOD — typically 5-10 years}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td class="placeholder">{{DCF_INTRINSIC_VALUE — not independently modeled; requires detailed FCF build-out reflecting the ongoing Amazon-volume-reduction/healthcare-expansion transition}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Relative Valuation</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>United Parcel Service, Inc.</th><th>Peer Average</th><th>Industry Average</th></tr>
+      <tr><td>P/E</td><td>18.6x</td><td class="placeholder">{{PEER_PE_AVG}}</td><td class="placeholder">{{INDUSTRY_PE_AVG}}</td></tr>
+      <tr><td>P/Sales</td><td class="placeholder">~0.9x (estimated from market cap/TTM revenue)</td><td class="placeholder">{{PEER_PS_AVG}}</td><td class="placeholder">{{INDUSTRY_PS_AVG}}</td></tr>
+      <tr><td>P/Cash Flow</td><td class="placeholder">~15.4x (estimated from market cap/TTM FCF)</td><td class="placeholder">{{PEER_PCF_AVG}}</td><td class="placeholder">{{INDUSTRY_PCF_AVG}}</td></tr>
+      <tr><td>P/Book Value</td><td class="placeholder">{{PB_RATIO}}</td><td class="placeholder">{{PEER_PB_AVG}}</td><td class="placeholder">{{INDUSTRY_PB_AVG}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">Given the bimodal analyst distribution — Strong Buy (48.3%) narrowly ahead of Hold (41.4%), with the headline consensus reading "Buy" — this report assigns a BUY rating, but with meaningfully less conviction than other BUY-rated names in this report series. The high dividend yield and declining free cash flow trend should be independently monitored for dividend sustainability risk before this name is treated as a straightforward income holding.</p>
+  </section>
+
+  <!-- ============ FINANCIAL ANALYSIS ============ -->
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+
+    <h3 class="sub-title">Historical &amp; Forecast Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>FY2024</th><th>FY2025</th><th>TTM (Jun'26)</th><th>FY2027E</th></tr>
+      <tr><td>Revenue</td><td>$91,070M</td><td>$88,661M</td><td>$89,930M</td><td class="placeholder">{{REV_Y3}}</td></tr>
+      <tr><td>EBITDA</td><td class="placeholder">{{EBITDA_Y0}}</td><td class="placeholder">{{EBITDA_Y1}}</td><td class="placeholder">{{EBITDA_Y2}}</td><td class="placeholder">{{EBITDA_Y3}}</td></tr>
+      <tr><td>Net Income</td><td>$5,782M</td><td>$5,572M</td><td>$4,570M</td><td class="placeholder">{{NI_Y3}}</td></tr>
+      <tr><td>EPS (Diluted)</td><td>$6.75</td><td>$6.56</td><td>$5.38</td><td class="placeholder">{{EPS_Y3}}</td></tr>
+      <tr><td>Free Cash Flow</td><td>$6,213M</td><td>$4,765M</td><td>$5,457M</td><td class="placeholder">{{FCF_Y3}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text"><strong>TTM net income of $4.57B is down 18.0% versus FY2025's $5.57B, a notably sharper decline than the roughly flat revenue trend (TTM $89.9B vs. FY2025 $88.7B) would suggest — this divergence is flagged for independent verification, as it may reflect margin compression from the intentional Amazon-volume mix shift, one-time restructuring charges tied to the announced executive/operating-model changes, or a combination of both.</strong> This should be checked against the operating expense and non-recurring items detail in the most recent 10-Q/10-K before being extrapolated into a forward earnings view.</p>
+
+    <h3 class="sub-title">Industry-Specific Ratios</h3>
+    <table class="data-table">
+      <tr><th>Ratio</th><th>Value</th></tr>
+      <tr><td>Average Daily Package Volume</td><td class="placeholder">{{INDUSTRY_RATIO_1_VALUE — not independently sourced in this pass; should be sourced from the most recent 10-Q operating statistics, a key indicator of the Amazon-volume-reduction strategy's progress}}</td></tr>
+      <tr><td>Operating Margin</td><td class="placeholder">{{INDUSTRY_RATIO_2_VALUE — historically in the high-single-digit-to-low-double-digit percentage range; requires independent verification given the current mix transition}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT RISKS ============ -->
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+
+    <div class="risk-item">
+      <span class="risk-tag op">Operational</span>
+      <span>Continued volume loss from Amazon's in-house logistics buildout could outpace the company's ability to replace that volume with higher-margin healthcare and B2B business, creating a revenue/earnings gap during the transition period.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag fin">Financial</span>
+      <span>Declining free cash flow alongside an unusually high 6.62% dividend yield raises questions about dividend sustainability that should be independently assessed against the payout ratio and balance sheet capacity.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag reg">Regulatory</span>
+      <span>Labor relations and collective bargaining agreement risk with the Teamsters union, which could affect labor costs and operational continuity in future contract negotiation cycles.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag legal">Legal</span>
+      <span>Exposure to ongoing commercial, employment, and regulatory litigation typical of a large logistics company; outcomes should be independently monitored via the company's most recent 10-K legal proceedings disclosure.</span>
+    </div>
+
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{AUDITOR_FLAGS — no material weaknesses or qualified audit opinions are known to this analyst as of the report date; this should be independently confirmed against UPS's most recent 10-K auditor's report}}</p>
+  </section>
+
+  <!-- ============ ESG ============ -->
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental">
+        <h4>Environmental</h4>
+        <ul>
+          <li>UPS has publicly committed to carbon-neutral operations and continued investment in electric and alternative-fuel delivery vehicle fleets</li>
+          <li class="placeholder">{{ESG_ENV_2 — specific fleet electrification targets should be sourced from UPS's corporate sustainability report}}</li>
+          <li class="placeholder">{{ESG_ENV_3 — waste management specifics not independently verified in this pass}}</li>
+        </ul>
+      </div>
+      <div class="esg-card social">
+        <h4>Social</h4>
+        <ul>
+          <li>UPS's large unionized workforce (Teamsters) and history of collective bargaining agreements are a central social/labor relations consideration for the company</li>
+          <li class="placeholder">{{ESG_SOC_2 — workforce diversity metrics not independently verified in this pass}}</li>
+          <li class="placeholder">{{ESG_SOC_3 — driver safety and working conditions initiatives should be sourced from UPS's sustainability disclosures}}</li>
+        </ul>
+      </div>
+      <div class="esg-card governance">
+        <h4>Governance</h4>
+        <ul>
+          <li class="placeholder">{{ESG_GOV_1 — board composition not independently verified in this pass; should be sourced from the most recent proxy statement}}</li>
+          <li class="placeholder">{{ESG_GOV_2 — executive compensation structure should be sourced from the most recent proxy statement}}</li>
+          <li>Recently announced executive restructuring is a notable current governance focus area, alongside the multi-year strategic business-mix transition</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER / DISCLOSURES ============ -->
+  <footer>
+    <div class="analyst-line">Prepared by Equity Research Desk, Equity Analyst — Independent Equity Research</div>
+    This report is compiled from publicly available data sources believed to be reliable but not independently audited. Figures marked as placeholders require independent verification before use in an investment decision. This report does not constitute investment advice, an offer, or a solicitation to buy or sell any security. Ratings: BUY = expected to outperform the market over the next 12 months; HOLD = expected to perform in line with the market; SELL = expected to underperform the market. The analyst(s) preparing this report may or may not hold a position in the subject security. Past performance is not indicative of future results.
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — NEM</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #e9edf2;
+    color: var(--text);
+    font-family: "Georgia", "Times New Roman", serif;
+    line-height: 1.55;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.12);
+    padding: 40px 50px 60px;
+  }
+
+  /* ---------- Header ---------- */
+  .report-header {
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .firm-name {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .company-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+  }
+
+  /* ---------- Recommendation banner ---------- */
+  .reco-banner {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .reco-main {
+    flex: 0 0 170px;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .reco-main .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+
+  .reco-main .value {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+
+  .reco-stats {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--gray-bg);
+  }
+
+  .reco-stat {
+    padding: 10px 14px;
+    border-left: 1px solid var(--border);
+  }
+
+  .reco-stat .label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    display: block;
+  }
+
+  .reco-stat .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* ---------- Basic info table ---------- */
+  .basic-info {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+
+  .basic-info td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .basic-info td.k {
+    color: var(--muted);
+    width: 38%;
+  }
+
+  .basic-info td.v {
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  /* ---------- Section styling ---------- */
+  section {
+    margin-bottom: 32px;
+  }
+
+  h2.section-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: var(--navy);
+    padding: 8px 14px;
+    margin: 0 0 14px 0;
+    border-left: 5px solid var(--accent);
+  }
+
+  h3.sub-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    margin: 18px 0 10px;
+  }
+
+  p.body-text {
+    font-size: 15px;
+    margin: 0 0 12px;
+  }
+
+  .placeholder {
+    color: #8a8fa3;
+    font-style: italic;
+  }
+
+  ul.bullet-list {
+    margin: 0 0 12px 0;
+    padding-left: 20px;
+  }
+
+  ul.bullet-list li {
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+
+  /* ---------- Investment Summary callout ---------- */
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  .thesis-box .thesis-label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-dark);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  /* ---------- Valuation table ---------- */
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  table.data-table th {
+    background: var(--navy);
+    color: #fff;
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  table.data-table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  table.data-table tr:nth-child(even) td {
+    background: var(--gray-bg);
+  }
+
+  /* ---------- Risk list ---------- */
+  .risk-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+  }
+
+  .risk-tag {
+    flex: 0 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    background: var(--red);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .risk-tag.op { background: #b8860b; }
+  .risk-tag.fin { background: var(--red); }
+  .risk-tag.reg { background: #6a3d9a; }
+  .risk-tag.legal { background: #444; }
+
+  /* ---------- ESG grid ---------- */
+  .esg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .esg-card {
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: 4px;
+    padding: 12px 14px;
+  }
+
+  .esg-card.environmental { border-top-color: #2e7d32; }
+  .esg-card.social { border-top-color: #1565c0; }
+  .esg-card.governance { border-top-color: #6a1b9a; }
+
+  .esg-card h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px;
+    color: var(--navy);
+  }
+
+  .esg-card ul {
+    margin: 0;
+    padding-left: 16px;
+    font-size: 13px;
+  }
+
+  .esg-card li { margin-bottom: 4px; }
+
+  /* ---------- Peer comparison ---------- */
+  .peer-note {
+    font-size: 12.5px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: -6px;
+    margin-bottom: 12px;
+  }
+
+  /* ---------- Footer / disclosures ---------- */
+  footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  footer .analyst-line {
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  @media (max-width: 700px) {
+    .page { padding: 24px 18px; }
+    .reco-banner { flex-direction: column; }
+    .reco-stats { grid-template-columns: repeat(2, 1fr); }
+    .esg-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research &middot; Equity Research</div>
+      <h1 class="company-title">Newmont Corporation</h1>
+      <div class="ticker-line">NEM &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Materials / Gold</div>
+    </div>
+    <div class="report-date">
+      September 18, 2026<br>
+      Analyst: Equity Research Desk
+    </div>
+  </div>
+
+  <!-- ============ RECOMMENDATION BANNER ============ -->
+  <div class="reco-banner">
+    <div class="reco-main">
+      <span class="label">Recommendation</span>
+      <span class="value" style="color:#1e7e34;">BUY</span>
+    </div>
+    <div class="reco-stats">
+      <div class="reco-stat">
+        <span class="label">Current Price</span>
+        <span class="value">$122.79</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Target Price</span>
+        <span class="value">$134.83</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Market Cap</span>
+        <span class="value">$128.53B</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Implied Upside/Downside</span>
+        <span class="value">+9.6%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BASIC INFORMATION ============ -->
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">NEM</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Materials</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Gold</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$76.05 &ndash; $135.29</td></tr>
+      <tr><td class="k">Average Daily Volume (Liquidity)</td><td class="v">~4,276,492 shares</td></tr>
+      <tr><td class="k">Float</td><td class="v"><span class="placeholder">{{FLOAT — not independently sourced; effectively equal to shares outstanding less insider holdings}}</span></td></tr>
+      <tr><td class="k">Shares Outstanding</td><td class="v">~1.05 billion</td></tr>
+      <tr><td class="k">Major Shareholders</td><td class="v"><span class="placeholder">{{MAJOR_SHAREHOLDERS — Vanguard and BlackRock are known large institutional holders; exact stakes not independently verified in this pass}}</span></td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT SUMMARY ============ -->
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Newmont Corporation is the world's largest gold mining company by production, with a globally diversified portfolio of mines across North America, South America, Australia, and Africa, and meaningful copper by-product exposure. The stock's market capitalization has risen approximately 48% over the trailing period, reflecting a strong gold price rally amid macroeconomic uncertainty and safe-haven demand. FY2025 revenue grew a strong 21.3% to $22.7B and net income more than doubled to $7.09B, with free cash flow surging 146.5% to $7.30B, reflecting substantial operating leverage to higher gold prices combined with continued cost discipline. The company reportedly posted record second-quarter free cash flow in Q2 2026. A reliable separately-reported TTM figure could not be obtained in this research pass; readers should independently verify current TTM figures directly from Newmont's most recent 10-Q. The 23-analyst distribution (15 Strong Buy / 5 Buy / 2 Hold / 0 Sell / 1 Strong Sell) shows Strong Buy alone constituting a clear 65.2% majority, supporting a BUY rating consistent with the average price target of $134.83, which implies +9.6% upside from the current price.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text placeholder">{{RECENT_DEVELOPMENTS — most recent quarterly results (the company reportedly posted record Q2 2026 free cash flow), gold price trends, production guidance across major mine sites, and any portfolio optimization/divestiture activity should be sourced from the most recent 10-Q/8-K and verified independently}}</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text placeholder">{{EARNINGS_FORECAST_SUMMARY — forward EPS and revenue estimates for FY2027E, highly sensitive to the assumed forward gold price curve, should be sourced from consensus data and verified independently; FY2025 diluted EPS of $6.39 provides a base}}</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">At $122.79, NEM trades at a modest 15.74x trailing P/E, inexpensive relative to the broader market despite the company's exceptional recent earnings and free cash flow growth, reflecting the market's typical discount for commodity-price-sensitive miners. The stock trades near the top of its 52-week range of $76.05–$135.29 following the gold price rally, and the average analyst target implies a further +9.6% upside.</p>
+  </section>
+
+  <!-- ============ BUSINESS DESCRIPTION ============ -->
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Newmont Corporation is the world's largest gold mining company by production volume, operating a globally diversified portfolio of mines across North America, South America, Australia, and Africa following its 2023 acquisition of Newcrest Mining. The company also produces meaningful quantities of copper, silver, zinc, and lead as by-products, and has pursued a portfolio-optimization strategy involving the divestiture of certain non-core assets to focus capital on its highest-return "Tier 1" mining operations.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Gold price, which has historically served as a safe-haven asset during periods of macroeconomic and geopolitical uncertainty, driving the recent strong price rally reflected in Newmont's results</li>
+      <li>Gold production volumes across the company's globally diversified mine portfolio</li>
+      <li>Copper and other by-product metal sales, an increasingly meaningful secondary revenue stream following the Newcrest acquisition</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Mining and processing costs, including energy, labor, and consumable inputs, which vary by mine site and ore grade</li>
+      <li>Capital expenditure on mine-life extension projects and continued portfolio optimization/integration costs following the Newcrest acquisition</li>
+    </ul>
+  </section>
+
+  <!-- ============ INDUSTRY OVERVIEW & COMPETITIVE POSITIONING ============ -->
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text placeholder">{{INDUSTRY_OVERVIEW — the global gold mining industry has benefited from a strong gold price environment driven by central bank buying, safe-haven demand amid macroeconomic and geopolitical uncertainty, and constrained new mine supply; should be independently verified with current industry and commodity-price data}}</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Very Low — new large-scale gold mine development requires enormous capital investment, decade-plus permitting timelines, and access to increasingly scarce high-grade ore bodies</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — dependence on energy, labor, and mining equipment suppliers, with cost inflation a periodic industry-wide pressure</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Low — gold is a globally traded commodity priced on exchanges, giving individual producers limited pricing power but also limited exposure to any single buyer's negotiating leverage</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Low — gold's role as a store of value and safe-haven asset has no close practical substitute among physical commodities</td></tr>
+      <tr><td>Competitive Rivalry</td><td>Moderate — competition with Barrick Mining, Agnico Eagle Mines, and other major global gold producers, with Newmont differentiated by its scale and Tier 1 asset portfolio following the Newcrest acquisition</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Newmont's moat is rooted in its position as the world's largest gold producer by scale, a globally diversified portfolio of long-life Tier 1 mining assets that reduces single-mine operational risk, and significant operating leverage to gold price increases given the company's substantial fixed-cost production base.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set used for relative valuation and competitive benchmarking.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Market Cap</th><th>P/E</th><th>EV/EBITDA</th></tr>
+      <tr><td>Newmont Corporation</td><td>NEM</td><td>$128.53B</td><td>15.74x</td><td class="placeholder">{{EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">Barrick Mining Corporation</td><td class="placeholder">B</td><td class="placeholder">{{PEER_1_MCAP}}</td><td class="placeholder">{{PEER_1_PE}}</td><td class="placeholder">{{PEER_1_EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">Agnico Eagle Mines Limited</td><td class="placeholder">AEM</td><td class="placeholder">{{PEER_2_MCAP}}</td><td class="placeholder">{{PEER_2_PE}}</td><td class="placeholder">{{PEER_2_EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">Freeport-McMoRan Inc.</td><td class="placeholder">FCX</td><td class="placeholder">{{PEER_3_MCAP}}</td><td class="placeholder">{{PEER_3_PE}}</td><td class="placeholder">{{PEER_3_EV_EBITDA}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ VALUATION ============ -->
+  <section>
+    <h2 class="section-title">Valuation</h2>
+
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{WACC — not independently modeled in this pass; typical large-cap gold mining WACC range 8-10%, given commodity-price cyclicality}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{TERMINAL_GROWTH — typically 2-3% for a mature-stage terminal assumption}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{FORECAST_PERIOD — should explicitly model a range of gold price scenarios given the commodity's price sensitivity}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td class="placeholder">{{DCF_INTRINSIC_VALUE — not independently modeled in this pass}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Relative Valuation</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Newmont Corporation</th><th>Peer Average</th><th>Industry Average</th></tr>
+      <tr><td>P/E</td><td>15.74x</td><td class="placeholder">{{PEER_PE_AVG}}</td><td class="placeholder">{{INDUSTRY_PE_AVG}}</td></tr>
+      <tr><td>P/Sales</td><td class="placeholder">~5.7x (estimated from market cap/FY2025 revenue)</td><td class="placeholder">{{PEER_PS_AVG}}</td><td class="placeholder">{{INDUSTRY_PS_AVG}}</td></tr>
+      <tr><td>P/Cash Flow</td><td class="placeholder">~17.6x (estimated from market cap/FY2025 FCF)</td><td class="placeholder">{{PEER_PCF_AVG}}</td><td class="placeholder">{{INDUSTRY_PCF_AVG}}</td></tr>
+      <tr><td>P/Book Value</td><td class="placeholder">{{PB_RATIO}}</td><td class="placeholder">{{PEER_PB_AVG}}</td><td class="placeholder">{{INDUSTRY_PB_AVG}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">With Strong Buy alone representing a clear 65.2% majority of covering analysts, this report assigns a BUY rating. The modest 15.74x trailing P/E, despite exceptional recent earnings and free cash flow growth, suggests the market continues to apply a typical commodity-price-sensitivity discount to gold miners; the average price target's +9.6% implied upside offers a further, if more modest, margin relative to some peers in this coverage batch.</p>
+  </section>
+
+  <!-- ============ FINANCIAL ANALYSIS ============ -->
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+
+    <h3 class="sub-title">Historical &amp; Forecast Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>FY2023</th><th>FY2024</th><th>FY2025</th><th>FY2027E</th></tr>
+      <tr><td>Revenue</td><td class="placeholder">{{REV_Y0 — not independently sourced in this pass}}</td><td>$18,682M</td><td>$22,669M</td><td class="placeholder">{{REV_Y3}}</td></tr>
+      <tr><td>EBITDA</td><td class="placeholder">{{EBITDA_Y0}}</td><td class="placeholder">{{EBITDA_Y1}}</td><td class="placeholder">{{EBITDA_Y2}}</td><td class="placeholder">{{EBITDA_Y3}}</td></tr>
+      <tr><td>Net Income</td><td class="placeholder">{{NI_Y0 — not independently sourced in this pass}}</td><td>$3,348M</td><td>$7,085M</td><td class="placeholder">{{NI_Y3}}</td></tr>
+      <tr><td>EPS (Diluted)</td><td class="placeholder">{{EPS_Y0}}</td><td>$2.92</td><td>$6.39</td><td class="placeholder">{{EPS_Y3}}</td></tr>
+      <tr><td>Free Cash Flow</td><td class="placeholder">{{FCF_Y0}}</td><td>$2,961M</td><td>$7,299M</td><td class="placeholder">{{FCF_Y3}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">A reliable separately-reported TTM figure could not be obtained in this research pass (the source displayed quarterly data without a distinct, verified TTM aggregation); readers should source current TTM figures directly from Newmont's most recent 10-Q. The FY2024-to-FY2025 more-than-doubling of net income (+111.6%) alongside a similarly outsized free cash flow increase (+146.5%) is a large but directionally plausible outcome for a gold miner with substantial fixed-cost operating leverage during a period of strong gold price appreciation; this operating leverage dynamic should nonetheless be independently verified against realized gold price and all-in sustaining cost detail in the 10-K.</p>
+
+    <h3 class="sub-title">Industry-Specific Ratios</h3>
+    <table class="data-table">
+      <tr><th>Ratio</th><th>Value</th></tr>
+      <tr><td>All-In Sustaining Cost (AISC) per Gold Ounce</td><td class="placeholder">{{INDUSTRY_RATIO_1_VALUE — the key cost-competitiveness metric for a gold miner; not independently sourced in this pass}}</td></tr>
+      <tr><td>Gold Production Volume (oz) / Realized Price</td><td class="placeholder">{{INDUSTRY_RATIO_2_VALUE — not independently sourced in this pass}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT RISKS ============ -->
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+
+    <div class="risk-item">
+      <span class="risk-tag op">Operational</span>
+      <span>Operational disruptions at major mine sites, or integration challenges from the Newcrest acquisition and related portfolio optimization/divestiture activity, could affect production volumes and costs.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag fin">Financial</span>
+      <span>Newmont's earnings and cash flow are highly leveraged to gold price movements; a reversal of the recent gold price rally could sharply compress the exceptional FY2025 earnings growth given the company's substantial fixed-cost production base.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag reg">Regulatory</span>
+      <span>Mining, environmental, and royalty/tax regulation risk across the company's globally diversified operating jurisdictions in North America, South America, Australia, and Africa.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag legal">Legal</span>
+      <span>Standard environmental remediation and commercial litigation typical of a large international mining company; outcomes should be independently monitored via the company's most recent 10-K legal proceedings disclosure.</span>
+    </div>
+
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{AUDITOR_FLAGS — no material weaknesses or qualified audit opinions are known to this analyst as of the report date; this should be independently confirmed against Newmont's most recent 10-K auditor's report}}</p>
+  </section>
+
+  <!-- ============ ESG ============ -->
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental">
+        <h4>Environmental</h4>
+        <ul>
+          <li class="placeholder">{{ESG_ENV_1 — mine site environmental remediation, tailings management, and water usage practices should be sourced from Newmont's sustainability report, particularly given historical scrutiny of large-scale mining operations}}</li>
+          <li class="placeholder">{{ESG_ENV_2 — specific corporate carbon-reduction targets not independently verified in this pass}}</li>
+          <li class="placeholder">{{ESG_ENV_3 — mine reclamation and closure planning specifics not independently verified in this pass}}</li>
+        </ul>
+      </div>
+      <div class="esg-card social">
+        <h4>Social</h4>
+        <ul>
+          <li class="placeholder">{{ESG_SOC_1 — worker safety metrics at mining operations, historically a significant industry risk area, should be sourced from Newmont's disclosures}}</li>
+          <li class="placeholder">{{ESG_SOC_2 — community relations with local populations near mine sites across the company's globally diversified footprint not independently verified in this pass}}</li>
+          <li class="placeholder">{{ESG_SOC_3 — workforce diversity metrics not independently verified in this pass}}</li>
+        </ul>
+      </div>
+      <div class="esg-card governance">
+        <h4>Governance</h4>
+        <ul>
+          <li class="placeholder">{{ESG_GOV_1 — board composition not independently verified in this pass; should be sourced from the most recent proxy statement}}</li>
+          <li class="placeholder">{{ESG_GOV_2 — executive compensation structure should be sourced from the most recent proxy statement}}</li>
+          <li>Established capital-return framework including dividends and share buybacks, alongside integration governance oversight following the 2023 Newcrest acquisition and subsequent portfolio optimization program</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER / DISCLOSURES ============ -->
+  <footer>
+    <div class="analyst-line">Prepared by Equity Research Desk, Equity Analyst — Independent Equity Research</div>
+    This report is compiled from publicly available data sources believed to be reliable but not independently audited. Figures marked as placeholders require independent verification before use in an investment decision. This report does not constitute investment advice, an offer, or a solicitation to buy or sell any security. Ratings: BUY = expected to outperform the market over the next 12 months; HOLD = expected to perform in line with the market; SELL = expected to underperform the market. The analyst(s) preparing this report may or may not hold a position in the subject security. Past performance is not indicative of future results.
+  </footer>
+
+</div>
+</body>
+</html>

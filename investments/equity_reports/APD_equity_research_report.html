@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — APD</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #e9edf2;
+    color: var(--text);
+    font-family: "Georgia", "Times New Roman", serif;
+    line-height: 1.55;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.12);
+    padding: 40px 50px 60px;
+  }
+
+  /* ---------- Header ---------- */
+  .report-header {
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .firm-name {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .company-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+  }
+
+  /* ---------- Recommendation banner ---------- */
+  .reco-banner {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .reco-main {
+    flex: 0 0 170px;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .reco-main .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+
+  .reco-main .value {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+
+  .reco-stats {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--gray-bg);
+  }
+
+  .reco-stat {
+    padding: 10px 14px;
+    border-left: 1px solid var(--border);
+  }
+
+  .reco-stat .label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    display: block;
+  }
+
+  .reco-stat .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* ---------- Basic info table ---------- */
+  .basic-info {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+
+  .basic-info td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .basic-info td.k {
+    color: var(--muted);
+    width: 38%;
+  }
+
+  .basic-info td.v {
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  /* ---------- Section styling ---------- */
+  section {
+    margin-bottom: 32px;
+  }
+
+  h2.section-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: var(--navy);
+    padding: 8px 14px;
+    margin: 0 0 14px 0;
+    border-left: 5px solid var(--accent);
+  }
+
+  h3.sub-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    margin: 18px 0 10px;
+  }
+
+  p.body-text {
+    font-size: 15px;
+    margin: 0 0 12px;
+  }
+
+  .placeholder {
+    color: #8a8fa3;
+    font-style: italic;
+  }
+
+  ul.bullet-list {
+    margin: 0 0 12px 0;
+    padding-left: 20px;
+  }
+
+  ul.bullet-list li {
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+
+  /* ---------- Investment Summary callout ---------- */
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  .thesis-box .thesis-label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-dark);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  /* ---------- Valuation table ---------- */
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  table.data-table th {
+    background: var(--navy);
+    color: #fff;
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  table.data-table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  table.data-table tr:nth-child(even) td {
+    background: var(--gray-bg);
+  }
+
+  /* ---------- Risk list ---------- */
+  .risk-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+  }
+
+  .risk-tag {
+    flex: 0 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    background: var(--red);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .risk-tag.op { background: #b8860b; }
+  .risk-tag.fin { background: var(--red); }
+  .risk-tag.reg { background: #6a3d9a; }
+  .risk-tag.legal { background: #444; }
+
+  /* ---------- ESG grid ---------- */
+  .esg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .esg-card {
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: 4px;
+    padding: 12px 14px;
+  }
+
+  .esg-card.environmental { border-top-color: #2e7d32; }
+  .esg-card.social { border-top-color: #1565c0; }
+  .esg-card.governance { border-top-color: #6a1b9a; }
+
+  .esg-card h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px;
+    color: var(--navy);
+  }
+
+  .esg-card ul {
+    margin: 0;
+    padding-left: 16px;
+    font-size: 13px;
+  }
+
+  .esg-card li { margin-bottom: 4px; }
+
+  /* ---------- Peer comparison ---------- */
+  .peer-note {
+    font-size: 12.5px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: -6px;
+    margin-bottom: 12px;
+  }
+
+  /* ---------- Footer / disclosures ---------- */
+  footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  footer .analyst-line {
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  @media (max-width: 700px) {
+    .page { padding: 24px 18px; }
+    .reco-banner { flex-direction: column; }
+    .reco-stats { grid-template-columns: repeat(2, 1fr); }
+    .esg-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research &middot; Equity Research</div>
+      <h1 class="company-title">Air Products and Chemicals, Inc.</h1>
+      <div class="ticker-line">APD &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Materials / Specialty Chemicals (Industrial Gases)</div>
+    </div>
+    <div class="report-date">
+      September 18, 2026<br>
+      Analyst: Equity Research Desk
+    </div>
+  </div>
+
+  <!-- ============ RECOMMENDATION BANNER ============ -->
+  <div class="reco-banner">
+    <div class="reco-main">
+      <span class="label">Recommendation</span>
+      <span class="value" style="color:#1e7e34;">BUY</span>
+    </div>
+    <div class="reco-stats">
+      <div class="reco-stat">
+        <span class="label">Current Price</span>
+        <span class="value">$284.33</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Target Price</span>
+        <span class="value">$345.11</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Market Cap</span>
+        <span class="value">$63.32B</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Implied Upside/Downside</span>
+        <span class="value">+21.4%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BASIC INFORMATION ============ -->
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">APD</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Materials</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Specialty Chemicals (Industrial Gases)</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$229.11 &ndash; $314.87</td></tr>
+      <tr><td class="k">Average Daily Volume (Liquidity)</td><td class="v">~713,255 shares</td></tr>
+      <tr><td class="k">Float</td><td class="v"><span class="placeholder">{{FLOAT — not independently sourced; effectively equal to shares outstanding less insider holdings}}</span></td></tr>
+      <tr><td class="k">Shares Outstanding</td><td class="v">~222.69 million</td></tr>
+      <tr><td class="k">Major Shareholders</td><td class="v"><span class="placeholder">{{MAJOR_SHAREHOLDERS — Vanguard and BlackRock are known large institutional holders; exact stakes not independently verified in this pass}}</span></td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT SUMMARY ============ -->
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Air Products and Chemicals is a global industrial gases company, the second-largest by scale behind Linde, supplying atmospheric and process gases to manufacturing, energy, and chemicals customers while pursuing a large capital program in clean hydrogen and gasification megaprojects. <strong>FY2025 net income swung to a loss of -$394.5M (diluted EPS -$1.78) from FY2024 net income of $3.83B, driven by a disclosed roughly $2.9B pre-tax charge related to exiting several major clean-energy megaprojects announced in June 2026 — a real, company-disclosed restructuring charge rather than a data-extraction artifact, though the magnitude and specific projects affected should be independently verified against the company's 8-K and 10-K disclosures.</strong> Free cash flow was also negative in both FY2024 and FY2025 (-$3.15B and -$3.77B respectively), reflecting the company's large ongoing capital expenditure program; the TTM net income figure of approximately -$47.3M suggests some sequential improvement since the FY2025 impairment quarter. The 21-analyst distribution (11 Strong Buy / 3 Buy / 7 Hold / 0 Sell / 0 Strong Sell) shows Strong Buy alone constituting a clear 52.4% majority, supporting a BUY rating premised on the market looking through the one-time project-exit charge toward the company's underlying industrial gases earnings power, consistent with the average price target of $345.11, which implies +21.4% upside from the current price.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text placeholder">{{RECENT_DEVELOPMENTS — details of the June 2026 announcement to exit major clean-energy/gasification megaprojects, including which specific projects were affected, the exact charge amount, and management's revised capital allocation strategy, should be sourced from the company's most recent 8-K and 10-Q and verified independently}}</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text placeholder">{{EARNINGS_FORECAST_SUMMARY — forward EPS and revenue estimates for FY2027E, reflecting a return to normalized profitability following the FY2025 project-exit charge and reduced capital spending on exited megaprojects, should be sourced from consensus data and verified independently; the forward P/E of 20.08x implies a meaningfully positive forward EPS estimate despite the FY2025 GAAP loss}}</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">At $284.33, APD's trailing P/E is not meaningful given the FY2025 GAAP net loss, but the forward P/E of 20.08x suggests the market is valuing the company on a normalized, post-charge earnings basis. The stock trades below the midpoint of its 52-week range of $229.11–$314.87, and the average analyst target implies substantial (+21.4%) further upside, suggesting analysts view the FY2025 charge as a one-time reset rather than a reflection of impaired ongoing earnings power.</p>
+  </section>
+
+  <!-- ============ BUSINESS DESCRIPTION ============ -->
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Air Products and Chemicals, Inc. is a global industrial gases company supplying atmospheric gases (oxygen, nitrogen, argon), process and specialty gases (hydrogen, helium, syngas), and related equipment to customers in refining, chemicals, metals, electronics, and manufacturing end markets. The company has in recent years pursued a large capital program in clean/"blue" and "green" hydrogen production and gasification megaprojects tied to the energy transition, though it announced in June 2026 that it would exit several of these major projects, resulting in a substantial impairment and restructuring charge.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Long-term on-site gas supply contracts with industrial customers, typically including take-or-pay volume commitments providing recurring revenue</li>
+      <li>Merchant gas sales tied to broader industrial production trends</li>
+      <li>Clean hydrogen and gasification project revenue, a strategic growth area now being scaled back following the June 2026 project-exit announcement</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Energy costs required for air separation and gas production, substantially passed through via contract pricing mechanisms</li>
+      <li>Capital expenditure on new production facilities, though this is expected to moderate following the exit from several megaprojects</li>
+      <li>The FY2025 project-exit impairment and restructuring charge (approximately $2.9B pre-tax), a significant one-time expense</li>
+    </ul>
+  </section>
+
+  <!-- ============ INDUSTRY OVERVIEW & COMPETITIVE POSITIONING ============ -->
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text placeholder">{{INDUSTRY_OVERVIEW — the global industrial gases industry remains a consolidated oligopoly with secular tailwinds from semiconductor and manufacturing demand, though the clean hydrogen megaproject segment specifically has faced slower-than-expected offtake demand and financing headwinds industry-wide, contributing to APD's project exits; should be independently verified with current industry data}}</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Very Low — capital-intensive on-site production facilities and long-term contracts create extremely high barriers to entry</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Low-to-Moderate — energy input costs are largely passed through to customers via contract pricing mechanisms</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Low — long-term take-or-pay on-site contracts give significant customer-relationship durability, though clean hydrogen megaproject offtake agreements have proven harder to finalize than expected</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Low — few practical substitutes exist for industrial gases in core end markets</td></tr>
+      <tr><td>Competitive Rivalry</td><td>Low-to-Moderate — global industrial gases market is a consolidated oligopoly with Linde and Air Liquide as the primary large-scale competitors, both with stronger recent execution track records than APD's megaproject pipeline</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Air Products' moat is rooted in its position as a top-tier global industrial gases producer with extensive on-site production infrastructure and long-term take-or-pay contracts; however, its recent capital allocation execution on clean hydrogen megaprojects has lagged peers, resulting in the June 2026 project exits, a notable execution setback relative to its historical reputation for disciplined capital deployment.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set used for relative valuation and competitive benchmarking.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Market Cap</th><th>P/E</th><th>EV/EBITDA</th></tr>
+      <tr><td>Air Products and Chemicals, Inc.</td><td>APD</td><td>$63.32B</td><td class="placeholder">N/M (GAAP loss)</td><td class="placeholder">{{EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">Linde plc</td><td class="placeholder">LIN</td><td class="placeholder">{{PEER_1_MCAP}}</td><td class="placeholder">{{PEER_1_PE}}</td><td class="placeholder">{{PEER_1_EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">Air Liquide S.A.</td><td class="placeholder">AI.PA</td><td class="placeholder">{{PEER_2_MCAP}}</td><td class="placeholder">{{PEER_2_PE}}</td><td class="placeholder">{{PEER_2_EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">Ecolab Inc.</td><td class="placeholder">ECL</td><td class="placeholder">{{PEER_3_MCAP}}</td><td class="placeholder">{{PEER_3_PE}}</td><td class="placeholder">{{PEER_3_EV_EBITDA}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ VALUATION ============ -->
+  <section>
+    <h2 class="section-title">Valuation</h2>
+
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{WACC — not independently modeled in this pass; typical large-cap industrial-gases WACC range 6-8%}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{TERMINAL_GROWTH — typically 2-3% for a mature-stage terminal assumption}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{FORECAST_PERIOD — typically 5-10 years, and should explicitly separate normalized core industrial-gases cash flow from the now-curtailed megaproject capital program}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td class="placeholder">{{DCF_INTRINSIC_VALUE — not independently modeled in this pass}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Relative Valuation</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Air Products and Chemicals, Inc.</th><th>Peer Average</th><th>Industry Average</th></tr>
+      <tr><td>P/E (Trailing)</td><td class="placeholder">N/M (GAAP loss)</td><td class="placeholder">{{PEER_PE_AVG}}</td><td class="placeholder">{{INDUSTRY_PE_AVG}}</td></tr>
+      <tr><td>P/E (Forward)</td><td>20.08x</td><td class="placeholder">{{PEER_FWD_PE_AVG}}</td><td class="placeholder">{{INDUSTRY_FWD_PE_AVG}}</td></tr>
+      <tr><td>P/Sales</td><td class="placeholder">~5.3x (estimated from market cap/FY2025 revenue)</td><td class="placeholder">{{PEER_PS_AVG}}</td><td class="placeholder">{{INDUSTRY_PS_AVG}}</td></tr>
+      <tr><td>P/Book Value</td><td class="placeholder">{{PB_RATIO}}</td><td class="placeholder">{{PEER_PB_AVG}}</td><td class="placeholder">{{INDUSTRY_PB_AVG}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">With Strong Buy alone representing a clear 52.4% majority of covering analysts, this report assigns a BUY rating, premised on the FY2025 GAAP net loss being a one-time, disclosed project-exit charge rather than a reflection of impaired core industrial-gases earnings power. The forward P/E of 20.08x is reasonable for the sector once normalized, and the average price target implies substantial (+21.4%) further upside as the market looks past the charge.</p>
+  </section>
+
+  <!-- ============ FINANCIAL ANALYSIS ============ -->
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+
+    <h3 class="sub-title">Historical &amp; Forecast Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>FY2023</th><th>FY2024</th><th>FY2025</th><th>FY2027E</th></tr>
+      <tr><td>Revenue</td><td class="placeholder">{{REV_Y0 — not independently sourced in this pass}}</td><td>$12,101M</td><td>$12,037M</td><td class="placeholder">{{REV_Y3}}</td></tr>
+      <tr><td>EBITDA</td><td class="placeholder">{{EBITDA_Y0}}</td><td class="placeholder">{{EBITDA_Y1}}</td><td class="placeholder">{{EBITDA_Y2}}</td><td class="placeholder">{{EBITDA_Y3}}</td></tr>
+      <tr><td>Net Income</td><td class="placeholder">{{NI_Y0 — not independently sourced in this pass}}</td><td>$3,828M</td><td>-$394.5M</td><td class="placeholder">{{NI_Y3}}</td></tr>
+      <tr><td>EPS (Diluted)</td><td class="placeholder">{{EPS_Y0}}</td><td>$17.18</td><td>-$1.78</td><td class="placeholder">{{EPS_Y3}}</td></tr>
+      <tr><td>Free Cash Flow</td><td class="placeholder">{{FCF_Y0}}</td><td>-$3,150M</td><td>-$3,766M</td><td class="placeholder">{{FCF_Y3}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text"><strong>Unlike several other names in this coverage batch, APD's FY2025 net loss does not appear to be a data-extraction anomaly — it is consistent with the company's disclosed ~$2.9B project-exit charge announced in June 2026, and the magnitude of the swing from FY2024's $3.83B profit to FY2025's -$394.5M loss is plausible given a charge of that size relative to the company's ~$12B revenue base.</strong> Readers should independently verify the exact charge amount, the specific megaprojects exited, and any associated cash versus non-cash components against the company's 8-K and 10-K filings. The TTM net income figure of approximately -$47.3M (versus the FY2025 full-year loss of -$394.5M) suggests sequential improvement in quarters following the initial impairment recognition, consistent with the charge being a discrete, largely non-recurring event rather than an ongoing operational deterioration. Free cash flow has been negative for at least two consecutive fiscal years, which should be independently monitored as the company's megaproject capital program is scaled back.</p>
+
+    <h3 class="sub-title">Industry-Specific Ratios</h3>
+    <table class="data-table">
+      <tr><th>Ratio</th><th>Value</th></tr>
+      <tr><td>Core Industrial Gases Operating Margin (ex-megaprojects)</td><td class="placeholder">{{INDUSTRY_RATIO_1_VALUE — a key metric to isolate the health of the underlying business from megaproject-related charges; not independently sourced in this pass}}</td></tr>
+      <tr><td>Remaining Megaproject Capital Commitment</td><td class="placeholder">{{INDUSTRY_RATIO_2_VALUE — the residual capital exposure to clean hydrogen/gasification projects not yet exited; not independently sourced in this pass}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT RISKS ============ -->
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+
+    <div class="risk-item">
+      <span class="risk-tag op">Operational</span>
+      <span>Further project exits, cost overruns, or additional impairment charges on the company's remaining clean hydrogen and gasification project portfolio could compound the FY2025 charge and further pressure reported earnings.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag fin">Financial</span>
+      <span>Negative free cash flow for at least two consecutive fiscal years raises questions about near-term capital allocation flexibility, including the sustainability of the current dividend, until the capital program is more fully scaled back.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag reg">Regulatory</span>
+      <span>Changes to clean hydrogen tax credit policy or energy-transition subsidy programs could further affect the economics of the company's remaining clean-energy project pipeline.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag legal">Legal</span>
+      <span>Potential shareholder or contractual litigation risk arising from the megaproject exits and associated impairment charge should be independently monitored via the company's most recent 10-K legal proceedings disclosure.</span>
+    </div>
+
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text"><strong>This report flags the FY2025 GAAP net loss and the associated ~$2.9B project-exit charge as a material item requiring independent verification against the company's 8-K and 10-K disclosures before this report is relied upon for an investment decision.</strong> <span class="placeholder">{{AUDITOR_FLAGS — no material weaknesses or qualified audit opinions are otherwise known to this analyst as of the report date; this should be independently confirmed against Air Products' most recent 10-K auditor's report}}</span></p>
+  </section>
+
+  <!-- ============ ESG ============ -->
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental">
+        <h4>Environmental</h4>
+        <ul>
+          <li>Air Products has historically positioned itself as a leader in clean/"blue" and "green" hydrogen production, though the June 2026 project exits represent a scaling-back of this strategy</li>
+          <li class="placeholder">{{ESG_ENV_2 — specific corporate carbon-reduction targets should be sourced from Air Products' sustainability report}}</li>
+          <li class="placeholder">{{ESG_ENV_3 — energy efficiency initiatives in air separation and gas production not independently verified in this pass}}</li>
+        </ul>
+      </div>
+      <div class="esg-card social">
+        <h4>Social</h4>
+        <ul>
+          <li class="placeholder">{{ESG_SOC_1 — worker safety metrics for industrial gas production operations should be sourced from Air Products' disclosures}}</li>
+          <li class="placeholder">{{ESG_SOC_2 — workforce diversity metrics not independently verified in this pass}}</li>
+          <li class="placeholder">{{ESG_SOC_3 — community impact of the megaproject exits (e.g., any workforce reductions at affected project sites) not independently verified in this pass}}</li>
+        </ul>
+      </div>
+      <div class="esg-card governance">
+        <h4>Governance</h4>
+        <ul>
+          <li class="placeholder">{{ESG_GOV_1 — board composition not independently verified in this pass; should be sourced from the most recent proxy statement}}</li>
+          <li><strong>The June 2026 megaproject exits and associated large impairment charge raise governance and capital-allocation-oversight questions that warrant independent review of board and management accountability disclosures in the most recent proxy statement.</strong></li>
+          <li>Dividend maintained despite the FY2025 net loss and negative free cash flow; sustainability of the current payout should be independently assessed against updated capital allocation guidance</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER / DISCLOSURES ============ -->
+  <footer>
+    <div class="analyst-line">Prepared by Equity Research Desk, Equity Analyst — Independent Equity Research</div>
+    This report is compiled from publicly available data sources believed to be reliable but not independently audited. Figures marked as placeholders require independent verification before use in an investment decision. This report does not constitute investment advice, an offer, or a solicitation to buy or sell any security. Ratings: BUY = expected to outperform the market over the next 12 months; HOLD = expected to perform in line with the market; SELL = expected to underperform the market. The analyst(s) preparing this report may or may not hold a position in the subject security. Past performance is not indicative of future results.
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — BKNG</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  .placeholder { color:#8a8fa3; font-style:italic; }
+  .alert-box { background:#fff3f2; border:1px solid #f4c7c3; border-left:4px solid var(--red); padding:12px 16px; font-size:13px; font-family:Arial, Helvetica, sans-serif; margin-bottom:16px; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Booking Holdings Inc.</h1>
+      <div class="ticker-line">BKNG &nbsp;|&nbsp; NASDAQ &nbsp;|&nbsp; Consumer Discretionary / Online Travel Services</div>
+    </div>
+    <div class="report-date">September 17, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="alert-box"><strong>Note on share-price comparability:</strong> Booking Holdings completed a 25-for-1 stock split in early 2026. All prices, price targets, and per-share figures in this report reflect the post-split share count; any pre-2026 price target quoted in the thousands of dollars should be divided by 25 for an apples-to-apples comparison.</div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#1e7e34;">BUY</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">~$169 (post-split)</span></div>
+      <div class="reco-stat"><span class="label">Target Price</span><span class="value">$238.78 (avg.)</span></div>
+      <div class="reco-stat"><span class="label">Target Range</span><span class="value">$188 – $301</span></div>
+      <div class="reco-stat"><span class="label">Implied Upside/Downside</span><span class="value">~41%</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">BKNG</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NASDAQ</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Consumer Discretionary</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Online Travel Services</td></tr>
+      <tr><td class="k">CEO</td><td class="v">Glenn Fogel</td></tr>
+      <tr><td class="k">Headquarters</td><td class="v">Norwalk, Connecticut</td></tr>
+      <tr><td class="k">Consensus Rating</td><td class="v">Strong Buy (39 analysts: 26 Strong Buy, 6 Buy, 7 Hold)</td></tr>
+      <tr><td class="k">Recent Corporate Action</td><td class="v">25-for-1 stock split, early 2026</td></tr>
+      <tr><td class="k">H1 2026 Share Buybacks</td><td class="v">$7.4 billion (avg. ~$173/share)</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Booking Holdings continues to compound as one of the highest-quality operators in online travel, delivering a Q2 2026 print described by analysts as a "strong beat across all metrics": adjusted EPS up 15% YoY to $2.54, gross bookings up 9% YoY, room-nights growth of 5% (exceeding guidance by roughly a point), and nearly 40 basis points of adjusted EBITDA margin expansion even while absorbing Middle East-related softness in long-haul flight demand. Management raised its cost-savings target from its ongoing transformation program to approximately $650 million and returned $4.1 billion to shareholders in the quarter alone (including $3.7 billion of buybacks), underscoring both operating discipline and a shareholder-friendly capital allocation posture. The company's early-2026 25-for-1 stock split — its first-ever split — improves accessibility for retail investors without changing the underlying investment case, and CEO Glenn Fogel's commentary on AI (a double-digit reduction in customer-service cost per booking, alongside candid acknowledgment that LLM-driven traffic remains "significantly below 1%" of room nights) reflects a company investing methodically in AI rather than over-promising near-term disruption. We rate BKNG a BUY given continued double-digit bookings and EPS growth, margin expansion, and substantial capital returns, tempered only by geopolitical travel-demand headwinds that are largely outside the company's control.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Booking Holdings' Q2 2026 results showed adjusted EPS of $2.54, up 15% year-over-year, on revenue growth of 8% YoY (7% on a constant-currency basis). Gross bookings rose 9% YoY (approximately 8% constant currency), and room nights grew 5% YoY, exceeding the company's own guidance by roughly one percentage point. Adjusted EBITDA reached approximately $2.6 billion, up 9% YoY, with adjusted EBITDA margin expanding nearly 40 basis points. The company returned $4.1 billion to shareholders in the quarter, including $3.7 billion of share repurchases, bringing H1 2026 buybacks to $7.4 billion at an average price of approximately $173 per share. Management increased its expected annual cost savings from the ongoing transformation program to approximately $650 million, providing what the company described as "additional flexibility for strategic investments." A notable headwind: the Middle East conflict weighed on long-haul travel demand, with flight-ticket growth decelerating to 4% YoY from prior quarters' pace. On AI, CEO Glenn Fogel noted the company is seeing a "double-digit decrease in customer service cost per booking" from AI deployment while maintaining customer satisfaction, but was candid that these efforts remain nascent — the company has not yet disclosed specific AI-driven conversion metrics, and traffic originating from large language models still represents "significantly below 1%" of room nights.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text placeholder">{{Q3_FY2026_GUIDANCE_DETAIL — specific Q3/full-year 2026 gross bookings, revenue, and EBITDA margin guidance figures were referenced in coverage but exact numbers were not independently confirmed in the sources reviewed; verify against the Q2 2026 earnings press release and investor presentation before use. Directionally, guidance commentary was consistent with continued mid-to-high single-digit room-night growth and margin expansion, tempered by acknowledged geopolitical travel headwinds.}}</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Consensus rating is Strong Buy across 39 analysts (26 Strong Buy, 6 Buy, 7 Hold), with an average price target of $238.78 (post-split), implying roughly 41% upside from the current price of approximately $169. The target range spans $188 (low) to $301 (high). Analysts have raised targets meaningfully following the Q2 print (one major firm cited in coverage raised its target from a pre-split-equivalent $196 to $232, i.e., $4,900 to $5,800 pre-split).</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Booking Holdings Inc. is the world's largest online travel company by gross bookings, operating a portfolio of leading travel brands including Booking.com (accommodation reservations), Priceline, Agoda, Kayak (travel search/metasearch), and OpenTable (restaurant reservations). The company connects travelers with hotels, alternative accommodations, rental cars, flights, and experiences globally, monetizing primarily through commissions on completed bookings. Under longtime CEO Glenn Fogel, Booking has pursued a "Connected Trip" strategy aiming to integrate flights, accommodations, ground transportation, and experiences into a single seamless booking journey, while investing in AI-driven customer service and personalization tools to improve unit economics and conversion.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Gross bookings growth (+9% YoY in Q2 2026), spanning accommodations, flights, and ancillary travel services</li>
+      <li>Room-nights growth (+5% YoY, exceeding guidance), reflecting continued share gains in global accommodation bookings</li>
+      <li>AI-driven customer-service cost efficiencies, contributing to adjusted EBITDA margin expansion even amid macro travel-demand headwinds</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Ongoing transformation-program investment, offset by an increased $650 million annual cost-savings target</li>
+      <li>Marketing and performance-advertising spend required to compete for traveler acquisition against Expedia, Airbnb, and Google-intermediated search</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Booking Holdings competes in the global online travel industry, most directly against Expedia Group, with Airbnb competing in alternative accommodations and Trip.com Group in Asia-focused markets. The Middle East conflict's impact on long-haul flight demand in Q2 2026 illustrates the industry's ongoing sensitivity to geopolitical shocks, even as underlying accommodation-booking demand has remained resilient.</p>
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — massive scale in supplier relationships (hotels, marketing spend) and brand recognition create formidable barriers.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — independent hotels rely heavily on OTA distribution, but large hotel chains increasingly push direct-booking incentives to reduce commission leakage.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>High — consumers can easily price-compare across OTAs and direct-booking channels, keeping commission rates and marketing spend competitive.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate — direct hotel/airline booking, Airbnb-style platforms, and emerging AI travel-planning tools all compete for the booking transaction.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — Expedia Group is the primary direct competitor; Airbnb competes in alternative accommodations; Google increasingly intermediates travel search.</td></tr>
+    </table>
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Booking Holdings' moat derives from Booking.com's unmatched global accommodation supply density (particularly in Europe and Asia-Pacific independent/boutique properties), powerful brand recognition across its portfolio, and a data/scale advantage in performance marketing that smaller competitors cannot match. Its early and methodical AI investment supports the durability of this position as search and discovery behavior evolves.</p>
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major global online travel platforms.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>Booking Holdings</td><td>BKNG</td><td>Average target $238.78 (post-split); ~41% implied upside</td></tr>
+      <tr><td class="placeholder">Expedia Group</td><td class="placeholder">EXPE</td><td class="placeholder">{{Not independently sourced for this report — primary direct online travel competitor}}</td></tr>
+      <tr><td class="placeholder">Airbnb</td><td class="placeholder">ABNB</td><td class="placeholder">{{Not independently sourced for this report — alternative accommodations specialist}}</td></tr>
+      <tr><td class="placeholder">Trip.com Group</td><td class="placeholder">TCOM</td><td class="placeholder">{{Not independently sourced for this report — leading Asia-focused online travel platform}}</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — recommend explicit modeling of geopolitical travel-demand sensitivity separately from core accommodation-booking growth}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>Average sell-side price target of $238.78 post-split (39 analysts) as of the report date</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">We rate BKNG a <strong>BUY</strong>. Double-digit EPS growth, mid-to-high single-digit bookings and room-night growth, expanding margins, an increased cost-savings target, and aggressive capital returns together support a constructive stance. The primary offsetting factor is exposure to geopolitical and macro travel-demand shocks (e.g., the Middle East conflict's impact on long-haul flight bookings in the most recent quarter), which are inherently unpredictable.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q2 2026</th><th>YoY Change</th></tr>
+      <tr><td>Adjusted EPS</td><td>$2.54</td><td>+15%</td></tr>
+      <tr><td>Revenue</td><td class="placeholder">{{Not independently sourced}}</td><td>+8% (+7% constant currency)</td></tr>
+      <tr><td>Gross Bookings</td><td class="placeholder">{{Not independently sourced}}</td><td>+9% (~+8% constant currency)</td></tr>
+      <tr><td>Room Nights</td><td class="placeholder">{{Not independently sourced}}</td><td>+5%</td></tr>
+      <tr><td>Adjusted EBITDA</td><td>~$2.6 billion</td><td>+9%</td></tr>
+      <tr><td>Capital Returned to Shareholders</td><td>$4.1 billion</td><td class="placeholder">{{Not separately disclosed}}</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">Margin expansion (~40 basis points YoY on adjusted EBITDA) alongside double-digit EPS growth suggests genuine operating leverage rather than one-time cost cuts, particularly given management simultaneously raised its multi-year cost-savings target. Flight-ticket growth decelerating to 4% YoY due to Middle East conflict impacts is a real but largely macro-driven headwind rather than a company-specific execution issue, and should be modeled separately from core accommodation-booking trends.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>Geopolitical conflicts (e.g., the Middle East) can meaningfully depress long-haul travel demand and flight-ticket growth with little advance warning, as seen in the deceleration to 4% YoY flight-ticket growth in Q2 2026. AI-driven changes to how consumers search for and book travel represent a long-term structural uncertainty management itself acknowledges is still nascent.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>Aggressive share buybacks ($7.4 billion in H1 2026 alone) reduce share count and support EPS growth, but also mean a large portion of capital is not being redeployed into new growth initiatives.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span class="placeholder">{{Online travel platforms face ongoing EU Digital Markets Act and other antitrust/marketplace-regulation scrutiny in various jurisdictions; specific current status not independently verified for this report.}}</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against Booking Holdings' most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in the sources reviewed — verify directly against Booking Holdings' 10-K/10-Q auditor opinion.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul class="placeholder"><li>{{ESG_ENV — sustainable travel program/carbon-offset initiatives not independently sourced in this summary}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul><li>Global marketplace connecting travelers with independent accommodation providers, including many small businesses reliant on OTA distribution</li><li class="placeholder">{{ESG_SOC — specific community/labor program details not independently sourced}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul><li>Glenn Fogel serves as CEO; the company completed governance-related changes alongside its 2026 stock split</li><li class="placeholder">{{ESG_GOV — board composition and diversity not independently sourced}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 17, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (company earnings releases, financial media coverage, and sell-side analyst commentary) that may be delayed or inconsistent. All share-price and per-share figures reflect the post-25-for-1-split share count effective early 2026. All figures should be independently verified against Booking Holdings' 10-K/10-Q filings before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

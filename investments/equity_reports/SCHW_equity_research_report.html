@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — SCHW</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  .placeholder { color:#8a8fa3; font-style:italic; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">The Charles Schwab Corporation</h1>
+      <div class="ticker-line">SCHW &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Financials / Investment Banking &amp; Brokerage</div>
+    </div>
+    <div class="report-date">September 18, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#1e7e34;">BUY</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">$104.63</span></div>
+      <div class="reco-stat"><span class="label">Target Price</span><span class="value">$124.95 (avg.)</span></div>
+      <div class="reco-stat"><span class="label">Market Cap</span><span class="value">$180.9B</span></div>
+      <div class="reco-stat"><span class="label">Implied Upside</span><span class="value">~+19.4%</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">SCHW</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Financials</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Investment Banking &amp; Brokerage</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$83.96 – $114.53</td></tr>
+      <tr><td class="k">Consensus Rating</td><td class="v">Buy (22 analysts: 11 Strong Buy, 7 Buy, 3 Hold, 1 Sell)</td></tr>
+      <tr><td class="k">TTM Revenue / Net Income</td><td class="v">$26.03 billion / $9.72 billion</td></tr>
+      <tr><td class="k">EPS (TTM)</td><td class="v">$5.49 (+47.6% YoY)</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Charles Schwab delivered standout TTM results — revenue of $26.03 billion (up 20.3% year-over-year) and net income of $9.72 billion (up 38.6%), with EPS up 47.6% to $5.49 — reflecting continued strength in client asset growth, net interest income, and trading activity following its TD Ameritrade integration. The analyst rating distribution is strongly favorable, with 18 of 22 analysts (82%) rating Buy or Strong Buy, and the average price target of $124.95 implies roughly 19.4% upside from the current price of $104.63. We rate SCHW a BUY, supported by exceptional earnings growth, a decisively bullish analyst base, and continued execution on its integrated brokerage and banking model.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Charles Schwab's trailing-twelve-month results showed revenue of $26.03 billion (up 20.3% year-over-year) and net income of $9.72 billion (up 38.6%), building on full-year 2025 revenue of $23.92 billion (up 22.01% versus 2024) and earnings of $8.42 billion (up 53.65%). EPS reached $5.49, up 47.6% year-over-year. The stock has traded within a 52-week range of $83.96 to $114.53, reflecting continued strength in client asset growth and net interest income following the completion of its TD Ameritrade integration.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text placeholder">{{No specific forward-quarter or full-year 2026 EPS guidance was independently sourced for this report — recommend reviewing Charles Schwab's most recent earnings call transcript for management's outlook on net new asset growth and net interest margin trends.}}</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Consensus rating is Buy across 22 analysts (11 Strong Buy, 7 Buy, 3 Hold, 1 Sell), an 82% Buy/Strong Buy majority. The average price target of $124.95 implies approximately 19.4% upside from the current price of $104.63, with a trailing P/E of 19.06x reflecting the market's continued premium valuation for Schwab's growth trajectory.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Charles Schwab is a leading brokerage and banking company providing wealth management, securities brokerage, banking, asset management, and financial advisory services to individual and institutional clients, having significantly expanded its scale following the 2020 acquisition and subsequent integration of TD Ameritrade.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Net interest income from client cash balances held in Schwab's bank subsidiary</li>
+      <li>Asset management and administration fees tied to client assets in advisory and mutual fund/ETF products</li>
+      <li>Trading revenue from commissions and order flow, benefiting from expanded scale post-TD Ameritrade integration</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Compensation and technology integration costs associated with the ongoing TD Ameritrade platform consolidation</li>
+      <li class="placeholder">{{Specific interest expense and funding cost figures not independently sourced for this report}}</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Charles Schwab competes in the retail brokerage, wealth management, and banking industry against Fidelity, Morgan Stanley's E*TRADE (see separate MS report in this series), Robinhood, and other discount and full-service brokerages, having significantly expanded its scale and market share through the TD Ameritrade acquisition.</p>
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Moderate — commission-free trading has lowered some barriers, though scale advantages in banking and asset management remain significant.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Low — Schwab largely controls its own technology and banking infrastructure.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate — retail clients can switch brokerages relatively easily, though switching costs increase for clients with integrated banking and advisory relationships.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate — fintech trading apps and robo-advisors present ongoing competitive alternatives, particularly for younger or self-directed investors.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — intense competition among discount brokerages and wealth managers for client assets and net new asset flows.</td></tr>
+    </table>
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Charles Schwab's moat rests on its massively expanded scale following the TD Ameritrade acquisition, its integrated brokerage-and-banking model that captures net interest income on client cash, and high switching costs for clients with consolidated brokerage, banking, and advisory relationships.</p>
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major U.S. financial services and brokerage companies. See separate JPM, BAC, WFC, C, GS, MS, BLK, AXP, and SPGI reports in this series.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>Charles Schwab</td><td>SCHW</td><td>Strongest EPS growth in this series (+47.6% YoY); 82% Buy+ rating</td></tr>
+      <tr><td>Morgan Stanley</td><td>MS</td><td>See separate MS report in this series</td></tr>
+      <tr><td>S&amp;P Global</td><td>SPGI</td><td>See separate SPGI report in this series</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — brokerage valuation is typically approached via P/E and client-asset-growth-based frameworks rather than standard DCF}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>Average sell-side price target of $124.95 (22 analysts) as of the report date</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">We rate SCHW a <strong>BUY</strong>. Exceptional EPS growth (+47.6% YoY), an 82% Buy/Strong Buy analyst distribution, and continued execution on its integrated brokerage-and-banking model following the TD Ameritrade integration all support a constructive stance, with ~19% implied upside to target.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>2025</th><th>TTM</th></tr>
+      <tr><td>Revenue</td><td>$23.92 billion (+22.01%)</td><td>$26.03 billion (+20.3%)</td></tr>
+      <tr><td>Net Income</td><td>$8.42 billion (+53.65%)</td><td>$9.72 billion (+38.6%)</td></tr>
+      <tr><td>EPS</td><td class="placeholder">{{N/A}}</td><td>$5.49 (+47.6%)</td></tr>
+      <tr><td>P/E (TTM)</td><td class="placeholder">{{N/A}}</td><td>19.06x</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text placeholder">{{Detailed earnings-quality items such as net interest margin trends and TD Ameritrade integration cost run-off were not independently sourced for this report — recommend reviewing Charles Schwab's 10-K and quarterly earnings supplements for detail.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>Net interest income is sensitive to interest rate movements and client cash sorting behavior (moving cash into higher-yielding alternatives), which can pressure margins in certain rate environments.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>As a bank holding company, Schwab is subject to regulatory capital requirements; balance sheet composition (including available-for-sale securities) can be sensitive to interest rate movements.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span class="placeholder">{{Brokerage and banking regulatory policy represents an ongoing industry-wide consideration; specific current developments not independently verified for this report.}}</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against Charles Schwab's most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in the sources reviewed — verify directly against Charles Schwab's 10-K/10-Q auditor opinion.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul class="placeholder"><li>{{ESG_ENV — operational emissions targets not independently sourced}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul><li>Schwab's financial literacy and low-cost investing access initiatives are frequently cited as part of its broader mission of "democratizing" investing</li><li class="placeholder">{{ESG_SOC — specific program details not independently sourced}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul class="placeholder"><li>{{ESG_GOV — board composition and diversity not independently sourced}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 18, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (financial data aggregators and sell-side analyst rating summaries) that may be delayed or inconsistent. All figures should be independently verified against Charles Schwab's 10-K/10-Q filings and live market data before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — AAPL</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #e9edf2;
+    color: var(--text);
+    font-family: "Georgia", "Times New Roman", serif;
+    line-height: 1.55;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.12);
+    padding: 40px 50px 60px;
+  }
+
+  /* ---------- Header ---------- */
+  .report-header {
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .firm-name {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .company-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+  }
+
+  /* ---------- Recommendation banner ---------- */
+  .reco-banner {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .reco-main {
+    flex: 0 0 170px;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .reco-main .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+
+  .reco-main .value {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+
+  .reco-stats {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--gray-bg);
+  }
+
+  .reco-stat {
+    padding: 10px 14px;
+    border-left: 1px solid var(--border);
+  }
+
+  .reco-stat .label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    display: block;
+  }
+
+  .reco-stat .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* ---------- Basic info table ---------- */
+  .basic-info {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+
+  .basic-info td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .basic-info td.k {
+    color: var(--muted);
+    width: 38%;
+  }
+
+  .basic-info td.v {
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  /* ---------- Section styling ---------- */
+  section {
+    margin-bottom: 32px;
+  }
+
+  h2.section-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: var(--navy);
+    padding: 8px 14px;
+    margin: 0 0 14px 0;
+    border-left: 5px solid var(--accent);
+  }
+
+  h3.sub-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    margin: 18px 0 10px;
+  }
+
+  p.body-text {
+    font-size: 15px;
+    margin: 0 0 12px;
+  }
+
+  .placeholder {
+    color: #8a8fa3;
+    font-style: italic;
+  }
+
+  ul.bullet-list {
+    margin: 0 0 12px 0;
+    padding-left: 20px;
+  }
+
+  ul.bullet-list li {
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+
+  /* ---------- Investment Summary callout ---------- */
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  .thesis-box .thesis-label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-dark);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  /* ---------- Valuation table ---------- */
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  table.data-table th {
+    background: var(--navy);
+    color: #fff;
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  table.data-table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  table.data-table tr:nth-child(even) td {
+    background: var(--gray-bg);
+  }
+
+  /* ---------- Risk list ---------- */
+  .risk-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+  }
+
+  .risk-tag {
+    flex: 0 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    background: var(--red);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .risk-tag.op { background: #b8860b; }
+  .risk-tag.fin { background: var(--red); }
+  .risk-tag.reg { background: #6a3d9a; }
+  .risk-tag.legal { background: #444; }
+
+  /* ---------- ESG grid ---------- */
+  .esg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .esg-card {
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: 4px;
+    padding: 12px 14px;
+  }
+
+  .esg-card.environmental { border-top-color: #2e7d32; }
+  .esg-card.social { border-top-color: #1565c0; }
+  .esg-card.governance { border-top-color: #6a1b9a; }
+
+  .esg-card h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px;
+    color: var(--navy);
+  }
+
+  .esg-card ul {
+    margin: 0;
+    padding-left: 16px;
+    font-size: 13px;
+  }
+
+  .esg-card li { margin-bottom: 4px; }
+
+  /* ---------- Peer comparison ---------- */
+  .peer-note {
+    font-size: 12.5px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: -6px;
+    margin-bottom: 12px;
+  }
+
+  /* ---------- Footer / disclosures ---------- */
+  footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  footer .analyst-line {
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  @media (max-width: 700px) {
+    .page { padding: 24px 18px; }
+    .reco-banner { flex-direction: column; }
+    .reco-stats { grid-template-columns: repeat(2, 1fr); }
+    .esg-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research &middot; Equity Research</div>
+      <h1 class="company-title">Apple Inc.</h1>
+      <div class="ticker-line">AAPL &nbsp;|&nbsp; NASDAQ &nbsp;|&nbsp; Technology / Consumer Electronics</div>
+    </div>
+    <div class="report-date">
+      September 18, 2026<br>
+      Analyst: Equity Research Desk
+    </div>
+  </div>
+
+  <!-- ============ RECOMMENDATION BANNER ============ -->
+  <div class="reco-banner">
+    <div class="reco-main">
+      <span class="label">Recommendation</span>
+      <span class="value" style="color:#1e7e34;">BUY</span>
+    </div>
+    <div class="reco-stats">
+      <div class="reco-stat">
+        <span class="label">Current Price</span>
+        <span class="value">$335.09</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Target Price</span>
+        <span class="value">$324.40</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Market Cap</span>
+        <span class="value">$4.89T</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Implied Upside/Downside</span>
+        <span class="value">-3.19%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BASIC INFORMATION ============ -->
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">AAPL</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NASDAQ</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Technology</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Consumer Electronics</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$236.65 &ndash; $344.57</td></tr>
+      <tr><td class="k">Average Daily Volume (Liquidity)</td><td class="v">~13.14 million shares</td></tr>
+      <tr><td class="k">Float</td><td class="v"><span class="placeholder">{{FLOAT — not independently sourced; effectively equal to shares outstanding less insider holdings}}</span></td></tr>
+      <tr><td class="k">Shares Outstanding</td><td class="v">~14.59 billion</td></tr>
+      <tr><td class="k">Major Shareholders</td><td class="v"><span class="placeholder">{{MAJOR_SHAREHOLDERS — Vanguard, BlackRock, and Berkshire Hathaway are known large holders; exact stakes not independently verified in this pass}}</span></td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT SUMMARY ============ -->
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Apple's installed base of roughly 2.3 billion active devices continues to anchor an increasingly services-driven earnings model, with Services revenue growing faster than the core Products segment and carrying materially higher margins. TTM revenue of $466.8B (+14.2% vs. FY2025) and TTM net income of $128.9B (+15.1%) reflect strong momentum, aided by a weaker U.S. dollar, resilient iPhone 17-cycle demand, and continued share buybacks that compress the share count. <strong>Note: the average analyst price target of $324.40 sits roughly 3% BELOW the current share price of $335.09 even as the headline consensus label reads "Buy," and the 44-analyst distribution (19 Strong Buy / 6 Buy / 13 Hold / 3 Sell / 3 Strong Sell) shows meaningful dispersion, with combined Buy-or-better (56.8%) a clear plurality but Hold+Sell+Strong Sell together representing 43.2% of coverage.</strong> This target-below-price configuration is flagged explicitly rather than reconciled, and should be independently verified before being relied upon; it may reflect the stock's sharp 2026 rally (+38.4% market cap growth) outrunning updated target prices, or genuine valuation caution at a 38.7x trailing P/E on a low-single-digit unit growth hardware business.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text placeholder">{{RECENT_DEVELOPMENTS — most recent quarterly results, iPhone 17 cycle commentary, Services growth, capital return updates, and any AI/Apple Intelligence product news should be sourced from the most recent 10-Q/8-K and verified independently}}</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text placeholder">{{EARNINGS_FORECAST_SUMMARY — forward EPS and revenue estimates for FY2026E/FY2027E should be sourced from consensus data and verified independently; TTM EPS of $8.72 provides a base}}</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">At $335.09, AAPL trades at approximately 38.7x trailing earnings, a premium to its own historical average and to the broader mega-cap technology group, reflecting the market's ascription of a growing-annuity multiple to Services cash flows. The disconnect between the current price and the $324.40 average analyst target suggests the sell-side has not fully caught up to the stock's recent advance, or that consensus views current levels as modestly ahead of fair value.</p>
+  </section>
+
+  <!-- ============ BUSINESS DESCRIPTION ============ -->
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Apple Inc. designs, manufactures, and markets smartphones (iPhone), personal computers (Mac), tablets (iPad), wearables and accessories (Apple Watch, AirPods, and other devices), and a broad portfolio of associated software and services. The Services segment — the App Store, Apple Music, iCloud, AppleCare, Apple Pay, advertising, and the licensing arrangement with Google for default search placement — has become an increasingly important profit driver, layered on top of a large and growing installed base of over 2 billion active devices worldwide. Apple sells through its own retail and online stores as well as third-party carriers, resellers, and wholesalers globally.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>iPhone unit volumes and average selling price, driven by annual product cycles and upgrade rates within the installed base</li>
+      <li>Services revenue growth (App Store commissions, subscriptions, licensing/search revenue, advertising, AppleCare, Apple Pay)</li>
+      <li>Wearables, Home & Accessories and Mac/iPad refresh cycles, supplemented by emerging AI-enabled feature differentiation ("Apple Intelligence")</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Cost of components, contract manufacturing (concentrated with a small number of Asian assembly partners), and logistics, exposed to tariff and supply-chain policy risk</li>
+      <li>R&D investment in silicon design, AI/ML capabilities, and new product categories, plus marketing spend around product launches</li>
+    </ul>
+  </section>
+
+  <!-- ============ INDUSTRY OVERVIEW & COMPETITIVE POSITIONING ============ -->
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text placeholder">{{INDUSTRY_OVERVIEW — global smartphone/PC unit shipment trends are broadly flat-to-low-growth in mature markets, with replacement cycles rather than new-user growth driving volumes; premium-tier share is concentrated among Apple and a small number of Android OEMs; should be independently verified with current IDC/Canalys shipment data}}</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — capital intensity, brand loyalty, ecosystem lock-in, and IP portfolio create very high barriers to entry in premium hardware</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — Apple wields significant leverage over its contract manufacturers and component suppliers given order volume, but is exposed to concentration risk in advanced semiconductor fabrication (TSMC) and assembly (Foxconn and peers)</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Low-to-Moderate — individual consumers have limited pricing power, though carriers and enterprise buyers can negotiate volume terms</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate — Android OEMs offer lower-cost alternatives, and cross-platform services can reduce switching costs at the margin</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — intense competition with Samsung, Google, and Chinese OEMs (Huawei, Xiaomi) in hardware, and with Google, Amazon, Microsoft, and Meta in services/AI</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Apple's moat rests on a tightly integrated hardware-software-services ecosystem, exceptional brand strength and customer loyalty (among the highest retention rates in consumer electronics), scale advantages in component sourcing and manufacturing logistics, and a growing high-margin Services annuity layered on top of the device installed base. Switching costs rise with each additional Apple device and subscription a customer adopts.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set used for relative valuation and competitive benchmarking.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Market Cap</th><th>P/E</th><th>EV/EBITDA</th></tr>
+      <tr><td>Apple Inc.</td><td>AAPL</td><td>$4.89T</td><td>38.7x</td><td class="placeholder">{{EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">Microsoft Corporation</td><td class="placeholder">MSFT</td><td class="placeholder">{{PEER_1_MCAP}}</td><td class="placeholder">{{PEER_1_PE}}</td><td class="placeholder">{{PEER_1_EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">Alphabet Inc.</td><td class="placeholder">GOOG</td><td class="placeholder">{{PEER_2_MCAP}}</td><td class="placeholder">{{PEER_2_PE}}</td><td class="placeholder">{{PEER_2_EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">Samsung Electronics</td><td class="placeholder">005930.KS</td><td class="placeholder">{{PEER_3_MCAP}}</td><td class="placeholder">{{PEER_3_PE}}</td><td class="placeholder">{{PEER_3_EV_EBITDA}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ VALUATION ============ -->
+  <section>
+    <h2 class="section-title">Valuation</h2>
+
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{WACC — not independently modeled in this pass; typical mega-cap tech WACC range 8-10%}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{TERMINAL_GROWTH — typically 2.5-3.5% for a mature mega-cap}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{FORECAST_PERIOD — typically 5-10 years}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td class="placeholder">{{DCF_INTRINSIC_VALUE — not independently modeled; requires detailed FCF build-out}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Relative Valuation</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Apple Inc.</th><th>Peer Average</th><th>Industry Average</th></tr>
+      <tr><td>P/E</td><td>38.7x</td><td class="placeholder">{{PEER_PE_AVG}}</td><td class="placeholder">{{INDUSTRY_PE_AVG}}</td></tr>
+      <tr><td>P/Sales</td><td class="placeholder">~10.5x (estimated from market cap/TTM revenue)</td><td class="placeholder">{{PEER_PS_AVG}}</td><td class="placeholder">{{INDUSTRY_PS_AVG}}</td></tr>
+      <tr><td>P/Cash Flow</td><td class="placeholder">{{PCF_RATIO}}</td><td class="placeholder">{{PEER_PCF_AVG}}</td><td class="placeholder">{{INDUSTRY_PCF_AVG}}</td></tr>
+      <tr><td>P/Book Value</td><td class="placeholder">{{PB_RATIO}}</td><td class="placeholder">{{PEER_PB_AVG}}</td><td class="placeholder">{{INDUSTRY_PB_AVG}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">The average sell-side price target of $324.40 currently sits below the market price of $335.09, an unusual configuration for a stock carrying a headline "Buy" consensus. Given the wide analyst target range ($215–$400) and the strong Buy-or-better plurality (56.8% of 44 analysts), this report assigns a BUY rating on the balance of the distribution, but flags the price-versus-target inversion as a data point warranting independent verification and closer monitoring for target revisions following the next earnings print.</p>
+  </section>
+
+  <!-- ============ FINANCIAL ANALYSIS ============ -->
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+
+    <h3 class="sub-title">Historical &amp; Forecast Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>FY2024</th><th>FY2025</th><th>TTM (Jun'26)</th><th>FY2026E</th></tr>
+      <tr><td>Revenue</td><td>$391,035M</td><td>$416,161M</td><td>$466,823M</td><td class="placeholder">{{REV_Y3}}</td></tr>
+      <tr><td>EBITDA</td><td class="placeholder">{{EBITDA_Y0}}</td><td class="placeholder">{{EBITDA_Y1}}</td><td class="placeholder">{{EBITDA_Y2}}</td><td class="placeholder">{{EBITDA_Y3}}</td></tr>
+      <tr><td>Net Income</td><td>$93,736M</td><td>$112,010M</td><td>$128,930M</td><td class="placeholder">{{NI_Y3}}</td></tr>
+      <tr><td>EPS (Diluted)</td><td>$6.08</td><td>$7.46</td><td>$8.72</td><td class="placeholder">{{EPS_Y3}}</td></tr>
+      <tr><td>Free Cash Flow</td><td>$108,807M</td><td>$98,767M</td><td>$136,683M</td><td class="placeholder">{{FCF_Y3}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">TTM free cash flow of $136.7B is up 42.1% versus FY2025's $98.8B, a materially faster pace than the underlying revenue growth of 14.2% — this divergence is flagged for independent verification, as it may reflect working-capital timing (inventory/payables swings ahead of a product launch) rather than a structural improvement in cash conversion. Net income growth (15.1% TTM vs. FY2025) is broadly consistent with revenue growth, which is a reassuring sign of earnings quality relative to some peers in this report series that have shown sharp unexplained TTM-vs-FY divergences.</p>
+
+    <h3 class="sub-title">Industry-Specific Ratios</h3>
+    <table class="data-table">
+      <tr><th>Ratio</th><th>Value</th></tr>
+      <tr><td>Services Revenue Growth Rate</td><td class="placeholder">{{INDUSTRY_RATIO_1_VALUE — not independently broken out in this pass; historically has run in the low-to-mid teens percentage range}}</td></tr>
+      <tr><td>Gross Margin</td><td class="placeholder">{{INDUSTRY_RATIO_2_VALUE — historically in the mid-40s percentage range; requires independent verification from the latest 10-K/10-Q}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT RISKS ============ -->
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+
+    <div class="risk-item">
+      <span class="risk-tag op">Operational</span>
+      <span>Heavy geographic concentration of final assembly and key component sourcing in China and other parts of Asia exposes Apple to supply-chain disruption, geopolitical tension, and tariff policy risk.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag fin">Financial</span>
+      <span>A rich 38.7x trailing P/E multiple leaves the stock vulnerable to a de-rating on any growth disappointment, particularly if iPhone unit growth or Services growth decelerates below current expectations.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag reg">Regulatory</span>
+      <span>Ongoing antitrust scrutiny in the U.S., EU (Digital Markets Act), and other jurisdictions targets App Store commission structures and the default search-engine licensing arrangement with Google, both meaningful profit contributors.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag legal">Legal</span>
+      <span>Exposure to ongoing intellectual property, antitrust, and consumer litigation globally; outcomes and financial impact are difficult to predict and should be independently monitored via the company's most recent 10-K legal proceedings disclosure.</span>
+    </div>
+
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{AUDITOR_FLAGS — no material weaknesses or qualified audit opinions are known to this analyst as of the report date; this should be independently confirmed against Apple's most recent 10-K auditor's report}}</p>
+  </section>
+
+  <!-- ============ ESG ============ -->
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental">
+        <h4>Environmental</h4>
+        <ul>
+          <li>Apple has publicly targeted carbon neutrality across its entire supply chain and product life cycle by 2030</li>
+          <li>Continued investment in recycled materials and closed-loop manufacturing (e.g., recycled aluminum, cobalt, and rare earth elements)</li>
+          <li class="placeholder">{{ESG_ENV_3 — waste management specifics not independently verified in this pass}}</li>
+        </ul>
+      </div>
+      <div class="esg-card social">
+        <h4>Social</h4>
+        <ul>
+          <li class="placeholder">{{ESG_SOC_1 — supplier labor standards and human rights audits should be sourced from Apple's Supplier Responsibility report}}</li>
+          <li class="placeholder">{{ESG_SOC_2 — workforce diversity metrics not independently verified in this pass}}</li>
+          <li>Large, loyal customer base with industry-leading customer satisfaction and Net Promoter Scores</li>
+        </ul>
+      </div>
+      <div class="esg-card governance">
+        <h4>Governance</h4>
+        <ul>
+          <li class="placeholder">{{ESG_GOV_1 — board composition not independently verified in this pass; should be sourced from the most recent proxy statement}}</li>
+          <li class="placeholder">{{ESG_GOV_2 — executive compensation structure should be sourced from the most recent proxy statement}}</li>
+          <li>Long-tenured management team under CEO Tim Cook, with an established capital-return framework (dividends plus a large ongoing buyback program)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER / DISCLOSURES ============ -->
+  <footer>
+    <div class="analyst-line">Prepared by Equity Research Desk, Equity Analyst — Independent Equity Research</div>
+    This report is compiled from publicly available data sources believed to be reliable but not independently audited. Figures marked as placeholders require independent verification before use in an investment decision. This report does not constitute investment advice, an offer, or a solicitation to buy or sell any security. Ratings: BUY = expected to outperform the market over the next 12 months; HOLD = expected to perform in line with the market; SELL = expected to underperform the market. The analyst(s) preparing this report may or may not hold a position in the subject security. Past performance is not indicative of future results.
+  </footer>
+
+</div>
+</body>
+</html>

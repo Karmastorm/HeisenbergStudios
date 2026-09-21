@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — ABBV</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  .placeholder { color:#8a8fa3; font-style:italic; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">AbbVie Inc.</h1>
+      <div class="ticker-line">ABBV &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Health Care / Pharmaceuticals</div>
+    </div>
+    <div class="report-date">September 18, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#1e7e34;">BUY</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">$264.02</span></div>
+      <div class="reco-stat"><span class="label">Target Price</span><span class="value">$277.31 (avg.)</span></div>
+      <div class="reco-stat"><span class="label">Market Cap</span><span class="value">$466.6B</span></div>
+      <div class="reco-stat"><span class="label">Implied Upside</span><span class="value">~+5.0%</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">ABBV</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Health Care</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Pharmaceuticals</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$190.75 – $267.47</td></tr>
+      <tr><td class="k">Consensus Rating</td><td class="v">Buy (31 analysts: 17 Strong Buy, 8 Buy, 5 Hold, 1 Sell)</td></tr>
+      <tr><td class="k">TTM Revenue / Net Income</td><td class="v">$64.39 billion / $6.27 billion</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      AbbVie delivered TTM revenue of $64.39 billion (up 10.4% year-over-year) and net income of $6.27 billion, up a substantial 67.7%, reflecting continued strong growth in its ex-Humira immunology franchise (Skyrizi and Rinvoq) that has more than offset the anticipated biosimilar erosion of its former blockbuster Humira. The stock trades near its 52-week high of $267.47 at $264.02, and the analyst rating distribution remains strongly favorable — 25 of 31 analysts (81%) rate Buy or Strong Buy — though the average price target of $277.31 implies a relatively modest 5.0% upside. We rate ABBV a BUY, supported by the successful post-Humira franchise transition and a decisively bullish analyst base, while noting the stock's proximity to its 52-week high limits near-term upside potential.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">AbbVie's trailing-twelve-month results showed revenue of $64.39 billion (up 10.4% year-over-year) and net income of $6.27 billion (up 67.7%), building on full-year 2025 revenue of $61.16 billion (up 8.57%) even as 2025 earnings of $4.19 billion were roughly flat (down 1.23%) versus the prior year. The substantial TTM net income growth suggests continued margin improvement as the post-Humira immunology franchise (Skyrizi and Rinvoq) scales. The stock has traded within a 52-week range of $190.75 to $267.47 and currently sits near that high.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text placeholder">{{No specific forward-quarter or full-year 2026 EPS guidance was independently sourced for this report — recommend reviewing AbbVie's most recent earnings call transcript for management's outlook on Skyrizi/Rinvoq growth trajectory and continued Humira erosion.}}</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Consensus rating is Buy across 31 analysts (17 Strong Buy, 8 Buy, 5 Hold, 1 Sell), an 81% Buy/Strong Buy majority. The average price target of $277.31 (range $200–$328) implies approximately 5.0% upside from the current price of $264.02, modest relative to the stock's strong trailing-year performance and proximity to its 52-week high.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">AbbVie is a global biopharmaceutical company with a portfolio spanning immunology (Skyrizi, Rinvoq, and the legacy Humira franchise), oncology, aesthetics (Botox and Juvederm via its Allergan acquisition), and neuroscience. The company has successfully transitioned its immunology franchise growth engine from Humira (facing biosimilar competition since 2023) to next-generation therapies Skyrizi and Rinvoq.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Skyrizi and Rinvoq immunology franchise growth, which has more than offset Humira's biosimilar-driven revenue decline</li>
+      <li>Aesthetics segment revenue from Botox Cosmetic and Juvederm, acquired via the 2020 Allergan acquisition</li>
+      <li>Oncology and neuroscience pipeline products contributing to diversified revenue growth</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Research and development investment supporting continued pipeline advancement across immunology, oncology, and neuroscience</li>
+      <li class="placeholder">{{Specific litigation and legal settlement expense figures (including opioid-related litigation) not independently sourced for this report}}</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">AbbVie competes in the global pharmaceutical industry against other large diversified drug makers including Johnson &amp; Johnson, Merck, and Pfizer (see separate JNJ, MRK, and PFE reports in this series), with particular competitive intensity in the immunology therapeutic category.</p>
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — extensive R&amp;D investment requirements, patent protection, and regulatory approval barriers limit new entrants in specialty pharmaceuticals.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Low-to-Moderate — AbbVie maintains diversified manufacturing capabilities across its therapeutic portfolio.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate — pharmacy benefit managers and payers can negotiate formulary placement and rebates, particularly relevant given AbbVie's specialty/immunology focus.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>High — AbbVie has direct recent experience with biosimilar substitution risk following Humira's loss of exclusivity, a structural risk that will recur as other key products approach patent expiration.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — intense competition in the immunology therapeutic category, AbbVie's largest franchise, against other major biopharmaceutical companies.</td></tr>
+    </table>
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">AbbVie's moat rests on its demonstrated ability to successfully transition its immunology franchise from a maturing blockbuster (Humira) to next-generation therapies (Skyrizi, Rinvoq) ahead of biosimilar erosion, along with its diversified aesthetics, oncology, and neuroscience portfolio.</p>
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major U.S. health care companies. See separate UNH, JNJ, MRK, PFE, TMO, ABT, DHR, ISRG, and AMGN reports in this series.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>AbbVie</td><td>ABBV</td><td>Successful post-Humira franchise transition; 81% Buy+ rating</td></tr>
+      <tr><td>Johnson &amp; Johnson</td><td>JNJ</td><td>See separate JNJ report in this series</td></tr>
+      <tr><td>Merck</td><td>MRK</td><td>See separate MRK report in this series</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — requires explicit modeling of Skyrizi/Rinvoq growth trajectory against eventual patent expiration timelines}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>Average sell-side price target of $277.31 (31 analysts) as of the report date</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">We rate ABBV a <strong>BUY</strong>. The successful immunology franchise transition, strong net income growth (+67.7% TTM), and an 81% Buy/Strong Buy analyst distribution support a constructive stance, though the modest ~5% implied upside and proximity to the 52-week high suggest the near-term positive case is substantially reflected in the current price.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>2025</th><th>TTM</th></tr>
+      <tr><td>Revenue</td><td>$61.16 billion (+8.57%)</td><td>$64.39 billion (+10.4%)</td></tr>
+      <tr><td>Net Income</td><td>$4.19 billion (-1.23%)</td><td>$6.27 billion (+67.7%)</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text placeholder">{{The substantial acceleration in net income growth from full-year 2025 (roughly flat) to the TTM period (+67.7%) suggests either a strong recent quarter or a favorable prior-year comparison base — specific quarterly detail was not independently sourced for this report and should be reviewed directly against AbbVie's quarterly earnings supplements.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>AbbVie's Skyrizi and Rinvoq immunology franchise faces eventual patent expiration and biosimilar/generic competition risk over the long term, similar to the pattern experienced with Humira.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>The stock trades near its 52-week high with the average analyst target implying only modest (~5%) further upside, suggesting limited valuation cushion if growth trends were to disappoint.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span class="placeholder">{{Pharmaceutical regulatory approval processes (FDA) and drug pricing policy represent ongoing industry-wide considerations; specific current developments not independently verified for this report.}}</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{AbbVie has faced historical opioid-related litigation exposure (via its Allergan acquisition); current status and reserve levels were not independently verified for this report — recommend reviewing the company's most recent 10-K legal proceedings disclosure directly.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in the sources reviewed — verify directly against AbbVie's 10-K/10-Q auditor opinion.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul class="placeholder"><li>{{ESG_ENV — operational emissions and sustainability targets not independently sourced}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul><li>Patient access and drug pricing considerations for its immunology franchise remain areas of ongoing public and investor scrutiny</li><li class="placeholder">{{ESG_SOC — specific program details not independently sourced}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul class="placeholder"><li>{{ESG_GOV — board composition and diversity not independently sourced}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 18, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (financial data aggregators and sell-side analyst rating summaries) that may be delayed or inconsistent. All figures should be independently verified against AbbVie's 10-K/10-Q filings and live market data before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

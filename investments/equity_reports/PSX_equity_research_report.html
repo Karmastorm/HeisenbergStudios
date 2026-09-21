@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — PSX</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  .placeholder { color:#8a8fa3; font-style:italic; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Phillips 66</h1>
+      <div class="ticker-line">PSX &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Energy / Oil &amp; Gas Refining &amp; Marketing</div>
+    </div>
+    <div class="report-date">September 17, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#b8860b;">HOLD</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">$273.18</span></div>
+      <div class="reco-stat"><span class="label">Target Price</span><span class="value">$249.32 (avg.)</span></div>
+      <div class="reco-stat"><span class="label">Market Cap</span><span class="value">$109.0B</span></div>
+      <div class="reco-stat"><span class="label">Implied Upside/Downside</span><span class="value">~-8.7%</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">PSX</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Energy</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Oil &amp; Gas Refining &amp; Marketing</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$126.74 – $273.24</td></tr>
+      <tr><td class="k">Consensus Rating</td><td class="v">Buy (20 analysts: 9 Strong Buy, 3 Buy, 6 Hold, 1 Sell, 1 Strong Sell)</td></tr>
+      <tr><td class="k">TTM Revenue / Net Income</td><td class="v">$152.17 billion / $7.09 billion</td></tr>
+      <tr><td class="k">TTM EPS</td><td class="v">$17.51 (up ~323% YoY)</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted); margin-top:-14px;">Note: the average analyst price target ($249.32) sits below the current share price ($273.18), implying negative headline upside despite an overall Buy consensus rating — consistent with a sector-wide pattern seen across U.S. refiners this cycle (see also MPC and VLO reports in this series). Figures should be independently re-verified against current market data before use.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Phillips 66 delivered a record Q2 2026, with net income surging roughly 313% year-over-year to $7.09 billion on a trailing-twelve-month basis and EPS up approximately 323% to $17.51, driven by exceptionally strong refining margins amid geopolitical supply disruptions affecting global energy markets. The stock has more than doubled over the trailing year (market cap up ~106%) and now trades near its 52-week high of $273.24, just above its average analyst price target of $249.32 — implying roughly 9% downside on a headline basis. The analyst rating distribution (12 of 20 analysts rating Buy or Strong Buy, 6 Hold, 2 Sell/Strong Sell) does support an overall constructive stance, but as with peers MPC and VLO, this earnings surge is overwhelmingly a function of historically elevated, highly cyclical refining crack spreads rather than structural volume or cost improvements. Given the stock's re-rating has already priced in much of the current-cycle margin strength, and the average target sits below the current price, we rate PSX a HOLD pending clearer visibility into margin durability.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Phillips 66 reported record second-quarter 2026 results, highlighted by trailing-twelve-month net income of $7.09 billion (up 312.9% year-over-year) and EPS of $17.51 (up 323.3%), on trailing revenue of $152.17 billion (up 14.4%). Management attributed the results to record earnings and strategic momentum across the integrated downstream business — refining, midstream, chemicals, and renewable fuels — with particularly strong refining margins driven by geopolitical tensions affecting global energy supply. The stock has traded above $240 and touched a new all-time/52-week high near $273 following the earnings release, with several sell-side firms raising price targets in response, even as some coverage questioned whether the stock now looks fully valued after such a sharp advance.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text placeholder">{{No specific forward quarterly or full-year 2026/2027 EPS guidance was independently sourced for this report — recommend modeling a normalized, lower refining-margin scenario distinct from the current peak-margin environment, consistent with the approach taken for MPC and VLO in this series.}}</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Consensus rating is Buy across 20 analysts (9 Strong Buy, 3 Buy, 6 Hold, 1 Sell, 1 Strong Sell), representing majority support (12 of 20, or 60%) for a positive rating. However, the average price target of $249.32 sits roughly 8.7% below the current share price of $273.18, indicating that even bullish-leaning coverage sees limited near-term upside at current levels after the stock's sharp re-rating.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Phillips 66 is an integrated downstream energy provider operating across four core segments: refining, midstream (including its consolidated interest in midstream logistics assets), chemicals (through the CPChem joint venture), and renewable fuels. Its refining network converts crude oil into gasoline, diesel, jet fuel, and other refined products, with earnings closely tied to regional crack spreads — the margin between crude input costs and refined product prices — which are highly sensitive to global supply disruptions, seasonal demand, and refinery utilization rates across the industry.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Refining margin expansion driven by geopolitical supply disruptions affecting global crude and refined-product markets</li>
+      <li>Diversified downstream mix across refining, midstream, chemicals (CPChem), and renewable fuels segments</li>
+      <li>Record TTM net income and EPS growth reflecting the current elevated-margin refining environment</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li class="placeholder">{{Specific Q2 2026 capital expenditure and operating cost figures not independently sourced for this report}}</li>
+      <li>Ongoing refining and midstream maintenance capital, plus renewable fuels segment investment</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Phillips 66 competes in the U.S. petroleum refining and marketing industry, most directly against Valero Energy and Marathon Petroleum (see separate VLO and MPC reports in this series). The entire sector benefited from historically elevated crack spreads in Q2 2026 amid geopolitical supply disruptions, meaning the earnings surge is likely industry-wide rather than solely reflective of PSX-specific execution.</p>
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — new U.S. refinery construction is exceedingly rare given capital intensity, permitting difficulty, and regulatory barriers.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — crude oil suppliers price on global benchmarks, though integrated refiners can optimize crude slate sourcing.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Low — refined products and chemicals are largely commodity goods with limited individual buyer leverage.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate-to-Long-Term — electric vehicle adoption and renewable fuels represent a structural long-term substitute for traditional refined transportation fuels.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — intense competition among major U.S. refiners (Valero, Marathon Petroleum, and others) for regional crack-spread advantages.</td></tr>
+    </table>
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Phillips 66's moat rests on its diversified integrated model spanning refining, midstream, chemicals (via the CPChem joint venture), and renewable fuels, which provides some earnings diversification relative to pure-play refiners, alongside scale advantages in its refining network.</p>
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major U.S. petroleum refiners. See separate VLO and MPC reports in this series.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>Phillips 66</td><td>PSX</td><td>Average target below current price; majority Buy/Strong Buy rating distribution (60%)</td></tr>
+      <tr><td>Valero Energy</td><td>VLO</td><td>See separate VLO report in this series</td></tr>
+      <tr><td>Marathon Petroleum</td><td>MPC</td><td>See separate MPC report in this series</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — recommend explicit modeling of a normalized (mean-reverting) refining-margin scenario separate from the current peak-margin period}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>Average sell-side price target of $249.32 (20 analysts) as of the report date, below the then-current price of $273.18</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">We rate PSX a <strong>HOLD</strong>. Record Q2 2026 results were driven overwhelmingly by historically elevated refining crack spreads tied to geopolitical supply disruptions — a highly cyclical, mean-reverting earnings driver. With the average analyst price target sitting below the current share price after a sharp year-long re-rating, we see the risk/reward as balanced rather than favorable at current levels, consistent with our HOLD ratings on sector peers MPC and VLO.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Prior Period (TTM)</th><th>Current (TTM)</th><th>YoY Change</th></tr>
+      <tr><td>Net Income</td><td class="placeholder">{{Not independently sourced}}</td><td>$7.09 billion</td><td>+312.9%</td></tr>
+      <tr><td>EPS</td><td class="placeholder">{{Not independently sourced}}</td><td>$17.51</td><td>+323.3%</td></tr>
+      <tr><td>Revenue</td><td class="placeholder">{{Not independently sourced}}</td><td>$152.17 billion</td><td>+14.4%</td></tr>
+      <tr><td>Market Capitalization</td><td class="placeholder">{{Not independently sourced}}</td><td>$109.0 billion</td><td>+106.2%</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">The extraordinary year-over-year net income and EPS growth is overwhelmingly attributable to refining margin expansion driven by geopolitical supply disruptions, rather than volume growth or structural cost improvements — a genuine but highly cyclical earnings driver shared across the U.S. refining sector this cycle. Investors should explicitly model a normalized, lower refining-margin scenario rather than extrapolating current peak-margin results forward.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>Refining margins are historically among the most cyclical metrics in the energy sector; the currently elevated crack spreads driven by geopolitical supply disruptions are unlikely to persist indefinitely, and normalization would substantially reduce earnings.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>The current share price already exceeds the average analyst price target, implying the market may be pricing in a continuation of currently elevated margins that carries meaningful downside risk if margins normalize.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span class="placeholder">{{Renewable fuel standard (RFS) policy and refined-product environmental regulation represent ongoing industry-wide regulatory considerations for the renewable fuels segment; specific current status not independently verified for this report.}}</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against Phillips 66's most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in the sources reviewed — verify directly against Phillips 66's 10-K/10-Q auditor opinion. The current price/average target discrepancy flagged above should be independently reconciled against live market data before this report is used for any investment decision.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul><li>Renewable fuels segment represents an ongoing lower-carbon fuels investment within the integrated downstream portfolio</li><li class="placeholder">{{ESG_ENV — refinery emissions-reduction targets not independently sourced}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul class="placeholder"><li>{{ESG_SOC — community relations and workforce safety program specifics not independently sourced}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul class="placeholder"><li>{{ESG_GOV — board composition and diversity not independently sourced}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 17, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (company earnings releases, financial media coverage, and sell-side analyst commentary) that may be delayed or inconsistent, including a noted discrepancy between the current price and the average analyst price target. All figures should be independently verified against Phillips 66's 10-K/10-Q filings and live market data before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

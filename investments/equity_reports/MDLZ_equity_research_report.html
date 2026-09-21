@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — MDLZ</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Mondelez International, Inc.</h1>
+      <div class="ticker-line">MDLZ &nbsp;|&nbsp; NASDAQ &nbsp;|&nbsp; Consumer Staples / Packaged Foods &amp; Snacks</div>
+    </div>
+    <div class="report-date">September 15, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#4caf50;">BUY</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">~$61.54 (Sept 2, 2026)</span></div>
+      <div class="reco-stat"><span class="label">Target Price (Consensus)</span><span class="value">~$67–$67.27 (24 analysts)</span></div>
+      <div class="reco-stat"><span class="label">Market Cap</span><span class="value">~$75.6–82.0 billion</span></div>
+      <div class="reco-stat"><span class="label">2026 YTD Performance</span><span class="value">+13–15%</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">MDLZ</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NASDAQ</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Consumer Staples</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Packaged Foods &amp; Snacks (Biscuits, Chocolate, Gum, Candy, Baked Snacks)</td></tr>
+      <tr><td class="k">Key Brands</td><td class="v">Oreo (marketed in 100+ countries), Milka, Cadbury, and other global/regional snacking brands</td></tr>
+      <tr><td class="k">Geographic Footprint</td><td class="v">Operations in more than 150 countries</td></tr>
+      <tr><td class="k">52-Week High</td><td class="v">$71 (stock trading ~14% below this level per one source)</td></tr>
+      <tr><td class="k">Dividend</td><td class="v">Quarterly dividend increased 4% in 2026; $1.5 billion returned to shareholders year-to-date (dividends + buybacks) as of Q2 2026</td></tr>
+      <tr><td class="k">CEO / Headquarters</td><td class="v">Dirk Van De Put (CEO); Amit Banati (CFO); headquartered in Chicago, Illinois</td></tr>
+      <tr><td class="k">Analyst Ratings</td><td class="v">"Moderate Buy"/"Strong Buy" skewed (13 Strong Buy / 2 Moderate Buy / 9 Hold of 24 analysts, one source)</td></tr>
+      <tr><td class="k">Earnings Beat Streak</td><td class="v">Topped Wall Street's bottom-line estimates in each of the last four quarters (as of the Q2 2026 preview)</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted); margin-top:-14px;">Note: sources showed a significant discrepancy in Q2 2026 adjusted EPS figures — one source cited $0.73 (down 2.7% at constant FX), while another cited $0.98 (up 12.6% YoY from $0.87). This is a large enough gap to warrant direct verification against Mondelez's own earnings release before use; it's possible one figure reflects a different currency/constant-FX basis or a data error. Market cap similarly ranged from $75.6B to $82.0B across sources and dates.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Mondelez continues to navigate a well-understood, multi-year cocoa-cost inflation cycle while delivering resilient top-line growth: Q2 2026 net revenue grew 4.1% to $9.4 billion (organic net revenue +2.2%), with strong performance in emerging markets (India, Mexico, and Brazil specifically cited as performing well, with China expected to improve) and North America, though Europe showed only early positive trends with some softness, compounded by an "unprecedented heat wave" that temporarily pressured chocolate consumption and led to tighter trade-stock management. Reported diluted EPS surged 144.9% to $1.20 in one detailed breakdown, driven mainly by favorable mark-to-market derivative impacts and tax benefits — a clear one-time distortion that should not be confused with the more representative adjusted EPS figure (cited variously as $0.73, down 2.7% at constant FX, or $0.98, up 12.6% — a discrepancy across sources that requires direct verification, though the $0.73/decline framing appears more consistent with management's own explicit 2025 and 2026 guidance narrative around cocoa-driven EPS pressure). Management raised full-year 2026 organic net revenue growth guidance to "at least +2%," and reiterated confidence that the industry's improved cocoa supply/demand backdrop (10-month coverage and a supply surplus) provides more stability than the acute cocoa-price spike of early 2024. The company is also strategically de-risking its long-term commodity exposure by pursuing a "less cocoa-reliant" portfolio strategy, pushing non-chocolate snacks and fillings. The stock has recovered meaningfully in 2026 (up 13-15% year-to-date across sources) even as longer-term holders "remain under water" (1-year total shareholder return still negative per one source) — a useful reminder that near-term momentum and longer-term returns can diverge. Given consistent innovation-led growth (particularly Oreo's continued global expansion), disciplined capital return, a credible cocoa-cost-mitigation strategy, and a stock still trading meaningfully below both consensus analyst targets and at least one intrinsic-value estimate, this supports a BUY.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Mondelez reported Q2 2026 net revenue of $9.355-9.4 billion (+4.1% YoY), with organic net revenue growth of 2.2%, driven by strong emerging-market performance (top-line growth of 4.4% in emerging markets per the CEO's own commentary) and solid North American results, while Europe showed only early positive trends alongside some softness attributed partly to an unprecedented heat wave that temporarily suppressed chocolate consumption and led to tighter trade-stock management. GAAP diluted EPS surged 144.9% to $1.20 in one detailed breakdown, driven mainly by favorable mark-to-market derivative impacts and tax benefits — a clear one-time item that should not be read as reflecting underlying operational performance. Adjusted EPS figures varied across sources reviewed ($0.73, down 2.7% at constant FX, in one source; $0.98, up 12.6% YoY, in another) — this discrepancy was not reconciled and should be verified directly against Mondelez's own Q2 2026 earnings release. The company returned $1.5 billion to shareholders year-to-date via dividends and share repurchases as of Q2 2026, and increased its quarterly dividend by 4%. CEO Dirk Van De Put specifically highlighted stable consumer confidence in emerging markets, with India, Mexico, and Brazil performing well and China "expected to improve." CFO Amit Banati expressed confidence in the company's "iconic brand portfolio and strong innovation pipeline," seeing significant growth opportunities in emerging markets and under-indexed North American channels. Management explicitly noted the ongoing Middle East conflict continues to present a headwind, impacting both top-line revenue and bottom-line costs, already factored into current guidance; earnings phasing for the remainder of 2026 is expected to be back-weighted toward Q4 due to the timing of cocoa costs and the lapping of specific interest and tax items in Q3. On cocoa specifically, management noted that despite continued price volatility, the industry's 10-month coverage and a significant supply surplus provide a more stable fundamental backdrop than in early 2024 (when cocoa prices spiked acutely) — and the company is actively pursuing a "less cocoa-reliant" portfolio strategy over the long term, pushing non-chocolate snacks and fillings to reduce commodity exposure. Full-year 2026 organic net revenue growth outlook was raised to at least +2%. In the biscuits and baked snacks segment (which includes Oreo, marketed in over 100 countries and used as a platform for line extensions including different flavors, ice cream, and chocolate bar formats), growth in the mid-to-high single digits continued across many emerging markets in the most recently reported quarter.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Full-year 2026 guidance (as raised following Q2) calls for organic net revenue growth of at least +2%. Prior-year guidance context is notable: 2025 adjusted EPS was expected to decline approximately 10% despite solid organic growth, driven specifically by cocoa inflation — a headwind management has consistently attributed to timing (cocoa costs, tax/interest item lapping) rather than a structural demand problem. One third-party model (TIKR) projects MDLZ could rise from approximately $61 to around $76 per share by the end of 2028, based on assumptions of 3.3% annual revenue growth, 14.0% operating margins, and a 19.2x normalized P/E multiple — implying a 24% total return, or approximately 8.4% annualized, over roughly 2.7 years. Separately, one source's own forward metrics cite forecast earnings growth of 13.5% per year (above the risk-free savings rate of 3.4%, but below the broader U.S. market's projected 15.5% growth) and revenue growth of just 2.9% per year (also below the broader market's 10.4%) — a useful reminder that Mondelez's growth profile, while solid for a consumer staples name, is not expected to outpace the broader market.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Mondelez trades meaningfully below both analyst consensus targets and at least one intrinsic-value estimate: the consensus price target of $67-67.27 (24 analysts) implies approximately 9-12.4% upside from a ~$60.67-61.54 price range across recent sources, while one source's "most followed narrative" pegs fair value at $67.21 against a $60.67 last close — a modest but consistent implied discount across multiple valuation approaches. The stock's 90-day return (+3.64%) and year-to-date return (+13.08-15%) suggest improving near-term momentum, even as the 1-year total shareholder return remained negative (-9.78%) in one source — indicating that longer-term holders have not yet been made whole despite the recent recovery.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Mondelez International, Inc., headquartered in Chicago, Illinois, is one of the world's largest snack food companies, specializing in the manufacturing, marketing, and distribution of biscuits, chocolate, gum, candy, and baked snacks across more than 150 countries. The company's portfolio includes globally iconic brands such as Oreo (marketed in over 100 countries and used as a platform for extensive line extensions), Milka, and Cadbury, alongside numerous regional snacking brands. Mondelez was spun off from Kraft Foods in 2012 to separate the global snacking business from the North American grocery business (which became Kraft Foods Group, later Kraft Heinz). The company's business model is particularly exposed to cocoa commodity price volatility given its substantial chocolate portfolio, a structural characteristic that has driven meaningful earnings volatility over the past several years and prompted a deliberate strategic pivot toward a "less cocoa-reliant" product mix over time.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Emerging market growth (India, Mexico, and Brazil specifically cited as strong performers, with China expected to improve), consistently outpacing developed-market growth</li>
+      <li>Oreo and other core snacking-brand innovation and global line extensions (flavors, ice cream, chocolate bar formats), continuing mid-to-high single-digit growth in many emerging markets</li>
+      <li>Pricing actions taken in response to elevated cocoa costs, which management indicates are largely offsetting cost pressure even as consumers continue spending on snacks despite broader economic uncertainty</li>
+      <li>North American channel expansion into currently under-indexed retail channels, identified by CFO Amit Banati as a significant growth opportunity</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Cocoa price volatility, the single most significant and well-documented cost factor for Mondelez, though management notes the industry's current 10-month coverage and supply surplus provide more stability than the acute 2024 price spike</li>
+      <li>Incremental costs from the ongoing Middle East conflict, explicitly factored into current guidance as both a top-line and bottom-line headwind</li>
+      <li>An "unprecedented heat wave" in Europe, which temporarily pressured chocolate consumption and required tighter trade-stock management in Q2 2026</li>
+      <li>Continued investment in the "less cocoa-reliant" portfolio strategy (non-chocolate snacks and fillings), a deliberate long-term de-risking initiative that carries its own execution and R&amp;D costs</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Mondelez operates in the global packaged snack food industry, competing against Nestlé, Hershey, PepsiCo's Frito-Lay/Quaker snacking businesses (see separate PEP report in this series), and numerous regional confectionery and biscuit competitors. The industry's defining recent dynamic has been extreme cocoa price volatility (a severe spike in early 2024, followed by improved supply/demand balance more recently), which has disproportionately affected chocolate-heavy portfolios like Mondelez's relative to less cocoa-exposed snack competitors — directly motivating the company's strategic pivot toward a "less cocoa-reliant" mix.</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — Mondelez's global brand portfolio (Oreo, Milka, Cadbury), scale, and distribution across 150+ countries represent substantial barriers to entry.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>High and directly evidenced — cocoa price volatility has been a dominant, disclosed cost factor for multiple consecutive years, giving cocoa suppliers/producers significant leverage over Mondelez's cost structure specifically (more so than for less chocolate-exposed peers).</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate — consumers have continued spending on snacks despite pricing actions taken to offset cocoa inflation, suggesting relatively resilient demand, though management's own commentary about "broader economic uncertainty" implies some underlying price sensitivity.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate — other snack categories (savory, non-chocolate) compete for the same consumer spending, a dynamic Mondelez is itself leaning into via its less-cocoa-reliant portfolio strategy.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — Nestlé, Hershey, and PepsiCo's snacking businesses all compete directly across various categories; competitive intensity varies significantly by region and product category.</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Mondelez's moat rests on genuinely iconic, globally recognized brands (Oreo above all, marketed in over 100 countries) combined with an unusually strong emerging-market distribution footprint that has consistently outperformed developed markets in recent quarters. The company's demonstrated pricing power — able to largely offset severe cocoa cost inflation through price increases without triggering significant volume destruction — is itself evidence of durable brand strength, though the ongoing strategic shift toward a less cocoa-reliant portfolio suggests management itself views the current chocolate-heavy cost-structure exposure as a moat vulnerability worth actively managing down over time.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major global packaged snack food companies. See separate PEP report in this series.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>Mondelez</td><td>MDLZ</td><td>Market cap ~$75.6–82.0B; significant cocoa-cost exposure; strong emerging-market growth</td></tr>
+      <tr><td>PepsiCo (Frito-Lay/Quaker)</td><td>PEP</td><td>See separate PEP report in this series — snacking is one segment among several for PepsiCo, versus Mondelez's pure-play snacking focus</td></tr>
+      <tr><td>Hershey</td><td class="placeholder">{{Not independently researched in this series}}</td><td>Direct chocolate-category competitor, similarly exposed to cocoa cost volatility</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled — the central long-term question is whether the "less cocoa-reliant" portfolio strategy successfully reduces earnings volatility over time without sacrificing the brand strength that currently supports pricing power}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>One third-party model (TIKR) projects the stock reaching approximately $76 by end-2028 (3.3% revenue growth, 14.0% operating margins, 19.2x P/E assumed); a separate source's "most followed narrative" pegs fair value at $67.21 versus a $60.67 last close — both suggesting modest, consistent undervaluation, though neither was independently rebuilt in this summary</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">Mondelez trades at a modest but consistent discount to both analyst consensus targets and multiple independent fair-value estimates cited across sources, while delivering solid organic revenue growth and demonstrated pricing power through a difficult cocoa-cost cycle. The gap between improving near-term momentum (13-15% YTD gain) and still-negative 1-year total shareholder returns suggests the market's confidence in the recovery, while building, has not yet fully caught up with either the underlying operational trends or the various fair-value estimates cited.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q1 2026</th><th>Q2 2026</th><th>FY2026 Guidance</th></tr>
+      <tr><td>Net Revenue</td><td>$10.08B (+8.2% YoY)</td><td>$9.355–9.4B (+4.1% YoY)</td><td>Organic growth ≥+2% (raised)</td></tr>
+      <tr><td>Organic Net Revenue Growth</td><td class="placeholder">{{Not directly sourced}}</td><td>+2.2%</td><td>≥+2% (full year, raised)</td></tr>
+      <tr><td>Adjusted EPS</td><td>$0.67 (beat $0.61 est.)</td><td>$0.73 or $0.98 (discrepancy — see note)</td><td class="placeholder">{{Not separately guided as a single figure in sources reviewed}}</td></tr>
+      <tr><td>GAAP Diluted EPS</td><td class="placeholder">{{Not directly sourced}}</td><td>$1.20 (+144.9% YoY, aided by MTM/tax items)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Free Cash Flow (H1)</td><td class="placeholder">{{Not directly sourced}}</td><td>$0.7B</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Cash from Operations (H1)</td><td class="placeholder">{{Not directly sourced}}</td><td>$1.3B</td><td class="placeholder">{{Not separately guided}}</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">Mondelez's Q2 2026 results present the most significant unreconciled data discrepancy encountered across this Consumer Staples batch: adjusted EPS was cited at both $0.73 (down 2.7% at constant FX) and $0.98 (up 12.6% YoY) in different sources covering the same quarter. Given that management's own broader 2025-2026 narrative has consistently emphasized cocoa-driven EPS pressure (including explicit prior guidance for a ~10% adjusted EPS decline in 2025), the $0.73/decline framing appears more internally consistent with the company's own stated trajectory, but this should be directly verified against Mondelez's own Q2 2026 earnings release before being relied upon. Separately, the 144.9% surge in GAAP diluted EPS to $1.20 was explicitly and clearly attributed by the company to favorable mark-to-market derivative impacts and tax benefits — a well-disclosed one-time item that should not be read as reflecting underlying operating momentum, similar in spirit to the GAAP-vs-adjusted distortions seen in several technology names in this report series (GOOG, META, AMZN) though driven by different mechanisms (commodity hedging rather than equity-investment gains).</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>An "unprecedented heat wave" in Europe temporarily pressured chocolate consumption and required tighter trade-stock management in Q2 2026 — a weather-related, likely temporary headwind, but one worth monitoring for recurrence. Europe showed only "early positive trends" with continued softness overall.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>Cocoa price volatility remains an ongoing, structural risk to Mondelez's cost base given its chocolate-heavy portfolio, even though management characterizes the current supply/demand backdrop (10-month coverage, supply surplus) as more stable than the acute 2024 spike. Earnings phasing is explicitly guided to be back-weighted toward Q4 2026, meaning near-term quarters may continue showing pressured year-over-year comparisons.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span>The ongoing Middle East conflict is explicitly cited by management as an incremental cost and revenue headwind, already factored into guidance but subject to further escalation risk.</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against Mondelez's most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in sources reviewed — verify directly against Mondelez's 10-K/10-Q auditor opinion. One source flagged "7 Warning Signs" for MDLZ without specifying what they are — worth investigating directly via that source (GuruFocus) before drawing conclusions. The Q2 2026 adjusted EPS discrepancy noted above ($0.73 vs. $0.98) should be resolved directly against Mondelez's own earnings release.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul class="placeholder"><li>{{ESG_ENV — Mondelez's cocoa supply chain carries well-known industry-wide sustainability and sourcing considerations (deforestation, farmer livelihoods); no specific current commitments or metrics were independently sourced in this summary — recommend reviewing Mondelez's own sustainability disclosures directly}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul class="placeholder"><li>{{ESG_SOC — cocoa farming labor practices are a commonly-discussed industry-wide social topic relevant to chocolate-heavy portfolios like Mondelez's; specific company programs or data not independently sourced in this summary}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul><li>Management's explicit, multi-quarter strategic communication about the "less cocoa-reliant" portfolio pivot reflects transparent, forward-looking disclosure about a structural business risk rather than treating cocoa exposure as an unaddressed vulnerability</li><li class="placeholder">{{ESG_GOV — board composition and executive compensation structure not sourced beyond the above}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 15, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (Quartr, TIKR.com, Simply Wall St, Yahoo Finance, ad-hoc-news.de, and Mondelez's own investor relations materials) that may be delayed or inconsistent. A significant, unreconciled discrepancy in Q2 2026 adjusted EPS figures ($0.73 vs. $0.98) was identified across sources and flagged explicitly rather than resolved. All figures should be independently verified against Mondelez's 10-K/10-Q filings before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

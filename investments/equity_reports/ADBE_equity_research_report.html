@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — ADBE</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #e9edf2;
+    color: var(--text);
+    font-family: "Georgia", "Times New Roman", serif;
+    line-height: 1.55;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.12);
+    padding: 40px 50px 60px;
+  }
+
+  /* ---------- Header ---------- */
+  .report-header {
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .firm-name {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .company-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+  }
+
+  /* ---------- Recommendation banner ---------- */
+  .reco-banner {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .reco-main {
+    flex: 0 0 170px;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .reco-main .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+
+  .reco-main .value {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+
+  .reco-stats {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--gray-bg);
+  }
+
+  .reco-stat {
+    padding: 10px 14px;
+    border-left: 1px solid var(--border);
+  }
+
+  .reco-stat .label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    display: block;
+  }
+
+  .reco-stat .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* ---------- Basic info table ---------- */
+  .basic-info {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+
+  .basic-info td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .basic-info td.k {
+    color: var(--muted);
+    width: 38%;
+  }
+
+  .basic-info td.v {
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  /* ---------- Section styling ---------- */
+  section {
+    margin-bottom: 32px;
+  }
+
+  h2.section-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: var(--navy);
+    padding: 8px 14px;
+    margin: 0 0 14px 0;
+    border-left: 5px solid var(--accent);
+  }
+
+  h3.sub-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    margin: 18px 0 10px;
+  }
+
+  p.body-text {
+    font-size: 15px;
+    margin: 0 0 12px;
+  }
+
+  .placeholder {
+    color: #8a8fa3;
+    font-style: italic;
+  }
+
+  ul.bullet-list {
+    margin: 0 0 12px 0;
+    padding-left: 20px;
+  }
+
+  ul.bullet-list li {
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+
+  /* ---------- Investment Summary callout ---------- */
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  .thesis-box .thesis-label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-dark);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  /* ---------- Valuation table ---------- */
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  table.data-table th {
+    background: var(--navy);
+    color: #fff;
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  table.data-table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  table.data-table tr:nth-child(even) td {
+    background: var(--gray-bg);
+  }
+
+  /* ---------- Risk list ---------- */
+  .risk-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+  }
+
+  .risk-tag {
+    flex: 0 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    background: var(--red);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .risk-tag.op { background: #b8860b; }
+  .risk-tag.fin { background: var(--red); }
+  .risk-tag.reg { background: #6a3d9a; }
+  .risk-tag.legal { background: #444; }
+
+  /* ---------- ESG grid ---------- */
+  .esg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .esg-card {
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: 4px;
+    padding: 12px 14px;
+  }
+
+  .esg-card.environmental { border-top-color: #2e7d32; }
+  .esg-card.social { border-top-color: #1565c0; }
+  .esg-card.governance { border-top-color: #6a1b9a; }
+
+  .esg-card h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px;
+    color: var(--navy);
+  }
+
+  .esg-card ul {
+    margin: 0;
+    padding-left: 16px;
+    font-size: 13px;
+  }
+
+  .esg-card li { margin-bottom: 4px; }
+
+  /* ---------- Peer comparison ---------- */
+  .peer-note {
+    font-size: 12.5px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: -6px;
+    margin-bottom: 12px;
+  }
+
+  /* ---------- Footer / disclosures ---------- */
+  footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  footer .analyst-line {
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  @media (max-width: 700px) {
+    .page { padding: 24px 18px; }
+    .reco-banner { flex-direction: column; }
+    .reco-stats { grid-template-columns: repeat(2, 1fr); }
+    .esg-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research &middot; Equity Research</div>
+      <h1 class="company-title">Adobe Inc.</h1>
+      <div class="ticker-line">ADBE &nbsp;|&nbsp; NASDAQ &nbsp;|&nbsp; Technology / Software &ndash; Application</div>
+    </div>
+    <div class="report-date">
+      September 18, 2026<br>
+      Analyst: Equity Research Desk
+    </div>
+  </div>
+
+  <!-- ============ RECOMMENDATION BANNER ============ -->
+  <div class="reco-banner">
+    <div class="reco-main">
+      <span class="label">Recommendation</span>
+      <span class="value" style="color:#b8860b;">HOLD</span>
+    </div>
+    <div class="reco-stats">
+      <div class="reco-stat">
+        <span class="label">Current Price</span>
+        <span class="value">$249.19</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Target Price</span>
+        <span class="value">$276.40</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Market Cap</span>
+        <span class="value">$99.05B</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Implied Upside/Downside</span>
+        <span class="value">+10.9%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BASIC INFORMATION ============ -->
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">ADBE</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NASDAQ</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Technology</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Software &ndash; Application</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$190.12 &ndash; $370.86</td></tr>
+      <tr><td class="k">Average Daily Volume (Liquidity)</td><td class="v">~1.09 million shares</td></tr>
+      <tr><td class="k">Float</td><td class="v"><span class="placeholder">{{FLOAT — not independently sourced; effectively equal to shares outstanding less insider holdings}}</span></td></tr>
+      <tr><td class="k">Shares Outstanding</td><td class="v">~397.5 million</td></tr>
+      <tr><td class="k">Major Shareholders</td><td class="v"><span class="placeholder">{{MAJOR_SHAREHOLDERS — Vanguard and BlackRock are known large institutional holders; exact stakes not independently verified in this pass}}</span></td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT SUMMARY ============ -->
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Adobe's core Creative Cloud (Photoshop, Illustrator, Premiere) and Document Cloud (Acrobat, Sign) franchises remain highly profitable and entrenched, and Digital Experience (marketing/analytics software) provides a third growth leg, but the stock has fallen sharply — market cap down 33.8% over the trailing period, with shares trading at $249.19 versus a 52-week high of $370.86 — amid broader market concern that generative AI tools (both third-party and Adobe's own Firefly) could commoditize aspects of the creative software value proposition faster than Adobe can monetize AI features. TTM revenue of $26.0B (+9.3% vs. FY2025's $23.8B) and TTM net income of $7.3B (+2.2%) show continued but decelerating growth. <strong>The 39-analyst distribution (7 Strong Buy / 4 Buy / 23 Hold / 1 Sell / 4 Strong Sell) shows only 28.2% Buy-or-better against a 59.0% Hold plurality, and the source's own headline consensus label is itself "Hold" — consistent with this report's methodology of weighing the full distribution rather than a single headline figure, a HOLD rating is assigned.</strong>
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text placeholder">{{RECENT_DEVELOPMENTS — the most recent quarterly results reportedly beat expectations but the stock declined post-earnings amid broader AI sector concerns per available summary data; specific guidance commentary and Firefly/AI monetization metrics should be sourced from the most recent 10-Q/8-K and verified independently}}</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text placeholder">{{EARNINGS_FORECAST_SUMMARY — forward EPS and revenue estimates for FY2027E should be sourced from consensus data and verified independently; TTM EPS of $17.91 and a forward P/E of 9.4x (vs. trailing P/E of 14.1x) suggest the market is pricing in continued but modest earnings growth}}</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">At $249.19, ADBE trades at a notably compressed 14.1x trailing P/E (9.4x forward) relative to its own historical multiple and to peer application-software names, reflecting the market's concern that generative AI could erode Adobe's creative-tools moat over time. This is one of the cheapest absolute valuations among the names covered in this report series' Information Technology sector, consistent with the more cautious analyst distribution.</p>
+  </section>
+
+  <!-- ============ BUSINESS DESCRIPTION ============ -->
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Adobe Inc. provides content creation, document management, and digital marketing software, organized around three segments: Digital Media (Creative Cloud subscription software including Photoshop, Illustrator, Premiere Pro, and the generative AI Firefly platform, plus Document Cloud/Acrobat), Digital Experience (marketing, analytics, commerce, and customer-data-platform software for enterprise customers), and Publishing/Advertising (a smaller legacy segment). Adobe has integrated generative AI capabilities (Firefly) directly into its core creative applications as a defensive and offensive AI monetization strategy.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Creative Cloud subscription renewal, seat growth, and price increases, plus incremental Firefly/generative-AI credit monetization</li>
+      <li>Document Cloud (Acrobat/Sign) subscription growth tied to digital document workflow adoption</li>
+      <li>Digital Experience enterprise software sales (marketing, analytics, commerce platforms) to large corporate customers</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>R&D investment in generative AI model development (Firefly) needed to keep pace with rapidly evolving third-party AI creative tools</li>
+      <li>Sales and marketing expense to defend Creative Cloud subscriber base against increasing competitive and AI-substitution pressure</li>
+    </ul>
+  </section>
+
+  <!-- ============ INDUSTRY OVERVIEW & COMPETITIVE POSITIONING ============ -->
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text placeholder">{{INDUSTRY_OVERVIEW — the creative software market is undergoing significant disruption from generative AI tools, both from well-funded startups and from big-tech incumbents embedding AI creative features into adjacent products; should be independently verified with current industry competitive-landscape data}}</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Moderate-to-High — generative AI has lowered the barrier for new entrants to offer credible creative-tool alternatives, a meaningfully higher threat level than in Adobe's pre-AI era</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Low — Adobe relies on public cloud infrastructure and GPU compute for AI model training/inference but is not dependent on any single scarce input beyond typical cloud vendor relationships</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate — individual creative professionals have historically faced high switching costs, but the emergence of credible free/low-cost AI-native alternatives is increasing buyer leverage</td></tr>
+      <tr><td>Threat of Substitutes</td><td>High — this is the central risk to the current investment thesis: generative AI tools from well-funded startups and big-tech players increasingly threaten to substitute for portions of Adobe's core creative workflow</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High and rising — competition from Canva, Figma, and a proliferating set of generative AI creative startups, alongside legacy competitors</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Adobe's moat rests on decades of entrenchment in professional creative workflows (Photoshop/Illustrator remain the industry standard file formats and toolsets for many professional users), a large enterprise Document Cloud and Digital Experience customer base, and a proprietary, commercially-licensable training-data advantage for Firefly (trained on Adobe Stock content, reducing certain copyright litigation risk relative to some AI competitors). This moat is narrower than in prior years given accelerating AI-driven substitution risk.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set used for relative valuation and competitive benchmarking.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Market Cap</th><th>P/E</th><th>EV/EBITDA</th></tr>
+      <tr><td>Adobe Inc.</td><td>ADBE</td><td>$99.05B</td><td>14.1x (9.4x fwd)</td><td class="placeholder">{{EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">Salesforce, Inc.</td><td class="placeholder">CRM</td><td class="placeholder">{{PEER_1_MCAP}}</td><td class="placeholder">{{PEER_1_PE}}</td><td class="placeholder">{{PEER_1_EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">Figma, Inc.</td><td class="placeholder">FIG</td><td class="placeholder">{{PEER_2_MCAP}}</td><td class="placeholder">{{PEER_2_PE}}</td><td class="placeholder">{{PEER_2_EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">Autodesk, Inc.</td><td class="placeholder">ADSK</td><td class="placeholder">{{PEER_3_MCAP}}</td><td class="placeholder">{{PEER_3_PE}}</td><td class="placeholder">{{PEER_3_EV_EBITDA}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ VALUATION ============ -->
+  <section>
+    <h2 class="section-title">Valuation</h2>
+
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{WACC — not independently modeled in this pass; typical large-cap software WACC range 8-11%}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{TERMINAL_GROWTH — typically 2.5-3.5% for a mature-stage terminal assumption}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{FORECAST_PERIOD — typically 5-10 years}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td class="placeholder">{{DCF_INTRINSIC_VALUE — not independently modeled; a DCF here is highly sensitive to assumptions about the pace of AI-driven substitution risk to the core Creative Cloud franchise}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Relative Valuation</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Adobe Inc.</th><th>Peer Average</th><th>Industry Average</th></tr>
+      <tr><td>P/E</td><td>14.1x (9.4x forward)</td><td class="placeholder">{{PEER_PE_AVG}}</td><td class="placeholder">{{INDUSTRY_PE_AVG}}</td></tr>
+      <tr><td>P/Sales</td><td class="placeholder">~3.8x (estimated from market cap/TTM revenue)</td><td class="placeholder">{{PEER_PS_AVG}}</td><td class="placeholder">{{INDUSTRY_PS_AVG}}</td></tr>
+      <tr><td>P/Cash Flow</td><td class="placeholder">~9.3x (estimated from market cap/TTM FCF)</td><td class="placeholder">{{PEER_PCF_AVG}}</td><td class="placeholder">{{INDUSTRY_PCF_AVG}}</td></tr>
+      <tr><td>P/Book Value</td><td class="placeholder">{{PB_RATIO}}</td><td class="placeholder">{{PEER_PB_AVG}}</td><td class="placeholder">{{INDUSTRY_PB_AVG}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">With only 28.2% of covering analysts at Buy-or-better against a 59.0% Hold plurality — and the source's own headline label itself reading "Hold" — this report assigns a HOLD rating despite the stock's statistically inexpensive absolute valuation. The low multiple appears to reflect a genuine, not merely sentiment-driven, market reassessment of Adobe's competitive moat durability in the face of generative AI substitution risk, and should not be read as a straightforward value opportunity without further independent diligence on AI-driven subscriber and pricing trends.</p>
+  </section>
+
+  <!-- ============ FINANCIAL ANALYSIS ============ -->
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+
+    <h3 class="sub-title">Historical &amp; Forecast Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>FY2024</th><th>FY2025</th><th>TTM (Aug'26)</th><th>FY2027E</th></tr>
+      <tr><td>Revenue</td><td>$21,505M</td><td>$23,769M</td><td>$25,970M</td><td class="placeholder">{{REV_Y3}}</td></tr>
+      <tr><td>EBITDA</td><td class="placeholder">{{EBITDA_Y0}}</td><td class="placeholder">{{EBITDA_Y1}}</td><td class="placeholder">{{EBITDA_Y2}}</td><td class="placeholder">{{EBITDA_Y3}}</td></tr>
+      <tr><td>Net Income</td><td>$5,560M</td><td>$7,130M</td><td>$7,284M</td><td class="placeholder">{{NI_Y3}}</td></tr>
+      <tr><td>EPS (Diluted)</td><td>$12.36</td><td>$16.70</td><td>$17.91</td><td class="placeholder">{{EPS_Y3}}</td></tr>
+      <tr><td>Free Cash Flow</td><td>$7,873M</td><td>$9,852M</td><td>$10,592M</td><td class="placeholder">{{FCF_Y3}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">TTM net income growth (+2.2% vs. FY2025) has decelerated sharply relative to the FY2024-to-FY2025 pace (+28.3%), even as revenue growth has moderated less severely (TTM +9.3% vs. FY2024-to-FY2025's +10.5%). This deceleration in net income growth relative to revenue growth is flagged for independent verification, as it may reflect rising AI-related R&D and infrastructure investment compressing margins, a dynamic that should be confirmed against the operating expense detail in the most recent 10-Q/10-K.</p>
+
+    <h3 class="sub-title">Industry-Specific Ratios</h3>
+    <table class="data-table">
+      <tr><th>Ratio</th><th>Value</th></tr>
+      <tr><td>Creative Cloud Subscriber/ARR Growth</td><td class="placeholder">{{INDUSTRY_RATIO_1_VALUE — not independently broken out in this pass; should be sourced from segment disclosures in the most recent 10-Q, a key indicator of AI-driven substitution risk materializing}}</td></tr>
+      <tr><td>Operating Margin</td><td class="placeholder">{{INDUSTRY_RATIO_2_VALUE — historically in the mid-40s percentage range; requires independent verification of any recent compression}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT RISKS ============ -->
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+
+    <div class="risk-item">
+      <span class="risk-tag op">Operational</span>
+      <span>Generative AI substitution risk to core Creative Cloud tools represents the single largest operational risk to the franchise, with third-party AI-native tools potentially eroding subscriber growth or pricing power over time.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag fin">Financial</span>
+      <span>Decelerating net income growth relative to revenue growth suggests early margin pressure from AI-related investment, which should be monitored closely for further compression.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag reg">Regulatory</span>
+      <span>Ongoing scrutiny of AI training-data practices and copyright considerations across the generative AI industry, alongside general antitrust attention to large software vendors' bundling practices.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag legal">Legal</span>
+      <span>Exposure to ongoing intellectual property and consumer-protection litigation (including past FTC scrutiny of subscription cancellation practices); outcomes should be independently monitored via the company's most recent 10-K legal proceedings disclosure.</span>
+    </div>
+
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{AUDITOR_FLAGS — no material weaknesses or qualified audit opinions are known to this analyst as of the report date; this should be independently confirmed against Adobe's most recent 10-K auditor's report}}</p>
+  </section>
+
+  <!-- ============ ESG ============ -->
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental">
+        <h4>Environmental</h4>
+        <ul>
+          <li class="placeholder">{{ESG_ENV_1 — climate/carbon reduction commitments should be sourced from Adobe's corporate sustainability report}}</li>
+          <li class="placeholder">{{ESG_ENV_2 — pollution/energy efficiency specifics not independently verified in this pass}}</li>
+          <li class="placeholder">{{ESG_ENV_3 — waste management specifics not independently verified in this pass}}</li>
+        </ul>
+      </div>
+      <div class="esg-card social">
+        <h4>Social</h4>
+        <ul>
+          <li>Adobe has publicly emphasized "Content Credentials" and AI-content provenance/authenticity initiatives, positioning itself as a responsible-AI leader in the creative software space</li>
+          <li class="placeholder">{{ESG_SOC_2 — workforce diversity metrics not independently verified in this pass}}</li>
+          <li class="placeholder">{{ESG_SOC_3 — customer/employee engagement metrics not independently verified in this pass}}</li>
+        </ul>
+      </div>
+      <div class="esg-card governance">
+        <h4>Governance</h4>
+        <ul>
+          <li class="placeholder">{{ESG_GOV_1 — board composition not independently verified in this pass; should be sourced from the most recent proxy statement}}</li>
+          <li class="placeholder">{{ESG_GOV_2 — executive compensation structure should be sourced from the most recent proxy statement}}</li>
+          <li>Long-tenured management team under CEO Shantanu Narayen, navigating the company's strategic response to generative AI disruption</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER / DISCLOSURES ============ -->
+  <footer>
+    <div class="analyst-line">Prepared by Equity Research Desk, Equity Analyst — Independent Equity Research</div>
+    This report is compiled from publicly available data sources believed to be reliable but not independently audited. Figures marked as placeholders require independent verification before use in an investment decision. This report does not constitute investment advice, an offer, or a solicitation to buy or sell any security. Ratings: BUY = expected to outperform the market over the next 12 months; HOLD = expected to perform in line with the market; SELL = expected to underperform the market. The analyst(s) preparing this report may or may not hold a position in the subject security. Past performance is not indicative of future results.
+  </footer>
+
+</div>
+</body>
+</html>

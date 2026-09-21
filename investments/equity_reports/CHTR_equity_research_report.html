@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — CHTR</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Charter Communications, Inc.</h1>
+      <div class="ticker-line">CHTR &nbsp;|&nbsp; NASDAQ &nbsp;|&nbsp; Communication Services / Telecom Services (Cable, Broadband, Mobile)</div>
+    </div>
+    <div class="report-date">September 15, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#b8860b;">HOLD</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">~$123–$153 (volatile — see note)</span></div>
+      <div class="reco-stat"><span class="label">Target Price (Consensus)</span><span class="value">~$184–$274 (wide range)</span></div>
+      <div class="reco-stat"><span class="label">2026 YTD Return</span><span class="value">~ −41%</span></div>
+      <div class="reco-stat"><span class="label">52-Week High</span><span class="value">~$422</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">CHTR</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NASDAQ</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Communication Services</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Telecom Services (Cable, Broadband, Mobile) — operates under the Spectrum brand</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">~$422 (high) to a low in the $120s following an April 2026 crash</td></tr>
+      <tr><td class="k">Shares Outstanding</td><td class="v">~119 million (post-Cox close, one source)</td></tr>
+      <tr><td class="k">Q2 2026 EPS (GAAP)</td><td class="v">$10.76 (beat estimates by ~5.9%)</td></tr>
+      <tr><td class="k">Leverage</td><td class="v">~4.2x (stable, per one source) — elevated and a persistent point of investor concern</td></tr>
+      <tr><td class="k">Free Cash Flow Yield</td><td class="v">&gt;16% (per one source), alongside aggressive share buybacks ($963 million / 4.3 million shares in Q1 2026 alone)</td></tr>
+      <tr><td class="k">Analyst Ratings</td><td class="v">"Hold" consensus (21 analysts, one source); a more detailed breakdown from another source showed 5 Buy / 9 Hold / 2 Underperform / 3 Sell out of 15 analysts — a genuinely split, cautious Street view</td></tr>
+      <tr><td class="k">Corporate Actions</td><td class="v">Completed $34.5–$21.9 billion acquisition of Cox Communications (figures vary by source — see note) and completed acquisition of Liberty Broadband in an all-stock transaction, both closing around August 2026</td></tr>
+      <tr><td class="k">Headquarters</td><td class="v">Stamford, Connecticut</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted); margin-top:-14px;">Note: sources gave different headline values for the Cox transaction ($34.5 billion in one, $21.9 billion in another, the latter possibly referring to the equity/cash portion specifically or a state-regulatory-approval-specific figure) — this should be reconciled directly against Charter's own transaction disclosures before use. Price data was also highly volatile and time-sensitive given the stock's dramatic 2026 decline (down as much as 65% from its 52-week high of ~$422 to a low around $124–147 at various points, before some recovery).</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Charter Communications has had one of the most dramatic stock trajectories in this entire report series: shares collapsed as much as 25.5% in a single session on April 24, 2026 (part of a roughly 65% peak-to-trough decline from a 52-week high near $422) after Q1 2026 results showed broadband subscriber losses of 120,000 — worse than the ~100,000 expected — reigniting fears that competitive pressure from fixed wireless and fiber providers is structurally eroding Charter's core cable business faster than the company's mobile-convergence strategy can offset. The central, unresolved bet for the stock is now the just-completed $34.5 billion (or $21.9 billion, depending on source) acquisition of Cox Communications, which closed in August 2026 alongside an all-stock Liberty Broadband acquisition, creating a combined entity with approximately 38 million subscribers and extending Charter's footprint into Cox's 18-state, largely non-overlapping territory. Bulls point to resilient free cash flow (a yield above 16% per one source), aggressive share buybacks, and management's plan to convert Cox synergies (~$800 million in projected cost savings) and network modernization capex (an $11.4 billion plan through 2027) into broadband stabilization; bears point to persistent subscriber losses, elevated leverage (~4.2x), and a Street that is more evenly split (5 Buy/9 Hold/2 Underperform/3 Sell in one detailed breakdown) than the simpler "Hold" consensus headline suggests. Given the genuinely wide range of scenario outcomes modeled by third-party analysts (from a ~9% IRR bear case to a ~15% IRR bull case over a multi-year horizon), and the real, still-unproven execution risk in integrating Cox at scale while the core broadband business remains under pressure, this is a HOLD: the risk/reward is balanced rather than clearly favorable in either direction until post-merger subscriber trends provide more clarity.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Charter's Q1 2026 results (reported April 2026) triggered the stock's "worst day ever" — a 18–25.5% single-session decline (sources vary slightly) — after the company reported 120,000 broadband customer losses (versus ~100,000 expected) alongside GAAP EPS of $9.17 (below the ~$10 consensus) on revenue of $13.60 billion (essentially flat YoY, roughly in line with estimates). CFO Jessica Fischer's comment that broadband ARPU growth for the year would be "close either way" (i.e., could go positive or negative) added to investor unease. Despite the subscriber miss, Charter continued aggressive capital returns, repurchasing 4.3 million shares for approximately $963 million in Q1 2026 alone (average price ~$225/share) — buybacks that, in hindsight, occurred well above the stock's subsequent trading levels. Q2 2026 results (reported ~late July) showed continued broadband attrition and a 1.7% YoY revenue decline to $13.5 billion, but GAAP EPS of $10.76 beat estimates by roughly 5.9%, net income was flat year-over-year at $1.29 billion, and leverage held stable at 4.2x with cap-ex beginning to normalize. Throughout mid-to-late 2026, Charter progressed and ultimately closed two major corporate transactions: the acquisition of Cox Communications (first announced in 2025, receiving FCC and DOJ approval, and California regulatory approval specifically noted in one source) and an all-stock acquisition of Liberty Broadband, both completing in August 2026. Following the Cox close, Charter stated all 6 million former Cox customers would have access to Spectrum-branded services (including Spectrum Internet, Spectrum Mobile, and video bundles) by mid-September 2026, with Spectrum brand, pricing, and packaging launching in all former Cox markets around that time. The combined company is now described as having approximately 38 million subscribers. Charter also announced a strategic content/advertising agreement with Optimum (OPTU) around local news access and advertising capabilities.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Third-party consensus estimates cited in sources reviewed showed EPS trending from Q1 2026's $9.17 actual toward roughly $10 in Q2 and Q3 2026 and approximately $12 in Q4 2026, with EPS growth accelerating even as revenue holds roughly flat — driven by lower programming costs, operating cost reductions, and continued share buybacks rather than top-line expansion. Management's network-modernization capital plan ($11.4 billion through 2027) is intended to support broadband stabilization and mobile-convergence growth (Charter has been building out mobile lines, with one source citing a "12 million mobile lines" figure as part of the bull case), with the Cox acquisition's projected ~$800 million in synergies (procurement, technology consolidation, network operations) representing a key medium-term earnings lever.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Consensus price targets showed real dispersion across sources — a "Street mean" of roughly $274 (implying ~52% upside from one snapshot) in one detailed source, versus a more conservative $184.41 consensus (implying ~21% upside from a different, more recent snapshot) in another — reflecting both genuinely different analyst views and the stock's own significant volatility across 2026 snapshots. One detailed scenario analysis modeled a bear case (broadband losses accelerate, ARPU compression continues) delivering roughly a 9% annual IRR, against a bull case (full Cox execution, broadband stabilization) delivering a price near $590 by the end of 2034 (a ~226% total return, ~15% IRR) — illustrating that this is a name where the range of plausible long-term outcomes is unusually wide even by the standards of this report series.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Charter Communications, Inc., headquartered in Stamford, Connecticut, operates as the second-largest cable operator in the United States by subscribers (historically; the Cox acquisition further consolidates this position), providing broadband internet, video, and mobile services to residential and business customers under the Spectrum brand. Following its 2025–2026 acquisitions of Cox Communications (a major cable/broadband peer with roughly 6 million customers in 18 states, largely non-overlapping with Charter's prior 41-state footprint) and Liberty Broadband (in an all-stock transaction), Charter now operates a combined entity with approximately 38 million subscribers. The company has been pursuing a "convergence" strategy of its own — bundling mobile service (Spectrum Mobile) with core broadband/video subscriptions — as a retention and ARPU-growth lever, similar in concept to the strategies pursued by AT&amp;T, Verizon, and T-Mobile (see separate reports in this series), though Charter's core business (traditional cable/broadband) faces more direct structural substitution pressure from fixed wireless and fiber than the wireless-carrier-centric peers.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Mobile line growth (Spectrum Mobile), a genuine bright spot offsetting some broadband/video subscriber attrition</li>
+      <li>Cox and Liberty Broadband integration, extending Charter's addressable footprint into non-overlapping geographies and creating an estimated ~$800 million in cost synergies</li>
+      <li>Network modernization (the $11.4 billion capex plan through 2027), intended to improve broadband competitiveness and support the eventual stabilization of subscriber losses</li>
+      <li>Advertising and content partnerships, including a new strategic agreement with Optimum around local news and advertising</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Elevated capital expenditure for network modernization, which management frames as necessary investment but which constrains near-term free cash flow</li>
+      <li>Integration costs from the concurrent Cox and Liberty Broadband transactions, both closing around the same time in 2026</li>
+      <li>Debt service on Charter's elevated leverage (~4.2x), a persistent point of investor concern flagged across multiple sources ("concerns are rising about debt levels")</li>
+      <li>Continued, aggressive share repurchases (partly debt- or cash-flow-funded) even during a period of stock-price weakness, which some might view as a capital-allocation risk if broadband trends do not stabilize as management expects</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Charter competes in the U.S. broadband and cable industry, facing the same structural fixed-wireless and fiber competitive pressure affecting Comcast (see separate CMCSA report in this series) — both companies experienced correlated, unexplained sharp single-day declines in a recent session (Charter down ~6%, Comcast down ~8%, alongside a 3% T-Mobile decline) with no clear company-specific catalyst identified, suggesting a broader cable/broadband sector repricing dynamic. The Cox acquisition significantly consolidates the U.S. cable industry, combining the second- and third-largest operators (by one characterization) into a single ~38-million-subscriber entity, a scale response to intensifying competition from AT&amp;T's and Verizon's fiber buildouts (see separate T and VZ reports) and T-Mobile's/Verizon's fixed-wireless access growth.</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low for new cable-infrastructure entrants (extreme capital intensity), but fixed-wireless access from T-Mobile/Verizon functions as a new-entrant-like substitute without requiring wired buildout — the single most significant competitive threat to Charter's core business.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — programming/content costs have historically pressured cable operator margins; lower programming costs were specifically cited as a driver of Charter's improving EPS trajectory in 2026.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>High and rising — persistent broadband subscriber losses (120,000 in Q1 2026 alone) directly evidence customers' willingness and ability to switch to fixed-wireless or fiber alternatives.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>High — fixed-wireless access and fiber are both credible, actively-marketed substitutes for traditional cable broadband, and this dynamic is the central, structural risk to Charter's investment thesis.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — Comcast is Charter's closest direct cable peer; AT&amp;T, Verizon, and T-Mobile all compete via fiber and/or fixed-wireless offerings; Optimum (Altice USA) is a smaller regional cable competitor with which Charter has also struck a content partnership.</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Charter's moat, historically built on extensive cable-network infrastructure and scale, has been directly and visibly tested by the fixed-wireless/fiber substitution threat over the 2025–2026 period, evidenced by the stock's dramatic decline. The Cox and Liberty Broadband acquisitions represent management's strategic response — pursuing greater scale, geographic diversification, and mobile-convergence capability to defend and rebuild this moat — but this is an unproven, in-progress strategy rather than a demonstrated success as of this report.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major U.S. cable/broadband and telecom companies. See separate CMCSA, T, VZ, and TMUS research reports in this series.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>Charter Communications</td><td>CHTR</td><td>~38M subscribers post-Cox/Liberty Broadband close; ~65% peak decline in 2026; leverage ~4.2x</td></tr>
+      <tr><td>Comcast</td><td>CMCSA</td><td>See separate CMCSA report — also facing broadband competitive pressure and its own major restructuring (NBCUniversal/Sky spin-off)</td></tr>
+      <tr><td>Optimum (Altice USA)</td><td>OPTU</td><td>Smaller regional cable competitor; recently struck a content/advertising partnership with Charter</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions; elevated leverage (~4.2x) should be reflected explicitly}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled — the central question is whether broadband subscriber losses stabilize (supporting positive terminal growth) or continue eroding (implying a declining terminal base)}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{One third-party source modeled a full decade (through 12/31/34), reflecting the long-duration nature of the Cox-integration and broadband-stabilization thesis}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>One source's scenario model: bear case ~9% IRR annually; bull case ~$590/share by 12/31/34 (~226% total return, ~15% IRR annually) — an unusually wide range reflecting genuine uncertainty</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">Charter's valuation debate is unusually binary and long-duration among the names in this report series: the entire bull/bear case rests on a single, trackable metric — quarterly broadband net adds — with one source specifically noting that narrowing losses from 120,000 toward a 60,000–80,000 range "signals that management's top-of-funnel improvements are gaining traction," calling this "the single number, more than any other, [that] separates a re-rating story from a value trap." Given the magnitude of the stock's 2026 decline and the genuinely wide analyst rating split (5 Buy/9 Hold/2 Underperform/3 Sell in one detailed breakdown), this is a name to monitor via that specific operating metric each quarter rather than to value with confidence today.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q1 2026</th><th>Q2 2026</th><th>Notes</th></tr>
+      <tr><td>Revenue</td><td>$13.60B (flat YoY)</td><td>$13.5B (-1.7% YoY)</td><td>Broadly flat-to-declining, in line with or slightly below estimates</td></tr>
+      <tr><td>GAAP EPS</td><td>$9.17 (missed ~$10 est.)</td><td>$10.76 (beat est. by ~5.9%)</td><td>Sequential improvement despite ongoing subscriber losses</td></tr>
+      <tr><td>Net Income</td><td class="placeholder">{{Not directly sourced}}</td><td>$1.29B (flat YoY)</td><td class="placeholder">{{Profit margin ~9.6%, in line with prior year}}</td></tr>
+      <tr><td>Broadband Net Adds</td><td>Loss of 120,000 (vs. ~100,000 est.)</td><td class="placeholder">{{Continued attrition per Simply Wall St; specific figure not directly sourced}}</td><td>Key metric to watch for stabilization signs</td></tr>
+      <tr><td>Free Cash Flow</td><td>$1.37B</td><td class="placeholder">{{Forward estimate ~$1.16B per one source's model}}</td><td class="placeholder">{{FCF yield cited above 16% by one source}}</td></tr>
+      <tr><td>Leverage</td><td>~4.15x</td><td>~4.2x (stable)</td><td>Elevated; a persistent investor concern</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">Charter's EPS growth trajectory (accelerating even as revenue holds flat or declines slightly) is explicitly driven by lower programming costs, operating cost reductions, and share buybacks rather than organic revenue growth — a legitimate, disclosed strategy, but one that means EPS improvement should not be mistaken for a genuine subscriber-trend turnaround. Notably, Charter's Q1 2026 buybacks (4.3 million shares at an average price of ~$225) occurred well above the stock's subsequent trading range (which fell into the $120s–$150s), illustrating the capital-allocation risk of buying back stock during a period that, in hindsight, preceded a further, sharp decline — a useful cautionary data point on buyback timing.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>Persistent broadband subscriber losses (120,000 in Q1 2026 alone) remain the central, unresolved operational risk; integrating both the Cox and Liberty Broadband transactions concurrently, while the core business is under competitive pressure, adds meaningful execution complexity.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>Elevated leverage (~4.2x) combined with a large, disclosed capital expenditure plan ($11.4 billion through 2027) and continued aggressive share buybacks (some executed at prices well above the stock's subsequent trading range) together constrain financial flexibility if broadband trends do not stabilize as management expects.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span>The Cox acquisition required multiple regulatory approvals (FCC, DOJ, and state-level approval specifically noted for California) — while these have now been obtained and the deal has closed, the process illustrates the regulatory complexity inherent in further cable-industry consolidation.</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against Charter's most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in sources reviewed — verify directly against Charter's 10-K/10-Q auditor opinion. Different sources cited different Cox deal values ($34.5B vs. $21.9B) — this discrepancy should be resolved directly against Charter's own transaction disclosures.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul class="placeholder"><li>{{ESG_ENV — not independently sourced in this summary}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul class="placeholder"><li>{{ESG_SOC — not independently sourced in this summary}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul><li>Management has a long history of executing major cable-industry M&A (Bresnan, Time Warner Cable, Bright House Networks, and now Cox), with the CFO specifically noted as having led financial integration of several of these prior transactions — relevant experience for the current Cox/Liberty Broadband integration</li><li class="placeholder">{{ESG_GOV — board composition and executive compensation not sourced beyond the above}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 15, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (StockAnalysis.com, TIKR.com, Simply Wall St, Google Finance, TradingKey, and various financial media) that may be delayed or inconsistent. Charter's stock has shown exceptional volatility in 2026 (a peak-to-trough decline of roughly 65%), and reported figures for the Cox transaction value varied across sources ($34.5B vs. $21.9B). All figures should be independently verified against Charter's 10-K/10-Q filings and merger-related disclosures before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

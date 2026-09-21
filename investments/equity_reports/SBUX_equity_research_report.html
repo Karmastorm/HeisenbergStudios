@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — SBUX</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  .placeholder { color:#8a8fa3; font-style:italic; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Starbucks Corporation</h1>
+      <div class="ticker-line">SBUX &nbsp;|&nbsp; NASDAQ &nbsp;|&nbsp; Consumer Discretionary / Restaurants &amp; Specialty Coffee</div>
+    </div>
+    <div class="report-date">September 17, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#b8860b;">HOLD</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">~$97</span></div>
+      <div class="reco-stat"><span class="label">Target Price</span><span class="value">$112.23 (avg.)</span></div>
+      <div class="reco-stat"><span class="label">Target Range</span><span class="value">$81 – $143</span></div>
+      <div class="reco-stat"><span class="label">Implied Upside/Downside</span><span class="value">~16%</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">SBUX</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NASDAQ</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Consumer Discretionary</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Restaurants / Specialty Coffee Retail</td></tr>
+      <tr><td class="k">CEO</td><td class="v">Brian Niccol (Chairman &amp; CEO)</td></tr>
+      <tr><td class="k">Headquarters</td><td class="v">Seattle, Washington</td></tr>
+      <tr><td class="k">Consensus Rating</td><td class="v">Buy (37 analysts)</td></tr>
+      <tr><td class="k">Turnaround Plan</td><td class="v">"Back to Starbucks"</td></tr>
+      <tr><td class="k">Recent Strategic Action</td><td class="v">Sold 60% controlling stake in China business to Boyu Capital (~$4B), finalized November 2025</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Starbucks delivered a striking Q3 FY2026 beat — adjusted EPS of $0.85 versus a $0.65 consensus estimate, a 31% surprise and the highest quarterly EPS print in at least eight quarters — alongside 7.9% global comparable-store sales growth, evidence that CEO Brian Niccol's "Back to Starbucks" turnaround (faster service, a simplified menu, café condition improvements, and a renewed focus on the "third place" experience) is beginning to show through in the numbers after several difficult years of traffic declines. Reported revenue was affected by the company's decision to sell a majority (60%) stake in its China business to Boyu Capital for roughly $4 billion, deconsolidating China results and masking underlying top-line momentum; management and analysts both frame current operating trends as understating the true improvement. Management raised full-year guidance following the print. That said, the stock's analyst price targets show unusually wide dispersion — from $81 to $143 — reflecting genuine disagreement about how much of the beat is durable operating improvement versus how much reflects an easy comparison base after a deeply depressed prior year, and at least one shop (Guggenheim) cut its target as recently as this cycle even as the headline numbers improved. Given this dispersion and the fact that a single strong quarter does not yet confirm a multi-year recovery, we rate SBUX a HOLD: the turnaround signal is real and the China deal simplifies the balance sheet, but the risk/reward is more balanced than the headline EPS beat alone would suggest until several more quarters confirm the trend.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Starbucks' Q3 FY2026 results (reported around July 29, 2026) showed EPS of $0.85, a 31% beat versus the $0.65 consensus estimate and up sharply from $0.50 in Q3 FY2025 — the highest quarterly EPS print in at least eight quarters. Revenue of $9.32 billion came in 2.2% above the $9.12 billion consensus estimate, though the reported figure was affected by the company's China joint-venture restructuring: in November 2025, Starbucks finalized a deal selling a 60% controlling stake in its China retail business to private equity firm Boyu Capital for approximately $4 billion, while retaining a minority interest and the Starbucks brand license. This deconsolidates China from reported financials going forward, mechanically reducing reported revenue even as underlying same-store performance (particularly in the U.S., the company's largest market) has improved materially. Global comparable-store sales grew 7.9% in the quarter, and management raised full-year guidance following the print, signaling confidence the improvement represents sustainable momentum rather than a one-quarter anomaly.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text placeholder">{{FY2026_GUIDANCE_DETAIL — specific raised full-year comparable-sales, EPS, and margin targets were referenced in coverage of the Q3 print but exact updated figures were not independently confirmed in the sources reviewed for this report; verify against the Q3 FY2026 earnings press release and investor presentation before use. Directionally, guidance was raised following the Q3 beat, consistent with confidence in sustained comparable-sales momentum through the balance of fiscal 2026.}}</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Consensus rating is Buy across 37 covering analysts, with an average price target of $112.23 (about 16% upside from a share price near $97), but the $81–$143 target range is unusually wide for a large-cap consumer name, reflecting real disagreement among analysts about the durability of the turnaround. Some firms (e.g., Guggenheim) have recently trimmed targets even as headline results improved, underscoring skepticism that the pace of same-store sales growth and margin recovery seen in Q3 will persist once base-period comparisons normalize.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Starbucks Corporation is the world's largest specialty coffee retailer, operating and licensing tens of thousands of stores globally under the Starbucks brand. Historically built on a "third place" positioning between home and work, the company faced several years of declining U.S. traffic, operational complexity from an overextended menu and customization options, and mixed execution before CEO Brian Niccol (formerly of Chipotle) took over and launched the "Back to Starbucks" turnaround plan, emphasizing faster order-to-serve times, a simplified core menu, improved café ambiance, and renewed marketing focus. In late 2025, the company restructured its China operations by selling majority control to private equity firm Boyu Capital, a move intended to accelerate China store growth under a partner with deeper local market expertise while allowing Starbucks to focus capital and management attention on the U.S. turnaround.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Global comparable-store sales growth (+7.9% in Q3 FY2026), reflecting improving traffic and spend under the "Back to Starbucks" turnaround</li>
+      <li>U.S. operational improvements — faster service times, menu simplification, and café condition upgrades — credited by management as core turnaround drivers</li>
+      <li>AI-driven customer-service cost reductions supporting margin, even as management describes these efforts as still nascent</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Investment in café remodels, staffing, and service-time initiatives tied to the turnaround plan</li>
+      <li>Costs associated with the China joint-venture restructuring and ongoing minority-stake relationship with Boyu Capital</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Starbucks competes in the global quick-service restaurant and specialty coffee industry, most directly against McDonald's McCafé (see separate MCD report in this series) and value-oriented chains such as Dunkin', alongside independent and regional coffee shops. The category has been characterized by intense competition for the daily coffee occasion amid a cautious U.S. consumer, making Starbucks' internal execution turnaround — rather than a category-wide tailwind — the primary driver of its recent outperformance.</p>
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Moderate — independent and regional coffee shops proliferate, though brand scale and real estate remain barriers to national-scale competition.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — coffee bean commodity price volatility affects input costs, though Starbucks' scale provides some hedging leverage.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate-to-High — consumers have abundant substitutes for a daily coffee occasion, making loyalty and experience critical differentiators.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>High — home brewing, convenience-store coffee, and quick-service chains (McDonald's McCafé, Dunkin') all compete for the same occasion.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — intense competition in both premium (independent cafes) and value (Dunkin', McDonald's) segments.</td></tr>
+    </table>
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Starbucks' moat rests on unmatched global brand recognition, a loyalty/rewards program with tens of millions of active members providing recurring engagement and data, and real estate scale that would be extremely costly for a new entrant to replicate. The moat had been eroding due to execution issues (slow service, an overly complex menu) that the current turnaround plan directly targets; early results suggest the moat is being reinforced rather than permanently impaired.</p>
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: quick-service restaurant and specialty coffee competitors. See separate MCD report in this series.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>Starbucks</td><td>SBUX</td><td>Average target $112.23; wide $81–$143 target dispersion</td></tr>
+      <tr><td>McDonald's</td><td>MCD</td><td>McCafé competes directly for the coffee occasion; see separate MCD report in this series</td></tr>
+      <tr><td class="placeholder">Restaurant Brands International</td><td class="placeholder">QSR</td><td class="placeholder">{{Not independently sourced for this report — value-oriented quick-service coffee competitor (Tim Hortons)}}</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — recommend explicit modeling of the China deconsolidation's impact on the revenue base separate from organic turnaround progress}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>Average sell-side price target of $112.23 (37 analysts) as of the report date, with an unusually wide $81–$143 range</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">We rate SBUX a <strong>HOLD</strong>. The turnaround evidence in Q3 FY2026 (a 31% EPS beat and nearly 8% comparable-sales growth) is genuinely encouraging and the China joint venture simplifies capital allocation, but the unusually wide analyst target dispersion signals the market has not yet reached consensus on durability. We would look for confirmation across at least two to three more quarters, particularly evidence that comparable-sales growth persists as base-period comparisons normalize, before moving to a more constructive rating.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q3 FY2025</th><th>Q3 FY2026</th><th>vs. Consensus</th></tr>
+      <tr><td>EPS</td><td>$0.50</td><td>$0.85</td><td>+31% vs. $0.65 estimate</td></tr>
+      <tr><td>Revenue</td><td class="placeholder">{{Not independently sourced}}</td><td>$9.32B</td><td>+2.2% vs. $9.12B estimate</td></tr>
+      <tr><td>Global Comparable Sales</td><td class="placeholder">{{Not independently sourced}}</td><td>+7.9%</td><td class="placeholder">{{Not separately disclosed}}</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">The EPS trajectory (from $0.41 and $0.50 in the prior two comparable quarters to $0.85 in Q3 FY2026) shows a clear positive inflection, but the comparison base itself was depressed by the company's own multi-year operational struggles, meaning some of the percentage improvement reflects an easy compare rather than a fundamentally higher steady-state earnings power. The China joint-venture deconsolidation also complicates period-over-period revenue comparisons and should be adjusted for when assessing underlying growth.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>The turnaround remains early-stage; a single strong quarter does not confirm that faster service times, menu simplification, and café improvements will sustain comparable-sales momentum as base-period comparisons become more difficult. The China joint venture with Boyu Capital also reduces Starbucks' direct operating control over one of its largest international markets.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>Deconsolidation of China revenue complicates period-over-period financial comparisons and could obscure underlying trends for investors relying on headline top-line figures. The wide analyst price-target dispersion ($81–$143) signals meaningful disagreement about durability of the earnings recovery, implying elevated potential share-price volatility around future earnings prints.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span class="placeholder">{{Labor relations/unionization activity at U.S. stores is an ongoing industry topic; specific current status not independently verified for this report.}}</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against Starbucks' most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in the sources reviewed — verify directly against Starbucks' 10-K/10-Q auditor opinion.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul class="placeholder"><li>{{ESG_ENV — reusable-cup initiatives and ethical coffee sourcing (C.A.F.E. Practices) not independently sourced in this summary}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul><li>Large global workforce ("partners") with ongoing public attention to U.S. store-level labor relations and unionization efforts</li><li class="placeholder">{{ESG_SOC — specific current labor-relations status not independently sourced}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul><li>Brian Niccol serves as Chairman and CEO, having joined from Chipotle in 2024 to lead the turnaround</li><li class="placeholder">{{ESG_GOV — board composition and diversity not independently sourced}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 17, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (company earnings releases, financial media coverage, and sell-side analyst commentary) that may be delayed or inconsistent. All figures should be independently verified against Starbucks' 10-K/10-Q filings before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

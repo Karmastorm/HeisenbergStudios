@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — SPG</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #e9edf2;
+    color: var(--text);
+    font-family: "Georgia", "Times New Roman", serif;
+    line-height: 1.55;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.12);
+    padding: 40px 50px 60px;
+  }
+
+  /* ---------- Header ---------- */
+  .report-header {
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .firm-name {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .company-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+  }
+
+  /* ---------- Recommendation banner ---------- */
+  .reco-banner {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .reco-main {
+    flex: 0 0 170px;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .reco-main .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+
+  .reco-main .value {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+
+  .reco-stats {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--gray-bg);
+  }
+
+  .reco-stat {
+    padding: 10px 14px;
+    border-left: 1px solid var(--border);
+  }
+
+  .reco-stat .label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    display: block;
+  }
+
+  .reco-stat .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* ---------- Basic info table ---------- */
+  .basic-info {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+
+  .basic-info td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .basic-info td.k {
+    color: var(--muted);
+    width: 38%;
+  }
+
+  .basic-info td.v {
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  /* ---------- Section styling ---------- */
+  section {
+    margin-bottom: 32px;
+  }
+
+  h2.section-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: var(--navy);
+    padding: 8px 14px;
+    margin: 0 0 14px 0;
+    border-left: 5px solid var(--accent);
+  }
+
+  h3.sub-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    margin: 18px 0 10px;
+  }
+
+  p.body-text {
+    font-size: 15px;
+    margin: 0 0 12px;
+  }
+
+  .placeholder {
+    color: #8a8fa3;
+    font-style: italic;
+  }
+
+  ul.bullet-list {
+    margin: 0 0 12px 0;
+    padding-left: 20px;
+  }
+
+  ul.bullet-list li {
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+
+  /* ---------- Investment Summary callout ---------- */
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  .thesis-box .thesis-label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-dark);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  /* ---------- Valuation table ---------- */
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  table.data-table th {
+    background: var(--navy);
+    color: #fff;
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  table.data-table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  table.data-table tr:nth-child(even) td {
+    background: var(--gray-bg);
+  }
+
+  /* ---------- Risk list ---------- */
+  .risk-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+  }
+
+  .risk-tag {
+    flex: 0 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    background: var(--red);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .risk-tag.op { background: #b8860b; }
+  .risk-tag.fin { background: var(--red); }
+  .risk-tag.reg { background: #6a3d9a; }
+  .risk-tag.legal { background: #444; }
+
+  /* ---------- ESG grid ---------- */
+  .esg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .esg-card {
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: 4px;
+    padding: 12px 14px;
+  }
+
+  .esg-card.environmental { border-top-color: #2e7d32; }
+  .esg-card.social { border-top-color: #1565c0; }
+  .esg-card.governance { border-top-color: #6a1b9a; }
+
+  .esg-card h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px;
+    color: var(--navy);
+  }
+
+  .esg-card ul {
+    margin: 0;
+    padding-left: 16px;
+    font-size: 13px;
+  }
+
+  .esg-card li { margin-bottom: 4px; }
+
+  /* ---------- Peer comparison ---------- */
+  .peer-note {
+    font-size: 12.5px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: -6px;
+    margin-bottom: 12px;
+  }
+
+  /* ---------- Footer / disclosures ---------- */
+  footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  footer .analyst-line {
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  @media (max-width: 700px) {
+    .page { padding: 24px 18px; }
+    .reco-banner { flex-direction: column; }
+    .reco-stats { grid-template-columns: repeat(2, 1fr); }
+    .esg-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research &middot; Equity Research</div>
+      <h1 class="company-title">Simon Property Group, Inc.</h1>
+      <div class="ticker-line">SPG &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Real Estate / REIT &mdash; Retail</div>
+    </div>
+    <div class="report-date">
+      September 18, 2026<br>
+      Analyst: Equity Research Desk
+    </div>
+  </div>
+
+  <!-- ============ RECOMMENDATION BANNER ============ -->
+  <div class="reco-banner">
+    <div class="reco-main">
+      <span class="label">Recommendation</span>
+      <span class="value" style="color:#b8860b;">HOLD</span>
+    </div>
+    <div class="reco-stats">
+      <div class="reco-stat">
+        <span class="label">Current Price</span>
+        <span class="value">$205.32</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Target Price</span>
+        <span class="value">$235.06</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Market Cap</span>
+        <span class="value">$77.90B</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Implied Upside/Downside</span>
+        <span class="value">+14.5%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BASIC INFORMATION ============ -->
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">SPG</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Real Estate</td></tr>
+      <tr><td class="k">Industry</td><td class="v">REIT &mdash; Retail</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$172.19 &ndash; $238.50</td></tr>
+      <tr><td class="k">Average Daily Volume (Liquidity)</td><td class="v">~3,014,874 shares</td></tr>
+      <tr><td class="k">Float</td><td class="v"><span class="placeholder">{{FLOAT — not independently sourced; effectively equal to shares outstanding less insider holdings}}</span></td></tr>
+      <tr><td class="k">Shares Outstanding</td><td class="v">~379.39 million</td></tr>
+      <tr><td class="k">Major Shareholders</td><td class="v"><span class="placeholder">{{MAJOR_SHAREHOLDERS — Vanguard and BlackRock are known large institutional holders; exact stakes not independently verified in this pass}}</span></td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT SUMMARY ============ -->
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Simon Property Group is the largest owner and operator of premier shopping, dining, entertainment, and mixed-use destinations in the United States, with a portfolio of malls, premium outlets, and Mills centers. FY2025 revenue grew 6.72% to $6,365M, while reported net income nearly doubled to $5,364M &mdash; but this growth was substantially driven by a $2,887M "Net Gains on Disposal of Properties" line item (versus a $75.82M loss on disposals in FY2024), pushing the FY2025 net margin to an unusually high 84.28%. This report treats the disposal-gain-driven net income spike as a genuine but non-recurring item that should be excluded when assessing normalized earnings power; a TTM data query for this report additionally returned figures (revenue $24.2B, net income $9.67B) that are themselves internally implausible relative to the FY2025 annual base (roughly 3.8x and 1.8x respectively) and are treated as unreliable, likely reflecting a further data-extraction/aggregation issue compounding the one-time-gain effect. The 20-analyst distribution (5 Strong Buy / 1 Buy / 14 Hold / 0 Sell / 0 Strong Sell) shows Hold as an outright 70% majority, and this report rates SPG a HOLD notwithstanding the positive (+14.5%) implied upside from the average price target, consistent with this report's convention of weighting a clear Hold-majority distribution over the headline "Buy" consensus label.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text placeholder">{{RECENT_DEVELOPMENTS — most recent quarterly results, specific properties involved in the large FY2025/Q1 2026 disposal gains, and mall/outlet occupancy and releasing spread trends should be sourced from the most recent 10-Q/8-K and verified independently}}</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text placeholder">{{EARNINGS_FORECAST_SUMMARY — forward FFO and revenue estimates for FY2027E, which should exclude the effect of the one-time property disposal gains embedded in FY2025 and TTM figures, should be sourced from consensus data and verified independently}}</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">At $205.32, SPG trades at a 14.41x trailing P/E, a figure that is likely understated by the large FY2025 disposal gains inflating the earnings denominator's base period; the metric should be interpreted cautiously. The average price target of $235.06 implies a solid +14.5% upside, but the analyst distribution's clear Hold majority (70%) suggests genuine caution among covering analysts regarding retail real estate fundamentals and the sustainability of the FY2025 earnings level.</p>
+  </section>
+
+  <!-- ============ BUSINESS DESCRIPTION ============ -->
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Simon Property Group, Inc. is a real estate investment trust that owns, develops, and manages premier shopping, dining, entertainment, and mixed-use destinations across the United States and internationally, including regional malls, premium outlet centers, and The Mills portfolio of large-format retail centers. The company actively recycles capital through property dispositions and redevelopment, converting underperforming or non-core assets into cash to fund higher-return investments.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Base minimum rent and occupancy levels across the company's mall and premium outlet portfolio, along with percentage rent tied to tenant sales</li>
+      <li>Releasing spreads (the rate change achieved on new versus expiring leases), a key indicator of pricing power in retail real estate</li>
+      <li>Ancillary and specialty leasing revenue, including sponsorship, media, and short-term "pop-up" tenant income</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Property operating expenses, including common-area maintenance, marketing, and property tax costs across the large mall and outlet portfolio</li>
+      <li>Interest expense on debt used to fund redevelopment, acquisitions, and the company's capital recycling program</li>
+    </ul>
+  </section>
+
+  <!-- ============ INDUSTRY OVERVIEW & COMPETITIVE POSITIONING ============ -->
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text placeholder">{{INDUSTRY_OVERVIEW — the U.S. mall and retail real estate industry has undergone significant consolidation and repositioning over the past decade, with well-located, high-productivity malls (Simon's core focus) generally outperforming lower-tier properties amid continued e-commerce competition; current industry conditions should be independently verified against recent industry sources}}</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — new large-scale mall development has been minimal for over a decade given e-commerce competition and high capital requirements, favoring incumbent owners of well-located properties</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Low — construction and maintenance service providers have limited leverage given Simon's scale and long-standing vendor relationships</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate-to-High — retail tenants have gained negotiating leverage amid ongoing e-commerce competition, though top-tier, high-traffic Simon properties retain pricing power</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate-to-High — e-commerce remains a structural competitive threat to physical retail, though experiential and entertainment-oriented tenants have helped differentiate top-tier malls from pure commodity retail space</td></tr>
+      <tr><td>Competitive Rivalry</td><td>Moderate — competition with other mall and retail REITs, though Simon's portfolio is concentrated in higher-productivity, Class-A properties that face less direct competition from lower-tier retail real estate</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Simon's moat is rooted in its portfolio concentration in higher-productivity, well-located Class-A malls and premium outlets, an active capital-recycling program that redeploys proceeds from underperforming asset sales into higher-return redevelopment, and scale advantages in tenant relationships and leasing negotiations.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set used for relative valuation and competitive benchmarking.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Market Cap</th><th>P/E</th><th>EV/EBITDA</th></tr>
+      <tr><td>Simon Property Group, Inc.</td><td>SPG</td><td>$77.90B</td><td>14.41x</td><td class="placeholder">{{EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">Macerich Company</td><td class="placeholder">MAC</td><td class="placeholder">{{PEER_1_MCAP}}</td><td class="placeholder">{{PEER_1_PE}}</td><td class="placeholder">{{PEER_1_EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">Kimco Realty Corporation</td><td class="placeholder">KIM</td><td class="placeholder">{{PEER_2_MCAP}}</td><td class="placeholder">{{PEER_2_PE}}</td><td class="placeholder">{{PEER_2_EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">Realty Income Corporation</td><td class="placeholder">O</td><td class="placeholder">{{PEER_3_MCAP}}</td><td class="placeholder">{{PEER_3_PE}}</td><td class="placeholder">{{PEER_3_EV_EBITDA}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ VALUATION ============ -->
+  <section>
+    <h2 class="section-title">Valuation</h2>
+
+    <h3 class="sub-title">Absolute Valuation &mdash; Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{WACC — not independently modeled in this pass; typical large-cap retail REIT WACC range 7-9%}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{TERMINAL_GROWTH — typically 2-3% for a mature-stage terminal assumption}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{FORECAST_PERIOD — should explicitly exclude the effect of one-time property disposal gains when modeling a normalized cash flow base}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td class="placeholder">{{DCF_INTRINSIC_VALUE — not independently modeled in this pass; note that REIT valuation is more commonly anchored to FFO multiples than a traditional DCF}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Relative Valuation</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Simon Property Group, Inc.</th><th>Peer Average</th><th>Industry Average</th></tr>
+      <tr><td>P/E (Trailing)</td><td>14.41x (likely understated by disposal gains)</td><td class="placeholder">{{PEER_PE_AVG}}</td><td class="placeholder">{{INDUSTRY_PE_AVG}}</td></tr>
+      <tr><td>P/FFO</td><td class="placeholder">{{PFFO_RATIO — not independently sourced in this pass; the more standard and more reliable REIT valuation metric than P/E given the disposal-gain distortion}}</td><td class="placeholder">{{PEER_PFFO_AVG}}</td><td class="placeholder">{{INDUSTRY_PFFO_AVG}}</td></tr>
+      <tr><td>P/Sales</td><td class="placeholder">~12.2x (estimated from market cap/FY2025 revenue)</td><td class="placeholder">{{PEER_PS_AVG}}</td><td class="placeholder">{{INDUSTRY_PS_AVG}}</td></tr>
+      <tr><td>P/Book Value</td><td class="placeholder">{{PB_RATIO}}</td><td class="placeholder">{{PEER_PB_AVG}}</td><td class="placeholder">{{INDUSTRY_PB_AVG}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">With Hold as an outright 70% majority of the 20-analyst distribution, this report assigns a HOLD rating despite the positive (+14.5%) implied upside from the average price target, consistent with this report's convention of weighting a clear Hold-majority distribution over a headline "Buy" consensus label. The unusually high FY2025 net margin (84.28%), driven substantially by one-time property disposal gains, further supports a cautious stance pending clarity on normalized, FFO-based earnings power.</p>
+  </section>
+
+  <!-- ============ FINANCIAL ANALYSIS ============ -->
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+
+    <h3 class="sub-title">Historical &amp; Forecast Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>FY2023</th><th>FY2024</th><th>FY2025</th><th>FY2027E</th></tr>
+      <tr><td>Revenue</td><td class="placeholder">{{REV_Y0 — not independently sourced in this pass}}</td><td>$5,964M</td><td>$6,365M</td><td class="placeholder">{{REV_Y3}}</td></tr>
+      <tr><td>EBITDA</td><td class="placeholder">{{EBITDA_Y0}}</td><td class="placeholder">{{EBITDA_Y1}}</td><td class="placeholder">{{EBITDA_Y2}}</td><td class="placeholder">{{EBITDA_Y3}}</td></tr>
+      <tr><td>Net Income</td><td class="placeholder">{{NI_Y0 — not independently sourced in this pass}}</td><td>$2,729M</td><td>$5,364M</td><td class="placeholder">{{NI_Y3}}</td></tr>
+      <tr><td>EPS (Diluted)</td><td class="placeholder">{{EPS_Y0}}</td><td>$7.26</td><td>$14.17</td><td class="placeholder">{{EPS_Y3}}</td></tr>
+      <tr><td>Free Cash Flow</td><td class="placeholder">{{FCF_Y0}}</td><td class="placeholder">{{FCF_Y1}}</td><td class="placeholder">{{FCF_Y2}}</td><td class="placeholder">{{FCF_Y3}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text"><strong>FY2025 net income of $5,364M includes approximately $2,887M in "Net Gains on Disposal of Properties," versus a $75.82M loss on disposals in FY2024 &mdash; this large swing accounts for substantially all of the reported year-over-year net income growth and should be treated as a non-recurring item when assessing normalized earnings power; excluding it, adjusted FY2025 net income would be roughly comparable to, or modestly below, the FY2024 level.</strong> Separately, a TTM data query for this report returned revenue of $24.2B and net income of $9.67B, which are themselves internally implausible relative to the FY2025 annual base (revenue roughly 3.8x, net income roughly 1.8x) and appear to compound a further data-extraction/aggregation issue on top of the one-time disposal gain; these TTM figures are excluded from the summary table above, and readers should independently verify current TTM figures directly from Simon's most recent 10-Q.</p>
+
+    <h3 class="sub-title">Industry-Specific Ratios</h3>
+    <table class="data-table">
+      <tr><th>Ratio</th><th>Value</th></tr>
+      <tr><td>Portfolio Occupancy Rate</td><td class="placeholder">{{INDUSTRY_RATIO_1_VALUE — a key operating metric for a mall REIT; not independently sourced in this pass}}</td></tr>
+      <tr><td>Base Minimum Rent per Square Foot / Releasing Spread</td><td class="placeholder">{{INDUSTRY_RATIO_2_VALUE — not independently sourced in this pass}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT RISKS ============ -->
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+
+    <div class="risk-item">
+      <span class="risk-tag op">Operational</span>
+      <span>Continued e-commerce competition and potential tenant bankruptcies could pressure occupancy and releasing spreads across the mall and outlet portfolio, particularly at lower-productivity properties.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag fin">Financial</span>
+      <span>The FY2025 net income figure is substantially inflated by one-time property disposal gains; readers should independently verify normalized, FFO-based earnings power rather than relying on reported GAAP net income or the headline trailing P/E.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag reg">Regulatory</span>
+      <span>Local zoning, property tax assessment, and redevelopment permitting processes across the company's large portfolio represent an ongoing consideration requiring independent monitoring.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag legal">Legal</span>
+      <span>Standard commercial real estate and tenant-related litigation typical of a large mall REIT; outcomes should be independently monitored via the company's most recent 10-K legal proceedings disclosure.</span>
+    </div>
+
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text"><strong>This report flags the large one-time property disposal gains embedded in FY2025 net income, and the further implausible TTM revenue and net income figures returned in this research pass, as material items requiring independent verification before this report is relied upon for an investment decision.</strong> <span class="placeholder">{{AUDITOR_FLAGS — no material weaknesses or qualified audit opinions are otherwise known to this analyst as of the report date; this should be independently confirmed against Simon's most recent 10-K auditor's report}}</span></p>
+  </section>
+
+  <!-- ============ ESG ============ -->
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental">
+        <h4>Environmental</h4>
+        <ul>
+          <li class="placeholder">{{ESG_ENV_1 — energy efficiency and building certification (e.g., LEED, ENERGY STAR) rates across the mall portfolio should be sourced from Simon's sustainability report}}</li>
+          <li class="placeholder">{{ESG_ENV_2 — specific corporate carbon-reduction targets not independently verified in this pass}}</li>
+          <li class="placeholder">{{ESG_ENV_3 — electric vehicle charging and solar installation initiatives at properties not independently verified in this pass}}</li>
+        </ul>
+      </div>
+      <div class="esg-card social">
+        <h4>Social</h4>
+        <ul>
+          <li class="placeholder">{{ESG_SOC_1 — community and local economic impact of mall redevelopment projects should be sourced from Simon's disclosures}}</li>
+          <li class="placeholder">{{ESG_SOC_2 — tenant and shopper safety/accessibility initiatives not independently verified in this pass}}</li>
+          <li class="placeholder">{{ESG_SOC_3 — workforce diversity metrics not independently verified in this pass}}</li>
+        </ul>
+      </div>
+      <div class="esg-card governance">
+        <h4>Governance</h4>
+        <ul>
+          <li class="placeholder">{{ESG_GOV_1 — board composition not independently verified in this pass; should be sourced from the most recent proxy statement}}</li>
+          <li><strong>Transparency around the composition of reported earnings (specifically, the large one-time disposal gains inflating FY2025 net income) is a governance and disclosure consideration warranting independent review of management's non-GAAP/FFO reconciliations.</strong></li>
+          <li class="placeholder">{{ESG_GOV_2 — executive compensation structure should be sourced from the most recent proxy statement}}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER / DISCLOSURES ============ -->
+  <footer>
+    <div class="analyst-line">Prepared by Equity Research Desk, Equity Analyst — Independent Equity Research</div>
+    This report is compiled from publicly available data sources believed to be reliable but not independently audited. Figures marked as placeholders require independent verification before use in an investment decision. This report does not constitute investment advice, an offer, or a solicitation to buy or sell any security. Ratings: BUY = expected to outperform the market over the next 12 months; HOLD = expected to perform in line with the market; SELL = expected to underperform the market. The analyst(s) preparing this report may or may not hold a position in the subject security. Past performance is not indicative of future results.
+  </footer>
+
+</div>
+</body>
+</html>

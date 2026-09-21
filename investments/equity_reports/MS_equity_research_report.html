@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — MS</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  .placeholder { color:#8a8fa3; font-style:italic; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Morgan Stanley</h1>
+      <div class="ticker-line">MS &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Financials / Investment Banking &amp; Brokerage</div>
+    </div>
+    <div class="report-date">September 18, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#b8860b;">HOLD</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">$203.52</span></div>
+      <div class="reco-stat"><span class="label">Target Price</span><span class="value">$237.33 (avg.)</span></div>
+      <div class="reco-stat"><span class="label">Market Cap</span><span class="value">$319.6B</span></div>
+      <div class="reco-stat"><span class="label">Implied Upside</span><span class="value">~+16.6%</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">MS</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Financials</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Investment Banking &amp; Brokerage</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$151.84 – $232.25</td></tr>
+      <tr><td class="k">Consensus Rating (Headline)</td><td class="v">Buy</td></tr>
+      <tr><td class="k">Rating Distribution (25 analysts)</td><td class="v">9 Strong Buy, 2 Buy, 12 Hold, 1 Sell, 1 Strong Sell</td></tr>
+      <tr><td class="k">TTM Revenue / Net Income</td><td class="v">$77.83 billion / $19.55 billion</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted); margin-top:-14px;">Note: the headline consensus rating is "Buy," but the rating distribution is nearly evenly split — 11 of 25 analysts (44%) rate Buy/Strong Buy versus 12 (48%) at Hold and 2 at Sell — a materially more mixed signal than the headline label alone suggests.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Morgan Stanley delivered strong TTM results — revenue of $77.83 billion (up 18.6% year-over-year) and net income of $19.55 billion (up 36.6%), with EPS of $12.38 (up 40.2%) — reflecting robust performance across its Institutional Securities, Wealth Management, and Investment Management segments. Despite the headline "Buy" consensus rating and an average price target of $237.33 implying roughly 16.6% upside, the underlying rating distribution is nearly evenly split: 11 of 25 analysts (44%) rate Buy or Strong Buy, versus 12 (48%) at Hold and 2 at Sell/Strong Sell. This pattern — no clear majority in either direction — mirrors the ambiguity we flagged at Goldman Sachs in this series, and for consistency we rate MS a HOLD rather than defaulting to the modestly more common headline label, notwithstanding the strong reported earnings growth and double-digit implied upside to target.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Morgan Stanley reported trailing-twelve-month revenue of $77.83 billion (up 18.6% year-over-year), net income of $19.55 billion (up 36.6%), and EPS of $12.38 (up 40.2%). Full-year 2025 results showed revenue of $70.30 billion (up 14.31%) and earnings of $16.25 billion (up 26.95%). The stock has traded within a 52-week range of $151.84 to $232.25, reflecting strength across its Institutional Securities, Wealth Management, and Investment Management segments.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text placeholder">{{No specific forward-quarter or full-year 2026 EPS guidance was independently sourced for this report — recommend reviewing Morgan Stanley's most recent earnings call transcript for management's outlook on wealth management fee growth and capital markets activity.}}</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">The average price target of $237.33 (range $184–$262) implies approximately 16.6% upside from the current price of $203.52. The rating distribution (9 Strong Buy, 2 Buy, 12 Hold, 1 Sell, 1 Strong Sell) shows no clear majority — 44% Buy/Strong Buy versus 48% Hold — which we weight over the headline "Buy" label in arriving at our overall rating, consistent with our treatment of the similarly split-distribution GS in this series. Trailing P/E stands at 16.45x.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Morgan Stanley is a leading global investment bank operating across three primary segments: Institutional Securities (investment banking, sales and trading), Wealth Management, and Investment Management, serving corporations, institutions, governments, and individual investors worldwide.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Institutional Securities investment banking fees and trading revenue, which can be volatile with capital markets activity levels</li>
+      <li>Wealth Management fee-based revenue, providing a more stable, recurring earnings stream relative to trading-driven segments</li>
+      <li>Investment Management fee income from asset management products and services</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Compensation expense, particularly within Institutional Securities and the Wealth Management advisor network</li>
+      <li class="placeholder">{{Specific technology and regulatory compliance expense figures not independently sourced for this report}}</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Morgan Stanley competes in the global investment banking and brokerage industry most directly against Goldman Sachs (see separate GS report in this series), with additional competition from the investment banking and wealth management divisions of large diversified banks.</p>
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — reputation, client relationships, and regulatory capital requirements create significant barriers to entry in large-scale investment banking and wealth management.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — the ability to attract and retain top investment banking, trading, and wealth advisory talent represents a key input cost and competitive factor.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate — large corporate and institutional clients can negotiate fees, though wealth management client relationships carry meaningful switching costs.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate — boutique advisory firms, robo-advisors, and alternative capital providers present competitive alternatives.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — intense competition among global investment banks and wealth managers for market share.</td></tr>
+    </table>
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Morgan Stanley's moat rests on its leading Wealth Management franchise, which provides a more stable, fee-based earnings stream than pure investment-banking peers, combined with a strong institutional securities and investment management platform.</p>
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major U.S. diversified and investment banks. See separate GS, JPM, BAC, WFC, and C reports in this series.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>Morgan Stanley</td><td>MS</td><td>No clear rating-distribution majority (44% Buy+ vs. 48% Hold)</td></tr>
+      <tr><td>Goldman Sachs</td><td>GS</td><td>See separate GS report in this series (also mixed distribution)</td></tr>
+      <tr><td>JPMorgan Chase</td><td>JPM</td><td>See separate JPM report in this series</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — investment bank valuation is typically approached via P/E, P/TBV, and ROE-based frameworks rather than standard DCF}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>Average sell-side price target of $237.33 (25 analysts) as of the report date</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">We rate MS a <strong>HOLD</strong>. Strong reported earnings growth and double-digit implied upside to target are offset by a rating distribution with no clear majority in either direction, suggesting genuine disagreement among covering analysts about the durability of current trading and wealth management fee levels.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>2025</th><th>TTM</th></tr>
+      <tr><td>Revenue</td><td>$70.30 billion (+14.31%)</td><td>$77.83 billion (+18.6%)</td></tr>
+      <tr><td>Net Income</td><td>$16.25 billion (+26.95%)</td><td>$19.55 billion (+36.6%)</td></tr>
+      <tr><td>EPS</td><td class="placeholder">{{N/A}}</td><td>$12.38 (+40.2%)</td></tr>
+      <tr><td>P/E (TTM)</td><td class="placeholder">{{N/A}}</td><td>16.45x</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">Morgan Stanley's earnings growth reflects strength across both its more stable Wealth Management fee-based business and its more cyclical Institutional Securities trading and investment banking segments. The mixed analyst rating distribution may partly reflect uncertainty about how much of the trading-driven strength is sustainable relative to structurally growing Wealth Management fees.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>Institutional Securities trading and investment banking revenue can be volatile quarter to quarter, dependent on capital markets activity levels and market conditions.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>As a systemically important financial institution, MS is subject to stringent capital and liquidity requirements; the mixed analyst rating distribution suggests some disagreement about near-term earnings sustainability.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span class="placeholder">{{Banking and broker-dealer regulatory policy (capital requirements, trading regulations, wealth management fiduciary rules) represents an ongoing industry-wide consideration; specific current developments not independently verified for this report.}}</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against Morgan Stanley's most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in the sources reviewed — verify directly against Morgan Stanley's 10-K/10-Q auditor opinion. The near-even split in the rating distribution flagged above should be independently reconciled before this report is used for any investment decision.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul class="placeholder"><li>{{ESG_ENV — sustainable finance commitments and operational emissions targets not independently sourced}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul class="placeholder"><li>{{ESG_SOC — community reinvestment and workforce program specifics not independently sourced}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul class="placeholder"><li>{{ESG_GOV — board composition and diversity not independently sourced}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 18, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (financial data aggregators and sell-side analyst rating summaries) that may be delayed or inconsistent, including a noted near-even split between Buy/Strong Buy and Hold ratings. All figures should be independently verified against Morgan Stanley's 10-K/10-Q filings and live market data before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — TMO</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  .placeholder { color:#8a8fa3; font-style:italic; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Thermo Fisher Scientific Inc.</h1>
+      <div class="ticker-line">TMO &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Health Care / Life Sciences Tools &amp; Services</div>
+    </div>
+    <div class="report-date">September 18, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#1e7e34;">BUY</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">$658.32</span></div>
+      <div class="reco-stat"><span class="label">Target Price</span><span class="value">$645.15 (avg.)</span></div>
+      <div class="reco-stat"><span class="label">Market Cap</span><span class="value">$243.4B</span></div>
+      <div class="reco-stat"><span class="label">Implied Upside</span><span class="value">~+0.6%</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">TMO</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Health Care</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Life Sciences Tools &amp; Services</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$435.27 – $663.57</td></tr>
+      <tr><td class="k">Consensus Rating</td><td class="v">Buy (29 analysts: 19 Strong Buy, 4 Buy, 5 Hold, 1 Sell)</td></tr>
+      <tr><td class="k">TTM Revenue / Net Income</td><td class="v">$46.34 billion / $6.97 billion</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted); margin-top:-14px;">Note: the stock is trading essentially at its average analyst price target (implying only ~0.6% upside) and near its 52-week high of $663.57, meaning the sizable Buy/Strong Buy majority is not currently paired with meaningful near-term price target upside.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Thermo Fisher Scientific delivered TTM revenue of $46.34 billion (up 7.2% year-over-year) and net income of $6.97 billion (up 5.8%), continuing consistent, steady growth across its analytical instruments, life sciences solutions, specialty diagnostics, and laboratory products and biopharma services segments. The analyst rating distribution is strongly bullish, with 23 of 29 analysts (79%) rating Buy or Strong Buy, but the stock is trading essentially in line with its average price target ($645.15 versus a current price of $658.32, implying roughly 0.6% upside) and near its 52-week high of $663.57. We rate TMO a BUY on the strength of its consistent execution and decisively bullish analyst base, while noting that the stock offers limited near-term price upside at current levels — the investment case here rests more on continued steady compounding than a re-rating catalyst.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Thermo Fisher's trailing-twelve-month results showed revenue of $46.34 billion (up 7.2% year-over-year) and net income of $6.97 billion (up 5.8%), building on full-year 2025 revenue of $44.56 billion (up 3.91%) and earnings of $6.70 billion (up 5.82%), demonstrating continued steady, consistent growth. The stock has traded within a 52-week range of $435.27 to $663.57 and currently sits near that high.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text placeholder">{{No specific forward-quarter or full-year 2026 EPS guidance was independently sourced for this report — recommend reviewing Thermo Fisher's most recent earnings call transcript for management's outlook on bioprocessing demand recovery and academic/government research funding trends.}}</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Consensus rating is Buy across 29 analysts (19 Strong Buy, 4 Buy, 5 Hold, 1 Sell), a 79% Buy/Strong Buy majority. However, the average price target of $645.15 (range $520–$750) implies only approximately 0.6% upside from the current price of $658.32 — the stock has effectively caught up to where analysts see fair value, despite the continued bullish rating distribution.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Thermo Fisher Scientific is a leading global life sciences tools and services company operating across four segments: Life Sciences Solutions, Analytical Instruments, Specialty Diagnostics, and Laboratory Products and Biopharma Services, serving pharmaceutical, biotechnology, academic, government, and clinical customers worldwide.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Life Sciences Solutions segment revenue, including reagents, consumables, and instruments for genomic and molecular research</li>
+      <li>Analytical Instruments segment revenue from scientific instrumentation used across pharmaceutical, academic, and industrial research</li>
+      <li>Laboratory Products and Biopharma Services segment, including contract development and manufacturing services for biopharma customers</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Research and development investment supporting continued instrument and consumables innovation</li>
+      <li class="placeholder">{{Specific acquisition integration and manufacturing capacity expansion expense figures not independently sourced for this report}}</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Thermo Fisher competes in the global life sciences tools and services industry against other large diagnostics and life sciences instrumentation companies, including Danaher (see separate DHR report in this series), Abbott, and other specialized life sciences tools providers.</p>
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low-to-Moderate — scale, R&amp;D investment, and established customer relationships in life sciences instrumentation create meaningful barriers, though niche players can compete in specific product categories.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Low-to-Moderate — Thermo Fisher maintains diversified global manufacturing and supply chain capabilities.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate — large pharmaceutical and biotech customers can negotiate volume-based pricing, though switching costs for integrated instrument/consumables ecosystems are meaningful.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Low-to-Moderate — specialized scientific instrumentation and consumables have limited direct substitutes, though competition among established providers is significant.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — intense competition among large life sciences tools and diagnostics companies for pharmaceutical, biotech, academic, and government research spending.</td></tr>
+    </table>
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Thermo Fisher's moat rests on its unmatched scale and breadth across life sciences tools, diagnostics, and biopharma services, an integrated instrument-and-consumables business model that creates recurring revenue and switching costs, and a track record of successful acquisition integration.</p>
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major U.S. health care and life sciences companies. See separate UNH, JNJ, ABBV, MRK, PFE, ABT, DHR, ISRG, and AMGN reports in this series.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>Thermo Fisher Scientific</td><td>TMO</td><td>79% Buy+ rating but trading essentially at average target (~0.6% upside)</td></tr>
+      <tr><td>Danaher</td><td>DHR</td><td>See separate DHR report in this series</td></tr>
+      <tr><td>Abbott Laboratories</td><td>ABT</td><td>See separate ABT report in this series</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — requires explicit modeling of bioprocessing demand recovery and life sciences research funding trends}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>Average sell-side price target of $645.15 (29 analysts) as of the report date</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">We rate TMO a <strong>BUY</strong>. Consistent execution, steady double-digit revenue growth, and a 79% Buy/Strong Buy analyst distribution support a constructive stance, though investors should note the stock is trading essentially at its average price target, meaning the near-term case rests on continued compounding rather than a valuation re-rating.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>2025</th><th>TTM</th></tr>
+      <tr><td>Revenue</td><td>$44.56 billion (+3.91%)</td><td>$46.34 billion (+7.2%)</td></tr>
+      <tr><td>Net Income</td><td>$6.70 billion (+5.82%)</td><td>$6.97 billion (+5.8%)</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text placeholder">{{Detailed earnings-quality items such as segment-level margin trends and bioprocessing/COVID-related revenue normalization detail were not independently sourced for this report — recommend reviewing Thermo Fisher's 10-K and quarterly earnings supplements for detail.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>Revenue is sensitive to academic and government research funding levels, as well as pharmaceutical and biotech customer capital spending cycles, which can fluctuate with broader budget conditions.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>The stock trades essentially at its average analyst price target, offering limited valuation cushion if growth trends were to decelerate from current levels.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span class="placeholder">{{Life sciences and diagnostics regulatory approval processes, as well as government research funding policy, represent ongoing industry-wide considerations; specific current developments not independently verified for this report.}}</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against Thermo Fisher's most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in the sources reviewed — verify directly against Thermo Fisher's 10-K/10-Q auditor opinion.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul class="placeholder"><li>{{ESG_ENV — operational emissions and sustainability targets not independently sourced}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul><li>Thermo Fisher's role in supplying tools and consumables for global scientific research and diagnostics supports broader public health and research infrastructure</li><li class="placeholder">{{ESG_SOC — specific program details not independently sourced}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul class="placeholder"><li>{{ESG_GOV — board composition and diversity not independently sourced}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 18, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (financial data aggregators and sell-side analyst rating summaries) that may be delayed or inconsistent. All figures should be independently verified against Thermo Fisher's 10-K/10-Q filings and live market data before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

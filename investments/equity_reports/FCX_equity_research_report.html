@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — FCX</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #e9edf2;
+    color: var(--text);
+    font-family: "Georgia", "Times New Roman", serif;
+    line-height: 1.55;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.12);
+    padding: 40px 50px 60px;
+  }
+
+  /* ---------- Header ---------- */
+  .report-header {
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .firm-name {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .company-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+  }
+
+  /* ---------- Recommendation banner ---------- */
+  .reco-banner {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .reco-main {
+    flex: 0 0 170px;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .reco-main .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+
+  .reco-main .value {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+
+  .reco-stats {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--gray-bg);
+  }
+
+  .reco-stat {
+    padding: 10px 14px;
+    border-left: 1px solid var(--border);
+  }
+
+  .reco-stat .label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    display: block;
+  }
+
+  .reco-stat .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* ---------- Basic info table ---------- */
+  .basic-info {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+
+  .basic-info td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .basic-info td.k {
+    color: var(--muted);
+    width: 38%;
+  }
+
+  .basic-info td.v {
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  /* ---------- Section styling ---------- */
+  section {
+    margin-bottom: 32px;
+  }
+
+  h2.section-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: var(--navy);
+    padding: 8px 14px;
+    margin: 0 0 14px 0;
+    border-left: 5px solid var(--accent);
+  }
+
+  h3.sub-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    margin: 18px 0 10px;
+  }
+
+  p.body-text {
+    font-size: 15px;
+    margin: 0 0 12px;
+  }
+
+  .placeholder {
+    color: #8a8fa3;
+    font-style: italic;
+  }
+
+  ul.bullet-list {
+    margin: 0 0 12px 0;
+    padding-left: 20px;
+  }
+
+  ul.bullet-list li {
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+
+  /* ---------- Investment Summary callout ---------- */
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  .thesis-box .thesis-label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-dark);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  /* ---------- Valuation table ---------- */
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  table.data-table th {
+    background: var(--navy);
+    color: #fff;
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  table.data-table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  table.data-table tr:nth-child(even) td {
+    background: var(--gray-bg);
+  }
+
+  /* ---------- Risk list ---------- */
+  .risk-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+  }
+
+  .risk-tag {
+    flex: 0 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    background: var(--red);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .risk-tag.op { background: #b8860b; }
+  .risk-tag.fin { background: var(--red); }
+  .risk-tag.reg { background: #6a3d9a; }
+  .risk-tag.legal { background: #444; }
+
+  /* ---------- ESG grid ---------- */
+  .esg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .esg-card {
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: 4px;
+    padding: 12px 14px;
+  }
+
+  .esg-card.environmental { border-top-color: #2e7d32; }
+  .esg-card.social { border-top-color: #1565c0; }
+  .esg-card.governance { border-top-color: #6a1b9a; }
+
+  .esg-card h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px;
+    color: var(--navy);
+  }
+
+  .esg-card ul {
+    margin: 0;
+    padding-left: 16px;
+    font-size: 13px;
+  }
+
+  .esg-card li { margin-bottom: 4px; }
+
+  /* ---------- Peer comparison ---------- */
+  .peer-note {
+    font-size: 12.5px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: -6px;
+    margin-bottom: 12px;
+  }
+
+  /* ---------- Footer / disclosures ---------- */
+  footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  footer .analyst-line {
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  @media (max-width: 700px) {
+    .page { padding: 24px 18px; }
+    .reco-banner { flex-direction: column; }
+    .reco-stats { grid-template-columns: repeat(2, 1fr); }
+    .esg-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research &middot; Equity Research</div>
+      <h1 class="company-title">Freeport-McMoRan Inc.</h1>
+      <div class="ticker-line">FCX &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Materials / Copper</div>
+    </div>
+    <div class="report-date">
+      September 18, 2026<br>
+      Analyst: Equity Research Desk
+    </div>
+  </div>
+
+  <!-- ============ RECOMMENDATION BANNER ============ -->
+  <div class="reco-banner">
+    <div class="reco-main">
+      <span class="label">Recommendation</span>
+      <span class="value" style="color:#1e7e34;">BUY</span>
+    </div>
+    <div class="reco-stats">
+      <div class="reco-stat">
+        <span class="label">Current Price</span>
+        <span class="value">$71.09</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Target Price</span>
+        <span class="value">$72.05</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Market Cap</span>
+        <span class="value">$102.09B</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Implied Upside/Downside</span>
+        <span class="value">+1.4%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BASIC INFORMATION ============ -->
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">FCX</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Materials</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Copper</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$35.15 &ndash; $80.24</td></tr>
+      <tr><td class="k">Average Daily Volume (Liquidity)</td><td class="v">~6,065,931 shares</td></tr>
+      <tr><td class="k">Float</td><td class="v"><span class="placeholder">{{FLOAT — not independently sourced; effectively equal to shares outstanding less insider holdings}}</span></td></tr>
+      <tr><td class="k">Shares Outstanding</td><td class="v">~1.44 billion</td></tr>
+      <tr><td class="k">Major Shareholders</td><td class="v"><span class="placeholder">{{MAJOR_SHAREHOLDERS — Vanguard and BlackRock are known large institutional holders; exact stakes not independently verified in this pass}}</span></td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT SUMMARY ============ -->
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Freeport-McMoRan is one of the world's largest publicly traded copper producers, with major mining operations in North America (Arizona, New Mexico), South America (Peru, Chile), and Indonesia (the large Grasberg complex), and meaningful gold and molybdenum by-product exposure. The stock's market capitalization has risen approximately 57% over the trailing period, reflecting a sharp rally in copper prices tied to electrification and grid-infrastructure demand. FY2025 revenue grew a modest 1.8% to $25.9B while net income grew a stronger 16.7% to $2.2B, though free cash flow declined sharply (-52.6%) as capital expenditures remained elevated at $4.5B. <strong>Note: a clean, separately reported TTM figure could not be reliably extracted in this research pass — the data source returned TTM revenue/net income figures roughly 4x larger than the FY2025 annual base ($104.1B vs. $25.9B), an implausible result almost certainly reflecting a data extraction/aggregation error; this report therefore uses FY2025 annual figures as the most reliable base and flags TTM line items for independent verification.</strong> The 23-analyst distribution (12 Strong Buy / 6 Buy / 4 Hold / 0 Sell / 1 Strong Sell) shows Strong Buy alone constituting a clear 52.2% majority with 78.3% Buy-or-better, supporting a BUY rating; however, the average price target of $72.05 implies essentially flat (+1.4%) upside from the current price, indicating that even bullish analysts view the recent copper-driven rally as having largely priced in the near-term fundamental improvement.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text placeholder">{{RECENT_DEVELOPMENTS — most recent quarterly results, copper price trends and any hedging activity, Grasberg complex production and any operational disruptions, and capital expenditure guidance for major expansion projects should be sourced from the most recent 10-Q/8-K and verified independently}}</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text placeholder">{{EARNINGS_FORECAST_SUMMARY — forward EPS and revenue estimates for FY2027E, highly sensitive to the assumed forward copper price curve, should be sourced from consensus data and verified independently; the forward P/E of 20.05x versus trailing 34.72x implies analysts expect meaningful earnings growth as recent copper price gains flow through, or as major expansion capex projects begin to ramp production}}</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">At $71.09, FCX trades at a rich 34.72x trailing P/E (20.05x forward), reflecting the market's forward-looking view of higher copper prices and production growth from expansion projects. The stock trades near the top of its wide 52-week range of $35.15–$80.24 following the sharp copper-driven rally, and the average analyst target's essentially flat implied upside (+1.4%) suggests the stock is close to fully valued at current levels even among bullish analysts.</p>
+  </section>
+
+  <!-- ============ BUSINESS DESCRIPTION ============ -->
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Freeport-McMoRan Inc. is a leading international mining company primarily focused on copper production, with major operating assets including the Morenci mine in Arizona, the Cerro Verde mine in Peru, El Abra in Chile, and the large-scale Grasberg minerals district in Indonesia (operated through PT Freeport Indonesia), which also produces significant gold and silver as by-products. The company's revenue is driven overwhelmingly by copper price and volume, with gold and molybdenum by-product sales providing a secondary revenue stream that partially offsets copper price cyclicality.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Copper price, which is highly sensitive to global electrification, grid-infrastructure, and electric-vehicle demand trends, as well as broader industrial and construction activity</li>
+      <li>Copper production volumes across the company's North American, South American, and Indonesian (Grasberg) operations</li>
+      <li>Gold and molybdenum by-product sales, which provide a meaningful secondary revenue stream, particularly from the Grasberg complex</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Mining and processing costs, including energy, labor, and consumable inputs, which can vary significantly by mine site and ore grade</li>
+      <li>Large ongoing capital expenditure programs for mine expansion and processing capacity additions to capture higher copper demand</li>
+    </ul>
+  </section>
+
+  <!-- ============ INDUSTRY OVERVIEW & COMPETITIVE POSITIONING ============ -->
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text placeholder">{{INDUSTRY_OVERVIEW — the global copper market has benefited from strong demand tied to grid electrification, data center power infrastructure, and electric vehicle adoption, alongside constrained new mine supply; this dynamic has driven a substantial period copper-price rally reflected in FCX's market cap gain; should be independently verified with current industry and commodity-price data}}</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Very Low — new large-scale copper mine development requires enormous capital investment, decade-plus permitting timelines, and access to increasingly scarce high-grade ore bodies</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — dependence on energy, labor, and mining equipment suppliers, with cost inflation a periodic industry-wide pressure</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Low — copper is a globally traded commodity priced on exchanges (LME, COMEX), giving individual producers limited pricing power but also limited exposure to any single buyer's negotiating leverage</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Low-to-Moderate — aluminum can substitute for copper in some electrical applications, but copper's conductivity advantages make it difficult to fully displace in most high-value electrification uses</td></tr>
+      <tr><td>Competitive Rivalry</td><td>Moderate — competition with other major global copper producers including BHP, Southern Copper, and Glencore, with FCX differentiated by its Grasberg complex scale and North/South American diversification</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Freeport-McMoRan's moat is rooted in its ownership of large-scale, long-life ore bodies (particularly the Grasberg complex, one of the world's largest copper-gold deposits) that would be effectively impossible to replicate given the scarcity of comparable undeveloped deposits and the multi-decade permitting and development timelines required for new large-scale mines.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set used for relative valuation and competitive benchmarking.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Market Cap</th><th>P/E</th><th>EV/EBITDA</th></tr>
+      <tr><td>Freeport-McMoRan Inc.</td><td>FCX</td><td>$102.09B</td><td>34.72x</td><td class="placeholder">{{EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">Southern Copper Corporation</td><td class="placeholder">SCCO</td><td class="placeholder">{{PEER_1_MCAP}}</td><td class="placeholder">{{PEER_1_PE}}</td><td class="placeholder">{{PEER_1_EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">BHP Group Limited</td><td class="placeholder">BHP</td><td class="placeholder">{{PEER_2_MCAP}}</td><td class="placeholder">{{PEER_2_PE}}</td><td class="placeholder">{{PEER_2_EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">Newmont Corporation</td><td class="placeholder">NEM</td><td class="placeholder">{{PEER_3_MCAP}}</td><td class="placeholder">{{PEER_3_PE}}</td><td class="placeholder">{{PEER_3_EV_EBITDA}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ VALUATION ============ -->
+  <section>
+    <h2 class="section-title">Valuation</h2>
+
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{WACC — not independently modeled in this pass; typical large-cap mining WACC range 8-10%, given commodity-price cyclicality}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{TERMINAL_GROWTH — typically 2-3% for a mature-stage terminal assumption}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{FORECAST_PERIOD — should explicitly model a range of copper price scenarios given the commodity's price sensitivity}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td class="placeholder">{{DCF_INTRINSIC_VALUE — not independently modeled in this pass}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Relative Valuation</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Freeport-McMoRan Inc.</th><th>Peer Average</th><th>Industry Average</th></tr>
+      <tr><td>P/E</td><td>34.72x</td><td class="placeholder">{{PEER_PE_AVG}}</td><td class="placeholder">{{INDUSTRY_PE_AVG}}</td></tr>
+      <tr><td>P/Sales</td><td class="placeholder">~3.9x (estimated from market cap/FY2025 revenue)</td><td class="placeholder">{{PEER_PS_AVG}}</td><td class="placeholder">{{INDUSTRY_PS_AVG}}</td></tr>
+      <tr><td>P/Cash Flow</td><td class="placeholder">~91.5x (estimated from market cap/FY2025 FCF)</td><td class="placeholder">{{PEER_PCF_AVG}}</td><td class="placeholder">{{INDUSTRY_PCF_AVG}}</td></tr>
+      <tr><td>P/Book Value</td><td class="placeholder">{{PB_RATIO}}</td><td class="placeholder">{{PEER_PB_AVG}}</td><td class="placeholder">{{INDUSTRY_PB_AVG}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">With Strong Buy alone representing a clear 52.2% majority and 78.3% Buy-or-better, this report assigns a BUY rating. However, the average price target's essentially flat implied upside (+1.4%) is a meaningful counterweight, suggesting the sharp copper-driven rally that has lifted FCX's market cap by roughly 57% has already priced in much of the near-term fundamental improvement; further upside likely depends on continued copper price strength or upside surprise in expansion-project production ramps beyond what is currently modeled by consensus.</p>
+  </section>
+
+  <!-- ============ FINANCIAL ANALYSIS ============ -->
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+
+    <h3 class="sub-title">Historical &amp; Forecast Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>FY2023</th><th>FY2024</th><th>FY2025</th><th>FY2027E</th></tr>
+      <tr><td>Revenue</td><td class="placeholder">{{REV_Y0 — not independently sourced in this pass}}</td><td>$25,455M</td><td>$25,915M</td><td class="placeholder">{{REV_Y3}}</td></tr>
+      <tr><td>EBITDA</td><td class="placeholder">{{EBITDA_Y0}}</td><td class="placeholder">{{EBITDA_Y1}}</td><td class="placeholder">{{EBITDA_Y2}}</td><td class="placeholder">{{EBITDA_Y3}}</td></tr>
+      <tr><td>Net Income</td><td class="placeholder">{{NI_Y0 — not independently sourced in this pass}}</td><td>$1,883M</td><td>$2,197M</td><td class="placeholder">{{NI_Y3}}</td></tr>
+      <tr><td>EPS (Diluted)</td><td class="placeholder">{{EPS_Y0}}</td><td>$1.30</td><td>$1.52</td><td class="placeholder">{{EPS_Y3}}</td></tr>
+      <tr><td>Free Cash Flow</td><td class="placeholder">{{FCF_Y0}}</td><td>$2,352M</td><td>$1,116M</td><td class="placeholder">{{FCF_Y3}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text"><strong>This research pass encountered a significant data-quality issue: the source's "TTM" query returned figures ($104.1B revenue, $9.5B net income, $6.58 diluted EPS) that are implausibly large — roughly 4x the FY2025 annual base — and are almost certainly a data extraction/aggregation error rather than genuine TTM figures.</strong> Given this, TTM line items have been omitted from the summary table above in favor of the more reliable FY2025 annual figures, and readers should independently pull Freeport-McMoRan's actual trailing-twelve-month results directly from the company's most recent 10-Q before relying on any TTM figure for this name. The FY2024-to-FY2025 divergence between net income growth (+16.7%) and a sharp free cash flow decline (-52.6%) is notable and should be independently verified against the capital expenditure detail in the 10-K; it likely reflects the elevated ~$4.5B capex tied to mine expansion projects outpacing operating cash flow growth in the period, rather than a data anomaly.</p>
+
+    <h3 class="sub-title">Industry-Specific Ratios</h3>
+    <table class="data-table">
+      <tr><th>Ratio</th><th>Value</th></tr>
+      <tr><td>Copper Production Volume (lbs) / Realized Price</td><td class="placeholder">{{INDUSTRY_RATIO_1_VALUE — the key volume and pricing metrics for a copper miner; not independently sourced in this pass}}</td></tr>
+      <tr><td>Cash Cost per Pound of Copper Produced</td><td class="placeholder">{{INDUSTRY_RATIO_2_VALUE — a key cost-competitiveness metric; not independently sourced in this pass}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT RISKS ============ -->
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+
+    <div class="risk-item">
+      <span class="risk-tag op">Operational</span>
+      <span>Operational disruptions at the Grasberg complex or other major mine sites (weather events, labor disputes, geotechnical issues) could materially reduce production volumes given the concentration of output at a small number of large-scale assets.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag fin">Financial</span>
+      <span>FCX's earnings and stock price are highly leveraged to copper price movements; a reversal or stalling of the recent copper price rally could sharply compress both earnings and the current rich valuation multiple, and the essentially flat implied upside from the average price target suggests limited margin of safety at current levels.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag reg">Regulatory</span>
+      <span>Mining, environmental, and export regulation risk in Indonesia (Grasberg) and South American jurisdictions (Peru, Chile), including potential changes to mining royalty, tax, or foreign-ownership requirements.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag legal">Legal</span>
+      <span>Standard environmental remediation and commercial litigation typical of a large international mining company, alongside historical legal and regulatory complexity associated with the Grasberg operating structure in Indonesia; outcomes should be independently monitored via the company's most recent 10-K legal proceedings disclosure.</span>
+    </div>
+
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{AUDITOR_FLAGS — no material weaknesses or qualified audit opinions are known to this analyst as of the report date; this should be independently confirmed against Freeport-McMoRan's most recent 10-K auditor's report}}</p>
+  </section>
+
+  <!-- ============ ESG ============ -->
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental">
+        <h4>Environmental</h4>
+        <ul>
+          <li>Copper is a critical enabling material for the broader energy transition (grid electrification, renewable power infrastructure, electric vehicles), positioning FCX favorably from a demand-side sustainability narrative</li>
+          <li class="placeholder">{{ESG_ENV_2 — mine site environmental remediation, tailings management, and water usage practices should be sourced from FCX's sustainability report, particularly given historical scrutiny of large-scale mining operations}}</li>
+          <li class="placeholder">{{ESG_ENV_3 — specific corporate carbon-reduction targets not independently verified in this pass}}</li>
+        </ul>
+      </div>
+      <div class="esg-card social">
+        <h4>Social</h4>
+        <ul>
+          <li class="placeholder">{{ESG_SOC_1 — worker safety metrics at mining operations, historically a significant industry risk area, should be sourced from FCX's disclosures}}</li>
+          <li class="placeholder">{{ESG_SOC_2 — community relations with local populations near mine sites (particularly Indonesia) not independently verified in this pass}}</li>
+          <li class="placeholder">{{ESG_SOC_3 — workforce diversity metrics not independently verified in this pass}}</li>
+        </ul>
+      </div>
+      <div class="esg-card governance">
+        <h4>Governance</h4>
+        <ul>
+          <li class="placeholder">{{ESG_GOV_1 — board composition not independently verified in this pass; should be sourced from the most recent proxy statement}}</li>
+          <li class="placeholder">{{ESG_GOV_2 — executive compensation structure should be sourced from the most recent proxy statement}}</li>
+          <li>Grasberg operating structure includes Indonesian government and state-owned enterprise ownership interests, a governance consideration specific to FCX's largest asset that should be independently reviewed</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER / DISCLOSURES ============ -->
+  <footer>
+    <div class="analyst-line">Prepared by Equity Research Desk, Equity Analyst — Independent Equity Research</div>
+    This report is compiled from publicly available data sources believed to be reliable but not independently audited. Figures marked as placeholders require independent verification before use in an investment decision. This report does not constitute investment advice, an offer, or a solicitation to buy or sell any security. Ratings: BUY = expected to outperform the market over the next 12 months; HOLD = expected to perform in line with the market; SELL = expected to underperform the market. The analyst(s) preparing this report may or may not hold a position in the subject security. Past performance is not indicative of future results.
+  </footer>
+
+</div>
+</body>
+</html>

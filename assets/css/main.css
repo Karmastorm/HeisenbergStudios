@@ -565,6 +565,114 @@ select:focus-visible {
     }
 }
 
+/* ---------------- EQUITY SECTOR REPORTS ------------------------
+   Sector-grouped listing of the standalone equity research reports.
+   Reuses .ticker-index for the right-hand sector menu (same look as
+   the Investment Fundamentals ticker list, just placed after the
+   content in markup so it lands on the right instead of the left). */
+.equity-reports-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    max-width: 100%;
+}
+
+.equity-reports-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.equity-reports-intro {
+    color: var(--color-text-soft);
+    margin-bottom: 1.5rem;
+}
+
+.sector-group {
+    margin-bottom: 2rem;
+}
+
+.sector-heading {
+    font-family: 'Bebas Neue', 'Nunito', sans-serif;
+    font-size: 1.35rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 0.4rem;
+    margin-bottom: 0.75rem;
+}
+
+.report-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 0.5rem;
+}
+
+.report-list a {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding: 0.5rem 0.6rem;
+    border-radius: 6px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    text-decoration: none;
+}
+
+.report-list a:hover {
+    border-color: var(--color-accent);
+    text-decoration: none;
+}
+
+.report-list .ticker-symbol {
+    font-weight: 700;
+    font-size: 0.9rem;
+    flex: 0 0 auto;
+}
+
+.report-list .ticker-company {
+    font-size: 0.8rem;
+    color: var(--color-text-soft);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.reco-badge {
+    margin-left: auto;
+    flex: 0 0 auto;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+}
+
+.reco-badge.reco-ref {
+    background-color: var(--color-bg);
+    color: var(--color-text-soft);
+    border: 1px solid var(--color-border);
+}
+
+.sector-menu {
+    position: sticky;
+    top: 1rem;
+}
+
+@media (max-width: 800px) {
+    .equity-reports-layout {
+        flex-direction: column;
+    }
+
+    .sector-menu {
+        position: static;
+        flex: 1 1 auto;
+        width: 100%;
+    }
+}
+
 /* ---------------- Shared admin-style form/table classes ----------------
    admin/cards.php, admin/folders.php, and admin/users.php each already
    carry their own copy of an equivalent block inline; this is the shared

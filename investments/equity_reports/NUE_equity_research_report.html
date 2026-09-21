@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — NUE</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #e9edf2;
+    color: var(--text);
+    font-family: "Georgia", "Times New Roman", serif;
+    line-height: 1.55;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.12);
+    padding: 40px 50px 60px;
+  }
+
+  /* ---------- Header ---------- */
+  .report-header {
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .firm-name {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .company-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+  }
+
+  /* ---------- Recommendation banner ---------- */
+  .reco-banner {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .reco-main {
+    flex: 0 0 170px;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .reco-main .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+
+  .reco-main .value {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+
+  .reco-stats {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--gray-bg);
+  }
+
+  .reco-stat {
+    padding: 10px 14px;
+    border-left: 1px solid var(--border);
+  }
+
+  .reco-stat .label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    display: block;
+  }
+
+  .reco-stat .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* ---------- Basic info table ---------- */
+  .basic-info {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+
+  .basic-info td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .basic-info td.k {
+    color: var(--muted);
+    width: 38%;
+  }
+
+  .basic-info td.v {
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  /* ---------- Section styling ---------- */
+  section {
+    margin-bottom: 32px;
+  }
+
+  h2.section-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: var(--navy);
+    padding: 8px 14px;
+    margin: 0 0 14px 0;
+    border-left: 5px solid var(--accent);
+  }
+
+  h3.sub-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    margin: 18px 0 10px;
+  }
+
+  p.body-text {
+    font-size: 15px;
+    margin: 0 0 12px;
+  }
+
+  .placeholder {
+    color: #8a8fa3;
+    font-style: italic;
+  }
+
+  ul.bullet-list {
+    margin: 0 0 12px 0;
+    padding-left: 20px;
+  }
+
+  ul.bullet-list li {
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+
+  /* ---------- Investment Summary callout ---------- */
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  .thesis-box .thesis-label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-dark);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  /* ---------- Valuation table ---------- */
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  table.data-table th {
+    background: var(--navy);
+    color: #fff;
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  table.data-table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  table.data-table tr:nth-child(even) td {
+    background: var(--gray-bg);
+  }
+
+  /* ---------- Risk list ---------- */
+  .risk-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+  }
+
+  .risk-tag {
+    flex: 0 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    background: var(--red);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .risk-tag.op { background: #b8860b; }
+  .risk-tag.fin { background: var(--red); }
+  .risk-tag.reg { background: #6a3d9a; }
+  .risk-tag.legal { background: #444; }
+
+  /* ---------- ESG grid ---------- */
+  .esg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .esg-card {
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: 4px;
+    padding: 12px 14px;
+  }
+
+  .esg-card.environmental { border-top-color: #2e7d32; }
+  .esg-card.social { border-top-color: #1565c0; }
+  .esg-card.governance { border-top-color: #6a1b9a; }
+
+  .esg-card h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px;
+    color: var(--navy);
+  }
+
+  .esg-card ul {
+    margin: 0;
+    padding-left: 16px;
+    font-size: 13px;
+  }
+
+  .esg-card li { margin-bottom: 4px; }
+
+  /* ---------- Peer comparison ---------- */
+  .peer-note {
+    font-size: 12.5px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: -6px;
+    margin-bottom: 12px;
+  }
+
+  /* ---------- Footer / disclosures ---------- */
+  footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  footer .analyst-line {
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  @media (max-width: 700px) {
+    .page { padding: 24px 18px; }
+    .reco-banner { flex-direction: column; }
+    .reco-stats { grid-template-columns: repeat(2, 1fr); }
+    .esg-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research &middot; Equity Research</div>
+      <h1 class="company-title">Nucor Corporation</h1>
+      <div class="ticker-line">NUE &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Materials / Steel</div>
+    </div>
+    <div class="report-date">
+      September 18, 2026<br>
+      Analyst: Equity Research Desk
+    </div>
+  </div>
+
+  <!-- ============ RECOMMENDATION BANNER ============ -->
+  <div class="reco-banner">
+    <div class="reco-main">
+      <span class="label">Recommendation</span>
+      <span class="value" style="color:#1e7e34;">BUY</span>
+    </div>
+    <div class="reco-stats">
+      <div class="reco-stat">
+        <span class="label">Current Price</span>
+        <span class="value">$248.31</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Target Price</span>
+        <span class="value">$285.19</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Market Cap</span>
+        <span class="value">$56.33B</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Implied Upside/Downside</span>
+        <span class="value">+14.8%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BASIC INFORMATION ============ -->
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">NUE</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Materials</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Steel</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$131.32 &ndash; $280.11</td></tr>
+      <tr><td class="k">Average Daily Volume (Liquidity)</td><td class="v">~1,494,725 shares</td></tr>
+      <tr><td class="k">Float</td><td class="v"><span class="placeholder">{{FLOAT — not independently sourced; effectively equal to shares outstanding less insider holdings}}</span></td></tr>
+      <tr><td class="k">Shares Outstanding</td><td class="v">~226.88 million</td></tr>
+      <tr><td class="k">Major Shareholders</td><td class="v"><span class="placeholder">{{MAJOR_SHAREHOLDERS — Vanguard and BlackRock are known large institutional holders; exact stakes not independently verified in this pass}}</span></td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT SUMMARY ============ -->
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Nucor Corporation is the largest steel producer in the United States, operating an electric-arc-furnace (mini-mill) based production model that provides greater cost flexibility and lower capital intensity than traditional integrated blast-furnace steelmaking. FY2025 revenue grew 5.7% to $32.5B, but net income declined 13.9% to $1.74B and free cash flow turned negative (-$188M) from FY2024's positive $806M, reflecting margin compression amid softer steel pricing. <strong>Note: a clean, separately reported TTM figure could not be reliably extracted in this research pass — the data source returned TTM revenue/net income figures roughly 4x larger than the FY2025 annual base ($134.6B vs. $32.5B), an implausible result almost certainly reflecting a data extraction/aggregation error; this report therefore uses FY2025 annual figures as the most reliable base and flags TTM line items for independent verification.</strong> The stock fell 6.35% on the report date following the company's disappointing Q3 2026 EPS guidance of $5.55-$5.65, below analyst expectations of $6.20, which reportedly triggered multiple analyst downgrades — a development that may not yet be fully reflected in the 17-analyst distribution shown (11 Strong Buy / 3 Buy / 3 Hold / 0 Sell / 0 Strong Sell, 82.4% Buy-or-better), which should be treated with added caution given its potential staleness relative to the very recent guidance cut. On the distribution as currently reported, Strong Buy constitutes a clear 64.7% majority, supporting a BUY rating consistent with the average price target of $285.19 (+14.8% implied upside), though this report flags the recent guidance miss and downgrade activity as a meaningful, possibly not-yet-fully-priced-in near-term risk to that view.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text"><strong>Nucor reportedly issued Q3 2026 EPS guidance of $5.55-$5.65, below the $6.20 analyst consensus, triggering multiple analyst downgrades and a 6.35% single-day stock decline on the report date.</strong> <span class="placeholder">{{RECENT_DEVELOPMENTS — the specific drivers cited by management for the guidance shortfall (steel pricing, volume, input costs, or segment-specific issues), along with any updated analyst rating changes following the guidance cut, should be sourced from the most recent 8-K and verified independently, as the rating distribution in this report may not yet reflect post-guidance-cut revisions}}</span></p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text placeholder">{{EARNINGS_FORECAST_SUMMARY — forward EPS and revenue estimates for FY2027E, which should incorporate the recently lowered Q3 2026 guidance and any subsequent analyst estimate revisions, should be sourced from consensus data and verified independently; FY2025 diluted EPS of $7.52 provides a base, though Q3 2026 guidance of $5.55-$5.65 suggests a lower run-rate}}</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">At $248.31 (following a 6.35% single-day decline), NUE trades at a 21.17x trailing P/E. The stock has fallen significantly from its 52-week high of $280.11 and remains well above its 52-week low of $131.32, reflecting substantial volatility tied to steel-price cyclicality. The average analyst target implies +14.8% upside, though this figure may not yet fully reflect the recent guidance-driven downgrade activity, and should be treated with corresponding caution.</p>
+  </section>
+
+  <!-- ============ BUSINESS DESCRIPTION ============ -->
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Nucor Corporation is the largest steel producer in the United States, manufacturing steel products through an electric-arc-furnace (mini-mill) production model that primarily uses recycled scrap steel as feedstock, offering greater operational and cost flexibility than traditional integrated blast-furnace steelmaking. The company operates across steel mills, steel products (including joist, deck, and fabricated construction products), and raw materials segments, serving construction, automotive, energy, and industrial end markets.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Steel pricing, which is cyclical and sensitive to domestic construction activity, global steel trade dynamics, and tariff policy</li>
+      <li>Steel shipment volumes across the company's mills and downstream steel products businesses</li>
+      <li>Non-residential and infrastructure construction demand, a key driver for the steel products (joist, deck, fabricated construction products) segment</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Scrap steel feedstock costs, the primary raw material input for Nucor's electric-arc-furnace production model</li>
+      <li>Energy costs (electricity) required for electric-arc-furnace steel production</li>
+    </ul>
+  </section>
+
+  <!-- ============ INDUSTRY OVERVIEW & COMPETITIVE POSITIONING ============ -->
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text placeholder">{{INDUSTRY_OVERVIEW — the U.S. steel industry has been shaped by tariff policy affecting import competition, ongoing infrastructure spending tailwinds, and cyclical softness in certain end markets contributing to the recent guidance miss; should be independently verified with current industry data}}</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low-to-Moderate — while electric-arc-furnace mini-mills require less capital than integrated blast furnaces, large-scale steel production still requires substantial investment and scrap-supply access</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — dependence on scrap steel feedstock and electricity, both subject to price volatility, though Nucor's scale provides some purchasing leverage</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate — steel is a largely commoditized product for many applications, giving large construction and industrial buyers meaningful price negotiating leverage, particularly during periods of oversupply</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Low-to-Moderate — few practical substitutes exist for steel in most structural and industrial applications, though aluminum and composite materials compete in some specific use cases</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — intense competition among Nucor, Steel Dynamics, Cleveland-Cliffs, and various import competitors, with domestic tariff policy a significant factor in the competitive balance versus imports</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Nucor's moat is rooted in its electric-arc-furnace production model, which provides greater cost flexibility and faster response to demand fluctuations than traditional integrated blast-furnace competitors, combined with scale, geographic manufacturing diversification across the U.S., and a diversified downstream steel products business that provides some earnings stability versus pure commodity steel producers.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set used for relative valuation and competitive benchmarking.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Market Cap</th><th>P/E</th><th>EV/EBITDA</th></tr>
+      <tr><td>Nucor Corporation</td><td>NUE</td><td>$56.33B</td><td>21.17x</td><td class="placeholder">{{EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">Steel Dynamics, Inc.</td><td class="placeholder">STLD</td><td class="placeholder">{{PEER_1_MCAP}}</td><td class="placeholder">{{PEER_1_PE}}</td><td class="placeholder">{{PEER_1_EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">Cleveland-Cliffs Inc.</td><td class="placeholder">CLF</td><td class="placeholder">{{PEER_2_MCAP}}</td><td class="placeholder">{{PEER_2_PE}}</td><td class="placeholder">{{PEER_2_EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">United States Steel Corporation</td><td class="placeholder">X</td><td class="placeholder">{{PEER_3_MCAP}}</td><td class="placeholder">{{PEER_3_PE}}</td><td class="placeholder">{{PEER_3_EV_EBITDA}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ VALUATION ============ -->
+  <section>
+    <h2 class="section-title">Valuation</h2>
+
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{WACC — not independently modeled in this pass; typical large-cap steel WACC range 8-10%, given commodity-price cyclicality}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{TERMINAL_GROWTH — typically 2-3% for a mature-stage terminal assumption}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{FORECAST_PERIOD — should explicitly model a full steel price cycle rather than extrapolating from either the recent guidance cut or prior-period strength}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td class="placeholder">{{DCF_INTRINSIC_VALUE — not independently modeled in this pass}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Relative Valuation</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Nucor Corporation</th><th>Peer Average</th><th>Industry Average</th></tr>
+      <tr><td>P/E</td><td>21.17x</td><td class="placeholder">{{PEER_PE_AVG}}</td><td class="placeholder">{{INDUSTRY_PE_AVG}}</td></tr>
+      <tr><td>P/Sales</td><td class="placeholder">~1.7x (estimated from market cap/FY2025 revenue)</td><td class="placeholder">{{PEER_PS_AVG}}</td><td class="placeholder">{{INDUSTRY_PS_AVG}}</td></tr>
+      <tr><td>P/Book Value</td><td class="placeholder">{{PB_RATIO}}</td><td class="placeholder">{{PEER_PB_AVG}}</td><td class="placeholder">{{INDUSTRY_PB_AVG}}</td></tr>
+      <tr><td>Dividend Yield</td><td>0.90%</td><td class="placeholder">{{PEER_YIELD_AVG}}</td><td class="placeholder">{{INDUSTRY_YIELD_AVG}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">With Strong Buy at a clear 64.7% majority of covering analysts as currently reported, this report assigns a BUY rating; however, this rating should be treated with elevated caution given that the distribution may predate the very recent Q3 2026 guidance cut and subsequent analyst downgrades reported on the same date as this data pull. Readers should independently verify whether the rating distribution and price target have been updated to reflect the guidance miss before relying on this BUY rating.</p>
+  </section>
+
+  <!-- ============ FINANCIAL ANALYSIS ============ -->
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+
+    <h3 class="sub-title">Historical &amp; Forecast Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>FY2023</th><th>FY2024</th><th>FY2025</th><th>FY2027E</th></tr>
+      <tr><td>Revenue</td><td class="placeholder">{{REV_Y0 — not independently sourced in this pass}}</td><td>$30,734M</td><td>$32,494M</td><td class="placeholder">{{REV_Y3}}</td></tr>
+      <tr><td>EBITDA</td><td class="placeholder">{{EBITDA_Y0}}</td><td class="placeholder">{{EBITDA_Y1}}</td><td class="placeholder">{{EBITDA_Y2}}</td><td class="placeholder">{{EBITDA_Y3}}</td></tr>
+      <tr><td>Net Income</td><td class="placeholder">{{NI_Y0 — not independently sourced in this pass}}</td><td>$2,018M</td><td>$1,737M</td><td class="placeholder">{{NI_Y3}}</td></tr>
+      <tr><td>EPS (Diluted)</td><td class="placeholder">{{EPS_Y0}}</td><td>$8.46</td><td>$7.52</td><td class="placeholder">{{EPS_Y3}}</td></tr>
+      <tr><td>Free Cash Flow</td><td class="placeholder">{{FCF_Y0}}</td><td>$806M</td><td>-$188M</td><td class="placeholder">{{FCF_Y3}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text"><strong>This research pass encountered a significant data-quality issue: the source's "TTM" query returned figures ($134.6B revenue, $8.2B net income, $35.62 diluted EPS) that are implausibly large — roughly 4x the FY2025 annual base — and are almost certainly a data extraction/aggregation error rather than genuine TTM figures.</strong> Given this, TTM line items have been omitted from the summary table above in favor of the more reliable FY2025 annual figures, and readers should independently pull Nucor's actual trailing-twelve-month results directly from the company's most recent 10-Q before relying on any TTM figure for this name. Separately, the FY2024-to-FY2025 swing from positive free cash flow ($806M) to negative (-$188M), alongside a 13.9% net income decline despite revenue growth, reflects genuine margin compression from steel pricing softness, consistent with and likely a leading indicator of the subsequently disclosed Q3 2026 guidance miss; this trend should be independently monitored closely given its apparent continuation into the most recent guidance.</p>
+
+    <h3 class="sub-title">Industry-Specific Ratios</h3>
+    <table class="data-table">
+      <tr><th>Ratio</th><th>Value</th></tr>
+      <tr><td>Steel Mill Utilization Rate</td><td class="placeholder">{{INDUSTRY_RATIO_1_VALUE — a key capacity and demand indicator; not independently sourced in this pass}}</td></tr>
+      <tr><td>Average Selling Price per Ton</td><td class="placeholder">{{INDUSTRY_RATIO_2_VALUE — the key steel pricing metric, directly relevant to the recent guidance shortfall; not independently sourced in this pass}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT RISKS ============ -->
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+
+    <div class="risk-item">
+      <span class="risk-tag op">Operational</span>
+      <span>The recently disclosed Q3 2026 guidance shortfall suggests continued near-term steel pricing and/or volume softness that could extend beyond a single quarter, as reflected in the FY2025 margin compression trend.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag fin">Financial</span>
+      <span>Negative free cash flow in FY2025, combined with the recent guidance cut, warrants close monitoring of near-term capital allocation flexibility and balance sheet trends.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag reg">Regulatory</span>
+      <span>Changes to steel tariff policy affecting import competition could significantly affect domestic steel pricing and Nucor's competitive position, in either direction depending on policy changes.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag legal">Legal</span>
+      <span>Standard environmental and commercial litigation typical of a large steel manufacturer; outcomes should be independently monitored via the company's most recent 10-K legal proceedings disclosure.</span>
+    </div>
+
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text"><strong>This report flags that the analyst rating distribution and price target used in this report may not yet fully reflect the very recent Q3 2026 guidance cut and subsequent analyst downgrades reported on the same date as this data pull; readers should independently verify the most current analyst ratings and price targets before relying on this report's BUY rating.</strong> <span class="placeholder">{{AUDITOR_FLAGS — no material weaknesses or qualified audit opinions are otherwise known to this analyst as of the report date; this should be independently confirmed against Nucor's most recent 10-K auditor's report}}</span></p>
+  </section>
+
+  <!-- ============ ESG ============ -->
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental">
+        <h4>Environmental</h4>
+        <ul>
+          <li>Nucor's electric-arc-furnace production model, which primarily uses recycled scrap steel, has a meaningfully lower carbon footprint per ton than traditional integrated blast-furnace steelmaking</li>
+          <li class="placeholder">{{ESG_ENV_2 — specific corporate carbon-reduction targets should be sourced from Nucor's sustainability report}}</li>
+          <li class="placeholder">{{ESG_ENV_3 — energy efficiency initiatives at electric-arc-furnace facilities not independently verified in this pass}}</li>
+        </ul>
+      </div>
+      <div class="esg-card social">
+        <h4>Social</h4>
+        <ul>
+          <li class="placeholder">{{ESG_SOC_1 — worker safety metrics at steel mill operations should be sourced from Nucor's disclosures}}</li>
+          <li class="placeholder">{{ESG_SOC_2 — workforce diversity metrics not independently verified in this pass}}</li>
+          <li>Long-standing profit-sharing and employee incentive compensation culture is a notable feature of Nucor's workforce management approach</li>
+        </ul>
+      </div>
+      <div class="esg-card governance">
+        <h4>Governance</h4>
+        <ul>
+          <li class="placeholder">{{ESG_GOV_1 — board composition not independently verified in this pass; should be sourced from the most recent proxy statement}}</li>
+          <li class="placeholder">{{ESG_GOV_2 — executive compensation structure should be sourced from the most recent proxy statement}}</li>
+          <li>Established capital-return framework including dividends and share buybacks; the recent guidance miss and stock decline warrant continued monitoring of management's forward communication and forecasting track record</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER / DISCLOSURES ============ -->
+  <footer>
+    <div class="analyst-line">Prepared by Equity Research Desk, Equity Analyst — Independent Equity Research</div>
+    This report is compiled from publicly available data sources believed to be reliable but not independently audited. Figures marked as placeholders require independent verification before use in an investment decision. This report does not constitute investment advice, an offer, or a solicitation to buy or sell any security. Ratings: BUY = expected to outperform the market over the next 12 months; HOLD = expected to perform in line with the market; SELL = expected to underperform the market. The analyst(s) preparing this report may or may not hold a position in the subject security. Past performance is not indicative of future results.
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — OXY</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  .placeholder { color:#8a8fa3; font-style:italic; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Occidental Petroleum Corporation</h1>
+      <div class="ticker-line">OXY &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Energy / Oil &amp; Gas Exploration &amp; Production</div>
+    </div>
+    <div class="report-date">September 17, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#b8860b;">HOLD</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">$59.23</span></div>
+      <div class="reco-stat"><span class="label">Target Price</span><span class="value">$67.12 (avg.)</span></div>
+      <div class="reco-stat"><span class="label">Target Range</span><span class="value">$55 – $79</span></div>
+      <div class="reco-stat"><span class="label">Implied Upside/Downside</span><span class="value">~+13.3%</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">OXY</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Energy</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Oil &amp; Gas Exploration &amp; Production</td></tr>
+      <tr><td class="k">Consensus Rating (Headline)</td><td class="v">Buy</td></tr>
+      <tr><td class="k">Rating Distribution (26 analysts)</td><td class="v">8 Strong Buy, 2 Buy, 16 Hold, 0 Sell, 0 Strong Sell</td></tr>
+      <tr><td class="k">Median Price Target</td><td class="v">$68</td></tr>
+      <tr><td class="k">Notable Shareholder</td><td class="v">Berkshire Hathaway (long-term strategic equity stake)</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted); margin-top:-14px;">Note: while the headline consensus rating is "Buy," the underlying distribution shows a majority of covering analysts (16 of 26, or ~62%) rating the stock Hold rather than Buy/Strong Buy — a materially more cautious signal than the headline label alone suggests.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Occidental Petroleum carries a headline "Buy" consensus rating from sell-side analysts, with an average 12-month price target of $67.12 (a median of $68) implying roughly 13% upside from the current price of $59.23, and a target range spanning $55 to $79. However, the underlying rating distribution is considerably more cautious than the headline label suggests: of 26 covering analysts, 16 (62%) rate the stock Hold, versus 10 (38%) rating Buy or Strong Buy, with zero Sell ratings. This pattern — a "Buy" consensus label sitting atop a majority-Hold distribution — mirrors what we observe at fellow Energy-sector names XOM and EOG in this series, and for consistency we apply the same standard here: when a majority of analysts sit at Hold, we rate the stock HOLD rather than defaulting to the more optimistic headline label, notwithstanding the double-digit implied upside to the average target. Occidental's balance sheet, still working through debt taken on for the 2023 CrownRock acquisition, and the company's exposure to crude oil price volatility (only partially offset by its OxyChem chemicals segment and direct air capture/carbon management initiatives), are additional considerations supporting a HOLD stance pending further deleveraging progress and clarity on oil price direction.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text placeholder">{{Specific Q2 2026 revenue, net income, and production-volume figures for Occidental were not independently retrieved in the sources reviewed for this report; recommend pulling the Q2 2026 earnings release and 10-Q directly from Occidental's investor relations site or SEC EDGAR before finalizing. Directionally, the stock continues to be evaluated against crude oil price trends, progress on post-CrownRock debt reduction, and continued build-out of OxyChem and low-carbon/direct air capture initiatives.}}</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text placeholder">{{No specific forward quarterly or full-year 2026 production or EPS guidance was independently sourced for this report — recommend modeling multiple crude oil price scenarios given Occidental's high sensitivity to commodity price swings, consistent with standard E&amp;P sector practice.}}</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">The average analyst price target of $67.12 (median $68, range $55–$79) implies approximately 13.3% upside from the current price of $59.23. However, the rating distribution (8 Strong Buy, 2 Buy, 16 Hold, 0 Sell) shows a clear majority (62%) at Hold, which we weight more heavily than the double-digit implied upside in arriving at our overall rating, for consistency with our treatment of similarly-distributed peers XOM and EOG.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Occidental Petroleum is a diversified energy and chemicals company operating three primary business segments: Oil &amp; Gas (upstream exploration and production, with a significant Permian Basin position following the 2023 acquisition of CrownRock), OxyChem (basic chemicals manufacturing), and Low Carbon Ventures (including direct air capture and carbon management initiatives). The company holds a notable long-term strategic equity investment from Berkshire Hathaway.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Upstream oil and gas production, heavily weighted toward the Permian Basin following the 2023 CrownRock acquisition</li>
+      <li>OxyChem basic chemicals segment, providing some earnings diversification away from pure crude-oil price exposure</li>
+      <li>Emerging Low Carbon Ventures business, including direct air capture (DAC) technology and carbon management services</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Ongoing debt service and deleveraging efforts related to financing for the 2023 CrownRock acquisition</li>
+      <li class="placeholder">{{Specific Q2 2026 capital expenditure and lease operating expense figures not independently sourced for this report}}</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Occidental competes in the U.S. oil and gas exploration and production industry, most directly against other large-cap E&amp;P and integrated producers such as ConocoPhillips and EOG Resources (see separate COP and EOG reports in this series). Occidental's diversification into chemicals (OxyChem) and low-carbon ventures (direct air capture) differentiates it somewhat from pure-play E&amp;P peers, though its earnings remain heavily leveraged to crude oil price movements.</p>
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Moderate — Permian Basin acreage and technical drilling expertise represent barriers, though the E&amp;P industry has relatively low entry barriers compared to integrated majors.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — oilfield services and equipment providers have some pricing power, particularly during periods of high drilling activity.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Low — crude oil and natural gas are globally priced commodities with limited individual buyer negotiating leverage.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate-to-Long-Term — renewable energy and electrification represent a structural long-term substitute for fossil fuel demand.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — intense competition among large-cap E&amp;P producers (ConocoPhillips, EOG Resources, and others) for Permian Basin and other key acreage.</td></tr>
+    </table>
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Occidental's moat rests on its expanded Permian Basin scale following the CrownRock acquisition, its unique OxyChem chemicals diversification, its early-mover position in direct air capture and carbon management technology, and its long-term strategic relationship with Berkshire Hathaway as a major shareholder.</p>
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major U.S. oil &amp; gas exploration and production companies. See separate COP and EOG reports in this series.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>Occidental Petroleum</td><td>OXY</td><td>Majority-Hold rating distribution (62%) despite headline Buy label</td></tr>
+      <tr><td>ConocoPhillips</td><td>COP</td><td>See separate COP report in this series</td></tr>
+      <tr><td>EOG Resources</td><td>EOG</td><td>See separate EOG report in this series (also majority-Hold distribution)</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — recommend explicit multi-scenario crude oil price modeling given Occidental's high commodity-price sensitivity}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>Average sell-side price target of $67.12 (median $68; range $55–$79) across 26 analysts as of the report date</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">We rate OXY a <strong>HOLD</strong>. While the average price target implies double-digit upside, the rating distribution shows a clear majority of covering analysts (62%) at Hold rather than Buy — a signal we weight more heavily than the headline "Buy" label, consistent with our treatment of similarly-distributed peers XOM and EOG. Ongoing deleveraging from the 2023 CrownRock acquisition and Occidental's high sensitivity to crude oil price swings further support a HOLD stance pending clearer directional catalysts.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Prior Period</th><th>Current Period</th><th>YoY Change</th></tr>
+      <tr><td>Revenue</td><td class="placeholder">{{Not independently sourced}}</td><td class="placeholder">{{Not independently sourced}}</td><td class="placeholder">{{Not independently sourced}}</td></tr>
+      <tr><td>Net Income</td><td class="placeholder">{{Not independently sourced}}</td><td class="placeholder">{{Not independently sourced}}</td><td class="placeholder">{{Not independently sourced}}</td></tr>
+      <tr><td>Current Share Price</td><td class="placeholder">{{N/A}}</td><td>$59.23</td><td class="placeholder">{{Not independently sourced}}</td></tr>
+      <tr><td>Average Analyst Price Target</td><td class="placeholder">{{N/A}}</td><td>$67.12</td><td class="placeholder">{{Not independently sourced}}</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text placeholder">{{Specific Q2 2026 earnings-quality details (one-time items, hedging gains/losses, segment mix shifts) were not independently sourced for this report — recommend reviewing Occidental's most recent 10-Q and earnings-call transcript directly for detail on OxyChem margins, upstream production costs, and any impairments or one-time items.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>Crude oil price volatility directly and substantially impacts upstream earnings; Occidental's earnings sensitivity to oil price swings is high relative to more diversified integrated energy peers.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>Ongoing debt service and deleveraging obligations related to the 2023 CrownRock acquisition constrain balance-sheet flexibility relative to less-levered E&amp;P peers.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span class="placeholder">{{Federal and state oil &amp; gas drilling permitting policy, methane emissions regulation, and carbon-capture tax credit policy (relevant to the Low Carbon Ventures segment) represent ongoing regulatory considerations; specific current status not independently verified for this report.}}</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against Occidental Petroleum's most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in the sources reviewed — verify directly against Occidental Petroleum's 10-K/10-Q auditor opinion. The gap between the headline "Buy" consensus label and the majority-Hold underlying rating distribution flagged above should be independently reconciled before this report is used for any investment decision.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul><li>Low Carbon Ventures segment, including direct air capture (DAC) technology, represents a notable industry-differentiated carbon-management investment</li><li class="placeholder">{{ESG_ENV — upstream emissions-reduction targets not independently sourced}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul class="placeholder"><li>{{ESG_SOC — community relations and workforce safety program specifics not independently sourced}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul><li>Long-term strategic equity investment from Berkshire Hathaway is often cited as a governance/quality signal by investors</li><li class="placeholder">{{ESG_GOV — board composition and diversity not independently sourced}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 17, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (financial media coverage and sell-side analyst rating aggregators) that may be delayed or incomplete, including a noted gap between the headline consensus label and the underlying rating distribution. All figures should be independently verified against Occidental Petroleum's 10-K/10-Q filings and live market data before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

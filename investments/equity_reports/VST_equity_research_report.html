@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — Vistra Corp. (VST)</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--text);
+    background: #ffffff;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+  }
+  .report-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 48px;
+  }
+  .report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+  }
+  .firm-name {
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .company-title {
+    font-size: 26px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .reco-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--gray-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+  }
+  .reco-main .label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+  }
+  .reco-main .value {
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .reco-stats {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 28px;
+  }
+  .reco-stats div .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+  .reco-stats div .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+  }
+  h2.section-title {
+    font-size: 18px;
+    color: var(--navy);
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 6px;
+    margin-top: 40px;
+    margin-bottom: 16px;
+  }
+  h3 {
+    font-size: 15px;
+    color: var(--navy);
+    margin-top: 22px;
+    margin-bottom: 8px;
+  }
+  table.basic-info, table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+  table.basic-info td, table.basic-info th,
+  table.data-table td, table.data-table th {
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    text-align: left;
+  }
+  table.basic-info th, table.data-table th {
+    background: var(--gray-bg);
+    color: var(--navy);
+    font-weight: bold;
+  }
+  table.basic-info td:first-child {
+    font-weight: bold;
+    color: var(--muted);
+    width: 32%;
+  }
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 14.5px;
+  }
+  ul {
+    margin-top: 4px;
+    padding-left: 22px;
+  }
+  li {
+    margin-bottom: 6px;
+  }
+  .peer-note {
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 8px;
+  }
+  .risk-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+  }
+  .risk-item .risk-tag {
+    display: inline-block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: bold;
+    color: #fff;
+    background: var(--muted);
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .esg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 12px;
+  }
+  .esg-card {
+    background: var(--gray-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+  .esg-card h4 {
+    margin-top: 0;
+    color: var(--navy);
+    font-size: 14px;
+  }
+  .placeholder {
+    color: #8a8fa3;
+    font-style: italic;
+  }
+  footer {
+    margin-top: 48px;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .analyst-line {
+    margin-bottom: 6px;
+  }
+  p { font-size: 14.5px; }
+</style>
+</head>
+<body>
+<div class="report-container">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Vistra Corp.</h1>
+      <div class="ticker-line">NYSE: VST &nbsp;|&nbsp; Sector: Utilities &nbsp;|&nbsp; Industry: Independent Power Producers &amp; Energy Traders</div>
+    </div>
+    <div class="report-date">
+      Report Date: September 19, 2026<br>
+      Analyst: Equity Research Desk
+    </div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main">
+      <div class="label">Recommendation</div>
+      <div class="value" style="color:var(--green);">BUY</div>
+    </div>
+    <div class="reco-stats">
+      <div>
+        <div class="label">Current Price</div>
+        <div class="value">$140.67</div>
+      </div>
+      <div>
+        <div class="label">Target Price</div>
+        <div class="value">$217.42</div>
+      </div>
+      <div>
+        <div class="label">Market Cap</div>
+        <div class="value">$47.21B</div>
+      </div>
+      <div>
+        <div class="label">Implied Upside/Downside</div>
+        <div class="value" style="color:var(--green);">+54.56%</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Basic Information</h2>
+  <table class="basic-info">
+    <tr><td>Ticker</td><td>VST (NYSE)</td></tr>
+    <tr><td>Exchange</td><td>New York Stock Exchange</td></tr>
+    <tr><td>Sector</td><td>Utilities</td></tr>
+    <tr><td>Industry</td><td>Independent Power Producers &amp; Energy Traders</td></tr>
+    <tr><td>52-Week Range</td><td>$132.66 – $219.82</td></tr>
+    <tr><td>Average Daily Volume</td><td>5,268,925 shares</td></tr>
+    <tr><td>Float</td><td class="placeholder">{{FLOAT_SHARES}}</td></tr>
+    <tr><td>Shares Outstanding</td><td>335.64 million</td></tr>
+    <tr><td>Major Shareholders</td><td class="placeholder">{{MAJOR_SHAREHOLDERS — institutional ownership detail not independently verified; primarily held by index funds and institutional asset managers (e.g., Vanguard, BlackRock, State Street per typical large-cap ownership patterns)}}</td></tr>
+  </table>
+
+  <h2 class="section-title">Investment Summary</h2>
+  <div class="thesis-box">
+    <strong>Investment Thesis:</strong> Vistra combines a large, diversified competitive generation fleet (natural gas, nuclear, coal, solar, and battery storage) with an integrated retail electricity business serving roughly 5 million customers across 20 states. We rate the stock BUY. The 20-analyst rating distribution is overwhelmingly bullish (15 Strong Buy, 4 Buy, 0 Hold, 1 Sell — 95% Buy-or-better), and the average price target of $217.42 implies +54.56% upside from the current $140.67, driven by structurally improving demand from AI/data-center-driven electricity growth, including long-term nuclear power purchase agreements with hyperscale customers. We flag a likely TTM data-aggregation error in third-party financial data (see Earnings Quality Notes) and note that GAAP net income has been volatile due to non-cash, unrealized mark-to-market hedging effects that obscure underlying operating strength.
+  </div>
+
+  <h3>Recent Developments</h3>
+  <p>Vistra reported FY2025 revenue of $17,738 million, up 3.0% year-over-year from $17,224 million in FY2024, while net income declined sharply to $752 million from $2,467 million and EPS fell from $7.00 to $2.18, reflecting significant non-cash, unrealized mark-to-market losses on commodity hedges rather than a deterioration in underlying operations. The company has continued to pursue growth through acquisitions (including gas generation capacity additions) and new long-term power purchase agreements with data-center and hyperscale customers, positioning the fleet's nuclear and gas capacity to capture premium, long-duration contracted revenue as AI-driven electricity demand accelerates. The stock's market cap has declined 33.1% from recent highs even as underlying adjusted operating metrics have strengthened, reflecting a market repricing of headline GAAP volatility.</p>
+
+  <h3>Earnings Forecast</h3>
+  <p>We expect continued growth in underlying adjusted operating earnings driven by data-center-linked power purchase agreements, contribution from recently completed and pending generation acquisitions, and normalization of GAAP earnings as prior-period hedge positions roll off. The forward P/E of 13.66x (versus a trailing 23.98x) reflects consensus expectations for a meaningful rebound in reported earnings.</p>
+
+  <h3>Valuation Summary</h3>
+  <p>At $140.67, VST trades well below both its 52-week high of $219.82 and the average analyst price target of $217.42, a wide gap that reflects the market's focus on volatile headline GAAP results rather than underlying adjusted operating performance. Combined with the strongly bullish, near-unanimous analyst distribution, we view the current price as an attractive entry point.</p>
+
+  <h2 class="section-title">Business Description</h2>
+  <p>Vistra Corp., headquartered in Irving, Texas, is an integrated retail electricity and power generation company and one of the largest competitive power generators in the United States. It owns and operates a diversified generation fleet spanning natural gas, nuclear, coal, solar, and battery energy storage. The company's retail segment sells electricity and natural gas to residential, commercial, and industrial customers, serving roughly 5 million customers across 20 states and the District of Columbia, including a substantial share of Texas electricity consumers. Vistra emerged as a standalone public company from the Energy Future Holdings bankruptcy in 2016.</p>
+  <h3>Key Revenue Drivers</h3>
+  <ul>
+    <li>Realized wholesale energy and capacity prices across ERCOT (Texas) and other competitive power markets.</li>
+    <li>Retail electricity and gas volumes and margins across its multi-million-customer base.</li>
+    <li>Long-term power purchase agreements with data center and hyperscale customers, including nuclear-backed contracts.</li>
+    <li>Contribution from recently acquired and pending generation assets.</li>
+  </ul>
+  <h3>Key Expense Drivers</h3>
+  <ul>
+    <li>Fuel costs (natural gas, coal) and plant operating and maintenance costs.</li>
+    <li>Hedging and commodity risk management activity, including mark-to-market volatility on derivative positions that can materially distort GAAP earnings in any given period.</li>
+    <li>Interest expense on debt used to fund acquisitions and growth capital expenditure.</li>
+  </ul>
+
+  <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+  <p>Vistra operates in the U.S. independent power producer and competitive retail electricity industry, a sector currently being reshaped by surging electricity demand from AI data centers, electrification, and industrial reshoring, layered on top of historically slow load growth. Vistra's largest market exposure is ERCOT (Texas), a deregulated, energy-only market prone to price volatility during extreme weather. Structural dynamics currently favor incumbent generators with existing dispatchable and carbon-free capacity, since new supply faces multi-year lead times and interconnection queues.</p>
+  <h3>Porter's Five Forces</h3>
+  <table class="data-table">
+    <tr><th>Force</th><th>Assessment</th></tr>
+    <tr><td>Threat of New Entrants</td><td>Moderate-to-low near term — long lead times for new gas turbines, nuclear, and transmission/interconnection queues limit rapid new supply.</td></tr>
+    <tr><td>Bargaining Power of Suppliers</td><td>Moderate — fuel and turbine-equipment suppliers have some pricing power, partly offset by Vistra's scale and fuel logistics capabilities.</td></tr>
+    <tr><td>Bargaining Power of Buyers</td><td>Rising among large data-center/hyperscale customers who can negotiate long-term PPAs directly with generators; retail residential/commercial customers individually have limited leverage.</td></tr>
+    <tr><td>Threat of Substitutes</td><td>Moderate — renewables plus storage are a growing substitute for thermal generation, though intermittency currently favors Vistra's dispatchable gas/nuclear/coal mix for reliability-critical load.</td></tr>
+    <tr><td>Competitive Rivalry</td><td>High — direct competition from other merchant generators and retailers for both wholesale capacity and retail customer share.</td></tr>
+  </table>
+  <h3>Competitive Advantage</h3>
+  <p>Vistra's principal competitive advantage is its integrated retail-plus-generation model: the retail business creates a natural hedge against wholesale price swings, smoothing cash flows relative to pure-play generators. Its scale and fuel diversity (gas, nuclear, coal, solar, battery) provide operational flexibility, and its growing carbon-free nuclear and battery capacity positions it to capture premium long-term contracts from data-center customers seeking reliable, low-carbon power.</p>
+  <div class="peer-note">Peer companies shown for comparative context; figures sourced from public financial data as of report date.</div>
+  <table class="data-table">
+    <tr><th>Company</th><th>Ticker</th><th>Market Cap</th><th>P/E</th><th>Net Margin</th></tr>
+    <tr><td>Vistra Corp.</td><td>VST</td><td>$47.21B</td><td>23.98x</td><td>4.24%</td></tr>
+    <tr><td>Constellation Energy</td><td>CEG</td><td class="placeholder">{{CEG_MCAP}}</td><td class="placeholder">{{CEG_PE}}</td><td class="placeholder">{{CEG_MARGIN}}</td></tr>
+    <tr><td>NRG Energy</td><td>NRG</td><td class="placeholder">{{NRG_MCAP}}</td><td class="placeholder">{{NRG_PE}}</td><td class="placeholder">{{NRG_MARGIN}}</td></tr>
+  </table>
+
+  <h2 class="section-title">Valuation</h2>
+  <h3>Absolute Valuation — Discounted Cash Flow (Illustrative)</h3>
+  <table class="data-table">
+    <tr><th>Assumption</th><th>Value</th></tr>
+    <tr><td>Terminal Growth Rate</td><td class="placeholder">{{TERMINAL_GROWTH}}</td></tr>
+    <tr><td>Discount Rate (WACC)</td><td class="placeholder">{{WACC}}</td></tr>
+    <tr><td>Implied Fair Value / Share</td><td class="placeholder">{{DCF_FAIR_VALUE}}</td></tr>
+  </table>
+  <h3>Relative Valuation</h3>
+  <table class="data-table">
+    <tr><th>Metric</th><th>VST</th><th>Peer Average</th></tr>
+    <tr><td>P/E (TTM)</td><td>23.98x</td><td class="placeholder">{{PEER_AVG_PE}}</td></tr>
+    <tr><td>Forward P/E</td><td>13.66x</td><td class="placeholder">{{PEER_AVG_FWD_PE}}</td></tr>
+    <tr><td>Dividend Yield</td><td>0.65%</td><td class="placeholder">{{PEER_AVG_YIELD}}</td></tr>
+  </table>
+  <h3>Valuation Conclusion</h3>
+  <p>Vistra's low forward P/E (13.66x) relative to its trailing P/E (23.98x) signals the market expects substantial earnings normalization as prior hedge-related GAAP distortions unwind. Combined with the strongly bullish analyst distribution and a wide gap to the average price target, we rate the shares BUY.</p>
+
+  <h2 class="section-title">Financial Analysis</h2>
+  <h3>Historical &amp; Forecast Summary</h3>
+  <table class="data-table">
+    <tr><th>Metric</th><th>FY2024</th><th>FY2025</th><th>FY2027E</th></tr>
+    <tr><td>Revenue ($M)</td><td>17,224</td><td>17,738</td><td class="placeholder">{{REV_2027E}}</td></tr>
+    <tr><td>Net Income ($M)</td><td>2,467</td><td>752</td><td class="placeholder">{{NI_2027E}}</td></tr>
+    <tr><td>EPS ($)</td><td>7.00</td><td>2.18</td><td class="placeholder">{{EPS_2027E}}</td></tr>
+    <tr><td>Net Margin</td><td>14.32%</td><td>4.24%</td><td class="placeholder">{{NETMARGIN_2027E}}</td></tr>
+  </table>
+  <h3>Earnings Quality Notes</h3>
+  <p>Trailing-twelve-month (TTM) figures pulled from third-party data reported revenue of $73,556 million and net income of $5,788 million — approximately 4.15x the corresponding FY2025 annual revenue figure ($17,738 million) and roughly 7.7x FY2025 net income ($752 million). This ratio is consistent with the recurring data-aggregation error pattern observed across multiple tickers in this series, notwithstanding the source tool's own assessment that "no red flags" were detected. We have excluded these TTM figures from the summary table above and used FY2024/FY2025 annual figures as the analytical base. Separately, we note that FY2025's sharp net income decline versus FY2024 (from $2,467 million to $752 million) reflects large non-cash, unrealized mark-to-market losses on commodity hedge positions rather than a deterioration in underlying cash operating performance — a genuine, disclosed earnings-volatility driver distinct from the TTM aggregation error, and one that should be assessed via adjusted EBITDA rather than GAAP net income. Readers should independently verify actual TTM performance via VST's most recent 10-Q and 10-K filings.</p>
+  <h3>Industry-Specific Ratios</h3>
+  <table class="data-table">
+    <tr><th>Ratio</th><th>Value</th></tr>
+    <tr><td>Generation Capacity (approx.)</td><td class="placeholder">{{GENERATION_CAPACITY_GW}}</td></tr>
+    <tr><td>Hedge Coverage — Forward Years</td><td class="placeholder">{{HEDGE_COVERAGE}}</td></tr>
+    <tr><td>Retail Customer Count</td><td>~5 million</td></tr>
+    <tr><td>Debt / EBITDA</td><td class="placeholder">{{DEBT_EBITDA}}</td></tr>
+  </table>
+
+  <h2 class="section-title">Investment Risks</h2>
+  <div class="risk-item">
+    <span class="risk-tag">Operational</span>
+    <p>Exposure to extreme weather events (winter storms, droughts, heat waves) that can damage infrastructure, curtail generation, or spike replacement power costs, particularly in ERCOT.</p>
+  </div>
+  <div class="risk-item">
+    <span class="risk-tag">Financial</span>
+    <p>Elevated leverage used to fund generation acquisitions; unrealized mark-to-market hedging losses can create material GAAP earnings volatility and headline misses versus consensus.</p>
+  </div>
+  <div class="risk-item">
+    <span class="risk-tag">Regulatory</span>
+    <p>Regulatory risk tied to coal combustion residuals rules and evolving EPA climate regulations affecting the coal fleet; regulatory approval risk applies to future M&amp;A and generation development.</p>
+  </div>
+  <div class="risk-item">
+    <span class="risk-tag">Legal</span>
+    <p>Potential liabilities from nuclear-plant incidents or coal-mine/ash-related events could exceed existing insurance coverage; competitive/antitrust scrutiny is possible given industry consolidation activity.</p>
+  </div>
+  <h3>Disclosure Flags</h3>
+  <p>We flag the likely TTM data-aggregation error described above as a data-quality risk for any analysis relying on automated trailing-twelve-month feeds for this ticker. We also flag the FY2025 GAAP net income decline as a genuine, hedge-related earnings-volatility event that should be assessed via adjusted operating metrics rather than headline GAAP figures. One Sell rating exists within an otherwise strongly bullish analyst distribution, warranting monitoring of that dissenting view's rationale.</p>
+
+  <h2 class="section-title">Environmental, Social &amp; Governance</h2>
+  <div class="esg-grid">
+    <div class="esg-card">
+      <h4>Environmental</h4>
+      <p class="placeholder">{{ESG_ENVIRONMENTAL — coal fleet transition, carbon-free nuclear/solar/battery expansion, and emissions disclosures not independently verified for this report}}</p>
+    </div>
+    <div class="esg-card">
+      <h4>Social</h4>
+      <p class="placeholder">{{ESG_SOCIAL — workforce and customer-affordability programs not independently verified for this report}}</p>
+    </div>
+    <div class="esg-card">
+      <h4>Governance</h4>
+      <p class="placeholder">{{ESG_GOVERNANCE — board composition, executive compensation, and insider transaction detail not independently verified for this report}}</p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="analyst-line">Prepared by the Equity Research Desk — publicly sourced information only.</div>
+    <div>This report is for informational purposes only and does not constitute investment advice or a solicitation to buy or sell any security. All data is sourced from publicly available third-party sources believed to be reliable but not independently audited; figures marked with placeholders indicate data points that could not be verified as of the report date. Past performance is not indicative of future results. Readers should conduct their own due diligence and consult a licensed financial advisor before making investment decisions.</div>
+  </footer>
+
+</div>
+</body>
+</html>

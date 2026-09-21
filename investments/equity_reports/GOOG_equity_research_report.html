@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — GOOG</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #e9edf2;
+    color: var(--text);
+    font-family: "Georgia", "Times New Roman", serif;
+    line-height: 1.55;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.12);
+    padding: 40px 50px 60px;
+  }
+
+  .report-header {
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .firm-name {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .company-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+  }
+
+  .reco-banner {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .reco-main {
+    flex: 0 0 170px;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .reco-main .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+
+  .reco-main .value {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+
+  .reco-stats {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--gray-bg);
+  }
+
+  .reco-stat {
+    padding: 10px 14px;
+    border-left: 1px solid var(--border);
+  }
+
+  .reco-stat .label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    display: block;
+  }
+
+  .reco-stat .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .basic-info {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+
+  .basic-info td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .basic-info td.k {
+    color: var(--muted);
+    width: 38%;
+  }
+
+  .basic-info td.v {
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  section { margin-bottom: 32px; }
+
+  h2.section-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: var(--navy);
+    padding: 8px 14px;
+    margin: 0 0 14px 0;
+    border-left: 5px solid var(--accent);
+  }
+
+  h3.sub-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    margin: 18px 0 10px;
+  }
+
+  p.body-text { font-size: 15px; margin: 0 0 12px; }
+
+  ul.bullet-list { margin: 0 0 12px 0; padding-left: 20px; }
+  ul.bullet-list li { margin-bottom: 6px; font-size: 15px; }
+
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  .thesis-box .thesis-label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-dark);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  table.data-table th {
+    background: var(--navy);
+    color: #fff;
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  table.data-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background: var(--gray-bg); }
+
+  .risk-item { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+
+  .risk-tag {
+    flex: 0 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    background: var(--red);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .risk-tag.op { background: #b8860b; }
+  .risk-tag.fin { background: var(--red); }
+  .risk-tag.reg { background: #6a3d9a; }
+  .risk-tag.legal { background: #444; }
+
+  .esg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
+  .esg-card {
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: 4px;
+    padding: 12px 14px;
+  }
+
+  .esg-card.environmental { border-top-color: #2e7d32; }
+  .esg-card.social { border-top-color: #1565c0; }
+  .esg-card.governance { border-top-color: #6a1b9a; }
+
+  .esg-card h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px;
+    color: var(--navy);
+  }
+
+  .esg-card ul { margin: 0; padding-left: 16px; font-size: 13px; }
+  .esg-card li { margin-bottom: 4px; }
+
+  .peer-note {
+    font-size: 12.5px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: -6px;
+    margin-bottom: 12px;
+  }
+
+  footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  footer .analyst-line { margin-bottom: 8px; font-size: 12px; color: var(--text); }
+
+  @media (max-width: 700px) {
+    .page { padding: 24px 18px; }
+    .reco-banner { flex-direction: column; }
+    .reco-stats { grid-template-columns: repeat(2, 1fr); }
+    .esg-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Alphabet Inc.</h1>
+      <div class="ticker-line">GOOG (Class C) / GOOGL (Class A) &nbsp;|&nbsp; NASDAQ &nbsp;|&nbsp; Communication Services / Internet Content &amp; Information</div>
+    </div>
+    <div class="report-date">
+      September 15, 2026<br>
+      Analyst: [Name Not Specified]
+    </div>
+  </div>
+
+  <!-- ============ RECOMMENDATION BANNER ============ -->
+  <div class="reco-banner">
+    <div class="reco-main">
+      <span class="label">Recommendation</span>
+      <span class="value" style="color:#4caf50;">BUY</span>
+    </div>
+    <div class="reco-stats">
+      <div class="reco-stat">
+        <span class="label">Current Price (GOOG)</span>
+        <span class="value">~$336–$346</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Target Price (Consensus)</span>
+        <span class="value">~$428 (Class A/C, per 54–63 analysts)</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Market Cap</span>
+        <span class="value">~$4.10–4.25 trillion</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Implied Upside</span>
+        <span class="value">~23–26% (consensus average)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BASIC INFORMATION ============ -->
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbols</td><td class="v">GOOG (Class C, no voting rights) / GOOGL (Class A, one vote per share)</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NASDAQ</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Communication Services</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Internet Content &amp; Information / Technology Services</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">~$235–$237 to ~$404–$409 (varies slightly by share class)</td></tr>
+      <tr><td class="k">P/E Ratio (TTM, GAAP)</td><td class="v">~17x (Class A/C, per one source) — note this reflects a large non-recurring equity-gain benefit to recent GAAP EPS; see Financial Analysis</td></tr>
+      <tr><td class="k">Beta</td><td class="v">~1.67 (per one source; other large-cap comparisons show lower figures — verify against a single consistent data source)</td></tr>
+      <tr><td class="k">Dividend</td><td class="v">$0.22/quarter (Class A, B, and C), initiated relatively recently</td></tr>
+      <tr><td class="k">Share Structure / Governance Note</td><td class="v">Dual/triple-class structure (Class A, B, C); Class B (unlisted, held mainly by founders/insiders) carries 10 votes per share, concentrating voting control</td></tr>
+      <tr><td class="k">Float</td><td class="v placeholder">{{Not independently sourced in this summary — verify against Alphabet's most recent proxy statement}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT SUMMARY ============ -->
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Alphabet's core advertising business remains remarkably resilient — Google Services revenue grew 15% year-over-year in Q2 2026 with Search up 17% — even as the market has focused heavily on whether generative AI (chatbots, AI search competitors) will disrupt Google Search's dominant position. At the same time, Google Cloud has become an unambiguous second growth engine, surging 82% year-over-year to $24.8 billion in Q2 2026 with a $514 billion backlog, evidence that Alphabet is winning meaningful enterprise AI infrastructure share alongside Microsoft and Amazon. The stock sold off sharply (as much as 7% in a single session) after management raised 2026 capex guidance to $195–$205 billion and reported the company's first-ever quarterly negative free cash flow, reflecting investor concern about the returns on this AI infrastructure buildout — but shares subsequently recovered roughly 10% as the market began crediting the cloud acceleration story. The mispricing thesis rests on whether the current ~17x reported P/E (aided by a large one-time equity-gain benefit) undervalues a company simultaneously defending a highly profitable core advertising franchise and scaling a second, faster-growing cloud/AI infrastructure business — against real risks from EU regulatory action, U.S. antitrust proceedings, and the capital intensity of the AI buildout itself.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Alphabet reported Q2 2026 revenue of $119.8 billion (+24% YoY), beating consensus of ~$116.9 billion, with Google Cloud revenue up 82% YoY to $24.8 billion (cloud operating income more than tripled to $8.8 billion) and Google Services revenue up 15% YoY to $94.5 billion (Search +17%, YouTube ads +13%). GAAP diluted EPS was $9.11–$9.23 (source-dependent), heavily inflated by an approximately $99 billion net unrealized gain on equity securities (reportedly including holdings such as SpaceX and Anthropic); non-GAAP adjusted EPS of $2.85 came in slightly below consensus of $2.89. Capital expenditures reached $44.9 billion for the quarter, producing the company's first-ever quarterly negative free cash flow (approximately −$5.86 to −$5.9 billion). Management raised full-year 2026 capex guidance to $195–$205 billion (from $180–$190 billion) and suspended share buybacks; long-term debt roughly doubled to approximately $98 billion after a $49.6 billion equity raise and $20.3 billion in senior unsecured notes issued to fund AI infrastructure. Separately, the European Commission fined Alphabet a total of €890 million during the quarter for Digital Markets Act non-compliance, and the Court of Justice of the European Union upheld a prior €4.1 billion Android antitrust fine. Waymo also began paid robotaxi service in Las Vegas and announced plans for a driverless launch in Tokyo.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Consensus analyst forecasts (per one source) call for net income growth of roughly 9.1% next year — notably below the ~35% growth forecast for the broader Interactive Media &amp; Services industry — while revenue is separately forecast to grow approximately 15% per annum and EPS approximately 11% per annum over the next three years (figures vary somewhat by source and estimate vintage). Management has signaled that 2027 capital spending will increase significantly above the already-elevated 2026 level, meaning free cash flow pressure is likely to persist near term even as cloud revenue continues to scale.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Alphabet trades at a meaningfully lower headline P/E (~17–25x depending on source and share class) than fellow "Magnificent Seven" hyperscalers Microsoft (~37x) and Amazon (~34x) per one comparison table, despite comparable or superior cloud growth rates. The 54–63 analyst consensus price target of approximately $428 implies roughly 23–26% upside from current levels, and Alphabet was rated the top pick among four major hyperscalers in a large retail-investor poll, reflecting broadly positive sentiment despite near-term capex-driven volatility.</p>
+  </section>
+
+  <!-- ============ BUSINESS DESCRIPTION ============ -->
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Alphabet Inc., headquartered in Mountain View, California, is the holding company for Google and a portfolio of other technology and health/life-sciences ventures ("Other Bets"). Its core Google Services segment includes Search, YouTube, Android, Chrome, Google Play, Google Maps, and hardware devices, monetized primarily through advertising alongside subscription (YouTube Premium, Google One) and Play Store revenue. Google Cloud provides infrastructure-as-a-service, platform-as-a-service, and enterprise collaboration tools (Google Workspace), and has become Alphabet's fastest-growing major segment on the back of enterprise AI adoption. The Other Bets segment includes ventures such as Waymo (autonomous driving), Verily (life sciences), and various early-stage technology investments; these remain a small share of consolidated revenue but represent long-duration optionality, with Waymo in particular now generating commercial revenue from paid robotaxi rides in multiple U.S. cities and planning international expansion (Tokyo). Alphabet was founded by Larry Page and Sergey Brin and restructured as a holding company in 2015.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Search advertising volume and pricing (Search revenue +17% YoY in Q2 2026)</li>
+      <li>YouTube advertising and subscription growth (+13% YoY ads in Q2 2026)</li>
+      <li>Google Cloud enterprise AI infrastructure demand — the primary growth driver, with an $514 billion revenue backlog signaling multi-year visibility</li>
+      <li>Gemini AI app engagement (950 million monthly active users, 22 billion tokens processed per minute, per management commentary) as a potential future monetization and Search-defense lever</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>AI infrastructure capital expenditures — the dominant near-term expense driver, at $44.9 billion in Q2 2026 alone and guided to $195–205 billion for full-year 2026</li>
+      <li>Traffic acquisition costs and content costs tied to advertising and YouTube</li>
+      <li>R&D investment across AI (Gemini, DeepMind), cloud infrastructure, and Other Bets ventures (Waymo, Verily)</li>
+      <li>Regulatory fines and compliance costs, including recent EU Digital Markets Act penalties</li>
+    </ul>
+  </section>
+
+  <!-- ============ INDUSTRY OVERVIEW & COMPETITIVE POSITIONING ============ -->
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Alphabet operates at the intersection of two large, fast-evolving industries: digital advertising (where it remains the dominant global player through Search and YouTube) and cloud/AI infrastructure (where it is one of three dominant hyperscalers alongside Microsoft Azure and Amazon Web Services). The industry's defining current dynamic is a massive, multi-year capital arms race in AI data-center infrastructure — the four major hyperscalers (Alphabet, Amazon, Microsoft, Meta) are collectively expected to spend nearly $700 billion on AI infrastructure in 2026 alone — creating both an enormous growth opportunity (enterprise AI/cloud demand) and a significant capital-intensity and return-on-investment risk that markets are actively debating.</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low in core search/cloud infrastructure given the capital intensity required (tens of billions in annual capex) to compete at hyperscale; moderate in AI application layer, where well-funded startups (OpenAI, Anthropic, others) and open-weight Chinese models are emerging as credible alternatives.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Rising — specialized AI chip suppliers (notably Nvidia, though Alphabet also designs its own TPUs) and data-center construction/energy suppliers hold meaningful leverage amid an industry-wide capacity crunch; management explicitly described the environment as "supply-constrained."</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate-to-high for large enterprise cloud customers, who can negotiate across multiple hyperscalers; advertisers have more limited leverage given Google Search's continued reach and targeting effectiveness, though this could shift if AI-native search alternatives gain material share.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Rising and a key market debate — AI chatbots and AI-native search products are the most-discussed potential substitute for traditional Search; management points to the Gemini App's 950 million monthly active users and Search's own AI-feature integration as a defensive response, but the long-term competitive outcome remains genuinely uncertain.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — direct competition from Microsoft (Azure, Bing, Copilot), Amazon (AWS), Meta (advertising, AI), and a fast-moving set of AI-native competitors (OpenAI, Anthropic) and open-weight model providers.</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Alphabet's moat combines Search's entrenched user habit and data advantages, YouTube's scale in video/creator content, Android's global mobile distribution, and — increasingly — vertically integrated AI infrastructure (custom TPU chips, proprietary Gemini models, and a global data-center footprint) that reduces reliance on third-party chip suppliers relative to some competitors. The $514 billion Google Cloud backlog signals durable, multi-year enterprise commitment that is difficult for smaller cloud providers to replicate. Alphabet's Other Bets portfolio (Waymo in particular) also provides potential long-duration optionality beyond the core advertising and cloud businesses, though these remain financially immaterial relative to the core business today.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: "Magnificent Seven" hyperscalers with overlapping cloud/AI infrastructure and/or advertising exposure. Figures are approximate and vary meaningfully by source, date, and share class — verify against a single consistent data source before use.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Market Cap</th><th>P/E Ratio</th><th>1-Yr Analyst Price Target Upside</th></tr>
+      <tr><td>Alphabet</td><td>GOOG / GOOGL</td><td>~$4.10–4.25T (varies by source/class)</td><td>~17–25x (source-dependent)</td><td>~23–26% (consensus)</td></tr>
+      <tr><td>Microsoft</td><td>MSFT</td><td>~$3.80T (one source, earlier date)</td><td>~37x (one source)</td><td>~11% (median target, one source)</td></tr>
+      <tr><td>Amazon</td><td>AMZN</td><td>~$2.35T (one source, earlier date)</td><td>~34x (one source)</td><td>~18% (median target, one source)</td></tr>
+      <tr><td>Meta Platforms</td><td>META</td><td>~$1.77T (one source, earlier date)</td><td>~25–26x (one source)</td><td>~27–30% (median/average target, source-dependent)</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted);">Note: market cap and P/E figures for peers were pulled from comparison tables with different "as of" dates (some clearly several weeks to months stale relative to this report's September 15, 2026 date) and should be refreshed from a single live data source before use in any formal valuation.</p>
+  </section>
+
+  <!-- ============ VALUATION ============ -->
+  <section>
+    <h2 class="section-title">Valuation</h2>
+
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified cost of capital assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — the current negative free cash flow print, driven by a temporary capex surge rather than declining core profitability, makes near-term FCF-based valuation especially sensitive to the assumed capex normalization path}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>One third-party source cited a "fair value" estimate of $333 against a then-current price of ~$401 (implying the stock was trading above that particular model's fair value at that time) — not independently rebuilt or reconciled here</td></tr>
+    </table>
+
+    <h3 class="sub-title">Relative Valuation</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Alphabet (GOOG/GOOGL)</th><th>Hyperscaler Peer Range</th></tr>
+      <tr><td>P/E (TTM, GAAP)</td><td>~17–25x (varies by source; inflated in some periods by one-time equity gains)</td><td>~25–37x (MSFT, AMZN, META per one comparison)</td></tr>
+      <tr><td>Cloud segment revenue growth (YoY)</td><td>82% (Q2 2026)</td><td class="placeholder">{{Not independently sourced for AWS/Azure in this summary — recommend direct comparison}}</td></tr>
+      <tr><td>Consensus 1-Year Price Target Upside</td><td>~23–26%</td><td>~11–30% across MSFT/AMZN/META (source-dependent)</td></tr>
+    </table>
+
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">Alphabet's headline P/E discount to Microsoft and Amazon, despite comparable-or-better cloud growth and a resilient core advertising franchise, is the crux of the relative-value case — though part of that apparent discount is an artifact of a large non-recurring equity-gain benefit to recent GAAP earnings rather than a clean like-for-like comparison, so non-GAAP/adjusted multiples should be used for any rigorous cross-company comparison. The ~$428 consensus target implies meaningful upside, but the size and persistence of AI capex (with 2027 spending guided to increase further) is the key swing factor for free cash flow and, ultimately, any DCF-based valuation.</p>
+  </section>
+
+  <!-- ============ FINANCIAL ANALYSIS ============ -->
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q2 2025</th><th>Q2 2026</th><th>FY2026 Guidance</th></tr>
+      <tr><td>Total Revenue</td><td class="placeholder">{{Implied ~$96.6B based on 24% YoY growth}}</td><td>$119.8B (+24% YoY)</td><td class="placeholder">{{Not formally guided as a single figure}}</td></tr>
+      <tr><td>Google Cloud Revenue</td><td class="placeholder">{{Implied ~$13.6B based on 82% YoY growth}}</td><td>$24.8B (+82% YoY)</td><td class="placeholder">{{Not separately guided; $514B backlog cited}}</td></tr>
+      <tr><td>Google Services Revenue</td><td class="placeholder">{{Implied ~$82.2B based on 15% YoY growth}}</td><td>$94.5B (+15% YoY)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>GAAP Diluted EPS</td><td>$2.31–$2.33</td><td>$9.11–$9.23 (source-dependent; includes ~$99B one-time equity gain)</td><td class="placeholder">{{Not guided}}</td></tr>
+      <tr><td>Non-GAAP Adjusted EPS</td><td class="placeholder">{{Not directly sourced}}</td><td>$2.85 (slightly below $2.89 consensus)</td><td class="placeholder">{{Not guided}}</td></tr>
+      <tr><td>Capital Expenditures</td><td class="placeholder">{{Roughly half of Q2 2026 level, per implied doubling YoY}}</td><td>$44.9B</td><td>$195B–$205B (full year, raised from $180–190B)</td></tr>
+    </table>
+
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">Q2 2026 GAAP diluted EPS of approximately $9.11–$9.23 is heavily distorted by an estimated $99 billion net unrealized gain on equity securities (holdings reportedly including SpaceX and Anthropic), recorded in other income rather than reflecting core operating performance. Analysts should evaluate Alphabet primarily on non-GAAP operating metrics and segment-level performance (Google Services, Google Cloud) rather than headline GAAP net income in periods with large equity-market-driven swings. Separately, the company's first-ever quarterly negative free cash flow (~−$5.86 to −$5.9 billion) reflects a deliberate, guided increase in AI infrastructure capex rather than deteriorating core profitability — Google Cloud operating income more than tripled year-over-year in the same quarter — but the trajectory and eventual return on this capex is the central open question for the earnings quality thesis going forward.</p>
+
+    <h3 class="sub-title">Industry-Specific Ratios</h3>
+    <table class="data-table">
+      <tr><th>Ratio</th><th>Value</th></tr>
+      <tr><td>Google Cloud revenue backlog</td><td>$514 billion</td></tr>
+      <tr><td>Gemini App monthly active users</td><td>950 million</td></tr>
+      <tr><td>Gemini token processing rate</td><td>22 billion tokens/minute (per management commentary)</td></tr>
+      <tr><td>2026 hyperscaler-wide AI capex (4 companies combined)</td><td>~$700 billion (Alphabet, Amazon, Microsoft, Meta combined, per one source)</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT RISKS ============ -->
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+
+    <div class="risk-item">
+      <span class="risk-tag op">Operational</span>
+      <span>Alphabet is now operating in a "supply-constrained environment" for AI infrastructure per its own CFO, meaning execution risk around data-center buildout, chip supply, and capacity delivery could directly affect the pace at which Google Cloud converts its large backlog into recognized revenue.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag fin">Financial</span>
+      <span>Capital intensity has increased sharply — 2026 capex guidance of $195–205 billion versus $180–190 billion just one quarter earlier — producing the company's first-ever negative quarterly free cash flow, a suspended buyback program, and long-term debt that has roughly doubled to ~$98 billion; the market's reaction (a 7% single-day share-price decline) shows this is a live investor concern, not a hypothetical one.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag reg">Regulatory</span>
+      <span>Active regulatory and antitrust exposure in both the EU and U.S.: the European Commission issued €890 million in Digital Markets Act fines during Q2 2026 alone (self-preferencing in Search; Google Play restrictions) and ordered remediation within 60 days or face further penalties of up to 5% of global turnover; the Court of Justice of the EU separately upheld a €4.1 billion Android antitrust fine. U.S. antitrust proceedings against Google (referenced via historical shareholder litigation notices) remain an ongoing consideration, though specific current-status details were not independently verified in this summary.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag legal">Legal</span>
+      <span>Historical securities class-action litigation related to Alphabet has been referenced in past shareholder notices; current litigation status was not independently verified in this summary and should be checked against Alphabet's most recent 10-K legal proceedings disclosure.</span>
+    </div>
+
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or disclosed material weaknesses in internal controls were identified in the sources reviewed for this summary — verify directly against Alphabet's most recent 10-K/10-Q auditor opinion before relying on this.}}</p>
+  </section>
+
+  <!-- ============ ESG ============ -->
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental">
+        <h4>Environmental</h4>
+        <ul class="placeholder">
+          <li>{{ESG_ENV — Alphabet's massive and growing AI data-center buildout (up to $205B in 2026 capex) plausibly carries significant energy and water-use implications that were not independently sourced in this summary; recommend reviewing Alphabet's own environmental/sustainability reporting directly, particularly around data-center energy consumption and any stated carbon-neutrality commitments}}</li>
+        </ul>
+      </div>
+      <div class="esg-card social">
+        <h4>Social</h4>
+        <ul class="placeholder">
+          <li>{{ESG_SOC — recent coverage referenced Alphabet launching age-verification features in Canada and broader EU scrutiny of under-15 access to AI chatbots/social media, both touching on platform safety for minors; specific program details and Alphabet's formal policy stance were not independently sourced here}}</li>
+          <li>{{ESG_SOC_2 — labor standards/workforce diversity data not sourced in this summary}}</li>
+        </ul>
+      </div>
+      <div class="esg-card governance">
+        <h4>Governance</h4>
+        <ul>
+          <li>Alphabet's dual/triple-class share structure (Class A, B, C) concentrates voting control with founders/insiders via super-voting Class B shares — a governance structure some investors view as reducing shareholder accountability</li>
+          <li class="placeholder">{{ESG_GOV_2 — board composition, executive compensation, and succession-planning detail not sourced in this summary}}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER / DISCLOSURES ============ -->
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 15, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party financial data sources (Yahoo Finance, CNBC, Robinhood, TradingView, Simply Wall St, StockAnalysis.com, TipRanks, company earnings materials, and various financial media) that may be delayed, inconsistent, or subject to revision. Market cap, P/E, and peer comparison figures varied meaningfully across providers and reporting dates searched — several peer figures in the comparison table above appear to be several weeks to months stale relative to this report's date and should be refreshed before use. All figures should be independently verified against primary sources (Alphabet's 10-K/10-Q filings and investor relations disclosures) before being used for any actual investment decision. This is not a research report from a registered investment adviser or broker-dealer, does not constitute investment advice, and should not be relied upon as such.
+  </footer>
+
+</div>
+</body>
+</html>

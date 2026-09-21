@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — Eversource Energy (ES)</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--text);
+    background: #ffffff;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+  }
+  .report-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 48px;
+  }
+  .report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+  }
+  .firm-name {
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .company-title {
+    font-size: 26px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .reco-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--gray-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+  }
+  .reco-main .label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+  }
+  .reco-main .value {
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .reco-stats {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 28px;
+  }
+  .reco-stats div .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+  .reco-stats div .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+  }
+  h2.section-title {
+    font-size: 18px;
+    color: var(--navy);
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 6px;
+    margin-top: 40px;
+    margin-bottom: 16px;
+  }
+  h3 {
+    font-size: 15px;
+    color: var(--navy);
+    margin-top: 22px;
+    margin-bottom: 8px;
+  }
+  table.basic-info, table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+  table.basic-info td, table.basic-info th,
+  table.data-table td, table.data-table th {
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    text-align: left;
+  }
+  table.basic-info th, table.data-table th {
+    background: var(--gray-bg);
+    color: var(--navy);
+    font-weight: bold;
+  }
+  table.basic-info td:first-child {
+    font-weight: bold;
+    color: var(--muted);
+    width: 32%;
+  }
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 14.5px;
+  }
+  ul {
+    margin-top: 4px;
+    padding-left: 22px;
+  }
+  li {
+    margin-bottom: 6px;
+  }
+  .peer-note {
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 8px;
+  }
+  .risk-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+  }
+  .risk-item .risk-tag {
+    display: inline-block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: bold;
+    color: #fff;
+    background: var(--muted);
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .esg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 12px;
+  }
+  .esg-card {
+    background: var(--gray-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+  .esg-card h4 {
+    margin-top: 0;
+    color: var(--navy);
+    font-size: 14px;
+  }
+  .placeholder {
+    color: #8a8fa3;
+    font-style: italic;
+  }
+  footer {
+    margin-top: 48px;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .analyst-line {
+    margin-bottom: 6px;
+  }
+  p { font-size: 14.5px; }
+</style>
+</head>
+<body>
+<div class="report-container">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Eversource Energy</h1>
+      <div class="ticker-line">NYSE: ES &nbsp;|&nbsp; Sector: Utilities &nbsp;|&nbsp; Industry: Regulated Electric</div>
+    </div>
+    <div class="report-date">
+      Report Date: September 19, 2026<br>
+      Analyst: Equity Research Desk
+    </div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main">
+      <div class="label">Recommendation</div>
+      <div class="value" style="color:#b8860b;">HOLD</div>
+    </div>
+    <div class="reco-stats">
+      <div>
+        <div class="label">Current Price</div>
+        <div class="value">$67.72</div>
+      </div>
+      <div>
+        <div class="label">Target Price</div>
+        <div class="value">$73.58</div>
+      </div>
+      <div>
+        <div class="label">Market Cap</div>
+        <div class="value">$25.51B</div>
+      </div>
+      <div>
+        <div class="label">Implied Upside/Downside</div>
+        <div class="value" style="color:var(--green);">+8.65%</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Basic Information</h2>
+  <table class="basic-info">
+    <tr><td>Ticker</td><td>ES (NYSE)</td></tr>
+    <tr><td>Exchange</td><td>New York Stock Exchange</td></tr>
+    <tr><td>Sector</td><td>Utilities</td></tr>
+    <tr><td>Industry</td><td>Regulated Electric</td></tr>
+    <tr><td>52-Week Range</td><td>$62.89 – $76.57</td></tr>
+    <tr><td>Average Daily Volume</td><td>5,761,745 shares</td></tr>
+    <tr><td>Float</td><td class="placeholder">{{FLOAT_SHARES}}</td></tr>
+    <tr><td>Shares Outstanding</td><td>376.67 million</td></tr>
+    <tr><td>Major Shareholders</td><td class="placeholder">{{MAJOR_SHAREHOLDERS — institutional ownership detail not independently verified; primarily held by index funds and institutional asset managers (e.g., Vanguard, BlackRock, State Street per typical large-cap utility ownership patterns)}}</td></tr>
+  </table>
+
+  <h2 class="section-title">Investment Summary</h2>
+  <div class="thesis-box">
+    <strong>Investment Thesis:</strong> Eversource Energy is a regulated electric, gas, and water utility holding company serving customers across Connecticut, Massachusetts, and New Hampshire. We rate the stock HOLD. The 16-analyst rating distribution has Hold as the largest bucket (9 of 16, 56.3%), matching the source's own explicit "Hold" consensus label. The average price target of $73.58 implies only modest +8.65% upside from the current $67.72, and the distribution includes 3 Sell/Strong Sell ratings alongside the Hold weighting. We flag a likely TTM data-aggregation error in third-party financial data (see Earnings Quality Notes), and separately flag FY2024's unusually depressed net income (which more than doubled in FY2025) as likely reflecting prior-period one-time charges that require independent verification.
+  </div>
+
+  <h3>Recent Developments</h3>
+  <p>Eversource reported FY2025 revenue of $13,547 million, up 13.83% year-over-year from $11,901 million in FY2024, with net income more than doubling to $1,692 million from $811.65 million and EPS growing from $2.27 to $4.56. Net margin improved substantially from 6.82% to 12.49%. This dramatic year-over-year improvement, combined with disclosed negative quarterly net income figures in prior periods (Q3 2024: -$549 million; Q4 2023: -$442 million), suggests FY2024 results were depressed by one-time charges (potentially related to the company's prior divestiture of its offshore wind investments or other impairments) that we have not independently verified; readers should consult Eversource's 10-K for the specific drivers before treating FY2025's growth rate as representative of a sustainable underlying trend.</p>
+
+  <h3>Earnings Forecast</h3>
+  <p>We expect continued mid-single-digit EPS growth on a normalized basis, driven by regulated rate-base investment across Eversource's Connecticut, Massachusetts, and New Hampshire electric, gas, and water utility operations, once the FY2024 one-time items are fully lapped.</p>
+
+  <h3>Valuation Summary</h3>
+  <p>At $67.72, ES trades at a P/E of 17.54x, reasonable for a regulated utility, though this multiple should be assessed cautiously given the unusual FY2024/FY2025 earnings volatility. The stock trades in the lower half of its 52-week range of $62.89–$76.57. Given the Hold-majority analyst distribution matching the source's own explicit "Hold" consensus label and modest implied upside, we view the shares as fairly valued at current levels.</p>
+
+  <h2 class="section-title">Business Description</h2>
+  <p>Eversource Energy is a public utility holding company providing regulated electric transmission and distribution, natural gas delivery, and water utility services across Connecticut, Massachusetts, and New Hampshire through subsidiaries including The Connecticut Light and Power Company, NSTAR Electric, and Eversource Gas Company. The company has in recent years worked to simplify its business mix and reduce exposure to non-regulated, higher-risk ventures such as offshore wind development, refocusing on its core regulated transmission and distribution operations.</p>
+  <h3>Key Revenue Drivers</h3>
+  <ul>
+    <li>Regulated electric transmission and distribution revenue across Connecticut, Massachusetts, and New Hampshire, driven by customer growth, rate base expansion, and approved rate case outcomes.</li>
+    <li>Regulated natural gas distribution revenue.</li>
+    <li>Regulated water utility revenue in Massachusetts.</li>
+    <li>Grid modernization and reliability investment supporting rate-base growth.</li>
+  </ul>
+  <h3>Key Expense Drivers</h3>
+  <ul>
+    <li>Capital expenditure on grid modernization, storm resiliency, and regulated infrastructure across three New England states.</li>
+    <li>Operations and maintenance costs across a multi-state electric, gas, and water utility operation.</li>
+    <li>Interest expense on debt used to fund the company's capital investment program.</li>
+    <li>Any residual costs or charges associated with the company's prior offshore wind divestiture.</li>
+  </ul>
+
+  <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+  <p>The U.S. regulated electric, gas, and water utility industry is characterized by stable, rate-regulated returns on capital investment. Eversource's New England service territory faces some of the nation's highest electricity costs and most stringent clean energy mandates, creating both substantial approved capital investment opportunity and elevated regulatory and political scrutiny over rate increases.</p>
+  <h3>Porter's Five Forces</h3>
+  <table class="data-table">
+    <tr><th>Force</th><th>Assessment</th></tr>
+    <tr><td>Threat of New Entrants</td><td>Low — regulated utilities operate in protected service territories with high barriers to entry from regulatory franchise structures.</td></tr>
+    <tr><td>Bargaining Power of Suppliers</td><td>Moderate — construction and equipment suppliers have some pricing power, particularly given New England's elevated construction costs.</td></tr>
+    <tr><td>Bargaining Power of Buyers</td><td>Low — regulated ratepayers have limited alternatives to grid electricity, gas, and water within the utility's service territory.</td></tr>
+    <tr><td>Threat of Substitutes</td><td>Low-to-Moderate — behind-the-meter solar and distributed generation are a growing but still modest substitute for grid electricity.</td></tr>
+    <tr><td>Competitive Rivalry</td><td>Low — regulated utilities generally do not face direct competition within their assigned service territories.</td></tr>
+  </table>
+  <h3>Competitive Advantage</h3>
+  <p>Eversource's scale across Connecticut, Massachusetts, and New Hampshire, combined with its recent strategic simplification away from higher-risk offshore wind development, provides a more focused, lower-risk regulated utility earnings base than in prior years, though the company's high-cost New England service territory carries elevated political and regulatory scrutiny.</p>
+  <div class="peer-note">Peer companies shown for comparative context; figures sourced from public financial data as of report date.</div>
+  <table class="data-table">
+    <tr><th>Company</th><th>Ticker</th><th>Market Cap</th><th>P/E</th><th>Net Margin</th></tr>
+    <tr><td>Eversource Energy</td><td>ES</td><td>$25.51B</td><td>17.54x</td><td>12.49%</td></tr>
+    <tr><td>Consolidated Edison</td><td>ED</td><td>$38.99B</td><td>17.32x</td><td>11.96%</td></tr>
+    <tr><td>WEC Energy Group</td><td>WEC</td><td>$33.62B</td><td>19.97x</td><td>15.89%</td></tr>
+  </table>
+
+  <h2 class="section-title">Valuation</h2>
+  <h3>Absolute Valuation — Discounted Cash Flow (Illustrative)</h3>
+  <table class="data-table">
+    <tr><th>Assumption</th><th>Value</th></tr>
+    <tr><td>Terminal Growth Rate</td><td class="placeholder">{{TERMINAL_GROWTH}}</td></tr>
+    <tr><td>Discount Rate (WACC)</td><td class="placeholder">{{WACC}}</td></tr>
+    <tr><td>Implied Fair Value / Share</td><td class="placeholder">{{DCF_FAIR_VALUE}}</td></tr>
+  </table>
+  <h3>Relative Valuation</h3>
+  <table class="data-table">
+    <tr><th>Metric</th><th>ES</th><th>Peer Average</th></tr>
+    <tr><td>P/E (TTM)</td><td>17.54x</td><td class="placeholder">{{PEER_AVG_PE}}</td></tr>
+    <tr><td>Dividend Yield</td><td>4.65%</td><td class="placeholder">{{PEER_AVG_YIELD}}</td></tr>
+  </table>
+  <h3>Valuation Conclusion</h3>
+  <p>ES's valuation is broadly in line with regulated utility peers, though the FY2024/FY2025 earnings volatility warrants a normalized-earnings view rather than reliance on the reported growth rate alone. Given the Hold-majority analyst distribution matching the source's own explicit "Hold" consensus label and modest implied upside, we rate the shares HOLD.</p>
+
+  <h2 class="section-title">Financial Analysis</h2>
+  <h3>Historical &amp; Forecast Summary</h3>
+  <table class="data-table">
+    <tr><th>Metric</th><th>FY2024</th><th>FY2025</th><th>FY2027E</th></tr>
+    <tr><td>Revenue ($M)</td><td>11,901</td><td>13,547</td><td class="placeholder">{{REV_2027E}}</td></tr>
+    <tr><td>Net Income ($M)</td><td>811.65</td><td>1,692</td><td class="placeholder">{{NI_2027E}}</td></tr>
+    <tr><td>EPS ($)</td><td>2.27</td><td>4.56</td><td class="placeholder">{{EPS_2027E}}</td></tr>
+    <tr><td>Net Margin</td><td>6.82%</td><td>12.49%</td><td class="placeholder">{{NETMARGIN_2027E}}</td></tr>
+  </table>
+  <h3>Earnings Quality Notes</h3>
+  <p>Trailing-twelve-month (TTM) figures pulled from third-party data reported revenue of $55.077 billion and net income of $5.033 billion — approximately 4.07x and 2.97x the corresponding FY2025 annual figures ($13,547 million revenue and $1,692 million net income), respectively. This ratio is consistent with the recurring data-aggregation error pattern observed across multiple tickers in this series. We have excluded these TTM figures from the summary table above and used FY2024/FY2025 annual figures as the analytical base. Separately, and distinct from the TTM aggregation issue, the source tool itself flagged that the TTM net income aggregate includes disclosed negative quarterly net income in Q3 2024 (-$549 million) and Q4 2023 (-$442 million) — real, disclosed loss quarters rather than data errors, but ones that materially depress any trailing-period comparison and likely explain much of FY2024's unusually low net income base versus FY2025's more-than-doubling. Readers should independently verify the specific cause of these loss quarters (potentially related to prior offshore wind divestiture charges) via ES's most recent 10-Q and 10-K filings.</p>
+  <h3>Industry-Specific Ratios</h3>
+  <table class="data-table">
+    <tr><th>Ratio</th><th>Value</th></tr>
+    <tr><td>Regulated Rate Base Growth</td><td class="placeholder">{{RATE_BASE_GROWTH}}</td></tr>
+    <tr><td>Service Territory</td><td>Connecticut, Massachusetts, New Hampshire</td></tr>
+    <tr><td>Water Utility Customer Count (Massachusetts)</td><td class="placeholder">{{WATER_CUSTOMER_COUNT}}</td></tr>
+    <tr><td>Debt / EBITDA</td><td class="placeholder">{{DEBT_EBITDA}}</td></tr>
+  </table>
+
+  <h2 class="section-title">Investment Risks</h2>
+  <div class="risk-item">
+    <span class="risk-tag">Operational</span>
+    <p>Exposure to severe New England weather events (nor'easters, ice storms) that can damage infrastructure and require substantial restoration capital expenditure across its electric, gas, and water utility operations.</p>
+  </div>
+  <div class="risk-item">
+    <span class="risk-tag">Financial</span>
+    <p>The recent history of significant negative-net-income quarters warrants monitoring for recurrence; ongoing capital expenditure requirements create sensitivity to interest rates and capital market access.</p>
+  </div>
+  <div class="risk-item">
+    <span class="risk-tag">Regulatory</span>
+    <p>Rate case outcomes with Connecticut, Massachusetts, and New Hampshire regulators directly determine allowed returns on invested capital, amid some of the nation's highest regional electricity costs and most stringent clean energy mandates.</p>
+  </div>
+  <div class="risk-item">
+    <span class="risk-tag">Legal</span>
+    <p>The company faces ongoing legal and regulatory risk related to any residual matters from its prior offshore wind investments and divestiture, as well as general infrastructure and environmental compliance litigation.</p>
+  </div>
+  <h3>Disclosure Flags</h3>
+  <p>We flag for readers that the Hold-dominated analyst rating distribution (9 of 16 analysts, 56.3%, plus 3 Sell/Strong Sell ratings) is corroborated by the source's own explicit "Hold" consensus label. We also flag the likely TTM data-aggregation error described above, as well as the disclosed real (non-error) negative net income quarters in the prior-period comparison base, both as factors that should be independently verified before drawing conclusions about ES's underlying earnings trajectory.</p>
+
+  <h2 class="section-title">Environmental, Social &amp; Governance</h2>
+  <div class="esg-grid">
+    <div class="esg-card">
+      <h4>Environmental</h4>
+      <p class="placeholder">{{ESG_ENVIRONMENTAL — prior offshore wind divestiture context, emissions reduction targets, and grid resiliency investment not independently verified for this report}}</p>
+    </div>
+    <div class="esg-card">
+      <h4>Social</h4>
+      <p class="placeholder">{{ESG_SOCIAL — customer affordability and workforce programs not independently verified for this report}}</p>
+    </div>
+    <div class="esg-card">
+      <h4>Governance</h4>
+      <p class="placeholder">{{ESG_GOVERNANCE — board composition and executive compensation structure not independently verified for this report}}</p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="analyst-line">Prepared by the Equity Research Desk — publicly sourced information only.</div>
+    <div>This report is for informational purposes only and does not constitute investment advice or a solicitation to buy or sell any security. All data is sourced from publicly available third-party sources believed to be reliable but not independently audited; figures marked with placeholders indicate data points that could not be verified as of the report date. Past performance is not indicative of future results. Readers should conduct their own due diligence and consult a licensed financial advisor before making investment decisions.</div>
+  </footer>
+
+</div>
+</body>
+</html>

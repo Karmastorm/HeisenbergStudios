@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — Consolidated Edison, Inc. (ED)</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--text);
+    background: #ffffff;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+  }
+  .report-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 48px;
+  }
+  .report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+  }
+  .firm-name {
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .company-title {
+    font-size: 26px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .reco-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--gray-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+  }
+  .reco-main .label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+  }
+  .reco-main .value {
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .reco-stats {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 28px;
+  }
+  .reco-stats div .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+  .reco-stats div .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+  }
+  h2.section-title {
+    font-size: 18px;
+    color: var(--navy);
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 6px;
+    margin-top: 40px;
+    margin-bottom: 16px;
+  }
+  h3 {
+    font-size: 15px;
+    color: var(--navy);
+    margin-top: 22px;
+    margin-bottom: 8px;
+  }
+  table.basic-info, table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+  table.basic-info td, table.basic-info th,
+  table.data-table td, table.data-table th {
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    text-align: left;
+  }
+  table.basic-info th, table.data-table th {
+    background: var(--gray-bg);
+    color: var(--navy);
+    font-weight: bold;
+  }
+  table.basic-info td:first-child {
+    font-weight: bold;
+    color: var(--muted);
+    width: 32%;
+  }
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 14.5px;
+  }
+  ul {
+    margin-top: 4px;
+    padding-left: 22px;
+  }
+  li {
+    margin-bottom: 6px;
+  }
+  .peer-note {
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 8px;
+  }
+  .risk-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+  }
+  .risk-item .risk-tag {
+    display: inline-block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: bold;
+    color: #fff;
+    background: var(--muted);
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .esg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 12px;
+  }
+  .esg-card {
+    background: var(--gray-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+  .esg-card h4 {
+    margin-top: 0;
+    color: var(--navy);
+    font-size: 14px;
+  }
+  .placeholder {
+    color: #8a8fa3;
+    font-style: italic;
+  }
+  footer {
+    margin-top: 48px;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .analyst-line {
+    margin-bottom: 6px;
+  }
+  p { font-size: 14.5px; }
+</style>
+</head>
+<body>
+<div class="report-container">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Consolidated Edison, Inc.</h1>
+      <div class="ticker-line">NYSE: ED &nbsp;|&nbsp; Sector: Utilities &nbsp;|&nbsp; Industry: Regulated Electric</div>
+    </div>
+    <div class="report-date">
+      Report Date: September 19, 2026<br>
+      Analyst: Equity Research Desk
+    </div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main">
+      <div class="label">Recommendation</div>
+      <div class="value" style="color:#b8860b;">HOLD</div>
+    </div>
+    <div class="reco-stats">
+      <div>
+        <div class="label">Current Price</div>
+        <div class="value">$105.43</div>
+      </div>
+      <div>
+        <div class="label">Target Price</div>
+        <div class="value">$110.28</div>
+      </div>
+      <div>
+        <div class="label">Market Cap</div>
+        <div class="value">$38.99B</div>
+      </div>
+      <div>
+        <div class="label">Implied Upside/Downside</div>
+        <div class="value" style="color:var(--green);">+4.60%</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Basic Information</h2>
+  <table class="basic-info">
+    <tr><td>Ticker</td><td>ED (NYSE)</td></tr>
+    <tr><td>Exchange</td><td>New York Stock Exchange</td></tr>
+    <tr><td>Sector</td><td>Utilities</td></tr>
+    <tr><td>Industry</td><td>Regulated Electric</td></tr>
+    <tr><td>52-Week Range</td><td>$94.96 – $116.23</td></tr>
+    <tr><td>Average Daily Volume</td><td>3,426,676 shares</td></tr>
+    <tr><td>Float</td><td class="placeholder">{{FLOAT_SHARES}}</td></tr>
+    <tr><td>Shares Outstanding</td><td>369.83 million</td></tr>
+    <tr><td>Major Shareholders</td><td class="placeholder">{{MAJOR_SHAREHOLDERS — institutional ownership detail not independently verified; primarily held by index funds and institutional asset managers (e.g., Vanguard, BlackRock, State Street per typical large-cap utility ownership patterns)}}</td></tr>
+  </table>
+
+  <h2 class="section-title">Investment Summary</h2>
+  <div class="thesis-box">
+    <strong>Investment Thesis:</strong> Consolidated Edison is a regulated electric, gas, and steam delivery utility serving New York City, Westchester County, and parts of northern New Jersey — one of the most capital-intensive and densely populated service territories among major U.S. utilities. We rate the stock HOLD. The 18-analyst rating distribution shows Hold as the largest bucket (9 of 18, 50%) matching the source's own explicit "Hold" consensus label, but notably includes a substantial bearish tilt (4 Sell, 3 Strong Sell — 38.9% combined), an unusually heavy negative weighting relative to other utilities in this series. The average price target of $110.28 implies only modest +4.60% upside from the current $105.43. We flag a likely TTM data-aggregation error in third-party financial data (see Earnings Quality Notes).
+  </div>
+
+  <h3>Recent Developments</h3>
+  <p>Consolidated Edison reported FY2025 revenue of $16,918 million, up 10.89% year-over-year from $15,256 million in FY2024, with net income growing 11.21% to $2,023 million from $1,820 million and EPS rising from $5.24 to $5.64. Operating margin remained stable at approximately 17.4%. Despite steady operating performance, the notably bearish tilt in the analyst rating distribution (7 of 18 analysts rating Sell or Strong Sell) suggests sell-side concern about valuation, regulatory risk, or capital intensity relative to the company's modest implied upside.</p>
+
+  <h3>Earnings Forecast</h3>
+  <p>We expect continued low-to-mid single-digit EPS growth driven by regulated rate-base investment in grid modernization and reliability across ConEd's New York City and Westchester service territory, tempered by the elevated capital intensity and regulatory complexity of operating in one of the nation's most demanding utility jurisdictions.</p>
+
+  <h3>Valuation Summary</h3>
+  <p>At $105.43, ED trades at a P/E of 17.32x, reasonable for a large, stable regulated utility. The stock trades in the middle of its 52-week range of $94.96–$116.23, and the modest +4.60% implied upside to the average price target, combined with a Hold-led and notably bearish-skewed analyst distribution, supports a HOLD rating.</p>
+
+  <h2 class="section-title">Business Description</h2>
+  <p>Consolidated Edison, Inc. is a regulated utility holding company providing electric, natural gas, and steam delivery service to customers in New York City and Westchester County through Consolidated Edison Company of New York, and electric and gas service in adjacent areas of New York State and northern New Jersey through Orange and Rockland Utilities. The company operates one of the most complex and densely populated utility distribution networks in the United States, including the nation's largest steam distribution system.</p>
+  <h3>Key Revenue Drivers</h3>
+  <ul>
+    <li>Regulated electric, gas, and steam delivery revenue across the New York City metropolitan area, driven by rate base expansion and approved rate case outcomes.</li>
+    <li>Customer growth and demand in one of the most densely populated and economically significant service territories in the U.S.</li>
+    <li>Grid modernization and resiliency investment supporting rate-base growth.</li>
+  </ul>
+  <h3>Key Expense Drivers</h3>
+  <ul>
+    <li>Capital expenditure on grid modernization, resiliency, and infrastructure upgrades across a dense, aging urban distribution network.</li>
+    <li>Operations and maintenance costs associated with operating in a highly complex, densely populated urban service territory.</li>
+    <li>Interest expense on debt used to fund the company's substantial capital investment program.</li>
+    <li>Regulatory compliance costs associated with New York State's aggressive clean energy and climate policy goals.</li>
+  </ul>
+
+  <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+  <p>Consolidated Edison operates in one of the most regulated and politically scrutinized utility environments in the U.S., given its New York City service territory and New York State's aggressive clean energy transition mandates. This creates both opportunity (substantial approved capital investment for grid modernization) and risk (elevated regulatory and political scrutiny over rate increases affecting a large, diverse customer base).</p>
+  <h3>Porter's Five Forces</h3>
+  <table class="data-table">
+    <tr><th>Force</th><th>Assessment</th></tr>
+    <tr><td>Threat of New Entrants</td><td>Low — regulated utilities operate in protected service territories with extremely high barriers to entry given the complexity of NYC's infrastructure.</td></tr>
+    <tr><td>Bargaining Power of Suppliers</td><td>Moderate — construction and equipment suppliers have some pricing power, particularly given elevated construction costs in the New York metropolitan area.</td></tr>
+    <tr><td>Bargaining Power of Buyers</td><td>Low — regulated ratepayers have limited alternatives to grid electricity, gas, and steam within the utility's service territory.</td></tr>
+    <tr><td>Threat of Substitutes</td><td>Low — dense urban environments limit the practicality of behind-the-meter solar and distributed generation alternatives.</td></tr>
+    <tr><td>Competitive Rivalry</td><td>Low — regulated utilities generally do not face direct competition within their assigned service territories.</td></tr>
+  </table>
+  <h3>Competitive Advantage</h3>
+  <p>Consolidated Edison's scale and irreplaceable infrastructure position in the New York City metropolitan area provide a stable, essential-service earnings base, though the company faces higher regulatory and political scrutiny than utilities in less politically prominent service territories.</p>
+  <div class="peer-note">Peer companies shown for comparative context; figures sourced from public financial data as of report date.</div>
+  <table class="data-table">
+    <tr><th>Company</th><th>Ticker</th><th>Market Cap</th><th>P/E</th><th>Net Margin</th></tr>
+    <tr><td>Consolidated Edison</td><td>ED</td><td>$38.99B</td><td>17.32x</td><td>11.96%</td></tr>
+    <tr><td>Dominion Energy</td><td>D</td><td>$55.92B</td><td>22.08x</td><td>17.90%</td></tr>
+    <tr><td>Exelon</td><td>EXC</td><td>$43.43B</td><td>15.47x</td><td>11.41%</td></tr>
+  </table>
+
+  <h2 class="section-title">Valuation</h2>
+  <h3>Absolute Valuation — Discounted Cash Flow (Illustrative)</h3>
+  <table class="data-table">
+    <tr><th>Assumption</th><th>Value</th></tr>
+    <tr><td>Terminal Growth Rate</td><td class="placeholder">{{TERMINAL_GROWTH}}</td></tr>
+    <tr><td>Discount Rate (WACC)</td><td class="placeholder">{{WACC}}</td></tr>
+    <tr><td>Implied Fair Value / Share</td><td class="placeholder">{{DCF_FAIR_VALUE}}</td></tr>
+  </table>
+  <h3>Relative Valuation</h3>
+  <table class="data-table">
+    <tr><th>Metric</th><th>ED</th><th>Peer Average</th></tr>
+    <tr><td>P/E (TTM)</td><td>17.32x</td><td class="placeholder">{{PEER_AVG_PE}}</td></tr>
+    <tr><td>Dividend Yield</td><td>3.37%</td><td class="placeholder">{{PEER_AVG_YIELD}}</td></tr>
+  </table>
+  <h3>Valuation Conclusion</h3>
+  <p>ED's valuation appears fair relative to regulated utility peers. Given the Hold-led analyst distribution with a notably bearish tilt (matching the source's own explicit "Hold" consensus label) and only modest implied upside to the average price target, we rate the shares HOLD.</p>
+
+  <h2 class="section-title">Financial Analysis</h2>
+  <h3>Historical &amp; Forecast Summary</h3>
+  <table class="data-table">
+    <tr><th>Metric</th><th>FY2024</th><th>FY2025</th><th>FY2027E</th></tr>
+    <tr><td>Revenue ($M)</td><td>15,256</td><td>16,918</td><td class="placeholder">{{REV_2027E}}</td></tr>
+    <tr><td>Net Income ($M)</td><td>1,820</td><td>2,023</td><td class="placeholder">{{NI_2027E}}</td></tr>
+    <tr><td>EPS ($)</td><td>5.24</td><td>5.64</td><td class="placeholder">{{EPS_2027E}}</td></tr>
+    <tr><td>Operating Margin</td><td>17.50%</td><td>17.35%</td><td class="placeholder">{{OPMARGIN_2027E}}</td></tr>
+    <tr><td>Net Margin</td><td>11.93%</td><td>11.96%</td><td class="placeholder">{{NETMARGIN_2027E}}</td></tr>
+  </table>
+  <h3>Earnings Quality Notes</h3>
+  <p>Trailing-twelve-month (TTM) figures pulled from third-party data reported revenue of $67,615 million and net income of $8,230 million — approximately 4.0x and 4.07x the corresponding FY2025 annual figures ($16,918 million revenue and $2,023 million net income), respectively. This ratio is consistent with the recurring data-aggregation error pattern observed across multiple tickers in this series, notwithstanding the source tool's own suggestion that the variance "could reflect seasonal earnings patterns" rather than an error. We have excluded these TTM figures from the summary table above and used FY2024/FY2025 annual figures as the analytical base. Readers should independently verify actual TTM performance via ED's most recent 10-Q and 10-K filings before relying on any trailing-twelve-month figures from automated data aggregators.</p>
+  <h3>Industry-Specific Ratios</h3>
+  <table class="data-table">
+    <tr><th>Ratio</th><th>Value</th></tr>
+    <tr><td>Regulated Rate Base Growth</td><td class="placeholder">{{RATE_BASE_GROWTH}}</td></tr>
+    <tr><td>Service Territory</td><td>NYC, Westchester County, N. New Jersey</td></tr>
+    <tr><td>Steam Distribution System Scale</td><td class="placeholder">{{STEAM_SYSTEM_SCALE}}</td></tr>
+    <tr><td>Debt / EBITDA</td><td class="placeholder">{{DEBT_EBITDA}}</td></tr>
+  </table>
+
+  <h2 class="section-title">Investment Risks</h2>
+  <div class="risk-item">
+    <span class="risk-tag">Operational</span>
+    <p>Operating one of the most complex and densely populated urban utility networks in the U.S. creates elevated infrastructure aging, storm resiliency, and reliability risk relative to less dense service territories.</p>
+  </div>
+  <div class="risk-item">
+    <span class="risk-tag">Financial</span>
+    <p>Large, ongoing capital expenditure requirements for grid modernization and resiliency create sensitivity to interest rates and capital market access.</p>
+  </div>
+  <div class="risk-item">
+    <span class="risk-tag">Regulatory</span>
+    <p>Rate case outcomes with the New York Public Service Commission are subject to elevated political and consumer-advocacy scrutiny given the size and prominence of ConEd's customer base and New York State's aggressive clean energy mandates, which require substantial capital investment with uncertain cost-recovery timing.</p>
+  </div>
+  <div class="risk-item">
+    <span class="risk-tag">Legal</span>
+    <p>The company faces ongoing legal and regulatory risk related to infrastructure incidents, environmental compliance, and consumer/rate-related litigation typical of a large urban utility.</p>
+  </div>
+  <h3>Disclosure Flags</h3>
+  <p>We flag for readers that the analyst rating distribution shows an unusually heavy bearish tilt for this series (4 Sell, 3 Strong Sell out of 18 analysts, 38.9% combined), alongside Hold as the largest single bucket (50%), both consistent with the source's own explicit "Hold" consensus label. This distribution is notably more negative than most other utility names covered, warranting closer monitoring of the specific concerns driving the Sell-side views. We also flag the likely TTM data-aggregation error described above as a data-quality risk for any analysis relying on automated trailing-twelve-month feeds for this ticker.</p>
+
+  <h2 class="section-title">Environmental, Social &amp; Governance</h2>
+  <div class="esg-grid">
+    <div class="esg-card">
+      <h4>Environmental</h4>
+      <p class="placeholder">{{ESG_ENVIRONMENTAL — New York State clean energy mandate compliance, emissions reduction targets, and grid resiliency investment not independently verified for this report}}</p>
+    </div>
+    <div class="esg-card">
+      <h4>Social</h4>
+      <p class="placeholder">{{ESG_SOCIAL — customer affordability programs and workforce initiatives not independently verified for this report}}</p>
+    </div>
+    <div class="esg-card">
+      <h4>Governance</h4>
+      <p class="placeholder">{{ESG_GOVERNANCE — board composition and executive compensation structure not independently verified for this report}}</p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="analyst-line">Prepared by the Equity Research Desk — publicly sourced information only.</div>
+    <div>This report is for informational purposes only and does not constitute investment advice or a solicitation to buy or sell any security. All data is sourced from publicly available third-party sources believed to be reliable but not independently audited; figures marked with placeholders indicate data points that could not be verified as of the report date. Past performance is not indicative of future results. Readers should conduct their own due diligence and consult a licensed financial advisor before making investment decisions.</div>
+  </footer>
+
+</div>
+</body>
+</html>

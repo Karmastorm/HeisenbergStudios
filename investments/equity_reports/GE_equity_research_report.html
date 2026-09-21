@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — GE</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #e9edf2;
+    color: var(--text);
+    font-family: "Georgia", "Times New Roman", serif;
+    line-height: 1.55;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.12);
+    padding: 40px 50px 60px;
+  }
+
+  .report-header {
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .firm-name {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .company-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+  }
+
+  .reco-banner {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .reco-main {
+    flex: 0 0 170px;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .reco-main .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+
+  .reco-main .value {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+
+  .reco-stats {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--gray-bg);
+  }
+
+  .reco-stat {
+    padding: 10px 14px;
+    border-left: 1px solid var(--border);
+  }
+
+  .reco-stat .label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    display: block;
+  }
+
+  .reco-stat .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .basic-info {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+
+  .basic-info td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .basic-info td.k {
+    color: var(--muted);
+    width: 38%;
+  }
+
+  .basic-info td.v {
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  section { margin-bottom: 32px; }
+
+  h2.section-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: var(--navy);
+    padding: 8px 14px;
+    margin: 0 0 14px 0;
+    border-left: 5px solid var(--accent);
+  }
+
+  h3.sub-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    margin: 18px 0 10px;
+  }
+
+  p.body-text { font-size: 15px; margin: 0 0 12px; }
+
+  ul.bullet-list { margin: 0 0 12px 0; padding-left: 20px; }
+  ul.bullet-list li { margin-bottom: 6px; font-size: 15px; }
+
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  .thesis-box .thesis-label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-dark);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  table.data-table th {
+    background: var(--navy);
+    color: #fff;
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  table.data-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background: var(--gray-bg); }
+
+  .risk-item { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+
+  .risk-tag {
+    flex: 0 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    background: var(--red);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .risk-tag.op { background: #b8860b; }
+  .risk-tag.fin { background: var(--red); }
+  .risk-tag.reg { background: #6a3d9a; }
+  .risk-tag.legal { background: #444; }
+
+  .esg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
+  .esg-card {
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: 4px;
+    padding: 12px 14px;
+  }
+
+  .esg-card.environmental { border-top-color: #2e7d32; }
+  .esg-card.social { border-top-color: #1565c0; }
+  .esg-card.governance { border-top-color: #6a1b9a; }
+
+  .esg-card h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px;
+    color: var(--navy);
+  }
+
+  .esg-card ul { margin: 0; padding-left: 16px; font-size: 13px; }
+  .esg-card li { margin-bottom: 4px; }
+
+  .peer-note {
+    font-size: 12.5px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: -6px;
+    margin-bottom: 12px;
+  }
+
+  footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  footer .analyst-line { margin-bottom: 8px; font-size: 12px; color: var(--text); }
+
+  @media (max-width: 700px) {
+    .page { padding: 24px 18px; }
+    .reco-banner { flex-direction: column; }
+    .reco-stats { grid-template-columns: repeat(2, 1fr); }
+    .esg-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">GE Aerospace</h1>
+      <div class="ticker-line">GE &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Industrials / Aerospace &amp; Defense</div>
+    </div>
+    <div class="report-date">
+      September 15, 2026<br>
+      Analyst: [Name Not Specified]
+    </div>
+  </div>
+
+  <!-- ============ RECOMMENDATION BANNER ============ -->
+  <div class="reco-banner">
+    <div class="reco-main">
+      <span class="label">Recommendation</span>
+      <span class="value" style="color:#b8860b;">HOLD</span>
+    </div>
+    <div class="reco-stats">
+      <div class="reco-stat">
+        <span class="label">Current Price</span>
+        <span class="value">~$306–$324</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Target Price (Consensus)</span>
+        <span class="value">~$405 (though a fresh downgrade cut targets to $350, see below)</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Market Cap</span>
+        <span class="value">~$325–336 billion</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Implied Upside</span>
+        <span class="value">~8–29% (highly sensitive to which target is used — see note)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BASIC INFORMATION ============ -->
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">GE</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Industrials</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Aerospace &amp; Defense</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$159.36 – $388.84 (varies slightly by source; the low end likely reflects the period around GE's multi-way 2024 breakup)</td></tr>
+      <tr><td class="k">P/E Ratio (TTM)</td><td class="v">~37–43x (varies by source)</td></tr>
+      <tr><td class="k">Forward P/E (NTM)</td><td class="v">~36–37x, versus an aerospace-industry average cited around 31x by one source — a persistent premium</td></tr>
+      <tr><td class="k">Dividend (Quarterly / Yield)</td><td class="v">~$0.47/quarter / ~0.5–0.6%</td></tr>
+      <tr><td class="k">Employees</td><td class="v">~57,000 (per one source)</td></tr>
+      <tr><td class="k">Corporate History</td><td class="v">GE Aerospace is the remaining entity following General Electric's three-way breakup (GE HealthCare spun off January 2023; GE Vernova spun off April 2024), retaining GE's historically most profitable aviation business</td></tr>
+      <tr><td class="k">CEO</td><td class="v">Larry Culp (Chairman and CEO)</td></tr>
+      <tr><td class="k">Short Interest</td><td class="v">~1.22% of float (per one source)</td></tr>
+      <tr><td class="k">Float</td><td class="v placeholder">{{Not independently sourced as an absolute figure in this summary — verify against GE Aerospace's most recent proxy statement}}</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted); margin-top:-14px;">Note: consensus price target figures found in sources predate a September 14–15, 2026 downgrade from Melius Research (see Investment Summary), which cut its GE Aerospace target sharply from $432 to $350. The $404.90–$405 consensus figures cited elsewhere in sources reviewed likely do not yet reflect this and other recent target revisions; treat all target-implied-upside figures in this report as provisional pending a refreshed consensus check.</p>
+  </section>
+
+  <!-- ============ INVESTMENT SUMMARY ============ -->
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      GE Aerospace has delivered five consecutive quarters of 20%+ revenue growth, underpinned by a record services backlog exceeding $210 billion and accelerating LEAP engine deliveries (up 41% in the first half of 2026) as the company works through years of supply-chain-driven delivery bottlenecks. Commercial Engines & Services revenue is compounding at pace (services revenue up 32% in H1 2026) while the Defense & Propulsion Technologies segment posted a 1.55x book-to-bill ratio in the same period, reflecting strong order momentum tied to next-generation programs (XA102 adaptive-cycle engine, collaborative combat aircraft) and rising global defense budgets. Management has raised full-year 2026 guidance in consecutive quarters and just announced an $11.75 billion acquisition of castings specialist Consolidated Precision Products (CPP) to vertically integrate against a key supply-chain bottleneck. However, this report is being compiled just one day after Melius Research downgraded GE Aerospace and four aerospace peers to "Hold" from "Buy," explicitly warning that "several years of robust" commercial aftermarket growth may be ending and cutting its GE price target sharply to $350 from $432 — the single largest cut among the five downgraded names. Combined with a persistent valuation premium (forward P/E around 36–37x versus an industry average near 31x) and a Value Score of "D" cited by one source, the immediate setup is one of genuine, fresh analyst disagreement between a still-strong operational growth story and a real, current concern that the market has priced in more durability than the aftermarket cycle can sustain. A HOLD recommendation reflects this specific, recent downgrade catalyst rather than a change in the underlying long-term operational trajectory, which remains strong on the evidence reviewed.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">GE Aerospace reported Q2 2026 revenue of $12.63 billion (topping forecasts by ~6.9%) and adjusted EPS of $2.02 (beating consensus of $1.86 by ~8.6%), marking a fifth consecutive quarter of 20%+ revenue growth. Operating margin declined 130 basis points to 21.7% despite the strong revenue growth, driven by higher installed engine deliveries, investment in production ramps (including the GE9X for the upcoming Boeing 777-9), and inflation — a margin trend management described as expected, with recovery anticipated post-2028 as headwinds ease. First-half 2026 total engine deliveries rose 31% (LEAP deliveries specifically up 41%), and the company achieved a milestone of nearly zero grounded LEAP-powered aircraft due to engine issues, aided by improved turnaround times. The services backlog reached over $210 billion, with 95% visibility into Q3 2026 spare-parts revenue. Notable new orders included Copa Airlines selecting up to 120 LEAP-1B engines, a Turkish Aerospace F404 engine agreement, and a Leonardo Helicopters CT7 engine deal for the UK Ministry of Defence's New Medium Helicopter program; Chinese airlines also ordered aircraft (including many CFM-powered, GE's joint venture with Safran) during a presidential visit to China. Defense backlog grew to over $30 billion, driven by milestones on the XA102 adaptive-cycle engine and collaborative combat aircraft programs, with the Defense & Propulsion Technologies segment posting a 1.55x book-to-bill ratio for the first half. Management raised full-year 2026 guidance across every major metric: revenue growth to high teens, adjusted EPS to $7.65–$7.85 (up from a prior $7.10–$7.40), operating profit to $10.55–$10.75 billion, and free cash flow to $8.9–$9.2 billion (up $650 million at the high end). On September 8, 2026, GE Aerospace announced an agreement to acquire castings and precision-parts specialist Consolidated Precision Products (CPP) from Warburg Pincus and Berkshire Partners for $11.75 billion, aimed at strengthening vertical integration in a segment (blades, vanes, and other precision turbine parts) that has historically bottlenecked supply; Jefferies called the deal an "impactful move," and one analyst estimated it could be 1.5% accretive to earnings. Most recently, on September 14–15, 2026, Melius Research downgraded GE Aerospace and four other aerospace names (HEICO, Honeywell Aerospace, TransDigm, Woodward) to "Hold" from "Buy," warning that commercial aviation aftermarket growth could slow to the high-single-digit range next year after several exceptionally strong years, and cut its GE Aerospace price target to $350 from $432 — the largest reduction among the group.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Full-year 2026 guidance (as most recently raised) calls for revenue growth in the high-teens percentage range, adjusted EPS of $7.65–$7.85, operating profit of $10.55–$10.75 billion, and free cash flow of $8.9–$9.2 billion. Commercial services revenue growth was upgraded to the low-20s percentage range, and LEAP engine delivery growth was raised to the high-teens (from a prior 15% target). Management's second-half guidance assumes low-double-digit services growth against difficult year-over-year comparisons from a strong 2025, alongside an expectation of returning to modest departures growth after a flattish first half. GE9X program losses are separately expected to roughly double year-over-year in 2026 (already incorporated into guidance) as production ramps ahead of the Boeing 777-9's entry into service.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">GE Aerospace trades at a persistent premium to both the broader industrials market and its direct aerospace peers — a forward P/E around 36–37x versus an industry average near 31x, and versus RTX (~28x) and Textron (~13x) per one comparison — reflecting the market's confidence in GE's record backlog and margin-expansion trajectory. That said, one source's aerospace-sector-specific comparison cited a considerably higher industry average (~82x) with GE trading at a *discount* to that broader sector figure, illustrating how sensitive relative-valuation conclusions are to exactly which peer set and metric are used. The immediate valuation debate has sharpened with Melius Research's September 2026 downgrade, which explicitly frames the current premium as vulnerable if aftermarket growth decelerates as it forecasts; this is a live, unresolved disagreement rather than settled consensus at the time of this report.</p>
+  </section>
+
+  <!-- ============ BUSINESS DESCRIPTION ============ -->
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">GE Aerospace, the remaining entity following General Electric's historic three-way corporate breakup (GE HealthCare spun off in January 2023, GE Vernova spun off in April 2024), designs, develops, manufactures, and services jet and turboprop engines and integrated systems for commercial, military, business, and general aviation aircraft. The company operates through two primary reporting segments — Commercial Engines & Services (CES), which contributes roughly three-quarters of total revenue and includes the design, manufacture, and servicing of jet engines for commercial airframes (including the LEAP engine family produced through the CFM International joint venture with Safran, and widebody engines such as the GEnx and GE9X) — and Defense & Propulsion Technologies (DPT), covering military and defense-related propulsion programs including next-generation adaptive-cycle engines and collaborative combat aircraft technology. The company's brand portfolio includes Avio Aero, Unison, GE Additive, and Dowty Propellers. GE Aerospace's installed base of engines powering the global commercial fleet is the primary long-term driver of its highly profitable, multi-decade aftermarket services business.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Commercial engine deliveries, especially LEAP engines powering Boeing's 737 MAX and Airbus's A320neo family (deliveries up 41% in H1 2026), tied directly to Boeing and Airbus production-rate ramps</li>
+      <li>Aftermarket/services revenue from GE's massive installed engine base (services backlog exceeding $210 billion), including shop visits, spare parts, and long-term service agreements spanning 10–20 years</li>
+      <li>Defense program milestones and order momentum (backlog over $30 billion; 1.55x book-to-bill in H1 2026), driven by next-generation adaptive-cycle engine and collaborative combat aircraft development</li>
+      <li>Widebody engine programs (GEnx, GE9X) supporting new aircraft entries into service, including the upcoming Boeing 777-9</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Investment in production ramps for new engine programs (notably the GE9X ahead of the 777-9's entry into service), which management has flagged as a near-term margin headwind expected to ease post-2028</li>
+      <li>Supply-chain and input-cost inflation, though management reports meaningful progress (material input from priority suppliers up double-digits sequentially and year-over-year via the company's "FLIGHT DECK" operating system)</li>
+      <li>The pending $11.75 billion Consolidated Precision Products acquisition, a significant capital commitment aimed at securing castings/precision-parts supply rather than relying solely on third-party vendors</li>
+      <li>GE9X program losses, expected to roughly double year-over-year in 2026 as the program ramps toward the 777-9 launch</li>
+    </ul>
+  </section>
+
+  <!-- ============ INDUSTRY OVERVIEW & COMPETITIVE POSITIONING ============ -->
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">GE Aerospace operates in the global commercial and defense aerospace engine and systems industry, an oligopolistic market dominated by a small number of major engine manufacturers (GE/CFM, RTX's Pratt & Whitney, Rolls-Royce, and Safran as GE's CFM joint-venture partner) given the extreme capital intensity, certification barriers, and multi-decade product lifecycles involved. The industry has benefited from a multi-year commercial aviation recovery and aftermarket demand surge — described by Melius Research as "several years of robust" growth — alongside sustained increases in global defense spending supporting the Defense & Propulsion Technologies segment. A persistent industry-wide constraint has been supply-chain bottlenecks limiting engine-delivery rates relative to underlying demand (evidenced by GE's own $210 billion-plus backlog and its recent CPP acquisition specifically to address a castings/precision-parts bottleneck).</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Very low — jet engine manufacturing requires decades of accumulated engineering expertise, extraordinarily high certification barriers, and enormous capital investment; the market has remained a stable oligopoly for decades with no realistic new large-scale entrants.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Rising — precision castings, forgings, and specialty components have been a persistent industry-wide bottleneck limiting engine-delivery rates, a dynamic significant enough that GE Aerospace chose to acquire a key supplier (CPP) outright for $11.75 billion rather than continue relying solely on third-party sourcing.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate — airlines and aircraft OEMs (Boeing, Airbus) have some ability to choose between competing engine platforms for new aircraft programs, but once an engine is selected for an airframe program, switching costs are extremely high for the life of that program, and demand currently exceeds GE's supply capacity, giving GE meaningful near-term pricing leverage on new deliveries.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Very low for the core jet-engine business (no viable substitute technology for commercial jet propulsion at scale), though GE's own experimental open-fan "RISE" engine architecture for next-generation aircraft represents a long-duration internal R&amp;D bet whose eventual adoption by aircraft makers remains uncertain per Morningstar.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High within the oligopoly — RTX's Pratt & Whitney competes directly for narrowbody engine share (GTF engine versus LEAP) and has also shown strong commercial aerospace momentum; Safran is both GE's CFM joint-venture partner and, in some engine categories, an independent competitor; Rolls-Royce and Howmet Aerospace (a supply-chain-adjacent peer) round out the competitive set.</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">GE Aerospace's moat is built on an enormous, multi-decade installed base of engines (particularly the ubiquitous CFM56 and its LEAP successor) that generates highly predictable, high-margin aftermarket services revenue over 10–20-year service-agreement horizons — a classic "installed base" moat common to the aerospace engine industry. The company's near-zero grounded-LEAP-aircraft milestone and continuing durability-kit rollouts (extending time-on-wing) both reinforce customer trust and reduce the risk of a competitor displacing GE on future re-engining decisions. The pending CPP acquisition extends this moat by vertically integrating a previously outsourced, bottleneck-prone input. Morningstar specifically frames the bull case as resting on operating leverage as commercial aerospace "fully recovers" and the LEAP aftermarket program "enters its profitable phase," while flagging the speculative, longer-horizon RISE open-fan engine program as a distinct source of both opportunity and technology risk for the 2040s.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major aerospace engine manufacturers and aerospace-and-defense industrials. Figures are approximate and vary meaningfully by source and date — verify against a single consistent data source before use.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Forward P/E</th><th>Notes</th></tr>
+      <tr><td>GE Aerospace</td><td>GE</td><td>~36–37x</td><td>Record $210B+ services backlog; five consecutive 20%+ revenue growth quarters; recently downgraded to Hold by Melius Research</td></tr>
+      <tr><td>RTX Corporation</td><td>RTX</td><td>~28x</td><td>Pratt &amp; Whitney (GTF engine) and Collins Aerospace segments both showing strong aftermarket/OEM momentum; trades at a discount to GE per sources reviewed</td></tr>
+      <tr><td>Textron</td><td>TXT</td><td>~13x</td><td>Cited as a materially cheaper peer in one direct comparison; business aviation and defense exposure differs somewhat from GE's core commercial-engine focus</td></tr>
+      <tr><td>Howmet Aerospace</td><td>HWM</td><td class="placeholder">{{Not independently sourced}}</td><td>Supply-chain-adjacent peer (precision castings/forgings) benefiting from the same commercial-aerospace demand strength as GE, with commercial-aerospace revenue up 13% YoY in one recent quarter cited</td></tr>
+      <tr><td>Safran</td><td>SAFR.PA</td><td class="placeholder">{{Not independently sourced}}</td><td>GE's CFM International joint-venture partner; flagged by one source as a beneficiary of the same China/Boeing order momentum benefiting GE's CFM engines</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ VALUATION ============ -->
+  <section>
+    <h2 class="section-title">Valuation</h2>
+
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified cost of capital assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled — the core valuation question raised by Melius Research's downgrade is precisely whether recent above-trend aftermarket growth rates should be extrapolated into a terminal assumption or normalized downward; this should be modeled as an explicit scenario range}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — recommend an explicit forecast through at least 2028, the point at which management itself has guided margin headwinds (GE9X ramp costs) to ease}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td class="placeholder">{{No third-party DCF-based fair-value estimate was found in the sources reviewed for this summary}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Relative Valuation</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>GE Aerospace</th><th>Peer Reference (RTX / Textron)</th></tr>
+      <tr><td>Forward P/E</td><td>~36–37x</td><td>RTX ~28x; Textron ~13x (both per one direct comparison source)</td></tr>
+      <tr><td>PEG Ratio</td><td>~3.23 (per one source) — above 1.0, suggesting a growth premium not fully offset by the pace of earnings growth in that source's methodology</td><td class="placeholder">{{Not independently sourced for peers}}</td></tr>
+      <tr><td>P/B Ratio</td><td>~16.81 (per one source)</td><td class="placeholder">{{Not independently sourced for peers}}</td></tr>
+      <tr><td>Services Backlog</td><td>&gt;$210 billion</td><td class="placeholder">{{Not independently sourced for peers}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">GE Aerospace's valuation premium relative to RTX and Textron is substantial by several metrics (forward P/E, PEG, P/B), and this premium is precisely what Melius Research's fresh downgrade calls into question — arguing the market has priced in a continuation of exceptionally strong aftermarket growth that may moderate to high-single-digits next year. Countervailing this, GE's operational execution has been genuinely strong (five consecutive 20%+ revenue growth quarters, consecutive guidance raises, record backlog), and the CPP acquisition specifically addresses a supply-side constraint rather than a demand-side one. Given the immediacy of the Melius downgrade (issued the day before this report) and the wide gap between the still-listed ~$405 consensus target and Melius's freshly cut $350 target, readers should treat any single price target cited in this report as provisional and check for a broader, more current consensus reading before forming a firm valuation view.</p>
+  </section>
+
+  <!-- ============ FINANCIAL ANALYSIS ============ -->
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q2 2025 (implied)</th><th>Q2 2026</th><th>FY2026 Guidance</th></tr>
+      <tr><td>Revenue</td><td class="placeholder">{{Implied ~$10.2B based on 24% YoY growth cited by one source}}</td><td>$12.63B (beat estimates by ~6.9%; fifth consecutive 20%+ growth quarter)</td><td>High-teens % growth (raised)</td></tr>
+      <tr><td>Adjusted EPS</td><td class="placeholder">{{Implied lower given the reported beat}}</td><td>$2.02 (beat consensus of $1.86 by ~8.6%)</td><td>$7.65–$7.85 (raised from $7.10–$7.40)</td></tr>
+      <tr><td>Operating Margin</td><td class="placeholder">{{Implied ~23.0% given a cited 130 bps YoY decline}}</td><td>21.7% (−130 bps YoY)</td><td class="placeholder">{{Operating profit guided to $10.55B–$10.75B}}</td></tr>
+      <tr><td>Free Cash Flow (Q2 YoY change)</td><td class="placeholder">{{Implied lower given a cited 43% YoY increase}}</td><td>~$3B (+43% YoY)</td><td>$8.9B–$9.2B (full year, raised by up to $650M at high end)</td></tr>
+      <tr><td>Services Backlog</td><td class="placeholder">{{~$190B at 2025 year-end per one source}}</td><td>&gt;$210B</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Commercial Engine Services Revenue Growth</td><td class="placeholder">{{Not directly comparable}}</td><td>+27–32% YoY (varies slightly by source/period cited)</td><td>Low-20s % growth guided for full year</td></tr>
+    </table>
+
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">GE Aerospace's headline growth metrics are strong and well-corroborated across multiple independent sources (consistent 20%+ revenue growth, EPS beats, backlog growth), which is a positive earnings-quality signal. However, the 130-basis-point operating-margin decline in Q2 2026 — occurring even as revenue grew 24% — is a meaningful detail that headline "beat and raise" framing can obscure; management attributes this specifically to higher installed engine deliveries (which typically carry lower margins than aftermarket services, at least initially), GE9X production-ramp investment, and inflation, with recovery expected only "post-2028." This means near-term margin trajectory is likely to remain under some pressure even as the top-line growth story continues, a nuance investors should model explicitly rather than assuming margin will track revenue growth in lockstep. Additionally, GE9X program losses are expected to roughly double year-over-year in 2026 — a disclosed, incorporated-into-guidance item, but one worth tracking given its potential to grow further as production ramps ahead of the 777-9 launch.</p>
+
+    <h3 class="sub-title">Industry-Specific Ratios</h3>
+    <table class="data-table">
+      <tr><th>Ratio</th><th>Value</th></tr>
+      <tr><td>Services backlog (revenue visibility, 10–20 year contracts)</td><td>&gt;$210 billion</td></tr>
+      <tr><td>Defense backlog</td><td>&gt;$30 billion</td></tr>
+      <tr><td>Defense book-to-bill ratio (H1 2026)</td><td>1.55x</td></tr>
+      <tr><td>LEAP engine delivery growth (H1 2026 YoY)</td><td>+41%</td></tr>
+      <tr><td>Q3 2026 spare-parts revenue visibility</td><td>~95%</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT RISKS ============ -->
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+
+    <div class="risk-item">
+      <span class="risk-tag op">Operational</span>
+      <span>Supply-chain constraints and spare-parts/shop-visit delinquency remain an ongoing operational challenge, with management itself citing supply constraints — not demand — as the key limiting factor on growth. The $11.75 billion CPP acquisition is a direct, capital-intensive response to this risk, but successful integration is not guaranteed. GE9X production-ramp costs (with losses expected to roughly double YoY in 2026) and margin pressure from a higher mix of new (versus aftermarket) engine deliveries are also disclosed near-term operational headwinds.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag fin">Financial</span>
+      <span>GE Aerospace trades at a persistent valuation premium (forward P/E ~36–37x versus peers RTX at ~28x and Textron at ~13x per one comparison, and a PEG ratio above 1.0 per another source), leaving limited room for multiple compression if growth decelerates. Melius Research's newly issued downgrade explicitly targets this exact risk, forecasting commercial aftermarket growth slowing to high-single-digits next year after several exceptionally strong years — a specific, falsifiable near-term risk that had not previously been reflected in the more bullish consensus price targets cited elsewhere in sources reviewed.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag reg">Regulatory</span>
+      <span>Macro and geopolitical risks specifically flagged in sources reviewed include the impact of Middle East conflict and elevated jet fuel prices on global airline departures and financial health (management assumes only flat to low-single-digit departures growth for 2026), and broader U.S.–China trade/aviation-order dynamics, which have both provided upside catalysts (recent Chinese Boeing/CFM orders) and represent a source of policy-driven volatility.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag legal">Legal</span>
+      <span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against GE Aerospace's most recent 10-K legal proceedings disclosure, noting that GE's historical predecessor entity (before the 2023/2024 breakup) has had various legacy legal and pension matters in past years that may still be relevant to GE Aerospace's disclosures.}}</span>
+    </div>
+
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or disclosed material weaknesses in internal controls were identified in the sources reviewed for this summary — verify directly against GE Aerospace's most recent 10-K/10-Q auditor opinion before relying on this.}}</p>
+  </section>
+
+  <!-- ============ ESG ============ -->
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental">
+        <h4>Environmental</h4>
+        <ul class="placeholder">
+          <li>{{ESG_ENV — GE Aerospace's experimental open-fan "RISE" engine architecture is explicitly framed by the company and Morningstar as a next-generation, more fuel-efficient design for the 2040s, representing a long-horizon technology bet with potential emissions-reduction implications for commercial aviation if adopted by aircraft makers; no specific current emissions targets, sustainable-aviation-fuel commitments, or detailed sustainability metrics were independently sourced in this summary — recommend reviewing GE Aerospace's own sustainability disclosures directly}}</li>
+        </ul>
+      </div>
+      <div class="esg-card social">
+        <h4>Social</h4>
+        <ul class="placeholder">
+          <li>{{ESG_SOC — no specific labor standards, workforce diversity, or community-relations data were independently sourced in this summary}}</li>
+        </ul>
+      </div>
+      <div class="esg-card governance">
+        <h4>Governance</h4>
+        <ul>
+          <li>GE Aerospace operates under CEO Larry Culp, who led the broader General Electric conglomerate through its historic three-way breakup (GE HealthCare in January 2023, GE Vernova in April 2024) before continuing to lead the remaining aerospace entity — a leadership continuity point that may be viewed positively given the scale and complexity of that corporate restructuring</li>
+          <li class="placeholder">{{ESG_GOV — board composition and executive compensation structure not sourced beyond the above in this summary}}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER / DISCLOSURES ============ -->
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 15, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party financial data sources (Investing.com, TipRanks, CNN, Kraken, StockAnalysis.com, Morningstar, MarketBeat, Zacks/Yahoo Finance, Leeham News and Analysis, company earnings materials and SEC filings, and various financial media) that may be delayed, inconsistent, or subject to revision. This report was compiled the day after Melius Research issued a notable downgrade (GE Aerospace and four peers cut to "Hold" from "Buy," GE's price target cut to $350 from $432) — given the recency of this development, consensus price-target and rating figures in this report should be treated as unusually time-sensitive and re-verified against a live, updated data source before use. All figures should also be independently verified against primary sources (GE Aerospace's 10-K/10-Q filings and investor relations disclosures) before being used for any actual investment decision. This is not a research report from a registered investment adviser or broker-dealer, does not constitute investment advice, and should not be relied upon as such.
+  </footer>
+
+</div>
+</body>
+</html>

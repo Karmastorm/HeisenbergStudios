@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Reference Report — PXD</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .alert-box { background:#fff7e6; border-left:4px solid #b8860b; padding:14px 18px; margin-bottom:20px; font-size:14.5px; font-family:Arial, Helvetica, sans-serif; }
+  .alert-box .alert-label { font-size:11px; text-transform:uppercase; letter-spacing:1px; color:#b8860b; font-weight:bold; display:block; margin-bottom:6px; }
+  .placeholder { color:#8a8fa3; font-style:italic; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Pioneer Natural Resources</h1>
+      <div class="ticker-line">PXD &nbsp;|&nbsp; Formerly NYSE &nbsp;|&nbsp; Energy / Oil &amp; Gas Exploration &amp; Production</div>
+    </div>
+    <div class="report-date">September 17, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Status</span><span class="value" style="color:var(--muted); font-size:16px;">DELISTED — ACQUIRED</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Acquirer</span><span class="value">ExxonMobil (XOM)</span></div>
+      <div class="reco-stat"><span class="label">Deal Announced</span><span class="value">October 2023</span></div>
+      <div class="reco-stat"><span class="label">Deal Completed</span><span class="value">May 3, 2024</span></div>
+      <div class="reco-stat"><span class="label">Consideration</span><span class="value">All-stock, ~$59.5B enterprise value</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">PXD (no longer trading)</td></tr>
+      <tr><td class="k">Former Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Energy</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Oil &amp; Gas Exploration &amp; Production (Permian Basin)</td></tr>
+      <tr><td class="k">Current Status</td><td class="v">Fully absorbed into ExxonMobil; PXD shares no longer exist</td></tr>
+    </table>
+  </section>
+
+  <div class="alert-box">
+    <span class="alert-label">Why there is no BUY/HOLD/SELL rating here</span>
+    Pioneer Natural Resources (PXD) was acquired by ExxonMobil in an all-stock transaction that closed on May 3, 2024. PXD shareholders received ExxonMobil (XOM) shares in exchange for their PXD stock, and PXD common stock was delisted from the NYSE and ceased independent trading upon deal completion. Because there is no longer a tradable PXD security, a standard equity research recommendation (Buy/Hold/Sell, price target, valuation) does not apply. This report instead summarizes the deal mechanics and points to the relevant successor tickers for anyone researching this name today.
+  </div>
+
+  <section>
+    <h2 class="section-title">Deal Summary</h2>
+    <p class="body-text">On October 11, 2023, ExxonMobil announced a definitive agreement to acquire Pioneer Natural Resources in an all-stock transaction valued at approximately $59.5 billion (enterprise value, including net debt). Under the terms of the deal, each share of PXD common stock was exchanged for 2.3234 shares of ExxonMobil common stock at closing. The transaction — one of the largest in the U.S. oil and gas sector in recent years — significantly expanded ExxonMobil's footprint in the Permian Basin, combining Pioneer's roughly 850,000 net acres in the Midland Basin with ExxonMobil's existing Permian position to create the largest unconventional resource holder in the basin. The deal closed on May 3, 2024, following regulatory clearance from the U.S. Federal Trade Commission (which required, as a condition, that Pioneer's outgoing CEO not join ExxonMobil's board, addressing antitrust concerns related to alleged coordination with OPEC on production levels). Upon closing, PXD shares were converted into XOM shares and PXD ceased to exist as an independent public company.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Where to Look Instead</h2>
+    <ul class="bullet-list">
+      <li><strong>ExxonMobil (XOM)</strong> — the acquiring company; Pioneer's Permian Basin assets are now part of XOM's upstream portfolio. See the separate XOM report in this series for a current equity research view on ExxonMobil, including analysis of the combined post-acquisition Permian position.</li>
+      <li>For historical PXD financial and operating data prior to the May 2024 close, refer to Pioneer Natural Resources' final 10-K and 10-Q filings on SEC EDGAR, or ExxonMobil's subsequent disclosures regarding the acquired Permian Basin asset base.</li>
+      <li>Investors seeking comparable pure-play Permian Basin exposure today may also consider other large-cap E&amp;P names with significant Permian acreage, such as ConocoPhillips (COP) or Occidental Petroleum (OXY) — see the separate COP and OXY reports in this series.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 17, 2026 — for illustrative/educational purposes only.</div>
+    This is a reference report, not an equity research recommendation: Pioneer Natural Resources (PXD) no longer trades as an independent public company following its acquisition by ExxonMobil, completed May 3, 2024. Deal terms and dates should be independently verified against ExxonMobil's and Pioneer's SEC filings before use. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

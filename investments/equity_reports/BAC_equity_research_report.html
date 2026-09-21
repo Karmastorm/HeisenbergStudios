@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — BAC</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  .placeholder { color:#8a8fa3; font-style:italic; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Bank of America Corporation</h1>
+      <div class="ticker-line">BAC &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Financials / Diversified Banks</div>
+    </div>
+    <div class="report-date">September 18, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#1e7e34;">BUY</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">$58.18</span></div>
+      <div class="reco-stat"><span class="label">Target Price</span><span class="value">$68.86 (avg.)</span></div>
+      <div class="reco-stat"><span class="label">Market Cap</span><span class="value">$406.8B</span></div>
+      <div class="reco-stat"><span class="label">Implied Upside</span><span class="value">~+18.4%</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">BAC</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Financials</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Diversified Banks</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$46.12 – $65.23</td></tr>
+      <tr><td class="k">Consensus Rating</td><td class="v">Buy (24 analysts: 15 Strong Buy, 5 Buy, 4 Hold)</td></tr>
+      <tr><td class="k">TTM Revenue / Net Income</td><td class="v">$113.93 billion / $32.13 billion</td></tr>
+      <tr><td class="k">EPS (TTM)</td><td class="v">$4.33 (+27.7% YoY)</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Bank of America posted TTM net income of $32.13 billion (up 20.4% year-over-year) on revenue of $113.93 billion (up 9.3%), with EPS growth of 27.7% reflecting strong operating leverage. The rating distribution is decisively bullish: 20 of 24 analysts (83%) rate the stock Buy or Strong Buy, with zero Sell ratings, and the average price target of $68.86 implies approximately 18.4% upside from the current price of $58.18. This is among the more constructive setups within the major U.S. banks covered in this series. We rate BAC a BUY, supported by strong earnings momentum, a decisively bullish analyst distribution, and double-digit implied upside to target.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Bank of America's trailing-twelve-month results showed revenue of $113.93 billion (up 9.3% year-over-year), net income of $32.13 billion (up 20.4%), and EPS of $4.33 (up 27.7%), reflecting continued momentum across its consumer banking, global wealth and investment management, global banking, and global markets segments. The stock trades near the upper half of its 52-week range of $46.12–$65.23.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text placeholder">{{No specific forward-quarter or full-year 2026 EPS guidance was independently sourced for this report — next earnings date reported as October 14, 2026; recommend reviewing management's most recent guidance commentary directly.}}</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Consensus rating is Buy across 24 analysts (15 Strong Buy, 5 Buy, 4 Hold, 0 Sell), representing a decisively bullish 83% Buy/Strong Buy distribution. The average price target of $68.86 (range $62–$76) implies approximately 18.4% upside, with the trailing P/E of 13.44x and forward P/E of 11.74x both below JPMorgan's comparable multiples.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Bank of America is one of the largest diversified financial institutions in the United States, operating across Consumer Banking, Global Wealth &amp; Investment Management, Global Banking, and Global Markets segments, serving individual consumers, small and middle-market businesses, and large corporations globally.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Net interest income from its large consumer deposit and lending franchise</li>
+      <li>Wealth management fee income through Merrill and Bank of America Private Bank</li>
+      <li>Global Markets trading and Global Banking investment banking fee revenue</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Compensation expense across its large employee base and wealth management advisor network</li>
+      <li class="placeholder">{{Specific technology and credit-provisioning expense figures not independently sourced for this report}}</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Bank of America competes in the U.S. diversified banking industry against JPMorgan Chase, Wells Fargo, and Citigroup (see separate JPM, WFC, and C reports in this series).</p>
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — high regulatory capital requirements and scale advantages create significant barriers to entry.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Low-to-Moderate — funding costs are influenced by broader interest rate policy.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate — corporate and institutional clients can negotiate terms, though switching costs are meaningful.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate — fintech and non-bank lenders present competitive alternatives for certain products.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — intense competition among large diversified banks for market share across all business lines.</td></tr>
+    </table>
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Bank of America's moat rests on its scale as one of the largest U.S. consumer banks, its Merrill wealth management franchise, and its broad geographic branch footprint supporting low-cost deposit gathering.</p>
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major U.S. diversified and investment banks. See separate JPM, WFC, C, GS, and MS reports in this series.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>Bank of America</td><td>BAC</td><td>Most bullish rating distribution among major banks covered (83% Buy+)</td></tr>
+      <tr><td>JPMorgan Chase</td><td>JPM</td><td>See separate JPM report in this series</td></tr>
+      <tr><td>Wells Fargo</td><td>WFC</td><td>See separate WFC report in this series</td></tr>
+      <tr><td>Citigroup</td><td>C</td><td>See separate C report in this series</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — bank valuation is typically approached via P/E, P/TBV, and dividend discount methods rather than standard DCF}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>Average sell-side price target of $68.86 (24 analysts) as of the report date</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">We rate BAC a <strong>BUY</strong>. Strong EPS growth, a decisively bullish 83% Buy/Strong Buy analyst distribution, and ~18% implied upside to target, combined with below-peer valuation multiples, support a constructive stance.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>TTM</th></tr>
+      <tr><td>Revenue</td><td>$113.93 billion (+9.3%)</td></tr>
+      <tr><td>Net Income</td><td>$32.13 billion (+20.4%)</td></tr>
+      <tr><td>EPS</td><td>$4.33 (+27.7%)</td></tr>
+      <tr><td>P/E (TTM) / Forward P/E</td><td>13.44x / 11.74x</td></tr>
+      <tr><td>Dividend Yield</td><td>2.20% ($1.28/share)</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text placeholder">{{Detailed earnings-quality items such as reserve build/release and trading revenue volatility were not independently sourced for this report — recommend reviewing Bank of America's 10-K and quarterly earnings supplements for detail.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>Earnings are sensitive to interest rate movements and credit cycle conditions, which can affect net interest margin and loan loss provisioning.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>As a systemically important financial institution, BAC is subject to stringent capital and liquidity requirements that can constrain capital return flexibility during periods of stress.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span class="placeholder">{{Banking regulatory policy (capital requirements, stress testing, consumer protection rules) represents an ongoing industry-wide consideration; specific current developments not independently verified for this report.}}</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against Bank of America's most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in the sources reviewed — verify directly against Bank of America's 10-K/10-Q auditor opinion.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul class="placeholder"><li>{{ESG_ENV — sustainable finance commitments and operational emissions targets not independently sourced}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul class="placeholder"><li>{{ESG_SOC — community reinvestment and workforce program specifics not independently sourced}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul class="placeholder"><li>{{ESG_GOV — board composition and diversity not independently sourced}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 18, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (financial data aggregators and sell-side analyst rating summaries) that may be delayed or inconsistent. All figures should be independently verified against Bank of America's 10-K/10-Q filings and live market data before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

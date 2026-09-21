@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — BLK</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  .placeholder { color:#8a8fa3; font-style:italic; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">BlackRock, Inc.</h1>
+      <div class="ticker-line">BLK &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Financials / Asset Management &amp; Custody Banks</div>
+    </div>
+    <div class="report-date">September 18, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#1e7e34;">BUY</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">$1,053.96</span></div>
+      <div class="reco-stat"><span class="label">Target Price</span><span class="value">$1,323 (avg.)</span></div>
+      <div class="reco-stat"><span class="label">Market Cap</span><span class="value">$171.2B</span></div>
+      <div class="reco-stat"><span class="label">Implied Upside</span><span class="value">~+25.6%</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">BLK</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Financials</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Asset Management &amp; Custody Banks</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$917.39 – $1,219.94</td></tr>
+      <tr><td class="k">Consensus Rating</td><td class="v">Buy (17 analysts: 10 Strong Buy, 5 Buy, 2 Hold)</td></tr>
+      <tr><td class="k">TTM Revenue / Net Income</td><td class="v">$27.30 billion / $6.58 billion</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      BlackRock, the world's largest asset manager, reported TTM revenue of $27.30 billion (up 26.5% year-over-year), though net income growth was more modest at $6.58 billion (up 2.7%), reflecting the difference between strong fee-generating asset growth and net income normalization following prior-year comparisons. The stock currently trades below the midpoint of its wide 52-week range ($917.39–$1,219.94) at $1,053.96. The analyst rating distribution is decisively bullish, with 15 of 17 analysts (88%) rating Buy or Strong Buy and zero Sell ratings, and the average price target of $1,323 implies substantial upside of roughly 25.6%. We rate BLK a BUY, supported by strong revenue growth, an overwhelmingly bullish analyst base, and a share price sitting meaningfully below its 52-week high.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">BlackRock's trailing-twelve-month results showed revenue of $27.30 billion (up 26.5% year-over-year) and net income of $6.58 billion (up 2.7%), reflecting continued growth in assets under management across its institutional, retail, and iShares ETF platforms, even as net income growth lagged revenue growth. The stock has traded within a wide 52-week range of $917.39 to $1,219.94 and currently sits below the midpoint of that range.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text placeholder">{{No specific forward-quarter or full-year 2026 EPS guidance was independently sourced for this report — recommend reviewing BlackRock's most recent earnings call transcript for management's outlook on net flows and fee rate trends.}}</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Consensus rating is Buy across 17 analysts (10 Strong Buy, 5 Buy, 2 Hold, 0 Sell), an 88% Buy/Strong Buy majority — among the most bullish distributions across the Financials names covered in this series. The average price target of $1,323 (range $1,190–$1,488) implies approximately 25.6% upside from the current price of $1,053.96.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">BlackRock is the world's largest asset manager, providing investment management, risk management, and advisory services to institutional and individual investors globally through active and index strategies, including its industry-leading iShares ETF platform, as well as its Aladdin technology and risk management platform licensed to other financial institutions.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Investment advisory and administration fees tied to assets under management (AUM), which benefit from both market appreciation and net client inflows</li>
+      <li>iShares ETF platform, a leading and fast-growing segment of BlackRock's overall AUM base</li>
+      <li>Technology services revenue from the Aladdin platform, licensed to other institutional investors</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Compensation and benefits expense across its global investment management and technology workforce</li>
+      <li class="placeholder">{{Specific technology infrastructure and acquisition-related expense figures not independently sourced for this report}}</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">BlackRock competes in the global asset management industry against other large traditional and alternative asset managers. Its scale as the world's largest asset manager, combined with its leading iShares ETF platform and the Aladdin technology franchise, differentiates it from most pure-play traditional asset managers.</p>
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low-to-Moderate — scale advantages in index/ETF products are significant, though new entrants can compete in niche active strategies.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Low — asset managers do not depend heavily on external suppliers for their core investment management function.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate-to-High — institutional clients can negotiate fees, and fee compression has been a persistent industry trend, particularly in passive/index products.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate — lower-cost index fund competitors and robo-advisors present ongoing fee-compression pressure.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — intense competition among large global asset managers for institutional and retail assets under management.</td></tr>
+    </table>
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">BlackRock's moat rests on its unmatched scale as the world's largest asset manager, its leading iShares ETF platform which benefits from strong network effects and liquidity advantages, and its Aladdin risk management technology platform, which creates additional switching costs and a differentiated revenue stream beyond traditional asset management fees.</p>
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major U.S. financial services and asset management companies. See separate JPM, BAC, WFC, C, GS, MS, AXP, SPGI, and SCHW reports in this series.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>BlackRock</td><td>BLK</td><td>World's largest asset manager; 88% Buy+ rating, among the most bullish in this series</td></tr>
+      <tr><td>S&amp;P Global</td><td>SPGI</td><td>See separate SPGI report in this series</td></tr>
+      <tr><td>Charles Schwab</td><td>SCHW</td><td>See separate SCHW report in this series</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — asset manager valuation is typically approached via P/E and AUM/fee-based frameworks rather than standard DCF}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>Average sell-side price target of $1,323 (17 analysts) as of the report date</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">We rate BLK a <strong>BUY</strong>. Strong revenue growth driven by AUM expansion, an overwhelmingly bullish 88% Buy/Strong Buy analyst distribution, and a share price sitting well below its 52-week high with ~26% implied upside to target all support a constructive stance.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>TTM</th></tr>
+      <tr><td>Revenue</td><td>$27.30 billion (+26.5%)</td></tr>
+      <tr><td>Net Income</td><td>$6.58 billion (+2.7%)</td></tr>
+      <tr><td>Market Capitalization</td><td>$171.24 billion (-1.2%)</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">The notable divergence between strong revenue growth (+26.5%) and modest net income growth (+2.7%) warrants closer examination — potentially reflecting acquisition-related integration costs, a shifting revenue mix toward lower-margin products, or one-time items not independently identified in the sources reviewed for this report. Recommend reviewing BlackRock's segment-level margin detail directly.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>Revenue is directly tied to assets under management, which fluctuate with both market performance and net client flows; a market downturn would directly reduce fee revenue.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>The gap between strong revenue growth and modest net income growth over the TTM period warrants monitoring for margin compression or one-time cost items.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span class="placeholder">{{Asset management regulatory policy (fiduciary standards, ETF regulation, index provider scrutiny) represents an ongoing industry-wide consideration; specific current developments not independently verified for this report.}}</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against BlackRock's most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in the sources reviewed — verify directly against BlackRock's 10-K/10-Q auditor opinion. The gap between revenue and net income growth rates flagged above should be independently reconciled before this report is used for any investment decision.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul><li>BlackRock offers a range of sustainable and ESG-focused investment products as part of its broader product lineup</li><li class="placeholder">{{ESG_ENV — specific emissions or sustainable-investing target details not independently sourced}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul class="placeholder"><li>{{ESG_SOC — community and workforce program specifics not independently sourced}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul><li>As one of the largest holders of shares across global public companies via its index funds, BlackRock's proxy voting and stewardship practices receive significant investor and regulatory attention</li><li class="placeholder">{{ESG_GOV — board composition and diversity not independently sourced}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 18, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (financial data aggregators and sell-side analyst rating summaries) that may be delayed or inconsistent, including a noted gap between revenue and net income growth rates. All figures should be independently verified against BlackRock's 10-K/10-Q filings and live market data before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

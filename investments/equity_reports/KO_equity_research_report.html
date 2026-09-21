@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — KO</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">The Coca-Cola Company</h1>
+      <div class="ticker-line">KO &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Consumer Staples / Non-Alcoholic Beverages</div>
+    </div>
+    <div class="report-date">September 15, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#b8860b;">HOLD</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">~$91 (one recent source)</span></div>
+      <div class="reco-stat"><span class="label">P/E Ratio</span><span class="value">~25.3x</span></div>
+      <div class="reco-stat"><span class="label">2026 YTD Performance</span><span class="value">+29% (one source)</span></div>
+      <div class="reco-stat"><span class="label">FY2026 EPS Guidance</span><span class="value">+9–10% comparable growth</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">KO</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Consumer Staples</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Non-Alcoholic Beverages</td></tr>
+      <tr><td class="k">P/E Ratio</td><td class="v">~25.3x (one source)</td></tr>
+      <tr><td class="k">Dividend</td><td class="v">$0.53/quarter (ex-date Sept. 15, 2026)</td></tr>
+      <tr><td class="k">2026 YTD Return</td><td class="v">+29% (one source, notably outperforming rival PepsiCo, described as having "struggled recently")</td></tr>
+      <tr><td class="k">Comparable Operating Margin (Q2 2026)</td><td class="v">35.6% (up from 34.7% YoY)</td></tr>
+      <tr><td class="k">CEO / Headquarters</td><td class="v">Henrique Braun (CEO); headquartered in Atlanta, Georgia</td></tr>
+      <tr><td class="k">One Analyst Model's Fair-Value Range</td><td class="v">$71–$101 (blended range, one quantitative-model source, calculated Aug. 22, 2026); base case ~$90 vs. a price of $91.10 at that time — implying an essentially fully-valued position under that specific model</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted); margin-top:-14px;">Note: this quantitative fair-value model (A.L. Capital Advisory) is a disclosed rules-based/qualitative-overlay tool, not a consensus Wall Street target, and is presented here as one data point among several rather than a definitive valuation.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Coca-Cola has delivered an exceptionally strong 2026, with the company raising full-year guidance in consecutive quarters — Q1 organic revenue grew 10% (well above the original 4-5% full-year guidance range), and Q2 followed with 6-7% organic revenue growth (sources vary slightly) and Trademark Coca-Cola volume growth of 5%, its strongest in 17 years excluding COVID recovery, driven substantially by a highly effective FIFA World Cup marketing activation (75 stops in 30 countries, record incidence rates, 25 million first-party data points collected). Every reporting segment posted volume growth in Q2, the company gained value and volume share in North America, Latin America, and EMEA, and management raised full-year comparable EPS guidance to 9-10% growth (from an original 8-9%, itself already raised from a prior range) alongside organic revenue growth guidance of approximately 5% (the high end of the original 4-5% range). This operational strength stands in explicit, repeatedly-noted contrast to rival PepsiCo, which has "struggled recently" and specifically flagged tightening U.S. consumer budgets in the same period (see separate PEP report in this series) — a genuine, company-specific execution divergence rather than a category-wide trend. However, this operational excellence is now substantially reflected in the stock price: shares are up 29% year-to-date (one source), trading at a P/E near 25.3x, and at least one quantitative fair-value model placed the stock almost exactly at its calculated fair value (a -1.55% "margin of safety") as of a late-August 2026 snapshot. Given the combination of genuinely excellent, well-documented operational execution and a valuation that has already re-rated substantially to reflect it, this is a HOLD: Coca-Cola remains a high-quality core consumer-staples holding, but the current price appears to already credit the company for its 2026 outperformance, leaving less obvious near-term upside than the strength of the underlying business alone might suggest.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Coca-Cola's Q1 2026 results (reported around late April 2026) showed comparable EPS of $0.86 (+18% YoY from $0.73) on revenue of $12.5 billion (+11% YoY), with organic revenue growth of 10% and unit case volume up 3% across all operating segments — results strong enough to prompt an immediate raise in full-year EPS guidance to 8-9% growth. Q2 2026 results (reported July 28, 2026) extended this momentum: net revenues grew 7% to $13.4 billion (beating the ~$13.16-13.38 billion consensus range cited across sources), organic revenue grew 6-7% (sources cite both figures), comparable EPS grew 11% to $0.97 (beating estimates), and GAAP EPS grew 16% to $1.03. Global unit case volume increased 5% with every reporting segment posting volume growth; Trademark Coca-Cola volume specifically grew 5% (the strongest in 17 years excluding COVID-recovery periods), Powerade volume grew 8% globally, and North America volume grew 3%. The company gained value and volume share in North America, Latin America, and EMEA. CEO Henrique Braun specifically credited a successful FIFA World Cup activation (Powerade present during hydration breaks, broader brand visibility) with driving record incidence rates and 25 million first-party consumer data points collected. Comparable operating margin expanded to 35.6% (from 34.7% a year earlier), driven by organic revenue growth, lower operating expenses, and currency tailwinds, partially offset by higher input costs and increased marketing investment. Management raised full-year 2026 guidance to organic revenue growth of approximately 5% (the high end of the original 4-5% range) and comparable EPS growth of 9-10% (up from a prior 8-9% range, itself already an increase from the original guidance) — the second consecutive quarter of guidance raises. Shares rose more than 7% on the earnings day, hitting a record high. Notable operational details included continued ramp-up of fairlife protein-milk production capacity at the company's Webster facility, and management's acknowledgment of a "dynamic" and "uneven" global consumer environment, with low-income consumers under pressure in many markets even as Coca-Cola's own results remained strong — a contrast management did not fully explain but which likely reflects Coca-Cola's premium brand positioning and successful revenue-growth-management/affordability balancing. The pending sale of Coca-Cola Beverages Africa is expected to close in H2 2026, creating a 2-3% headwind to comparable net revenues but mechanically lifting consolidated margins. Comparable operating income declined in Asia Pacific specifically due to investments in expanding the company's consumer base there, and geopolitical conflicts were noted as continuing to disrupt operations in Eurasia and the Middle East.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Full-year 2026 guidance (as raised following Q2) calls for organic revenue growth of approximately 5% and comparable EPS growth of 9-10% (versus $3.00 comparable EPS in 2025), with comparable currency-neutral EPS growth guided at 7-8%. The pending Coca-Cola Beverages Africa divestiture, expected to close in the second half of 2026, will create a modeled 2-3% headwind to comparable net revenues going forward while mechanically improving consolidated margins — a structural mix shift analysts should build into forward models rather than treating as a one-time item.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Coca-Cola trades at a P/E near 25.3x following a 29% year-to-date share-price gain (one source), a premium multiple that reflects the market's enthusiastic response to two consecutive quarters of guidance raises and genuinely strong, broad-based volume growth. One quantitative fair-value model (A.L. Capital Advisory, calculated August 22, 2026) placed the stock's blended fair-value range at $71-$101 with a base case near $90 against a then-price of $91.10 — implying an approximately -1.55% to -2% "margin of safety," or essentially fair value to slightly overvalued under that specific model's assumptions. This is a useful counterweight to the purely momentum-driven "record high" framing seen in some sources: Coca-Cola's operational execution has been excellent, but the stock's re-rating appears to have kept reasonable pace with it rather than lagging behind, unlike the valuation-gap setups seen in several other names in this report series.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">The Coca-Cola Company, headquartered in Atlanta, Georgia, manufactures and sells non-alcoholic beverages in the United States and internationally through a concentrate/syrup manufacturing and licensing model, in which the company sells concentrates and syrups to authorized bottling partners who manufacture, package, and distribute finished branded beverages. The company's portfolio spans sparkling soft drinks (Coca-Cola, Sprite, Fanta), water and hydration (Powerade, Smartwater), juice and dairy (including fairlife protein milk, a fast-growing recent addition), coffee and tea, and energy drinks. Coca-Cola's revenue recognition is influenced by both unit case volume (a demand-strip-out metric excluding pricing effects) and concentrate sales/price-mix, and the company's Q2 2026 results specifically noted concentrate shipments lagging unit case volume by one point due to shipment timing — a distinction analysts should track separately from underlying demand trends.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Trademark Coca-Cola volume growth (5% in Q2 2026, the strongest in 17 years excluding COVID recovery), driven substantially by the FIFA World Cup marketing activation</li>
+      <li>Powerade global volume growth (+8% in Q2 2026), also benefiting from World Cup hydration-break visibility</li>
+      <li>fairlife protein-milk capacity expansion (new Webster facility production ramping), a genuine incremental growth category within the broader portfolio</li>
+      <li>Value and volume share gains in North America, Latin America, and EMEA, evidencing successful revenue-growth-management and affordability-balancing strategies even amid an "uneven" global consumer environment</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Increased marketing investment, partly tied to the timing and scale of the FIFA World Cup activation (75 stops in 30 countries) — a deliberate, high-ROI investment per the results achieved, but a genuine cost increase nonetheless</li>
+      <li>Higher input costs, partially offsetting comparable operating margin expansion</li>
+      <li>Investments in expanding the consumer base in Asia Pacific specifically, which caused comparable operating income to decline in that region even as volume/share trends improved</li>
+      <li>Geopolitical disruption in Eurasia and the Middle East, an ongoing, disclosed operational headwind</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Coca-Cola competes in the global non-alcoholic ready-to-drink (NARTD) beverage industry, most directly against PepsiCo (see separate PEP report in this series) across carbonated soft drinks, hydration, juice, and increasingly diversified adjacent categories. The most notable recent industry dynamic is a genuine performance divergence between the two dominant players: Coca-Cola gained value share in total NARTD beverages and posted its strongest volume growth in 17 years, while PepsiCo specifically flagged tightening U.S. consumer budgets weighing on sales in the same period — evidence that execution and brand strength, not merely category-wide tailwinds, are driving Coca-Cola's outperformance.</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — Coca-Cola's global bottling-partner network, brand recognition, and distribution scale represent enormous barriers to entry at comparable scale.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — higher input costs were specifically disclosed as a margin headwind in Q2 2026, partially offset by currency tailwinds and operating leverage.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate — an "uneven" and "dynamic" global consumer environment with low-income consumers under pressure in many markets gives price-sensitive consumers some leverage, though Coca-Cola's brand strength and affordability initiatives appear to be successfully managing this tension based on Q2 2026 results.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate — PepsiCo and numerous regional/private-label beverage competitors offer substitutes across most categories, though Coca-Cola's brand loyalty (particularly in Trademark Coca-Cola) appears to be strengthening rather than weakening based on recent volume trends.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High but currently favoring Coca-Cola — PepsiCo is the primary direct competitor, and the two companies' recent divergent performance (Coca-Cola's guidance raises vs. PepsiCo's flagged U.S. consumer-budget pressure) is a notable, currently favorable competitive dynamic for KO.</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Coca-Cola's moat rests on arguably the single most recognized consumer brand globally, a vast bottling-partner distribution network built over more than a century, and demonstrated marketing execution capability (the FIFA World Cup activation results are a clear, recent example). The company's asset-light concentrate/syrup business model also generates unusually high margins and returns on capital relative to a typical consumer packaged goods company, since bottling partners bear much of the capital-intensive manufacturing and distribution infrastructure.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major global beverage companies. See separate PEP report in this series.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>Coca-Cola</td><td>KO</td><td>P/E ~25.3x; +29% YTD 2026; two consecutive quarters of raised guidance</td></tr>
+      <tr><td>PepsiCo</td><td>PEP</td><td>See separate PEP report in this series — specifically flagged tightening U.S. consumer budgets in the comparable period</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — recommend explicit modeling of the Coca-Cola Beverages Africa divestiture's structural impact on the revenue/margin mix separately from organic growth trends}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>One quantitative model (A.L. Capital Advisory) calculated a blended fair-value range of $71–$101 with a base case near $90 as of August 22, 2026, against a then-price of $91.10 — implying the stock was trading essentially at, or fractionally above, that model's calculated fair value</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">Coca-Cola's 2026 performance is genuinely excellent and well-documented across multiple independent sources, but the stock's 29% year-to-date gain and P/E near 25.3x suggest the market has already substantially credited the company for this outperformance. Unlike several other names in this report series where strong operational results coincided with a still-discounted share price, Coca-Cola's valuation and fundamentals appear to have moved roughly in tandem in 2026 — supporting a HOLD rather than a fresh BUY at current levels, while still representing a high-quality core holding for existing investors.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q1 2026</th><th>Q2 2026</th><th>FY2026 Guidance</th></tr>
+      <tr><td>Net Revenue</td><td>$12.5B (+11% YoY)</td><td>$13.4B (+7% YoY)</td><td>Organic revenue growth ~5%</td></tr>
+      <tr><td>Organic Revenue Growth</td><td>+10%</td><td>+6–7% (source-dependent)</td><td>~5% (high end of prior 4–5% range)</td></tr>
+      <tr><td>Comparable EPS</td><td>$0.86 (+18% YoY)</td><td>$0.97 (+11% YoY, beat est.)</td><td>+9–10% growth vs. $3.00 in 2025</td></tr>
+      <tr><td>GAAP EPS</td><td class="placeholder">{{Not directly sourced}}</td><td>$1.03 (+16% YoY)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Unit Case Volume Growth</td><td>+3% (all segments)</td><td>+5% (all segments)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Comparable Operating Margin</td><td class="placeholder">{{Not directly sourced}}</td><td>35.6% (vs. 34.7% YoY)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">Coca-Cola's Q2 2026 results were unusually well-corroborated and clean across sources, with GAAP EPS growth (+16%) actually exceeding comparable/adjusted EPS growth (+11%) — a favorable and relatively unusual earnings-quality signal, since it typically indicates fewer one-time GAAP-inflating items rather than more (the reverse of the dynamic seen in several other names in this report series, such as GOOG, META, and AMZN, where GAAP figures were inflated by one-time gains). Concentrate shipments lagging unit case volume by one point due to shipment timing is a disclosed, temporary technical item that should reverse rather than indicate genuine demand softness. The pending Coca-Cola Beverages Africa divestiture (closing H2 2026) will mechanically alter the revenue base and margin profile going forward and should be modeled as a structural mix shift.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>Geopolitical conflicts continue to disrupt operations in Eurasia and the Middle East. Asia Pacific comparable operating income declined due to deliberate consumer-base-expansion investment — a near-term margin trade-off for longer-term growth that has not yet fully paid off.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>The pending Coca-Cola Beverages Africa sale creates a disclosed 2-3% headwind to comparable net revenues; higher input costs and increased marketing investment have partially offset margin expansion even amid strong organic growth.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span class="placeholder">{{No specific major regulatory risk was identified in the sources reviewed for this summary beyond general beverage-industry considerations (sugar taxes, packaging regulation in various jurisdictions).}}</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against Coca-Cola's most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in sources reviewed — verify directly against Coca-Cola's 10-K/10-Q auditor opinion. One source flagged "6 Warning Signs" for a differently-ticked company (NWBI) in a section discussing KO — this appears to be a data-source labeling error and should be disregarded; verify any GuruFocus-sourced warning signs directly against a KO-specific query.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul class="placeholder"><li>{{ESG_ENV — not independently sourced in this summary; beverage packaging and water-use sustainability are commonly discussed industry topics worth reviewing directly in Coca-Cola's own disclosures}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul class="placeholder"><li>{{ESG_SOC — not independently sourced in this summary}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul><li>Management's explicit, repeated acknowledgment of an "uneven" and "dynamic" global consumer environment — even while reporting strong results — reflects a transparent disclosure approach rather than overselling the company's own performance</li><li class="placeholder">{{ESG_GOV — board composition and executive compensation structure not sourced beyond the above}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 15, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (Yahoo Finance, CNBC, StockAnalysis.com, TIKR.com, Seeking Alpha, A.L. Capital Advisory, and Coca-Cola's own investor relations materials) that may be delayed or inconsistent. All figures should be independently verified against Coca-Cola's 10-K/10-Q filings before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

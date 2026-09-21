@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — MO</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Altria Group, Inc.</h1>
+      <div class="ticker-line">MO &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Consumer Staples / Tobacco (U.S. Smokeable &amp; Oral Products)</div>
+    </div>
+    <div class="report-date">September 15, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#b8860b;">HOLD</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">~$70.61 (one recent source)</span></div>
+      <div class="reco-stat"><span class="label">Target Price (Consensus)</span><span class="value">~$70 (14 analysts)</span></div>
+      <div class="reco-stat"><span class="label">1-Year Performance</span><span class="value">+8.81%</span></div>
+      <div class="reco-stat"><span class="label">FY2026 Adj. EPS Guidance</span><span class="value">$5.61–$5.72 (+3.5–5.5%)</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">MO</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Consumer Staples</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Tobacco (U.S. Smokeable &amp; Oral Products)</td></tr>
+      <tr><td class="k">Key Brands</td><td class="v">Marlboro (PM USA), Black &amp; Mild (Middleton), Copenhagen/Skoal/Red Seal/Husky (USSTC — moist smokeless), on! (Helix — nicotine pouches), NJOY ACE (e-vapor)</td></tr>
+      <tr><td class="k">Segments</td><td class="v">Smokeable Products (combustible cigarettes, machine-made large cigars); Oral Tobacco Products (MST and oral nicotine pouches)</td></tr>
+      <tr><td class="k">Employees</td><td class="v">~5,900 full-time</td></tr>
+      <tr><td class="k">CEO / Headquarters</td><td class="v">Sal Mancuso (CEO); headquartered in Richmond, Virginia</td></tr>
+      <tr><td class="k">Balance Sheet</td><td class="v">Cash and equivalents $2.37B; long-term debt $22.89B; total stockholders' deficit of $2.67B (as of Q2 2026) — a negative equity position common among large, historically leveraged tobacco companies with substantial buyback history</td></tr>
+      <tr><td class="k">Analyst Consensus</td><td class="v">"Hold" (14 analysts, one source); separately described as "Zacks Rank #2 (Buy)" in another source — a reminder that different rating systems can diverge</td></tr>
+      <tr><td class="k">Corporate History</td><td class="v">Former parent of Philip Morris International (see separate PM report in this series) prior to PM's 2008 spin-off as a separate international entity; Altria retained the U.S. domestic tobacco business</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Altria delivered a mixed Q2 2026: adjusted EPS of $1.48 grew 2.8% year-over-year but missed the $1.50 consensus, while net revenue was essentially flat (+0.1% to $6.11 billion), with growth in smokeable products and an acquisition-related "all other" category offset by weakness in oral tobacco. Despite the modest miss, management actually narrowed (and slightly raised the low end of) full-year 2026 adjusted EPS guidance to $5.61-5.72 (from $5.56-5.72), implying 3.5-5.5% growth — a combination the market read as cautiously constructive, since raising the guidance floor after a quarterly miss signals underlying confidence in second-half execution. The core smokeable business showed genuine pricing power (4.5% price realization in Q2, led by Marlboro, with adjusted smokeable operating income up 2.4% to $3.02 billion and margin expanding 30 basis points to 64.8%) even as cigarette volumes continue their well-understood structural decline — offset partly by increased cigarette import/export activity, which management expects to provide a greater benefit in the second half of 2026. The oral tobacco segment (on! nicotine pouches, Copenhagen/Skoal moist smokeless) underperformed in the quarter, and NJOY ACE e-vapor guidance explicitly assumes the product does NOT return to the marketplace in 2026 — a notable, specific regulatory/product-status caveat management has now repeated across multiple consecutive quarterly guidance releases, worth understanding directly given its potential earnings implications if resolved either way. Altria's balance sheet carries substantial long-term debt ($22.89 billion) and negative stockholders' equity, a structural feature of the business's long history of debt-funded buybacks rather than a new development. Given a stock trading essentially at its consensus target ($70 vs. $70.61 in one snapshot), a well-covered but not growth-oriented dividend business, and genuine offsetting dynamics (smokeable pricing strength vs. oral tobacco softness and NJOY uncertainty), this is a HOLD: Altria remains a reliable income vehicle within a structurally declining core product category, but does not currently offer a compelling valuation gap or a clear near-term catalyst comparable to PM's smoke-free international growth story.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Altria reported Q2 2026 adjusted EPS of $1.48 (+2.8% YoY, missing the $1.50 Zacks consensus), with net revenues of $6.11 billion (+0.1% YoY) and revenues net of excise taxes of $5.356 billion (+1.2% YoY, slightly below the $5.362 billion consensus). Growth in smokeable products and the "all other" category (reflecting 2025 acquisition-related items) was offset by weakness in oral tobacco products. Smokeable price realization was 4.5% in the quarter, led by Marlboro pricing and partly offset by Basic-brand mix; adjusted smokeable operating companies income rose 2.4% to $3.02 billion, with margin expanding 30 basis points to 64.8%. First-half adjusted EPS grew 4.9% to $2.80. The company ended the quarter with $2.367 billion in cash and equivalents, $22.893 billion in long-term debt, and a total stockholders' deficit of $2.668 billion. Altria repurchased 0.8 million shares for $55 million in Q2 (5.3 million shares for $335 million through the first half, leaving $665 million under its repurchase authorization) and paid $1.8 billion in dividends during the quarter. Management narrowed full-year 2026 adjusted EPS guidance to $5.61-5.72 (from a prior $5.56-5.72) — leaving the upper end unchanged while raising the lower end by 5 cents, implying 3.5-5.5% growth from 2025's adjusted EPS of $5.42. Capital expenditure guidance was raised to $375-450 million (from a prior $300 million-ish range, exact prior figure not fully specified in sources reviewed). Management continues to expect a greater benefit from cigarette import and export activity in the second half of 2026 than in the first half, now expecting that benefit to be more balanced between Q3 and Q4 specifically due to the timing of certain Q2 benefits already realized. CEO Sal Mancuso highlighted that Helix (the oral tobacco subsidiary) expanded on! PLUS to 120,000 stores nationwide during the quarter, engaged in trial-generating activities, and is preparing additional product line extensions later in 2026; in smokeable products, PM USA advanced a "data-driven, total portfolio approach," with Marlboro Cowboy Cut generating strong interest among premium smokers and the Basic brand continuing to gain traction in the discount segment. Guidance continues to explicitly assume NJOY ACE (the company's e-vapor product) does NOT return to the marketplace in 2026 — a specific, repeated caveat across the company's Q1, Q4-FY2025, and Q2 guidance releases reviewed, suggesting an ongoing regulatory or market-status issue affecting this product that has not yet been resolved as of the most recent guidance.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Full-year 2026 guidance (narrowed following Q2) calls for adjusted diluted EPS of $5.61-5.72, implying 3.5-5.5% growth from 2025's $5.42. Guidance continues to reflect several specific, recurring assumptions management has disclosed consistently across 2026 quarterly releases: the impact of moderated e-vapor industry growth on combustible and e-vapor volumes, increased macroeconomic uncertainty facing adult nicotine consumers, investments supporting contract manufacturing capabilities, that NJOY ACE does not return to market in 2026, and reinvestment of cost savings from the company's "Optimize & Accelerate" initiative into smoke-free marketplace activities and R&D. Capital expenditure is now guided at $375-450 million for the full year, an increase from prior guidance.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Altria's average 12-month analyst price target of approximately $70.00 (14 analysts, one source) implies essentially no upside (+1.48%) from a then-current price near $70.61 — suggesting the stock trades close to fair value under this specific consensus view. The stock has gained approximately 8.81% over the trailing year and 7.47% over the trailing month as of one recent snapshot (~$70.61, up 2.36% on that day), a modest but steady performance consistent with a mature, income-oriented tobacco holding rather than a growth story.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Altria Group, Inc., headquartered in Richmond, Virginia, is a holding company that manufactures and sells smokeable and oral tobacco products in the United States through its subsidiaries. Its smokeable products segment includes Philip Morris USA (PM USA, manufacturer of the Marlboro brand) and John Middleton Co. (Black & Mild large cigars and pipe tobacco). Its oral tobacco products segment includes U.S. Smokeless Tobacco Company (USSTC, moist smokeless tobacco under Copenhagen, Skoal, Red Seal, and Husky), Helix Innovations (oral nicotine pouches under the on! brand), and NJOY, LLC (e-vapor products under the NJOY ACE brand, though its market status remains an ongoing, disclosed guidance caveat). Altria was formerly the parent of Philip Morris International prior to PM's 2008 spin-off as a separately-traded international entity; Altria retained the U.S. domestic tobacco business exclusively, while PM operates internationally (see separate PM report in this series for the related but distinct international smoke-free growth story).</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Marlboro pricing power (4.5% smokeable price realization in Q2 2026), the primary driver of continued smokeable segment profitability even amid structurally declining cigarette volumes</li>
+      <li>on! nicotine pouch expansion (on! PLUS reached 120,000 stores nationwide in Q2 2026, with additional line extensions planned for later in 2026)</li>
+      <li>Cigarette import and export activity, expected to provide a greater earnings benefit in the second half of 2026 than the first half</li>
+      <li>New product initiatives within existing brands (e.g., Marlboro Cowboy Cut generating strong premium-smoker interest, Basic gaining discount-segment traction)</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Increased capital expenditure guidance ($375-450 million for full-year 2026, raised from a prior lower range), reflecting investment in contract manufacturing capabilities and smoke-free product development</li>
+      <li>Substantial ongoing dividend payments ($1.8 billion paid in Q2 2026 alone) and continued share buybacks ($335 million through H1 2026), both funded amid a structurally declining core cigarette volume base</li>
+      <li>Weakness in oral tobacco products, a specific, disclosed drag on Q2 2026 overall revenue growth</li>
+      <li>Interest expense on substantial long-term debt ($22.89 billion), a structural feature of Altria's capital structure</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Altria operates exclusively in the U.S. tobacco and nicotine-products market, a structurally mature and declining category for traditional combustible cigarettes, offset partially by growth in oral nicotine pouches and (potentially, pending regulatory resolution) e-vapor products. Unlike Philip Morris International's international growth-oriented smoke-free transition (see separate PM report), Altria's domestic-only footprint means its growth algorithm relies more heavily on pricing power within a shrinking volume base, supplemented by newer oral nicotine products, rather than geographic expansion into new smoke-free markets.</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — extensive U.S. regulatory requirements (FDA tobacco product review, marketing restrictions) and brand entrenchment (Marlboro's dominant U.S. market position) create substantial barriers.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Low-to-moderate — Altria's scale provides negotiating leverage, though contract-manufacturing-capability investments suggest some ongoing supply-chain development needs.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Low — nicotine-product demand is generally price-inelastic, supporting Altria's demonstrated Marlboro pricing power (4.5% price realization) even amid declining volumes.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate-to-high — the ongoing shift toward smoke-free/reduced-risk products (nicotine pouches, e-vapor) represents both an opportunity (on! growth) and a substitution risk to Altria's legacy combustible cigarette base, compounded by the specific NJOY ACE market-status uncertainty.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High within the U.S. market — Reynolds American (part of British American Tobacco) is Altria's primary direct U.S. combustible-cigarette competitor; competition in the oral nicotine pouch category (against Swedish Match/ZYN, now part of PM, and other smaller players) is intensifying.</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Altria's moat rests overwhelmingly on Marlboro's dominant, decades-entrenched position in the U.S. cigarette market, providing durable pricing power even as the category's overall volume structurally declines — evidenced by continued smokeable segment margin expansion (64.8%, +30bps) despite falling cigarette volumes. The company's expanding on! nicotine pouch presence (120,000 stores) represents a genuine, if smaller-scale, extension of this moat into the fastest-growing nicotine sub-category, though it remains considerably smaller in scale than PM's international ZYN business.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major U.S. tobacco companies. See separate PM report in this series.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>Altria</td><td>MO</td><td>U.S.-only tobacco; FY2026 adj. EPS guidance $5.61–5.72; trading near consensus target</td></tr>
+      <tr><td>Philip Morris International</td><td>PM</td><td>See separate PM report in this series — international, faster-growing smoke-free transformation story; formerly Altria's parent prior to 2008 spin-off</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions; Altria's negative stockholders' equity and substantial debt load should be reflected explicitly in the capital-structure assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled — likely modestly negative-to-flat given the structural decline in core cigarette volumes, offset by continued Marlboro pricing power and oral-tobacco growth}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td class="placeholder">{{No third-party DCF estimate was clearly isolated in sources reviewed}}</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">Altria trades essentially at its consensus analyst price target ($70 target vs. $70.61 price in one snapshot), consistent with a mature, fairly-valued income holding rather than a name offering a significant valuation gap. Given the modest, steady 1-year (+8.81%) and 1-month (+7.47%) performance cited, and offsetting internal dynamics (smokeable pricing strength vs. oral tobacco softness and NJOY ACE regulatory uncertainty), the risk/reward here is balanced rather than compelling in either direction.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q2 2025</th><th>Q2 2026</th><th>FY2026 Guidance</th></tr>
+      <tr><td>Net Revenue</td><td class="placeholder">{{Implied ~$6.10B based on 0.1% YoY growth}}</td><td>$6.11B (+0.1% YoY)</td><td class="placeholder">{{Implied from EPS guidance; not separately stated}}</td></tr>
+      <tr><td>Revenue Net of Excise Taxes</td><td class="placeholder">{{Implied ~$5.29B based on 1.2% YoY growth}}</td><td>$5.356B (+1.2% YoY; missed $5.362B est.)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Adjusted EPS</td><td class="placeholder">{{Implied ~$1.44 based on 2.8% YoY growth}}</td><td>$1.48 (+2.8% YoY; missed $1.50 est.)</td><td>$5.61–$5.72 (full year, narrowed from $5.56–5.72)</td></tr>
+      <tr><td>Adjusted Smokeable Operating Income</td><td class="placeholder">{{Implied ~$2.95B based on 2.4% YoY growth}}</td><td>$3.02B (+2.4% YoY)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Smokeable Margin</td><td>~64.5% (implied, given the 30bps expansion)</td><td>64.8% (+30 bps YoY)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Smokeable Price Realization</td><td class="placeholder">{{Not directly sourced}}</td><td>+4.5% (led by Marlboro)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">Altria's Q2 2026 results present a modestly favorable earnings-quality signal despite the headline consensus miss: management chose to narrow (and slightly raise the floor of) full-year guidance immediately after a quarterly EPS miss — a combination that typically signals underlying management confidence rather than concern, since guidance cuts (not raises) are the more common response to a genuine earnings-quality problem. That said, the reported EPS growth (+2.8%) was supported partly by "a lower share count" (from ongoing buybacks) alongside operating income growth — a useful distinction, since EPS growth driven partly by share-count reduction is a different (though legitimate) earnings-quality dynamic than pure operating-income-driven growth. The specific, repeated NJOY ACE "does not return to marketplace in 2026" guidance caveat, appearing consistently across multiple quarters of releases reviewed, suggests analysts should treat this as an ongoing situation to monitor directly (likely regulatory in nature, though the specific cause was not detailed in sources reviewed) rather than a resolved matter.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>Oral tobacco products showed weakness in Q2 2026, a specific and disclosed drag on overall revenue growth that management has not yet fully explained or resolved. Cigarette volume declines remain a structural, ongoing operational reality across the industry.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>Altria carries substantial long-term debt ($22.89 billion) against a negative stockholders' equity position ($2.67 billion deficit) — a structural feature of the company's leveraged capital-return history rather than a new development, but one that limits balance-sheet flexibility relative to less-leveraged peers.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span>NJOY ACE's continued absence from the marketplace (explicitly assumed in guidance through 2026) reflects an unresolved regulatory or market-status issue specific to that product; moderated e-vapor industry growth broadly and increased macroeconomic uncertainty facing adult nicotine consumers are both explicitly cited, ongoing guidance considerations.</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against Altria's most recent 10-K legal proceedings disclosure; note that tobacco companies broadly carry a long history of litigation exposure that should be checked directly.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in sources reviewed — verify directly against Altria's 10-K/10-Q auditor opinion. One source's "2025 revenue $20.14B, down 1.49%; earnings $6.93B, down 38.35%" full-year figures were not reconciled against the 2026 quarterly data discussed above and should be verified directly against Altria's annual report.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul class="placeholder"><li>{{ESG_ENV — not independently sourced in this summary}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul><li>As with all tobacco companies, Altria's core product category (combustible cigarettes) carries well-established public health considerations; the company's expanding oral nicotine pouch (on!) business is positioned by the company as a lower-risk alternative, though this is a company characterization rather than independently verified in this summary, and tobacco/nicotine products remain a category some investors screen for on ethical/values grounds</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul><li>Continued substantial capital return to shareholders (dividends and buybacks) even amid a structurally declining core business reflects a long-standing, disciplined capital-allocation approach typical of mature tobacco companies</li><li class="placeholder">{{ESG_GOV — board composition and executive compensation structure not sourced beyond the above}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 15, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (Yahoo Finance, TradingView, StockAnalysis.com, ChartMill.com, and Altria's own investor relations materials/press releases) that may be delayed or inconsistent. All figures should be independently verified against Altria's 10-K/10-Q filings before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

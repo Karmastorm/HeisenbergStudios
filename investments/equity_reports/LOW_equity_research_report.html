@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — LOW</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  .placeholder { color:#8a8fa3; font-style:italic; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Lowe's Companies, Inc.</h1>
+      <div class="ticker-line">LOW &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Consumer Discretionary / Home Improvement Retail</div>
+    </div>
+    <div class="report-date">September 17, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#1e7e34;">BUY</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">~$220</span></div>
+      <div class="reco-stat"><span class="label">Target Price</span><span class="value">$277.71 (consensus)</span></div>
+      <div class="reco-stat"><span class="label">Market Cap</span><span class="value">~$116.7 billion</span></div>
+      <div class="reco-stat"><span class="label">Implied Upside/Downside</span><span class="value">~26%</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">LOW</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Consumer Discretionary</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Home Improvement Retail</td></tr>
+      <tr><td class="k">CEO</td><td class="v">Marvin Ellison (Chairman &amp; CEO)</td></tr>
+      <tr><td class="k">Headquarters</td><td class="v">Mooresville, North Carolina</td></tr>
+      <tr><td class="k">Shares Outstanding</td><td class="v">~880.5 million</td></tr>
+      <tr><td class="k">Return on Invested Capital</td><td class="v">25.5%</td></tr>
+      <tr><td class="k">Consensus Price Target</td><td class="v">$277.71 (33 analysts, raised post-Q2 FY2026)</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Lowe's is executing a credible, evidence-backed pivot toward the higher-margin Pro and online customer, layering the FBM (Foundation Building Materials) and ADG (Artisan Design Group) acquisitions on top of a core DIY retail base that remains under near-term pressure from a "frozen" housing market and cautious discretionary spending. Q2 FY2026 marked a fifth consecutive quarter of both positive comparable sales and an adjusted EPS beat, evidence that the company's execution is outpacing a soft macro backdrop rather than depending on it. Management's decision to guide to the bottom of, rather than cut, its full-year ranges — while still absorbing real margin drag from acquisition-related intangible amortization — reflects conservatism more than deterioration. The read-through is closely parallel to Home Depot (see separate HD report in this series): both retailers are managing the same delayed "big-ticket" remodeling cycle by leaning into Pro-channel M&amp;A (Lowe's FBM/ADG vs. HD's SRS Distribution) to diversify away from a still-sluggish DIY consumer. We rate LOW a BUY on the view that a housing-driven recovery in large discretionary projects is a "when," not "if," catalyst that the current valuation does not fully credit, while the Pro/online build-out provides earnings resilience in the meantime.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Lowe's Q2 FY2026 results (quarter ended August 1, 2026) showed net earnings of $2.4 billion and diluted EPS of $4.27, roughly flat year-over-year, while adjusted diluted EPS of $4.40 rose 1.6% YoY and beat the $4.22–$4.23 consensus range by approximately 4% — the company's fifth consecutive adjusted EPS beat. Adjusted EPS included a roughly $0.11-per-share benefit from IEEPA tariff refunds. Total sales rose 8.3% YoY to approximately $26.0 billion, aided by the FBM and ADG acquisitions, though this slightly missed the ~$26.16 billion consensus. Comparable sales rose 0.2% — a fifth consecutive positive-comp quarter — even as comparable transactions declined 2.1%, indicating average ticket and Pro-skewed mix are currently doing more work than traffic. Online sales grew 15.7% year-over-year. Gross margin declined roughly 80 basis points YoY on elevated fuel, transportation, and energy costs, and the company excluded $96 million of pre-tax FBM/ADG acquisition-related expenses from its adjusted EPS figure. Nine of thirteen product categories posted positive comparable sales in the quarter. CEO Marvin Ellison characterized underlying demand by noting, "The good news is that we're not seeing these customers trade down" — that is, big-ticket DIY customers are deferring larger projects rather than downgrading to cheaper alternatives, a distinction management views as supportive of an eventual demand snap-back. Heightened competitive pricing actions in July, particularly in seasonal categories, weighed on sales and comps, and the FBM and ADG acquisitions are themselves facing headwinds from a sluggish residential construction market.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Full-year FY2026 guidance was narrowed to the bottom end of prior ranges rather than cut outright: total sales of approximately $92.0 billion (from a prior $92.0–$94.0 billion range), comparable sales roughly flat (from a prior flat-to-+2% range), adjusted operating margin of approximately 11.6%, adjusted diluted EPS of approximately $12.25 (from a prior $12.25–$12.75 range), GAAP diluted EPS of approximately $11.75, net interest expense of approximately $1.6 billion, an effective tax rate of approximately 24.5%, and capital expenditures of up to $2.5 billion. Guidance reflects an approximately 40 basis point margin drag and roughly $0.50 per share after-tax EPS impact from FBM/ADG intangible amortization.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Following the Q2 print, sell-side analysts broadly raised price targets, lifting the consensus target to $277.71 across 33 analysts, citing the EPS beat, resilient margins despite cost headwinds, guidance held near the floor rather than cut, and continued Pro-segment share gains. Shares rose roughly 4.8% on the earnings print itself, though the stock remained down approximately 2.8% on a trailing one-year basis heading into the quarter, reflecting a de-rating tied to the broader home-improvement retail malaise. We view the consensus target as achievable if Pro/online mix continues to offset DIY softness.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Lowe's Companies, Inc. is one of the two dominant U.S. home improvement retailers, serving both do-it-yourself (DIY) homeowners and professional contractors (Pro) through physical stores and a growing e-commerce/omnichannel platform (Lowes.com and the Lowe's app). The company sells building materials, appliances, tools, hardware, lawn and garden products, and home décor. Under CEO Marvin Ellison, Lowe's has pursued a "Total Home" strategy emphasizing Pro-customer penetration, private-brand expansion, supply-chain modernization, and digital investment. The company's FY2026 acquisitions of FBM (Foundation Building Materials) and ADG (Artisan Design Group) extend Lowe's into professional-grade building materials distribution and interior design/installation services respectively, mirroring rival Home Depot's 2024 acquisition of SRS Distribution as both companies race to capture wallet share from professional contractors.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Pro-channel expansion via the FBM and ADG acquisitions, extending Lowe's into professional building-materials distribution and design/installation services</li>
+      <li>Online sales growth (+15.7% YoY in Q2 FY2026), reflecting continued omnichannel investment</li>
+      <li>Comparable-sales stability (fifth consecutive positive-comp quarter) despite declining transaction counts, driven by average-ticket and Pro-mix strength</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Elevated fuel, transportation, and energy costs, which pressured gross margin by roughly 80 basis points YoY in Q2 FY2026</li>
+      <li>FBM/ADG acquisition-related integration expenses ($96 million pre-tax in Q2 FY2026) and ongoing intangible amortization (~40 bps margin drag, ~$0.50/share EPS impact guided for FY2026)</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Lowe's competes in the U.S. home improvement retail industry, an effective duopoly with Home Depot (see separate HD report in this series). Both companies are navigating a "frozen" housing market in which existing-home turnover and large discretionary remodeling projects remain depressed, prompting both retailers to pursue Pro-channel acquisitions (Lowe's FBM/ADG vs. HD's SRS Distribution) to diversify revenue away from a soft DIY consumer.</p>
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — scale, real estate footprint, and supply-chain infrastructure create high barriers to entry at comparable scale.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — Lowe's scale provides purchasing leverage, though certain branded suppliers retain pricing power.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate-to-High — price transparency and e-commerce increase customer switching ability, especially among DIY shoppers.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate — online retailers, specialty retailers, and regional players compete for wallet share.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — effectively a duopoly with Home Depot, with both companies currently investing heavily in Pro-channel acquisitions.</td></tr>
+    </table>
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Lowe's benefits from real-estate scale, supply-chain density, and brand recognition that create a durable, though not insurmountable, moat versus Home Depot and smaller regional players. Its moat is narrower than Home Depot's given HD's larger existing Pro-customer base and earlier SRS Distribution acquisition; the FBM/ADG deals are a direct strategic response intended to close that gap.</p>
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major U.S. home improvement and building-materials retailers. See separate HD and TJX reports in this series.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>Lowe's Companies</td><td>LOW</td><td>Consensus target $277.71; ~26% implied upside</td></tr>
+      <tr><td>Home Depot</td><td>HD</td><td>See separate HD report in this series — larger Pro-channel presence via SRS Distribution</td></tr>
+      <tr><td class="placeholder">Floor &amp; Decor</td><td class="placeholder">FND</td><td class="placeholder">{{Not independently sourced for this report — specialty hard-surface flooring retailer}}</td></tr>
+      <tr><td class="placeholder">Builders FirstSource</td><td class="placeholder">BLDR</td><td class="placeholder">{{Not independently sourced for this report — professional building-materials distribution, competes with FBM}}</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — recommend explicit modeling of FBM/ADG integration costs and amortization separately from core organic growth}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>Consensus sell-side price target of $277.71 (33 analysts) as of the report date, raised following the Q2 FY2026 earnings beat</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">We rate LOW a <strong>BUY</strong>. The combination of a fifth consecutive EPS beat and positive-comp quarter, a Pro/online-led earnings mix shift, and guidance held near the top of a conservative floor rather than cut, supports a constructive stance even against a still-soft DIY backdrop. The primary offsetting consideration is that upside depends on a housing-driven recovery in large remodeling projects whose timing is uncertain.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q2 FY2026</th><th>YoY Change</th><th>FY2026 Guidance</th></tr>
+      <tr><td>Total Sales</td><td>~$26.0B</td><td>+8.3%</td><td>~$92.0B</td></tr>
+      <tr><td>Comparable Sales</td><td>+0.2%</td><td>Fifth straight positive quarter</td><td>Roughly flat</td></tr>
+      <tr><td>Adjusted Diluted EPS</td><td>$4.40</td><td>+1.6%</td><td>~$12.25</td></tr>
+      <tr><td>GAAP Diluted EPS</td><td>$4.27</td><td>Roughly flat</td><td>~$11.75</td></tr>
+      <tr><td>Net Earnings</td><td>$2.4B</td><td class="placeholder">{{Not independently sourced}}</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Online Sales</td><td class="placeholder">{{Not independently sourced}}</td><td>+15.7%</td><td class="placeholder">{{Not separately guided}}</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">Adjusted EPS excludes $96 million of pre-tax FBM/ADG acquisition-related expenses and includes a one-time ~$0.11-per-share IEEPA tariff-refund benefit; both should be considered non-recurring when assessing run-rate earnings power. Comparable transactions declining 2.1% while comparable sales rose 0.2% indicates average ticket and Pro-skewed mix are currently doing more work than traffic — a dynamic worth monitoring for sustainability.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>Discretionary DIY demand remains under pressure as customers defer large remodeling projects rather than trade down, creating uncertainty on the timing of a demand recovery; the FBM and ADG acquisitions themselves face headwinds from a sluggish residential construction market.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>Gross margin pressure from elevated fuel, transportation, and energy costs, plus roughly 40 basis points of guided margin drag and ~$0.50/share EPS impact from acquisition-related intangible amortization; heightened competitive pricing (notably in seasonal categories, observed in July) could pressure margins further if it persists.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span>Tariff policy remains a swing factor; Q2 results benefited from an IEEPA tariff refund that is non-recurring, and future tariff actions could reverse this benefit or raise input costs.</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against Lowe's most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in the sources reviewed — verify directly against Lowe's 10-K/10-Q auditor opinion.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul class="placeholder"><li>{{ESG_ENV — energy-efficiency programs and sustainable-sourcing commitments not independently sourced in this summary}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul><li>Large-scale U.S. employer with significant workforce exposure to retail labor market dynamics and wage policy</li><li class="placeholder">{{ESG_SOC — community/workforce program specifics not independently sourced}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul><li>Marvin Ellison serves as combined Chairman and CEO</li><li class="placeholder">{{ESG_GOV — board composition and diversity not independently sourced}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 17, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (company earnings releases, financial media coverage, and sell-side analyst commentary) that may be delayed or inconsistent. All figures should be independently verified against Lowe's 10-K/10-Q filings before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

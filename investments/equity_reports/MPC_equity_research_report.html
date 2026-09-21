@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — MPC</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  .placeholder { color:#8a8fa3; font-style:italic; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Marathon Petroleum Corporation</h1>
+      <div class="ticker-line">MPC &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Energy / Oil &amp; Gas Refining &amp; Marketing</div>
+    </div>
+    <div class="report-date">September 17, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#b8860b;">HOLD</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">~$422 (one source)</span></div>
+      <div class="reco-stat"><span class="label">Target Price</span><span class="value">$370.17 (avg.)</span></div>
+      <div class="reco-stat"><span class="label">Target Range</span><span class="value">$236 – $462</span></div>
+      <div class="reco-stat"><span class="label">Implied Upside/Downside</span><span class="value">~-12% (one source)</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">MPC</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Energy</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Oil &amp; Gas Refining &amp; Marketing</td></tr>
+      <tr><td class="k">Consensus Rating</td><td class="v">Buy (19 analysts: 6 Strong Buy, 4 Buy, 8 Hold, 1 Sell)</td></tr>
+      <tr><td class="k">Q2 2026 Cash &amp; Equivalents</td><td class="v">$7.8 billion (no revolver borrowings)</td></tr>
+      <tr><td class="k">Q2 2026 Shareholder Returns</td><td class="v">&gt;$2.8 billion; $6.1B remaining buyback authorization</td></tr>
+      <tr><td class="k">Midstream Subsidiary</td><td class="v">MPLX (targeting 12.5% annual distribution growth)</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted); margin-top:-14px;">Note: one source's average price target ($370.17) is below its cited current price ($421.89), implying negative headline upside despite an overall Buy consensus rating; both figures are presented here as sourced rather than reconciled, and should be independently re-verified against current market data before use.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Marathon Petroleum posted an extraordinary Q2 2026 — net income attributable to shareholders of $5.1 billion ($17.73 diluted EPS), more than four times the $1.2 billion ($3.96 EPS) reported in Q2 2025 — driven by a dramatic expansion in refining margins to $36.33 per barrel from $17.58 a year earlier, alongside 94% crude capacity utilization and 2.9 million barrels per day of throughput. Adjusted EBITDA more than doubled year-over-year to $8.5 billion, with the Refining &amp; Marketing segment contributing $6.7 billion, Midstream (via MPLX) $1.8 billion, and Renewable Diesel $258 million. The company returned over $2.8 billion to shareholders in the quarter, maintains $7.8 billion of cash with no revolver borrowings, and its midstream subsidiary MPLX increased 2026 growth capital to $2.9 billion, targeting 12.5% annual distribution growth. However, this is fundamentally a refining-margin-driven earnings surge — refining crack spreads are historically among the most cyclical and mean-reverting metrics in the energy sector — and one data source's cited current share price ($421.89) already sits above its own average analyst price target ($370.17), implying the market may be pricing in continued exceptional margins that are unlikely to persist at current levels. With the analyst rating distribution also more mixed than the headline "Buy" label suggests (8 of 19 analysts rate Hold, one rates Sell), we rate MPC a HOLD: the Q2 2026 results were genuinely exceptional, but refining margins of this magnitude are unlikely to be sustained indefinitely, and the currently cited valuation may already reflect a normalization risk that has not yet been fully tested.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Marathon Petroleum's Q2 2026 results showed net income attributable to shareholders of $5.1 billion ($17.73 diluted EPS), up sharply from $1.2 billion ($3.96 diluted EPS) in Q2 2025. Sales and operating revenues totaled $52.0 billion, versus $33.8 billion in the prior-year period. Adjusted EBITDA reached $8.5 billion, more than double the $3.3 billion reported a year earlier, driven by "strong commercial and operational performance across the system" per company messaging. Refining &amp; Marketing margins expanded dramatically to $36.33 per barrel from $17.58 in Q2 2025, with the company operating at 94% crude capacity utilization and 2.9 million barrels per day of throughput, benefiting from higher crack spreads across all regions. By segment, Refining &amp; Marketing contributed $6.7 billion of adjusted EBITDA, Midstream (MPLX) contributed $1.8 billion, and Renewable Diesel contributed $258 million. The company returned more than $2.8 billion to shareholders during the quarter, with $6.1 billion remaining under existing share-repurchase authorizations, and held $7.8 billion of cash and equivalents with no revolver borrowings. Management highlighted completed projects including El Paso yield improvements and Robinson product flexibility enhancements, and noted that MPLX increased its 2026 growth capital to $2.9 billion, targeting 12.5% annual distribution growth through natural gas and NGL infrastructure development in the Permian and Marcellus basins.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">MPC's 2026 capital outlook projects $1.5 billion in capital spending excluding MPLX, with 65% allocated to value-enhancing investments. No formal full-year refining-margin or EPS guidance was disclosed in the sources reviewed for this report, consistent with the inherently unpredictable nature of crack-spread-driven refining earnings.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Consensus rating is Buy across 19 analysts, though the underlying distribution (6 Strong Buy, 4 Buy, 8 Hold, 1 Sell) is considerably more mixed than the headline label suggests. One source cites an average price target of $370.17 against a then-current price of $421.89 — implying roughly 12% downside — with a wide target range spanning $236 (low) to $462 (high), reflecting significant analyst disagreement about the sustainability of current refining margins.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Marathon Petroleum Corporation is one of the largest petroleum refining, marketing, and midstream companies in the United States, operating a nationwide refining network alongside a retail marketing business and a controlling interest in MPLX, a publicly traded midstream logistics partnership. The company's earnings are heavily leveraged to refining crack spreads — the margin between crude oil input costs and refined product output prices — which fluctuate with regional supply/demand balances, seasonal driving-season demand, and refinery-capacity utilization across the industry. MPLX provides a more stable, fee-based midstream earnings stream that partially offsets the cyclicality of the core refining business.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Refining &amp; Marketing margin expansion to $36.33 per barrel in Q2 2026 from $17.58 a year earlier, driven by higher crack spreads across all regions</li>
+      <li>High crude capacity utilization (94%) and strong throughput (2.9 million barrels per day)</li>
+      <li>MPLX midstream growth capital expansion ($2.9 billion for 2026), targeting 12.5% annual distribution growth via Permian and Marcellus natural gas/NGL infrastructure</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Capital spending on refinery yield-improvement and flexibility projects (e.g., El Paso, Robinson), guided at $1.5 billion excluding MPLX for 2026</li>
+      <li>MPLX's own $2.9 billion growth-capital program for midstream infrastructure development</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Marathon Petroleum competes in the U.S. petroleum refining and marketing industry, most directly against Valero Energy and Phillips 66 (see separate VLO and PSX reports in this series). Refining is an inherently cyclical, commodity-margin-driven business; the entire sector benefited from historically elevated crack spreads in Q2 2026, meaning the earnings surge is likely to be industry-wide rather than solely reflective of MPC-specific execution.</p>
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — new refinery construction in the U.S. is exceedingly rare due to capital intensity, permitting difficulty, and regulatory barriers.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — crude oil suppliers price on global benchmarks, though refiners can optimize crude slate sourcing for margin advantage.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Low — refined products (gasoline, diesel) are largely commodity goods with limited individual buyer negotiating leverage.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate-to-Long-Term — electric vehicle adoption and renewable fuels represent a structural long-term substitute for traditional refined transportation fuels.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — intense competition among major U.S. refiners (Valero, Phillips 66, and others) for regional crack-spread advantages.</td></tr>
+    </table>
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Marathon Petroleum's moat rests on its scale as one of the largest U.S. refiners, geographic diversification of its refining network, and its controlling interest in MPLX, which provides a stabilizing, fee-based midstream earnings stream that offsets some of the inherent cyclicality of refining margins.</p>
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major U.S. petroleum refiners. See separate VLO and PSX reports in this series.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>Marathon Petroleum</td><td>MPC</td><td>One source shows average target below current price; rating distribution more mixed than headline Buy suggests</td></tr>
+      <tr><td>Valero Energy</td><td>VLO</td><td>See separate VLO report in this series</td></tr>
+      <tr><td>Phillips 66</td><td>PSX</td><td>See separate PSX report in this series</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — recommend explicit modeling of a normalized (mean-reverting) refining-margin scenario separate from the Q2 2026 peak-margin quarter}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>One source's average sell-side price target of $370.17 (19 analysts) as of the report date, below that same source's cited then-current price of $421.89</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">We rate MPC a <strong>HOLD</strong>. Q2 2026 results were genuinely exceptional, but the results were driven overwhelmingly by historically elevated refining crack spreads that are among the most cyclical, mean-reverting metrics in the energy sector. The mixed analyst rating distribution and one source's average price target sitting below its cited current price both suggest the market — and at least some covering analysts — are skeptical that current margin levels are fully sustainable, favoring a HOLD until margin normalization risk is better understood.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q2 2025</th><th>Q2 2026</th><th>YoY Change</th></tr>
+      <tr><td>Net Income (Attributable)</td><td>$1.2 billion ($3.96/share)</td><td>$5.1 billion ($17.73/share)</td><td>+~325%</td></tr>
+      <tr><td>Sales &amp; Operating Revenue</td><td>$33.8 billion</td><td>$52.0 billion</td><td>+54%</td></tr>
+      <tr><td>Adjusted EBITDA</td><td>$3.3 billion</td><td>$8.5 billion</td><td>+~158%</td></tr>
+      <tr><td>Refining Margin ($/barrel)</td><td>$17.58</td><td>$36.33</td><td>+~107%</td></tr>
+      <tr><td>Crude Capacity Utilization</td><td class="placeholder">{{Not independently sourced}}</td><td>94%</td><td class="placeholder">{{Not independently sourced}}</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">The extraordinary year-over-year earnings growth (net income more than quadrupling) is overwhelmingly attributable to a doubling of per-barrel refining margins rather than volume growth or structural cost improvements — a genuine but highly cyclical earnings driver. Investors should explicitly model a normalized, lower refining-margin scenario rather than extrapolating Q2 2026's peak-margin quarter forward, given the historical mean-reverting tendency of refining crack spreads.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>Refining margins are historically among the most cyclical metrics in the energy sector; the dramatic expansion to $36.33/barrel in Q2 2026 from $17.58 a year earlier is unlikely to persist indefinitely, and a reversion toward historical average margins would substantially reduce earnings.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>One data source's cited current share price already exceeds its own average analyst price target, implying the market may be pricing in a continuation of currently elevated margins that carries meaningful downside risk if margins normalize.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span class="placeholder">{{Renewable fuel standard (RFS) policy, refined-product environmental regulation, and any changes to biofuel blending mandates represent ongoing industry-wide regulatory considerations affecting the Renewable Diesel segment; specific current status not independently verified for this report.}}</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against Marathon Petroleum's most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in the sources reviewed — verify directly against Marathon Petroleum's 10-K/10-Q auditor opinion. Note the price-target/current-price discrepancy flagged above should be independently reconciled against live market data before this report is used for any investment decision.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul><li>Renewable Diesel segment ($258 million adjusted EBITDA in Q2 2026) represents an ongoing lower-carbon fuels investment</li><li class="placeholder">{{ESG_ENV — refinery emissions-reduction targets not independently sourced}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul class="placeholder"><li>{{ESG_SOC — community relations and workforce safety program specifics not independently sourced}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul class="placeholder"><li>{{ESG_GOV — board composition and diversity not independently sourced}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 17, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (company earnings releases, financial media coverage, and sell-side analyst commentary) that may be delayed or inconsistent, including a noted discrepancy between one source's cited current price and its own average analyst price target. All figures should be independently verified against Marathon Petroleum's 10-K/10-Q filings and live market data before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

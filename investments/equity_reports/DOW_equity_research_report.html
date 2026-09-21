@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — DOW</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #e9edf2;
+    color: var(--text);
+    font-family: "Georgia", "Times New Roman", serif;
+    line-height: 1.55;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.12);
+    padding: 40px 50px 60px;
+  }
+
+  /* ---------- Header ---------- */
+  .report-header {
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .firm-name {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .company-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+  }
+
+  /* ---------- Recommendation banner ---------- */
+  .reco-banner {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .reco-main {
+    flex: 0 0 170px;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .reco-main .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+
+  .reco-main .value {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+
+  .reco-stats {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--gray-bg);
+  }
+
+  .reco-stat {
+    padding: 10px 14px;
+    border-left: 1px solid var(--border);
+  }
+
+  .reco-stat .label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    display: block;
+  }
+
+  .reco-stat .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* ---------- Basic info table ---------- */
+  .basic-info {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+
+  .basic-info td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .basic-info td.k {
+    color: var(--muted);
+    width: 38%;
+  }
+
+  .basic-info td.v {
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  /* ---------- Section styling ---------- */
+  section {
+    margin-bottom: 32px;
+  }
+
+  h2.section-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: var(--navy);
+    padding: 8px 14px;
+    margin: 0 0 14px 0;
+    border-left: 5px solid var(--accent);
+  }
+
+  h3.sub-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    margin: 18px 0 10px;
+  }
+
+  p.body-text {
+    font-size: 15px;
+    margin: 0 0 12px;
+  }
+
+  .placeholder {
+    color: #8a8fa3;
+    font-style: italic;
+  }
+
+  ul.bullet-list {
+    margin: 0 0 12px 0;
+    padding-left: 20px;
+  }
+
+  ul.bullet-list li {
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+
+  /* ---------- Investment Summary callout ---------- */
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  .thesis-box .thesis-label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-dark);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  /* ---------- Valuation table ---------- */
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  table.data-table th {
+    background: var(--navy);
+    color: #fff;
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  table.data-table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  table.data-table tr:nth-child(even) td {
+    background: var(--gray-bg);
+  }
+
+  /* ---------- Risk list ---------- */
+  .risk-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+  }
+
+  .risk-tag {
+    flex: 0 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    background: var(--red);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .risk-tag.op { background: #b8860b; }
+  .risk-tag.fin { background: var(--red); }
+  .risk-tag.reg { background: #6a3d9a; }
+  .risk-tag.legal { background: #444; }
+
+  /* ---------- ESG grid ---------- */
+  .esg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .esg-card {
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: 4px;
+    padding: 12px 14px;
+  }
+
+  .esg-card.environmental { border-top-color: #2e7d32; }
+  .esg-card.social { border-top-color: #1565c0; }
+  .esg-card.governance { border-top-color: #6a1b9a; }
+
+  .esg-card h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px;
+    color: var(--navy);
+  }
+
+  .esg-card ul {
+    margin: 0;
+    padding-left: 16px;
+    font-size: 13px;
+  }
+
+  .esg-card li { margin-bottom: 4px; }
+
+  /* ---------- Peer comparison ---------- */
+  .peer-note {
+    font-size: 12.5px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: -6px;
+    margin-bottom: 12px;
+  }
+
+  /* ---------- Footer / disclosures ---------- */
+  footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  footer .analyst-line {
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  @media (max-width: 700px) {
+    .page { padding: 24px 18px; }
+    .reco-banner { flex-direction: column; }
+    .reco-stats { grid-template-columns: repeat(2, 1fr); }
+    .esg-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research &middot; Equity Research</div>
+      <h1 class="company-title">Dow Inc.</h1>
+      <div class="ticker-line">DOW &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Materials / Chemicals</div>
+    </div>
+    <div class="report-date">
+      September 18, 2026<br>
+      Analyst: Equity Research Desk
+    </div>
+  </div>
+
+  <!-- ============ RECOMMENDATION BANNER ============ -->
+  <div class="reco-banner">
+    <div class="reco-main">
+      <span class="label">Recommendation</span>
+      <span class="value" style="color:#b8860b;">HOLD</span>
+    </div>
+    <div class="reco-stats">
+      <div class="reco-stat">
+        <span class="label">Current Price</span>
+        <span class="value">$28.65</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Target Price</span>
+        <span class="value">$34.69</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Market Cap</span>
+        <span class="value">$20.69B</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Implied Upside/Downside</span>
+        <span class="value">+21.1%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BASIC INFORMATION ============ -->
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">DOW</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Materials</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Chemicals</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$20.65 &ndash; $42.74</td></tr>
+      <tr><td class="k">Average Daily Volume (Liquidity)</td><td class="v">~5,106,147 shares</td></tr>
+      <tr><td class="k">Float</td><td class="v"><span class="placeholder">{{FLOAT — not independently sourced; effectively equal to shares outstanding less insider holdings}}</span></td></tr>
+      <tr><td class="k">Shares Outstanding</td><td class="v">~722.34 million</td></tr>
+      <tr><td class="k">Major Shareholders</td><td class="v"><span class="placeholder">{{MAJOR_SHAREHOLDERS — Vanguard and BlackRock are known large institutional holders; exact stakes not independently verified in this pass}}</span></td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT SUMMARY ============ -->
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Dow Inc. is a leading global commodity and specialty chemicals producer spanning packaging and specialty plastics, industrial intermediates, and performance materials and coatings, with earnings highly cyclical and closely tied to global petrochemical margins and energy input costs. FY2025 revenue declined 7.0% to $40.0B and the company swung to a net loss of -$2.63B (diluted EPS -$3.70) from FY2024 net income of $1.10B, with free cash flow also deteriorating to -$1.60B, reflecting a severe cyclical downturn in commodity chemical margins. <strong>Note: a clean, separately reported TTM figure could not be reliably extracted in this research pass — the data source returned TTM revenue of $161.5B, roughly 4x the FY2025 annual base of $40.0B, an implausible result almost certainly reflecting a data extraction/aggregation error (likely treating quarterly figures as already-annualized); this report therefore uses FY2025 annual figures as the most reliable base and flags TTM line items for independent verification.</strong> Despite a headline "Buy" consensus label and a positive average price target implying +21.1% upside, the 18-analyst distribution (5 Strong Buy / 1 Buy / 11 Hold / 1 Sell / 0 Strong Sell) shows Hold as the clear outright majority at 61.1%, with only 33.3% Buy-or-better; per this report's rating methodology, which weighs the full distribution rather than the headline label, this supports a HOLD rating. The company also recently guided Q3 2026 EBITDA modestly below its prior view, citing early-quarter headwinds.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text placeholder">{{RECENT_DEVELOPMENTS — the company reportedly guided Q3 2026 EBITDA to $1.5-$1.6B, described as "modestly lower than prior view" due to early-quarter headwinds; details on which segments and geographies are driving the softness, along with any capacity-rationalization or cost-cutting actions, should be sourced from the most recent 10-Q/8-K and verified independently}}</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text placeholder">{{EARNINGS_FORECAST_SUMMARY — forward EPS and revenue estimates for FY2027E, reflecting the timing of an eventual petrochemical margin cycle recovery, should be sourced from consensus data and verified independently; the FY2025 GAAP loss makes near-term earnings visibility limited}}</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">At $28.65, DOW's trailing P/E is not meaningful given the FY2025 GAAP net loss. The stock trades near the bottom of its 52-week range of $20.65–$42.74, down roughly one-third from its high, reflecting the severity of the current commodity chemicals downturn. The elevated 4.89% dividend yield should be scrutinized for sustainability given the negative free cash flow, and while the average analyst price target implies meaningful upside, the Hold-majority rating distribution suggests substantial analyst caution about the timing of a cyclical recovery.</p>
+  </section>
+
+  <!-- ============ BUSINESS DESCRIPTION ============ -->
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Dow Inc. is a global materials science company producing a broad portfolio of plastics, industrial intermediates, and performance materials and coatings, organized into Packaging and Specialty Plastics, Industrial Intermediates and Infrastructure, and Performance Materials and Coatings segments. The company's earnings are highly sensitive to global petrochemical (ethylene, polyethylene) margins, which are in turn driven by feedstock costs, global chemical capacity utilization, and end-market demand across packaging, construction, automotive, and consumer products.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Global petrochemical (ethylene, polyethylene) pricing and volumes, highly cyclical and sensitive to global chemical industry capacity utilization</li>
+      <li>Packaging and specialty plastics demand tied to consumer products and food packaging end markets</li>
+      <li>Industrial intermediates and construction-chemicals demand tied to infrastructure and building activity</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Feedstock and energy costs (natural gas, natural gas liquids, naphtha), a major input cost that drives petrochemical margin cyclicality</li>
+      <li>Fixed manufacturing costs at large-scale petrochemical crackers and processing facilities, which create significant operating leverage in both directions through the commodity chemicals cycle</li>
+    </ul>
+  </section>
+
+  <!-- ============ INDUSTRY OVERVIEW & COMPETITIVE POSITIONING ============ -->
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text placeholder">{{INDUSTRY_OVERVIEW — the global commodity chemicals industry is currently navigating a severe cyclical downturn driven by excess global ethylene/polyethylene capacity (particularly new Chinese and Middle Eastern capacity additions) depressing margins industry-wide; should be independently verified with current industry data}}</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — large-scale petrochemical cracker facilities require enormous capital investment, though new capacity additions (particularly in China and the Middle East) have contributed to the current industry-wide margin downturn</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — feedstock (natural gas, NGL) costs are a major input, with Dow's U.S. Gulf Coast asset base providing some relative cost advantage versus naphtha-based competitors</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate-to-High — commodity chemicals are largely undifferentiated, giving large industrial buyers significant price negotiating leverage, particularly during periods of oversupply</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Low-to-Moderate — few practical substitutes exist for many plastics and chemical intermediates in packaging and industrial applications, though increasing recycled-content mandates create some substitution pressure over time</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — intense global competition among Dow, LyondellBasell, ExxonMobil Chemical, and various Asian and Middle Eastern producers, with commodity chemicals largely undifferentiated on a price basis</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Dow's competitive position rests on its scale, U.S. Gulf Coast feedstock cost advantage (natural gas liquids versus naphtha-based competitors elsewhere), and integrated value chain from feedstock through downstream specialty products; however, the current industry-wide oversupply has compressed margins across the sector broadly, limiting the near-term benefit of these structural advantages.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set used for relative valuation and competitive benchmarking.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Market Cap</th><th>P/E</th><th>EV/EBITDA</th></tr>
+      <tr><td>Dow Inc.</td><td>DOW</td><td>$20.69B</td><td class="placeholder">N/M (GAAP loss)</td><td class="placeholder">{{EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">LyondellBasell Industries N.V.</td><td class="placeholder">LYB</td><td class="placeholder">{{PEER_1_MCAP}}</td><td class="placeholder">{{PEER_1_PE}}</td><td class="placeholder">{{PEER_1_EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">DuPont de Nemours, Inc.</td><td class="placeholder">DD</td><td class="placeholder">{{PEER_2_MCAP}}</td><td class="placeholder">{{PEER_2_PE}}</td><td class="placeholder">{{PEER_2_EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">Celanese Corporation</td><td class="placeholder">CE</td><td class="placeholder">{{PEER_3_MCAP}}</td><td class="placeholder">{{PEER_3_PE}}</td><td class="placeholder">{{PEER_3_EV_EBITDA}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ VALUATION ============ -->
+  <section>
+    <h2 class="section-title">Valuation</h2>
+
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{WACC — not independently modeled in this pass; typical large-cap commodity chemicals WACC range 8-10%, given cyclicality}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{TERMINAL_GROWTH — typically 2-3% for a mature-stage terminal assumption}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{FORECAST_PERIOD — should explicitly model a full petrochemical margin cycle rather than extrapolating from the current cyclical trough}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td class="placeholder">{{DCF_INTRINSIC_VALUE — not independently modeled in this pass}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Relative Valuation</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Dow Inc.</th><th>Peer Average</th><th>Industry Average</th></tr>
+      <tr><td>P/E (Trailing)</td><td class="placeholder">N/M (GAAP loss)</td><td class="placeholder">{{PEER_PE_AVG}}</td><td class="placeholder">{{INDUSTRY_PE_AVG}}</td></tr>
+      <tr><td>P/Sales</td><td class="placeholder">~0.5x (estimated from market cap/FY2025 revenue)</td><td class="placeholder">{{PEER_PS_AVG}}</td><td class="placeholder">{{INDUSTRY_PS_AVG}}</td></tr>
+      <tr><td>Dividend Yield</td><td>4.89%</td><td class="placeholder">{{PEER_YIELD_AVG}}</td><td class="placeholder">{{INDUSTRY_YIELD_AVG}}</td></tr>
+      <tr><td>P/Book Value</td><td class="placeholder">{{PB_RATIO}}</td><td class="placeholder">{{PEER_PB_AVG}}</td><td class="placeholder">{{INDUSTRY_PB_AVG}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">With Hold as the outright majority at 61.1% of covering analysts — despite a headline "Buy" consensus label and a positive average price target implying +21.1% upside — this report assigns a HOLD rating, consistent with its methodology of weighing the full rating distribution over the headline label. The very low ~0.5x P/Sales multiple reflects deep cyclical distress, and while this could represent a value opportunity if the petrochemical cycle turns, the elevated dividend yield (4.89%) against negative free cash flow, combined with the Hold-majority analyst view, warrants caution until clearer signs of margin recovery emerge.</p>
+  </section>
+
+  <!-- ============ FINANCIAL ANALYSIS ============ -->
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+
+    <h3 class="sub-title">Historical &amp; Forecast Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>FY2023</th><th>FY2024</th><th>FY2025</th><th>FY2027E</th></tr>
+      <tr><td>Revenue</td><td class="placeholder">{{REV_Y0 — not independently sourced in this pass}}</td><td>$42,964M</td><td>$39,968M</td><td class="placeholder">{{REV_Y3}}</td></tr>
+      <tr><td>EBITDA</td><td class="placeholder">{{EBITDA_Y0}}</td><td class="placeholder">{{EBITDA_Y1}}</td><td class="placeholder">{{EBITDA_Y2}}</td><td class="placeholder">{{EBITDA_Y3}}</td></tr>
+      <tr><td>Net Income</td><td class="placeholder">{{NI_Y0 — not independently sourced in this pass}}</td><td>$1,104M</td><td>-$2,634M</td><td class="placeholder">{{NI_Y3}}</td></tr>
+      <tr><td>EPS (Diluted)</td><td class="placeholder">{{EPS_Y0}}</td><td>$1.57</td><td>-$3.70</td><td class="placeholder">{{EPS_Y3}}</td></tr>
+      <tr><td>Free Cash Flow</td><td class="placeholder">{{FCF_Y0}}</td><td>-$229M</td><td>-$1,604M</td><td class="placeholder">{{FCF_Y3}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text"><strong>This research pass encountered a significant data-quality issue: the source's "TTM" query returned a revenue figure ($161.5B) roughly 4x the FY2025 annual base ($40.0B), consistent with the recurring data-extraction/aggregation error pattern observed across several names in this coverage batch (likely each "quarterly" figure in the source actually represents an already-annualized or duplicated value rather than a true single-quarter figure).</strong> Given this, TTM line items have been omitted from the summary table above in favor of the more reliable FY2025 annual figures, and readers should independently pull Dow's actual trailing-twelve-month results directly from the company's most recent 10-Q before relying on any TTM figure for this name. Separately, the underlying deterioration from FY2024 net income of $1.10B to a FY2025 net loss of -$2.63B, alongside negative free cash flow in both years, reflects a genuine and severe cyclical downturn in commodity chemical margins rather than a data anomaly, and should be independently monitored for signs of stabilization in upcoming quarterly results.</p>
+
+    <h3 class="sub-title">Industry-Specific Ratios</h3>
+    <table class="data-table">
+      <tr><th>Ratio</th><th>Value</th></tr>
+      <tr><td>Global Ethylene/Polyethylene Capacity Utilization</td><td class="placeholder">{{INDUSTRY_RATIO_1_VALUE — the key leading indicator of petrochemical margin cycle direction; not independently sourced in this pass}}</td></tr>
+      <tr><td>Feedstock Cost Spread (Ethane/Naphtha vs. Ethylene Price)</td><td class="placeholder">{{INDUSTRY_RATIO_2_VALUE — a key margin driver; not independently sourced in this pass}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT RISKS ============ -->
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+
+    <div class="risk-item">
+      <span class="risk-tag op">Operational</span>
+      <span>Continued global petrochemical oversupply, particularly from new Chinese and Middle Eastern capacity additions, could extend the current margin downturn well beyond current expectations, as suggested by the recently lowered Q3 2026 EBITDA guidance.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag fin">Financial</span>
+      <span>The elevated 4.89% dividend yield, against a backdrop of negative free cash flow in two consecutive fiscal years, raises meaningful questions about dividend sustainability absent a clear margin cycle recovery.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag reg">Regulatory</span>
+      <span>Environmental and chemical-safety regulation affecting large-scale petrochemical manufacturing, along with potential carbon-pricing or emissions regulation that could increase compliance costs disproportionately for energy-intensive chemical producers.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag legal">Legal</span>
+      <span>Standard environmental remediation and commercial litigation typical of a large chemicals manufacturer, including legacy environmental liabilities; outcomes should be independently monitored via the company's most recent 10-K legal proceedings disclosure.</span>
+    </div>
+
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text"><strong>This report flags the FY2025 GAAP net loss, negative free cash flow, and the elevated dividend yield relative to cash generation as material items requiring independent verification before this report is relied upon for an investment decision.</strong> <span class="placeholder">{{AUDITOR_FLAGS — no material weaknesses or qualified audit opinions are otherwise known to this analyst as of the report date; this should be independently confirmed against Dow's most recent 10-K auditor's report}}</span></p>
+  </section>
+
+  <!-- ============ ESG ============ -->
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental">
+        <h4>Environmental</h4>
+        <ul>
+          <li class="placeholder">{{ESG_ENV_1 — corporate carbon-reduction and manufacturing decarbonization targets should be sourced from Dow's sustainability report, given the energy-intensive nature of petrochemical production}}</li>
+          <li class="placeholder">{{ESG_ENV_2 — legacy environmental remediation liabilities at historical manufacturing sites not independently verified in this pass}}</li>
+          <li class="placeholder">{{ESG_ENV_3 — plastics circularity and recycled-content initiatives not independently verified in this pass}}</li>
+        </ul>
+      </div>
+      <div class="esg-card social">
+        <h4>Social</h4>
+        <ul>
+          <li class="placeholder">{{ESG_SOC_1 — worker safety metrics at petrochemical manufacturing facilities should be sourced from Dow's disclosures}}</li>
+          <li class="placeholder">{{ESG_SOC_2 — workforce diversity metrics not independently verified in this pass}}</li>
+          <li class="placeholder">{{ESG_SOC_3 — community and environmental-justice considerations near large-scale chemical manufacturing sites not independently verified in this pass}}</li>
+        </ul>
+      </div>
+      <div class="esg-card governance">
+        <h4>Governance</h4>
+        <ul>
+          <li class="placeholder">{{ESG_GOV_1 — board composition not independently verified in this pass; should be sourced from the most recent proxy statement}}</li>
+          <li><strong>The sustainability of the current dividend amid a GAAP net loss and negative free cash flow is a governance and capital-allocation consideration that warrants independent review ahead of any investment decision.</strong></li>
+          <li class="placeholder">{{ESG_GOV_2 — executive compensation structure should be sourced from the most recent proxy statement}}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER / DISCLOSURES ============ -->
+  <footer>
+    <div class="analyst-line">Prepared by Equity Research Desk, Equity Analyst — Independent Equity Research</div>
+    This report is compiled from publicly available data sources believed to be reliable but not independently audited. Figures marked as placeholders require independent verification before use in an investment decision. This report does not constitute investment advice, an offer, or a solicitation to buy or sell any security. Ratings: BUY = expected to outperform the market over the next 12 months; HOLD = expected to perform in line with the market; SELL = expected to underperform the market. The analyst(s) preparing this report may or may not hold a position in the subject security. Past performance is not indicative of future results.
+  </footer>
+
+</div>
+</body>
+</html>

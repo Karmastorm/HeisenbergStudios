@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — AMGN</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #e9edf2;
+    color: var(--text);
+    font-family: "Georgia", "Times New Roman", serif;
+    line-height: 1.55;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.12);
+    padding: 40px 50px 60px;
+  }
+
+  /* ---------- Header ---------- */
+  .report-header {
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .firm-name {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .company-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+  }
+
+  /* ---------- Recommendation banner ---------- */
+  .reco-banner {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .reco-main {
+    flex: 0 0 170px;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .reco-main .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+
+  .reco-main .value {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+
+  .reco-stats {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--gray-bg);
+  }
+
+  .reco-stat {
+    padding: 10px 14px;
+    border-left: 1px solid var(--border);
+  }
+
+  .reco-stat .label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    display: block;
+  }
+
+  .reco-stat .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* ---------- Basic info table ---------- */
+  .basic-info {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+
+  .basic-info td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .basic-info td.k {
+    color: var(--muted);
+    width: 38%;
+  }
+
+  .basic-info td.v {
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  /* ---------- Section styling ---------- */
+  section {
+    margin-bottom: 32px;
+  }
+
+  h2.section-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: var(--navy);
+    padding: 8px 14px;
+    margin: 0 0 14px 0;
+    border-left: 5px solid var(--accent);
+  }
+
+  h3.sub-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    margin: 18px 0 10px;
+  }
+
+  p.body-text {
+    font-size: 15px;
+    margin: 0 0 12px;
+  }
+
+  .placeholder {
+    color: #8a8fa3;
+    font-style: italic;
+  }
+
+  ul.bullet-list {
+    margin: 0 0 12px 0;
+    padding-left: 20px;
+  }
+
+  ul.bullet-list li {
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+
+  /* ---------- Investment Summary callout ---------- */
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  .thesis-box .thesis-label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-dark);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  /* ---------- Valuation table ---------- */
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  table.data-table th {
+    background: var(--navy);
+    color: #fff;
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  table.data-table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  table.data-table tr:nth-child(even) td {
+    background: var(--gray-bg);
+  }
+
+  /* ---------- Risk list ---------- */
+  .risk-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+  }
+
+  .risk-tag {
+    flex: 0 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    background: var(--red);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .risk-tag.op { background: #b8860b; }
+  .risk-tag.fin { background: var(--red); }
+  .risk-tag.reg { background: #6a3d9a; }
+  .risk-tag.legal { background: #444; }
+
+  /* ---------- ESG grid ---------- */
+  .esg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .esg-card {
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: 4px;
+    padding: 12px 14px;
+  }
+
+  .esg-card.environmental { border-top-color: #2e7d32; }
+  .esg-card.social { border-top-color: #1565c0; }
+  .esg-card.governance { border-top-color: #6a1b9a; }
+
+  .esg-card h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px;
+    color: var(--navy);
+  }
+
+  .esg-card ul {
+    margin: 0;
+    padding-left: 16px;
+    font-size: 13px;
+  }
+
+  .esg-card li { margin-bottom: 4px; }
+
+  /* ---------- Peer comparison ---------- */
+  .peer-note {
+    font-size: 12.5px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: -6px;
+    margin-bottom: 12px;
+  }
+
+  /* ---------- Footer / disclosures ---------- */
+  footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  footer .analyst-line {
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  @media (max-width: 700px) {
+    .page { padding: 24px 18px; }
+    .reco-banner { flex-direction: column; }
+    .reco-stats { grid-template-columns: repeat(2, 1fr); }
+    .esg-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research &middot; Equity Research</div>
+      <h1 class="company-title">Amgen Inc.</h1>
+      <div class="ticker-line">AMGN &nbsp;|&nbsp; NASDAQ &nbsp;|&nbsp; Health Care / Drug Manufacturers &mdash; General</div>
+    </div>
+    <div class="report-date">
+      September 18, 2026<br>
+      Analyst: Equity Research Desk
+    </div>
+  </div>
+
+  <!-- ============ RECOMMENDATION BANNER ============ -->
+  <div class="reco-banner">
+    <div class="reco-main">
+      <span class="label">Recommendation</span>
+      <span class="value" style="color:#b8860b;">HOLD</span>
+    </div>
+    <div class="reco-stats">
+      <div class="reco-stat">
+        <span class="label">Current Price</span>
+        <span class="value">$385.18</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Target Price</span>
+        <span class="value">$388.03</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Market Cap</span>
+        <span class="value">$208.24B</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Implied Upside/Downside</span>
+        <span class="value">+0.7%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BASIC INFORMATION ============ -->
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">AMGN</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NASDAQ</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Health Care</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Drug Manufacturers &mdash; General</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$269.77 &ndash; $447.03</td></tr>
+      <tr><td class="k">Average Daily Volume (Liquidity)</td><td class="v">~2,695,953 shares</td></tr>
+      <tr><td class="k">Float</td><td class="v"><span class="placeholder">{{FLOAT — not independently sourced; effectively equal to shares outstanding less insider holdings}}</span></td></tr>
+      <tr><td class="k">Shares Outstanding</td><td class="v">~540.63 million</td></tr>
+      <tr><td class="k">Major Shareholders</td><td class="v"><span class="placeholder">{{MAJOR_SHAREHOLDERS — Vanguard and BlackRock are known large institutional holders; exact stakes not independently verified in this pass}}</span></td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT SUMMARY ============ -->
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Amgen is one of the world's largest independent biotechnology companies, with a broad portfolio spanning inflammation (Enbrel, Otezla), bone health (Prolia, Evenity), cardiovascular disease (Repatha), rare disease (the Horizon Therapeutics portfolio, including Tepezza and Uplizna), oncology, and an emerging respiratory/inflammation and obesity pipeline (TEZSPIRE, IMDELLTRA, and MariTide). FY2025 results were strong on their face &mdash; revenue of $36,751M (+9.95% YoY) and net income of $7,711M (+88.53% YoY, with net margin expanding from 12.24% to 20.98%) &mdash; but a TTM data query for this report returned implausible figures (revenue of $148.04B and net income of $29.26B, roughly 4x the FY2025 annual base), which this report treats as a data-extraction/aggregation error and excludes from the analysis below in favor of the FY annual figures. The stock trades at a reasonable 23.6x trailing / 16.2x forward P/E and offers a 2.62% dividend yield, but the 34-analyst distribution (9 Strong Buy / 4 Buy / 17 Hold / 2 Sell / 2 Strong Sell) shows Hold as the single largest bucket at exactly 50%, and the average price target of $388.03 implies essentially no upside (+0.74%) from the current price. This combination of a large, well-distributed Hold plurality and negligible implied upside supports a HOLD rating, notwithstanding the strong reported FY2025 earnings growth.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text"><strong>Amgen has reported positive clinical trial results for two relatively recent product launches, IMDELLTRA (oncology) and TEZSPIRE (severe asthma), while facing some pipeline uncertainty following competitor setbacks in adjacent drug categories (most notably in the obesity/incretin space, where MariTide is Amgen's clinical-stage candidate).</strong> <span class="placeholder">{{RECENT_DEVELOPMENTS — the specific readouts, competitive positioning versus GLP-1 incumbents, and any updated regulatory or launch timelines for MariTide should be sourced from the most recent 10-Q/8-K and verified independently}}</span></p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text placeholder">{{EARNINGS_FORECAST_SUMMARY — forward EPS and revenue estimates for FY2027E, along with the trajectory of biosimilar erosion on legacy products (Enbrel, Otezla) versus growth from Repatha, Tepezza/Uplizna, and the newer respiratory/oncology launches, should be sourced from consensus data and verified independently; the gap between trailing (23.60x) and forward (16.19x) P/E implies modest expected earnings growth}}</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">At $385.18, AMGN trades at 23.60x trailing and 16.19x forward earnings, roughly in the middle of its 52-week range of $269.77&ndash;$447.03. With the average analyst price target of $388.03 implying essentially flat (+0.74%) upside, and a wide dispersion of individual targets ($225 low to $457 high), the market appears to see the stock as fairly valued at current levels, consistent with the Hold-weighted analyst distribution.</p>
+  </section>
+
+  <!-- ============ BUSINESS DESCRIPTION ============ -->
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Amgen Inc. is a global biotechnology company that discovers, develops, manufactures, and markets human therapeutics, with a portfolio spanning inflammation, bone health, cardiovascular disease, oncology, and rare disease. The company significantly expanded its rare-disease and inflammation footprint through its 2023 acquisition of Horizon Therapeutics (adding Tepezza, Uplizna, and Krystexxa), while continuing to manage biosimilar competition against long-standing legacy products such as Enbrel and Otezla and investing in a pipeline of newer launches including TEZSPIRE, IMDELLTRA, and the obesity candidate MariTide.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Volume and pricing trends across the core inflammation, bone health, and cardiovascular franchises (Prolia, Repatha, Evenity), balanced against biosimilar erosion on older products such as Enbrel and Otezla</li>
+      <li>Continued ramp of the Horizon Therapeutics rare-disease portfolio (Tepezza, Uplizna, Krystexxa) acquired in 2023</li>
+      <li>Uptake of newer product launches, including TEZSPIRE (severe asthma) and IMDELLTRA (oncology), and clinical/regulatory progress on pipeline candidates such as MariTide</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Research and development spending across a broad late-stage and early-stage pipeline, including the obesity/incretin program</li>
+      <li>Interest expense associated with debt taken on to fund the Horizon Therapeutics acquisition, alongside ongoing manufacturing and commercialization costs for the expanded product portfolio</li>
+    </ul>
+  </section>
+
+  <!-- ============ INDUSTRY OVERVIEW & COMPETITIVE POSITIONING ============ -->
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text placeholder">{{INDUSTRY_OVERVIEW — the large-cap biopharmaceutical industry continues to face biosimilar/generic erosion pressure on legacy blockbusters alongside intense competitive activity in high-growth categories such as obesity/incretin therapeutics, where several large competitors have reported significant clinical setbacks or breakthroughs recently; current competitive dynamics should be independently verified against recent industry sources}}</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low-to-Moderate for novel biologics given high R&amp;D and regulatory barriers, but Moderate-to-High for legacy small-molecule and biologic products facing biosimilar/generic competition</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Low-to-Moderate — Amgen maintains substantial in-house manufacturing capacity for its biologics portfolio, reducing dependence on third-party contract manufacturers</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>High — pharmacy benefit managers, government payers, and health systems exert substantial pricing pressure, particularly amid ongoing U.S. drug-pricing policy scrutiny</td></tr>
+      <tr><td>Threat of Substitutes</td><td>High for mature products facing biosimilar competition (Enbrel, Otezla); Moderate for newer, differentiated therapeutics with limited direct alternatives</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — intense competition from other large biopharmaceutical companies across every major therapeutic category Amgen participates in, including an increasingly crowded obesity/incretin competitive landscape</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Amgen's moat rests on its large-scale biologics manufacturing infrastructure, deep and broad late-stage pipeline, and an expanded rare-disease franchise following the Horizon Therapeutics acquisition, though the company continues to face structural biosimilar erosion risk on its older blockbuster products that partially offsets these advantages.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set used for relative valuation and competitive benchmarking.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Market Cap</th><th>P/E</th><th>EV/EBITDA</th></tr>
+      <tr><td>Amgen Inc.</td><td>AMGN</td><td>$208.24B</td><td>23.60x (trailing)</td><td class="placeholder">{{EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">Gilead Sciences, Inc.</td><td class="placeholder">GILD</td><td class="placeholder">{{PEER_1_MCAP}}</td><td class="placeholder">{{PEER_1_PE}}</td><td class="placeholder">{{PEER_1_EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">Regeneron Pharmaceuticals, Inc.</td><td class="placeholder">REGN</td><td class="placeholder">{{PEER_2_MCAP}}</td><td class="placeholder">{{PEER_2_PE}}</td><td class="placeholder">{{PEER_2_EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">Vertex Pharmaceuticals Incorporated</td><td class="placeholder">VRTX</td><td class="placeholder">{{PEER_3_MCAP}}</td><td class="placeholder">{{PEER_3_PE}}</td><td class="placeholder">{{PEER_3_EV_EBITDA}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ VALUATION ============ -->
+  <section>
+    <h2 class="section-title">Valuation</h2>
+
+    <h3 class="sub-title">Absolute Valuation &mdash; Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{WACC — not independently modeled in this pass; typical large-cap biopharmaceutical WACC range 7-9%}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{TERMINAL_GROWTH — typically 2-3% for a mature-stage terminal assumption}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{FORECAST_PERIOD — should explicitly model biosimilar erosion timing on legacy products against ramp of newer launches and pipeline candidates}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td class="placeholder">{{DCF_INTRINSIC_VALUE — not independently modeled in this pass}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Relative Valuation</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Amgen Inc.</th><th>Peer Average</th><th>Industry Average</th></tr>
+      <tr><td>P/E (Trailing)</td><td>23.60x</td><td class="placeholder">{{PEER_PE_AVG}}</td><td class="placeholder">{{INDUSTRY_PE_AVG}}</td></tr>
+      <tr><td>P/E (Forward)</td><td>16.19x</td><td class="placeholder">{{PEER_FWD_PE_AVG}}</td><td class="placeholder">{{INDUSTRY_FWD_PE_AVG}}</td></tr>
+      <tr><td>P/Sales</td><td class="placeholder">~5.67x (estimated from market cap/FY2025 revenue)</td><td class="placeholder">{{PEER_PS_AVG}}</td><td class="placeholder">{{INDUSTRY_PS_AVG}}</td></tr>
+      <tr><td>P/Book Value</td><td class="placeholder">{{PB_RATIO}}</td><td class="placeholder">{{PEER_PB_AVG}}</td><td class="placeholder">{{INDUSTRY_PB_AVG}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">With Hold as the largest single analyst bucket at exactly 50% of the 34-analyst distribution, and an average price target implying essentially no upside (+0.74%), this report assigns a HOLD rating notwithstanding Amgen's strong reported FY2025 earnings growth. The stock's reasonable but unremarkable forward multiple (16.19x) and wide price-target dispersion ($225&ndash;$457) reflect a market that sees the stock as fairly valued pending clearer visibility on pipeline execution (particularly MariTide) and the pace of biosimilar erosion on legacy products.</p>
+  </section>
+
+  <!-- ============ FINANCIAL ANALYSIS ============ -->
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+
+    <h3 class="sub-title">Historical &amp; Forecast Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>FY2023</th><th>FY2024</th><th>FY2025</th><th>FY2027E</th></tr>
+      <tr><td>Revenue</td><td class="placeholder">{{REV_Y0 — not independently sourced in this pass}}</td><td>$33,424M</td><td>$36,751M</td><td class="placeholder">{{REV_Y3}}</td></tr>
+      <tr><td>EBITDA</td><td class="placeholder">{{EBITDA_Y0}}</td><td class="placeholder">{{EBITDA_Y1}}</td><td class="placeholder">{{EBITDA_Y2}}</td><td class="placeholder">{{EBITDA_Y3}}</td></tr>
+      <tr><td>Net Income</td><td class="placeholder">{{NI_Y0 — not independently sourced in this pass}}</td><td>$4,090M</td><td>$7,711M</td><td class="placeholder">{{NI_Y3}}</td></tr>
+      <tr><td>EPS (Diluted)</td><td class="placeholder">{{EPS_Y0}}</td><td>$7.56</td><td>$14.23</td><td class="placeholder">{{EPS_Y3}}</td></tr>
+      <tr><td>Free Cash Flow</td><td class="placeholder">{{FCF_Y0}}</td><td class="placeholder">{{FCF_Y1}}</td><td class="placeholder">{{FCF_Y2}}</td><td class="placeholder">{{FCF_Y3}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text"><strong>A TTM data query for this report returned revenue of $148.04B and net income of $29.26B &mdash; roughly 4x the corresponding FY2025 annual figures ($36.75B revenue, $7.71B net income) &mdash; which this report treats as a likely data-extraction/aggregation error rather than a genuine trailing-twelve-month result, and excludes from the summary table above.</strong> Readers should independently verify current TTM figures directly from Amgen's most recent 10-Q. Separately, the FY2025 net margin expansion (12.24% to 20.98%) and 88.5% net income growth against only 9.95% revenue growth is a genuine, well-documented improvement rather than a data artifact, though the specific drivers (mix shift, cost discipline, one-time items, or amortization step-downs related to the Horizon acquisition) should be independently confirmed against the 10-K.</p>
+
+    <h3 class="sub-title">Industry-Specific Ratios</h3>
+    <table class="data-table">
+      <tr><th>Ratio</th><th>Value</th></tr>
+      <tr><td>R&amp;D as % of Revenue</td><td class="placeholder">{{INDUSTRY_RATIO_1_VALUE — not independently sourced in this pass}}</td></tr>
+      <tr><td>Biosimilar Erosion Rate (Legacy Products)</td><td class="placeholder">{{INDUSTRY_RATIO_2_VALUE — not independently sourced in this pass}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT RISKS ============ -->
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+
+    <div class="risk-item">
+      <span class="risk-tag op">Operational</span>
+      <span>Continued biosimilar erosion on legacy products (Enbrel, Otezla) could outpace growth from newer launches and the Horizon Therapeutics portfolio, pressuring the top line beyond current expectations.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag fin">Financial</span>
+      <span>Amgen carries elevated leverage following the debt-funded 2023 Horizon Therapeutics acquisition; readers should independently verify current net debt, interest coverage, and deleveraging progress against the most recent 10-Q.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag reg">Regulatory</span>
+      <span>U.S. drug-pricing policy, including Medicare price-negotiation provisions under the Inflation Reduction Act, poses an ongoing risk to pricing power across Amgen's product portfolio, with specific product-level impacts requiring independent verification.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag legal">Legal</span>
+      <span>Standard pharmaceutical-industry litigation exposure, including patent disputes related to biosimilar entrants and general product-liability matters; outcomes should be independently monitored via the company's most recent 10-K legal proceedings disclosure.</span>
+    </div>
+
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text"><strong>This report flags the implausible TTM revenue and net income figures returned in this research pass (approximately 4x the FY2025 annual base) as a likely data-extraction error requiring independent verification before this report is relied upon for an investment decision.</strong> <span class="placeholder">{{AUDITOR_FLAGS — no material weaknesses or qualified audit opinions are otherwise known to this analyst as of the report date; this should be independently confirmed against Amgen's most recent 10-K auditor's report}}</span></p>
+  </section>
+
+  <!-- ============ ESG ============ -->
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental">
+        <h4>Environmental</h4>
+        <ul>
+          <li class="placeholder">{{ESG_ENV_1 — biomanufacturing energy and water usage practices should be sourced from Amgen's sustainability report}}</li>
+          <li class="placeholder">{{ESG_ENV_2 — specific corporate carbon-reduction targets not independently verified in this pass}}</li>
+          <li class="placeholder">{{ESG_ENV_3 — pharmaceutical waste and environmental compliance record not independently verified in this pass}}</li>
+        </ul>
+      </div>
+      <div class="esg-card social">
+        <h4>Social</h4>
+        <ul>
+          <li class="placeholder">{{ESG_SOC_1 — patient access and drug-pricing assistance program details should be sourced from Amgen's disclosures}}</li>
+          <li class="placeholder">{{ESG_SOC_2 — clinical trial diversity and access initiatives not independently verified in this pass}}</li>
+          <li class="placeholder">{{ESG_SOC_3 — workforce diversity metrics not independently verified in this pass}}</li>
+        </ul>
+      </div>
+      <div class="esg-card governance">
+        <h4>Governance</h4>
+        <ul>
+          <li class="placeholder">{{ESG_GOV_1 — board composition not independently verified in this pass; should be sourced from the most recent proxy statement}}</li>
+          <li><strong>Post-Horizon Therapeutics acquisition leverage and capital allocation priorities (debt paydown versus dividend growth versus further M&amp;A) are a governance consideration warranting independent review of management's current guidance.</strong></li>
+          <li class="placeholder">{{ESG_GOV_2 — executive compensation structure should be sourced from the most recent proxy statement}}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER / DISCLOSURES ============ -->
+  <footer>
+    <div class="analyst-line">Prepared by Equity Research Desk, Equity Analyst — Independent Equity Research</div>
+    This report is compiled from publicly available data sources believed to be reliable but not independently audited. Figures marked as placeholders require independent verification before use in an investment decision. This report does not constitute investment advice, an offer, or a solicitation to buy or sell any security. Ratings: BUY = expected to outperform the market over the next 12 months; HOLD = expected to perform in line with the market; SELL = expected to underperform the market. The analyst(s) preparing this report may or may not hold a position in the subject security. Past performance is not indicative of future results.
+  </footer>
+
+</div>
+</body>
+</html>

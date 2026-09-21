@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — RTX</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #e9edf2;
+    color: var(--text);
+    font-family: "Georgia", "Times New Roman", serif;
+    line-height: 1.55;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.12);
+    padding: 40px 50px 60px;
+  }
+
+  .report-header {
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .firm-name {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .company-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+  }
+
+  .reco-banner {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .reco-main {
+    flex: 0 0 170px;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .reco-main .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+
+  .reco-main .value {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+
+  .reco-stats {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--gray-bg);
+  }
+
+  .reco-stat {
+    padding: 10px 14px;
+    border-left: 1px solid var(--border);
+  }
+
+  .reco-stat .label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    display: block;
+  }
+
+  .reco-stat .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .basic-info {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+
+  .basic-info td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .basic-info td.k {
+    color: var(--muted);
+    width: 38%;
+  }
+
+  .basic-info td.v {
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  section { margin-bottom: 32px; }
+
+  h2.section-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: var(--navy);
+    padding: 8px 14px;
+    margin: 0 0 14px 0;
+    border-left: 5px solid var(--accent);
+  }
+
+  h3.sub-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    margin: 18px 0 10px;
+  }
+
+  p.body-text { font-size: 15px; margin: 0 0 12px; }
+
+  ul.bullet-list { margin: 0 0 12px 0; padding-left: 20px; }
+  ul.bullet-list li { margin-bottom: 6px; font-size: 15px; }
+
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  .thesis-box .thesis-label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-dark);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  table.data-table th {
+    background: var(--navy);
+    color: #fff;
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  table.data-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background: var(--gray-bg); }
+
+  .risk-item { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+
+  .risk-tag {
+    flex: 0 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    background: var(--red);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .risk-tag.op { background: #b8860b; }
+  .risk-tag.fin { background: var(--red); }
+  .risk-tag.reg { background: #6a3d9a; }
+  .risk-tag.legal { background: #444; }
+
+  .esg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
+  .esg-card {
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: 4px;
+    padding: 12px 14px;
+  }
+
+  .esg-card.environmental { border-top-color: #2e7d32; }
+  .esg-card.social { border-top-color: #1565c0; }
+  .esg-card.governance { border-top-color: #6a1b9a; }
+
+  .esg-card h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px;
+    color: var(--navy);
+  }
+
+  .esg-card ul { margin: 0; padding-left: 16px; font-size: 13px; }
+  .esg-card li { margin-bottom: 4px; }
+
+  .peer-note {
+    font-size: 12.5px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: -6px;
+    margin-bottom: 12px;
+  }
+
+  footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  footer .analyst-line { margin-bottom: 8px; font-size: 12px; color: var(--text); }
+
+  @media (max-width: 700px) {
+    .page { padding: 24px 18px; }
+    .reco-banner { flex-direction: column; }
+    .reco-stats { grid-template-columns: repeat(2, 1fr); }
+    .esg-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">RTX Corporation</h1>
+      <div class="ticker-line">RTX &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Industrials / Aerospace &amp; Defense</div>
+    </div>
+    <div class="report-date">
+      September 15, 2026<br>
+      Analyst: [Name Not Specified]
+    </div>
+  </div>
+
+  <!-- ============ RECOMMENDATION BANNER ============ -->
+  <div class="reco-banner">
+    <div class="reco-main">
+      <span class="label">Recommendation</span>
+      <span class="value" style="color:#4caf50;">BUY</span>
+    </div>
+    <div class="reco-stats">
+      <div class="reco-stat">
+        <span class="label">Current Price</span>
+        <span class="value">~$198–$213 (see note)</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Target Price (Consensus)</span>
+        <span class="value">~$164 (one stale source) to a raised range post-Q2 — see note</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Market Cap</span>
+        <span class="value">~$266–271 billion</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Dividend Yield</span>
+        <span class="value">~1.3–1.7%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BASIC INFORMATION ============ -->
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">RTX</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Industrials</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Aerospace &amp; Defense</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$112.27 – $226.88 (one source); other sources show a narrower recent range — verify against a live quote</td></tr>
+      <tr><td class="k">Shares Outstanding</td><td class="v">~1.35 billion</td></tr>
+      <tr><td class="k">P/E Ratio (TTM)</td><td class="v">~34.4–35.6x (varies by source)</td></tr>
+      <tr><td class="k">Forward P/E</td><td class="v">~26.9x (one source, dated September 14, 2026)</td></tr>
+      <tr><td class="k">Dividend (Annual / Yield)</td><td class="v">~$2.92 / ~1.3–1.7% (varies by source and date)</td></tr>
+      <tr><td class="k">Corporate History</td><td class="v">Formed in 2020 by the merger of United Technologies' aerospace businesses and Raytheon Company; renamed from Raytheon Technologies Corporation to RTX Corporation in July 2023</td></tr>
+      <tr><td class="k">CEO / Headquarters</td><td class="v">Chris Calio (Chairman and CEO); headquartered in Arlington, Virginia; incorporated 1934 (predecessor entity)</td></tr>
+      <tr><td class="k">Total Capital Returned Since Merger</td><td class="v">&gt;$32 billion (per one source)</td></tr>
+      <tr><td class="k">Float</td><td class="v placeholder">{{Not independently sourced in this summary — verify against RTX's most recent proxy statement}}</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted); margin-top:-14px;">Note: Sources searched showed a meaningful spread in current price (roughly $198 to $213) and correspondingly in market cap and forward P/E, likely reflecting different snapshot dates over the past several weeks of a genuinely strong post-earnings run (shares reportedly up ~22% over a recent 90-day window per one source). One clearly stale MarketBeat data point (price ~$156.62) has been excluded from the headline figures above. Verify against a single live data source before use.</p>
+  </section>
+
+  <!-- ============ INVESTMENT SUMMARY ============ -->
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      RTX Corporation delivered a strong Q2 2026 across all three of its segments (Collins Aerospace, Pratt & Whitney, Raytheon), with sales up 14.5% year-over-year to $24.71 billion (16% organic growth) against a record $289 billion backlog (+22% YoY), prompting shares to rise 7.3% on the earnings print alone — one of the sharper single-day outperformances for a company of this scale. The most important operational story is the measurable, ongoing improvement in Pratt & Whitney's long-troubled geared turbofan (GTF) engine fleet-management issue: aircraft-on-ground counts for the PW1100 engine family are down 25% year-to-date, supported by a 40%+ increase in MRO output and a 23% reduction in turnaround times, with the next-generation GTF Advantage engine now certified and beginning Airbus deliveries. On the defense side, Raytheon secured nearly $20 billion in awards in the quarter alone (including Patriot GEM-T interceptors and classified programs), benefiting from elevated global defense spending and international demand exceeding $10 billion in the first half. Management raised full-year 2026 guidance across every meaningful metric (sales, organic growth, EPS, and free cash flow). The primary risk to this generally strong thesis is valuation: the stock's approximately 22% run over a recent 90-day window means "much of the upside may already be priced in" per at least one source, and the current consensus rating (14 Buy, 5 Hold, 0 Sell per one source) shows the price target sitting close to the current price in that particular snapshot — though other, more recent post-earnings commentary suggests fair-value and price-target estimates have since moved higher. This is a name where execution durability (specifically, whether the GTF fix and defense-order momentum both continue) matters more to the forward return than any single valuation snapshot.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">RTX reported Q2 2026 sales of $24.71 billion (+14.5% YoY, 16% organic growth), with adjusted EPS of $1.58–$1.89 (sources differ slightly on the specific figure), and a record $289 billion backlog (+22% YoY). Collins Aerospace generated $8.21 billion in revenue (+8% YoY), benefiting from strong commercial OE, aftermarket, and defense demand. Pratt & Whitney reported $8.89–$7.24 billion in revenue depending on the specific period/source cited (+14% YoY per one detailed breakdown), with commercial aftermarket up 13%, military growth of 20%, and commercial OE up 9%; adjusted operating margin for the segment improved 170 basis points to 8.2%. Raytheon's segment revenue showed a slight YoY decline in one detailed breakdown due to a cybersecurity-business divestiture (excluding which, sales rose 5%), while nearly $20 billion in new awards were secured in the quarter, including more than $5 billion of Patriot GEM-T interceptor orders, over $4 billion of classified awards, and $1.8 billion in AMRAAM missile contracts. Most significantly for the operational turnaround narrative, Pratt & Whitney's GTF fleet-management plan showed continued measurable progress: PW1100 aircraft-on-ground counts down 25% year-to-date, MRO output up more than 40%, and turnaround times improved 23%; the next-generation GTF Advantage engine received certification and began deliveries to Airbus, with full production transition anticipated in 2028 and expected to double time-on-wing performance. RTX agreed to sell Raytheon's Blue Canyon Technologies business for $620 million to sharpen focus on core defense capabilities. The company is investing more than $200 million domestically to expand GTF MRO capacity and GEM-T/LTAMDS production and testing capacity. Management raised full-year 2026 guidance: adjusted sales to $95–$96 billion (from $92.5–$93.5 billion), organic sales growth to 8–9% (from 5–6%), adjusted EPS to $7.10–$7.25 (from $6.70–$6.90), and free cash flow to $8.50–$8.75 billion (from $8.25–$8.75 billion). More recently, RTX has also announced a new president for Pratt & Whitney and a licensing deal with Hermeus for fighter-engine technology, and secured additional Pentagon deals (alongside Boeing) to boost missile-interceptor component production.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Full-year 2026 guidance (as raised following Q2) calls for adjusted sales of $95–$96 billion, organic sales growth of 8–9%, adjusted EPS of $7.10–$7.25, and free cash flow of $8.50–$8.75 billion. Sell-side consensus (per one source) points to a central full-year EPS estimate near $7.22, within management's guided range. Morgan Stanley specifically identified Raytheon as the largest source of incremental earnings upside looking into 2027–2028, alongside continued Pratt & Whitney GTF operational improvement and Collins Aerospace margin expansion (targeted toward 19–20% over time from an approximately 17% current level via structural cost-reduction initiatives).</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">RTX trades at a forward P/E in the high-20s to mid-30s depending on source and date, a premium some sources describe as "less expensive" than a broader aerospace-sector average (cited as high as ~83x in one source, though this figure should be treated cautiously given how it diverges from other peer comparisons in this and related reports) but still a genuine premium reflecting the market's confidence in RTX's record backlog and multi-year earnings visibility. One source's consensus rating showed a price target sitting close to the then-current price, suggesting limited near-term upside in that specific snapshot, while other, more recent commentary following the strong Q2 print suggests analyst fair-value estimates have moved higher since. Given the roughly 22% run in the stock over a recent 90-day window, position-sizing and entry-point discipline are more relevant considerations here than for a name trading near or below its historical valuation range.</p>
+  </section>
+
+  <!-- ============ BUSINESS DESCRIPTION ============ -->
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">RTX Corporation, headquartered in Arlington, Virginia, is a multinational aerospace and defense conglomerate providing systems and services to commercial, military, and government customers worldwide. The company operates through three segments: Collins Aerospace (aerospace and defense products and aftermarket services for civil and military aircraft manufacturers, commercial airlines, regional/business/general aviation, and commercial space operations), Pratt & Whitney (aircraft engines for commercial, military, business jet, and general aviation customers, including the geared turbofan engine family widely installed on narrowbody aircraft, plus auxiliary power units and fleet management/aftermarket MRO services), and Raytheon (defensive and offensive threat detection, tracking, and mitigation systems for government and commercial customers, including sensors, mission orchestration, satellite control products, and software — notably Patriot air-defense systems and AMRAAM missiles). RTX was formed in 2020 through a merger of equals between United Technologies Corporation's aerospace subsidiaries and Raytheon Company (with UTC having previously spun off Otis Elevator and Carrier Corporation), and was renamed from Raytheon Technologies Corporation to RTX Corporation in July 2023.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Commercial aerospace aftermarket demand (Pratt & Whitney commercial aftermarket +13% YoY, Collins Aerospace benefiting from strong commercial OE and aftermarket volumes)</li>
+      <li>Geared turbofan (GTF) engine fleet expansion and the improving operational/financial trajectory of the GTF fleet-management program as aircraft-on-ground counts decline</li>
+      <li>Defense order momentum across Patriot, AMRAAM, and classified programs, supported by elevated U.S. and international defense budgets (international awards exceeding $10 billion in H1 2026)</li>
+      <li>Record $289 billion backlog, split between commercial aerospace and defense, providing multi-year revenue visibility</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>GTF fleet-management remediation costs, including MRO capacity expansion (&gt;$200 million domestic investment) and powder-metal-related compensation payments (~$150 million in one quarter cited), tied to the historical geared-turbofan durability issue</li>
+      <li>Capacity investment in defense production (Patriot GEM-T components, LTAMDS radar testing) to meet strong order demand</li>
+      <li>Collins Aerospace margin headwinds from defense-mix shift and divestiture impacts, partially offset by higher-volume drop-through</li>
+      <li>Investment in next-generation programs, including the GTF Advantage engine transition (full production ramp targeted for 2028) and new licensing/technology partnerships (e.g., Hermeus fighter-engine licensing deal)</li>
+    </ul>
+  </section>
+
+  <!-- ============ INDUSTRY OVERVIEW & COMPETITIVE POSITIONING ============ -->
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">RTX operates across both the commercial aerospace engine/systems industry and the global defense industry, giving it a somewhat more diversified end-market exposure than pure-play commercial engine makers like GE Aerospace. The commercial aerospace segment benefits from the same multi-year aftermarket demand recovery affecting the broader industry, while the defense segment benefits from sustained increases in U.S. and international (particularly European and NATO-aligned) defense spending amid heightened geopolitical tensions. A defining company-specific dynamic within this broader industry context has been the multi-year remediation of Pratt & Whitney's geared-turbofan powder-metal contamination issue, which grounded a meaningful portion of the PW1100-powered A320neo fleet — RTX's steady, quantifiable progress on this issue (AOG counts down 25% YTD) is a distinct company-specific catalyst distinguishing its recent performance from the broader industry recovery narrative.</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Very low in both commercial jet engines and major defense systems — extreme capital intensity, certification barriers, and decades of accumulated engineering/security clearances make new large-scale entrants essentially nonexistent.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — specialty materials and components (particularly powder-metal alloys, given RTX's own history with this issue) and defense-grade electronics suppliers hold some leverage; RTX has been actively investing in domestic production capacity to reduce this dependency.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Low-to-moderate — the U.S. government and allied defense ministries are large, sophisticated buyers with some negotiating leverage on major weapons programs, but RTX's entrenched positions on long-lived platforms (Patriot, AMRAAM, GTF-powered aircraft) create high switching costs once systems are deployed.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Low — no viable substitute technology exists for commercial jet propulsion or for many of Raytheon's specialized missile-defense and sensor systems at comparable scale and reliability.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High within the oligopoly — GE Aerospace/CFM competes directly with Pratt & Whitney's GTF for narrowbody engine share; Lockheed Martin, Northrop Grumman, and Boeing's defense arm compete with Raytheon across various defense programs; Honeywell and Safran compete with Collins Aerospace in avionics and aerostructures.</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">RTX's moat is built on its unusually diversified position spanning both commercial aerospace aftermarket services (Collins Aerospace, Pratt & Whitney) and mission-critical defense systems (Raytheon) — a broader diversification than most single-segment aerospace or defense peers. Its record $289 billion backlog, split across both commercial and defense revenue streams, provides multi-year earnings visibility that is difficult for less diversified competitors to match. The improving GTF fleet-management trajectory, once fully resolved, should also remove a multi-year overhang that has historically distinguished RTX unfavorably from peers like GE Aerospace, potentially narrowing any valuation discount tied to that specific issue.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major aerospace-engine and defense-systems companies. Figures are approximate and vary meaningfully by source — verify against a single consistent data source before use.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Forward P/E</th><th>Notes</th></tr>
+      <tr><td>RTX Corporation</td><td>RTX</td><td>~27–36x (wide range across sources/dates)</td><td>Record $289B backlog; diversified commercial/defense exposure; ongoing GTF remediation progress</td></tr>
+      <tr><td>GE Aerospace</td><td>GE</td><td>~36–37x</td><td>Pure-play commercial/defense engine maker; also recently downgraded by Melius Research (see separate GE research report) on similar aftermarket-growth-durability concerns</td></tr>
+      <tr><td>Textron</td><td>TXT</td><td>~13x</td><td>Cited as a materially cheaper peer in comparisons reviewed for the separate GE Aerospace report; business aviation and defense exposure differs from RTX's core mix</td></tr>
+      <tr><td>Honeywell Aerospace</td><td>HONA / part of HON</td><td class="placeholder">{{Not independently sourced}}</td><td>Competes with Collins Aerospace in avionics; also recently downgraded by Melius Research alongside GE Aerospace</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ VALUATION ============ -->
+  <section>
+    <h2 class="section-title">Valuation</h2>
+
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified cost of capital assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — recommend explicit forecast through at least 2028, the point at which the GTF Advantage engine's full production transition and Collins Aerospace's targeted 19–20% margin are both expected}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>One source noted analysts raised their fair-value estimate by approximately $5 following the strong Q2 print, citing GTF progress and defense-award upside as key supports — the specific resulting dollar figure was not independently sourced in this summary</td></tr>
+    </table>
+
+    <h3 class="sub-title">Relative Valuation</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>RTX</th><th>Peer Reference (GE Aerospace / Textron)</th></tr>
+      <tr><td>Forward P/E</td><td>~27–36x (wide range)</td><td>GE Aerospace ~36–37x; Textron ~13x (per sources reviewed in the separate GE Aerospace report)</td></tr>
+      <tr><td>Backlog</td><td>$289 billion (record, +22% YoY)</td><td>GE Aerospace: &gt;$210 billion services backlog (per separate GE Aerospace report)</td></tr>
+      <tr><td>Dividend Yield</td><td>~1.3–1.7%</td><td>GE Aerospace ~0.5–0.6% (per separate GE Aerospace report) — RTX offers a notably higher yield</td></tr>
+    </table>
+
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">RTX's forward P/E generally sits at or modestly below GE Aerospace's, while offering a larger absolute backlog, a more diversified commercial/defense revenue mix, and a meaningfully higher dividend yield — a combination that, on the evidence reviewed, makes RTX a reasonably attractive relative alternative within the aerospace-and-defense space, particularly given that GE Aerospace was specifically downgraded by Melius Research on aftermarket-growth-durability concerns that RTX's more diversified defense exposure may partially offset. That said, RTX's own approximately 22% share-price run over a recent 90-day window means the stock is not obviously "cheap" in absolute terms, and at least one snapshot showed its consensus price target sitting close to the then-current price — a rigorous, updated DCF incorporating the post-Q2 raised guidance and GTF-remediation trajectory is recommended before forming a firm view on remaining upside.</p>
+  </section>
+
+  <!-- ============ FINANCIAL ANALYSIS ============ -->
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q2 2025</th><th>Q2 2026</th><th>FY2026 Guidance</th></tr>
+      <tr><td>Sales</td><td class="placeholder">{{Implied ~$21.6B based on 14.5% YoY growth}}</td><td>$24.71B (+14.5% YoY; 16% organic)</td><td>$95B–$96B (raised from $92.5–$93.5B)</td></tr>
+      <tr><td>Adjusted EPS</td><td>$1.24–$1.56 (source-dependent)</td><td>$1.58–$1.89 (source-dependent)</td><td>$7.10–$7.25 (raised from $6.70–$6.90)</td></tr>
+      <tr><td>Free Cash Flow (quarter)</td><td class="placeholder">{{Not directly sourced}}</td><td>$2.9B (per one source)</td><td>$8.50B–$8.75B (full year, raised)</td></tr>
+      <tr><td>Total Backlog</td><td class="placeholder">{{Implied ~$237B based on +22% YoY growth}}</td><td>$289B (record; +22% YoY)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Collins Aerospace Revenue</td><td class="placeholder">{{Implied ~$7.6B based on 8% YoY growth}}</td><td>$8.21B (+8% YoY)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Pratt &amp; Whitney Revenue</td><td class="placeholder">{{Implied lower given 14% YoY growth cited in one detailed breakdown}}</td><td>$7.24B–$8.89B (source-dependent for exact period/quarter)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">RTX's Q2 2026 results show broad-based, well-corroborated strength across independent sources (consistent double-digit organic growth, record backlog, multiple guidance raises), a generally positive earnings-quality signal. One detailed segment breakdown (from a source describing what may be a different specific quarter within 2026) noted Raytheon segment sales declined 1% year-over-year due to a cybersecurity-business divestiture, with underlying (ex-divestiture) sales up 5% — an important distinction between headline and organic performance that should be tracked consistently rather than conflated. Powder-metal-related compensation payments (~$150 million in one quarter cited) remain a disclosed, ongoing cost tied to the historical GTF durability issue — while clearly itemized (a positive disclosure practice), the pace of decline in these payments is worth monitoring as a proxy for how close the GTF remediation program is to full resolution. RTX's return on equity was cited at approximately 14% and net margin at approximately 8.3% in one detailed source, both solid but not exceptional for a company trading at a premium multiple — reinforcing that the investment case rests more on backlog-driven growth visibility than on current absolute profitability ratios.</p>
+
+    <h3 class="sub-title">Industry-Specific Ratios</h3>
+    <table class="data-table">
+      <tr><th>Ratio</th><th>Value</th></tr>
+      <tr><td>Total backlog composition</td><td>$289B total; in one detailed quarterly breakdown, $221B total split $131B commercial aerospace / $90B defense (note: figures from different specific quarters within 2026 — verify current split directly)</td></tr>
+      <tr><td>PW1100 (GTF) aircraft-on-ground reduction (YTD)</td><td>−25%</td></tr>
+      <tr><td>GTF MRO output increase (YTD)</td><td>&gt;40%</td></tr>
+      <tr><td>GTF turnaround time improvement</td><td>−23%</td></tr>
+      <tr><td>Total capital returned to shareholders since 2020 merger</td><td>&gt;$32 billion</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT RISKS ============ -->
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+
+    <div class="risk-item">
+      <span class="risk-tag op">Operational</span>
+      <span>The Pratt & Whitney GTF fleet-management remediation, while showing clear quantitative progress (AOG counts down 25% YTD), is not yet fully resolved, and continued execution on MRO capacity expansion and turnaround-time improvement is required to sustain this trajectory. The GTF Advantage engine's full production transition is not expected until 2028, meaning the company remains mid-transition on its next-generation commercial engine platform.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag fin">Financial</span>
+      <span>The stock's approximately 22% run over a recent 90-day window (per one source) raises the bar for continued execution against an already very full order book, and at least one snapshot showed the consensus price target sitting close to the then-current trading price, suggesting the market may have already priced in much of the recent operational improvement.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag reg">Regulatory</span>
+      <span>As a major U.S. government defense contractor, RTX is subject to U.S. defense budget and procurement policy risk; management specifically cited the proposed U.S. defense budget and international demand as supporting long-term growth, implying the reverse (budget cuts or program delays) would be a meaningful downside risk. Environmental regulations affecting commercial aviation (fuel efficiency, noise standards) also indirectly support demand for RTX's newer-generation GTF engines relative to older platforms, a regulatory tailwind rather than headwind in this case.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag legal">Legal</span>
+      <span class="placeholder">{{No specific major current litigation was identified in the sources reviewed for this summary beyond the historical, now well-documented GTF powder-metal contamination matter (which has been treated here as an operational/financial risk given its remediation-cost and AOG implications rather than as active litigation) — verify against RTX's most recent 10-K legal proceedings disclosure for any additional current matters.}}</span>
+    </div>
+
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or disclosed material weaknesses in internal controls were identified in the sources reviewed for this summary — verify directly against RTX's most recent 10-K/10-Q auditor opinion before relying on this.}}</p>
+  </section>
+
+  <!-- ============ ESG ============ -->
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental">
+        <h4>Environmental</h4>
+        <ul>
+          <li>RTX's geared turbofan engine family is specifically marketed as improving fuel efficiency and reducing noise compared with older-generation powerplants, positioning the company favorably relative to tightening environmental regulations affecting commercial aviation — a genuine environmental/commercial alignment rather than a purely compliance-driven initiative</li>
+          <li class="placeholder">{{ESG_ENV — no specific emissions targets, net-zero commitments, or detailed sustainability metrics beyond the GTF fuel-efficiency positioning were independently sourced in this summary; recommend reviewing RTX's own sustainability disclosures directly}}</li>
+        </ul>
+      </div>
+      <div class="esg-card social">
+        <h4>Social</h4>
+        <ul class="placeholder">
+          <li>{{ESG_SOC — no specific labor standards, workforce diversity, or community-relations data were independently sourced in this summary. Note: as a major defense contractor whose products include missile and air-defense systems, RTX's business itself sits within a category some investors screen for on ethical/values grounds — this is a values-based investment consideration rather than a financial risk, and readers should apply their own screening criteria as appropriate}}</li>
+        </ul>
+      </div>
+      <div class="esg-card governance">
+        <h4>Governance</h4>
+        <ul>
+          <li>RTX has returned over $32 billion in capital to shareholders since the 2020 merger, indicating a disciplined, shareholder-return-oriented capital-allocation history</li>
+          <li>The company recently divested non-core assets (Raytheon's cybersecurity business and Blue Canyon Technologies) to sharpen focus on core operations, a positive portfolio-discipline signal</li>
+          <li class="placeholder">{{ESG_GOV — board composition and executive compensation structure not sourced beyond the above in this summary}}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER / DISCLOSURES ============ -->
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 15, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party financial data sources (StockAnalysis.com, MSN Money, Yahoo Finance, Google Finance, Seeking Alpha, Simply Wall St, MarketBeat, Benzinga, TheStreet, company earnings materials, and various financial media) that may be delayed, inconsistent, or subject to revision. Current price, market cap, and P/E figures showed a notable spread across sources searched, and specific segment-revenue figures for the same period varied by source, likely reflecting different snapshot dates or reporting conventions (e.g., a detailed segment breakdown that may correspond to a different specific quarter within 2026 than the primary Q2 2026 headline figures cited elsewhere). All figures should be independently verified against primary sources (RTX's 10-K/10-Q filings and investor relations disclosures) before being used for any actual investment decision. This is not a research report from a registered investment adviser or broker-dealer, does not constitute investment advice, and should not be relied upon as such.
+  </footer>
+
+</div>
+</body>
+</html>

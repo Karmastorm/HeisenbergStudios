@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — Sempra (SRE)</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--text);
+    background: #ffffff;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+  }
+  .report-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 48px;
+  }
+  .report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+  }
+  .firm-name {
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .company-title {
+    font-size: 26px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .reco-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--gray-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+  }
+  .reco-main .label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+  }
+  .reco-main .value {
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .reco-stats {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 28px;
+  }
+  .reco-stats div .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+  .reco-stats div .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+  }
+  h2.section-title {
+    font-size: 18px;
+    color: var(--navy);
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 6px;
+    margin-top: 40px;
+    margin-bottom: 16px;
+  }
+  h3 {
+    font-size: 15px;
+    color: var(--navy);
+    margin-top: 22px;
+    margin-bottom: 8px;
+  }
+  table.basic-info, table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+  table.basic-info td, table.basic-info th,
+  table.data-table td, table.data-table th {
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    text-align: left;
+  }
+  table.basic-info th, table.data-table th {
+    background: var(--gray-bg);
+    color: var(--navy);
+    font-weight: bold;
+  }
+  table.basic-info td:first-child {
+    font-weight: bold;
+    color: var(--muted);
+    width: 32%;
+  }
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 14.5px;
+  }
+  ul {
+    margin-top: 4px;
+    padding-left: 22px;
+  }
+  li {
+    margin-bottom: 6px;
+  }
+  .peer-note {
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 8px;
+  }
+  .risk-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+  }
+  .risk-item .risk-tag {
+    display: inline-block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: bold;
+    color: #fff;
+    background: var(--muted);
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .esg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 12px;
+  }
+  .esg-card {
+    background: var(--gray-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+  .esg-card h4 {
+    margin-top: 0;
+    color: var(--navy);
+    font-size: 14px;
+  }
+  .placeholder {
+    color: #8a8fa3;
+    font-style: italic;
+  }
+  footer {
+    margin-top: 48px;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .analyst-line {
+    margin-bottom: 6px;
+  }
+  p { font-size: 14.5px; }
+</style>
+</head>
+<body>
+<div class="report-container">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Sempra</h1>
+      <div class="ticker-line">NYSE: SRE &nbsp;|&nbsp; Sector: Utilities &nbsp;|&nbsp; Industry: Diversified Utilities</div>
+    </div>
+    <div class="report-date">
+      Report Date: September 19, 2026<br>
+      Analyst: Equity Research Desk
+    </div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main">
+      <div class="label">Recommendation</div>
+      <div class="value" style="color:var(--green);">BUY</div>
+    </div>
+    <div class="reco-stats">
+      <div>
+        <div class="label">Current Price</div>
+        <div class="value">$81.31</div>
+      </div>
+      <div>
+        <div class="label">Target Price</div>
+        <div class="value">$101.82</div>
+      </div>
+      <div>
+        <div class="label">Market Cap</div>
+        <div class="value">$53.17B</div>
+      </div>
+      <div>
+        <div class="label">Implied Upside/Downside</div>
+        <div class="value" style="color:var(--green);">+25.22%</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Basic Information</h2>
+  <table class="basic-info">
+    <tr><td>Ticker</td><td>SRE (NYSE)</td></tr>
+    <tr><td>Exchange</td><td>New York Stock Exchange</td></tr>
+    <tr><td>Sector</td><td>Utilities</td></tr>
+    <tr><td>Industry</td><td>Diversified Utilities</td></tr>
+    <tr><td>52-Week Range</td><td>$79.59 – $101.04</td></tr>
+    <tr><td>Average Daily Volume</td><td>6,148,515 shares</td></tr>
+    <tr><td>Float</td><td class="placeholder">{{FLOAT_SHARES}}</td></tr>
+    <tr><td>Shares Outstanding</td><td>653.90 million</td></tr>
+    <tr><td>Major Shareholders</td><td class="placeholder">{{MAJOR_SHAREHOLDERS — institutional ownership detail not independently verified; primarily held by index funds and institutional asset managers (e.g., Vanguard, BlackRock, State Street per typical large-cap utility ownership patterns)}}</td></tr>
+  </table>
+
+  <h2 class="section-title">Investment Summary</h2>
+  <div class="thesis-box">
+    <strong>Investment Thesis:</strong> Sempra is a diversified utility holding company operating regulated electric and gas utilities in California and Texas alongside a growing LNG-focused infrastructure business through Sempra Infrastructure. We rate the stock BUY. The 19-analyst rating distribution is strongly bullish (12 Strong Buy, 3 Buy, 4 Hold — 79% Buy-or-better with no Sell ratings), and the average price target of $101.82 implies +25.22% upside from the current $81.31. We flag a likely TTM data-aggregation error in third-party financial data (see Earnings Quality Notes) and separately flag a notable FY2025 net income decline versus FY2024 that requires independent verification of its cause before being treated as a fundamental earnings-quality concern.
+  </div>
+
+  <h3>Recent Developments</h3>
+  <p>Sempra reported FY2025 revenue of $13,702 million, up 3.92% year-over-year from $13,185 million in FY2024, while net income declined 36.3% to $1,796 million from $2,817 million, and EPS fell from $4.42 to $2.75. Net margin contracted from 21.37% to 13.11%. This is a substantial decline that could reflect one-time items (such as asset sale gains embedded in the FY2024 base, non-controlling interest allocation changes from Sempra Infrastructure minority stake sales, or impairments) that we have not independently verified; readers should consult Sempra's 10-K for the specific drivers before drawing conclusions about underlying earnings trends.</p>
+
+  <h3>Earnings Forecast</h3>
+  <p>We expect continued growth in regulated rate base at Sempra California (SDG&amp;E, SoCalGas) and Sempra Texas Utilities (Oncor), alongside continued development of LNG export infrastructure through Sempra Infrastructure, which should support underlying earnings growth once the FY2025 net income decline is normalized for any one-time items.</p>
+
+  <h3>Valuation Summary</h3>
+  <p>At $81.31, SRE trades at a P/E of 23.49x, elevated relative to its FY2025 net income base but potentially distorted by the year's earnings decline; investors should assess valuation against a normalized earnings base once the cause of the FY2025 decline is clarified. The stock trades near the low end of its 52-week range of $79.59–$101.04, and the strongly bullish analyst distribution and meaningful price-target upside support a BUY rating.</p>
+
+  <h2 class="section-title">Business Description</h2>
+  <p>Sempra is an energy infrastructure holding company operating through three primary segments: Sempra California, comprising San Diego Gas &amp; Electric (SDG&amp;E) and Southern California Gas Company (SoCalGas), regulated electric and gas utilities serving Southern California; Sempra Texas Utilities, which includes a stake in Oncor, a regulated electric transmission and distribution utility serving Texas; and Sempra Infrastructure, which develops and operates LNG export terminals and other energy infrastructure primarily serving international markets.</p>
+  <h3>Key Revenue Drivers</h3>
+  <ul>
+    <li>Regulated electric and gas utility revenue from SDG&amp;E and SoCalGas in California.</li>
+    <li>Regulated electric transmission and distribution revenue from Oncor in Texas.</li>
+    <li>LNG export and energy infrastructure revenue from Sempra Infrastructure, including long-term offtake agreements.</li>
+    <li>Rate base growth across all three segments supporting steady earnings growth.</li>
+  </ul>
+  <h3>Key Expense Drivers</h3>
+  <ul>
+    <li>Capital expenditure on grid modernization, wildfire mitigation (California), and LNG infrastructure development.</li>
+    <li>Fuel and gas procurement costs for regulated utility operations.</li>
+    <li>Interest expense on debt used to fund the company's substantial capital investment program across all three segments.</li>
+    <li>Operations and maintenance costs across a geographically diverse utility and infrastructure portfolio.</li>
+  </ul>
+
+  <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+  <p>Sempra operates at the intersection of regulated utility services (stable, rate-regulated returns) and global LNG infrastructure (driven by global energy demand and long-term offtake contracts). This diversification provides both the earnings stability of traditional regulated utilities and exposure to the higher-growth global LNG export market, which benefits from increasing international demand for U.S. natural gas exports.</p>
+  <h3>Porter's Five Forces</h3>
+  <table class="data-table">
+    <tr><th>Force</th><th>Assessment</th></tr>
+    <tr><td>Threat of New Entrants</td><td>Low (regulated utility segments) / Moderate (LNG infrastructure, where well-capitalized competitors can develop competing export terminals).</td></tr>
+    <tr><td>Bargaining Power of Suppliers</td><td>Moderate — natural gas supply and construction/equipment suppliers have some pricing power, particularly for large LNG infrastructure projects.</td></tr>
+    <tr><td>Bargaining Power of Buyers</td><td>Low (regulated ratepayers) / Moderate (LNG offtake counterparties, who negotiate long-term supply agreements).</td></tr>
+    <tr><td>Threat of Substitutes</td><td>Low (regulated utility segments) / Moderate (LNG buyers have access to other global LNG suppliers).</td></tr>
+    <tr><td>Competitive Rivalry</td><td>Low (regulated utility segments) / High (LNG export market, competing against other U.S. and global LNG exporters).</td></tr>
+  </table>
+  <h3>Competitive Advantage</h3>
+  <p>Sempra's diversified business mix across California and Texas regulated utilities plus a growing LNG infrastructure platform provides a differentiated growth profile relative to pure regulated utility peers, with its California and Texas rate bases providing earnings stability that supports continued LNG infrastructure investment.</p>
+  <div class="peer-note">Peer companies shown for comparative context; figures sourced from public financial data as of report date.</div>
+  <table class="data-table">
+    <tr><th>Company</th><th>Ticker</th><th>Market Cap</th><th>P/E</th><th>Net Margin</th></tr>
+    <tr><td>Sempra</td><td>SRE</td><td>$53.17B</td><td>23.49x</td><td>13.11%</td></tr>
+    <tr><td>Duke Energy</td><td>DUK</td><td>$91.64B</td><td>17.69x</td><td>15.43%</td></tr>
+    <tr><td>American Electric Power</td><td>AEP</td><td>$65.33B</td><td>20.79x</td><td>16.43%</td></tr>
+  </table>
+
+  <h2 class="section-title">Valuation</h2>
+  <h3>Absolute Valuation — Discounted Cash Flow (Illustrative)</h3>
+  <table class="data-table">
+    <tr><th>Assumption</th><th>Value</th></tr>
+    <tr><td>Terminal Growth Rate</td><td class="placeholder">{{TERMINAL_GROWTH}}</td></tr>
+    <tr><td>Discount Rate (WACC)</td><td class="placeholder">{{WACC}}</td></tr>
+    <tr><td>Implied Fair Value / Share</td><td class="placeholder">{{DCF_FAIR_VALUE}}</td></tr>
+  </table>
+  <h3>Relative Valuation</h3>
+  <table class="data-table">
+    <tr><th>Metric</th><th>SRE</th><th>Peer Average</th></tr>
+    <tr><td>P/E (TTM)</td><td>23.49x</td><td class="placeholder">{{PEER_AVG_PE}}</td></tr>
+    <tr><td>Dividend Yield</td><td>3.24%</td><td class="placeholder">{{PEER_AVG_YIELD}}</td></tr>
+  </table>
+  <h3>Valuation Conclusion</h3>
+  <p>SRE's elevated P/E relative to peers is influenced by the FY2025 net income decline, which compresses the earnings denominator; a cleaner, normalized earnings base would likely show a more moderate multiple. Combined with the strongly bullish analyst distribution and substantial implied upside, we rate the shares BUY.</p>
+
+  <h2 class="section-title">Financial Analysis</h2>
+  <h3>Historical &amp; Forecast Summary</h3>
+  <table class="data-table">
+    <tr><th>Metric</th><th>FY2024</th><th>FY2025</th><th>FY2027E</th></tr>
+    <tr><td>Revenue ($M)</td><td>13,185</td><td>13,702</td><td class="placeholder">{{REV_2027E}}</td></tr>
+    <tr><td>Net Income ($M)</td><td>2,817</td><td>1,796</td><td class="placeholder">{{NI_2027E}}</td></tr>
+    <tr><td>EPS ($)</td><td>4.42</td><td>2.75</td><td class="placeholder">{{EPS_2027E}}</td></tr>
+    <tr><td>Net Margin</td><td>21.37%</td><td>13.11%</td><td class="placeholder">{{NETMARGIN_2027E}}</td></tr>
+  </table>
+  <h3>Earnings Quality Notes</h3>
+  <p>Trailing-twelve-month (TTM) figures pulled from third-party data reported revenue of $54.12 billion and net income of $9.96 billion — approximately 3.95x and 5.55x the corresponding FY2025 annual figures ($13,702 million revenue and $1,796 million net income), respectively. This ratio is consistent with the recurring data-aggregation error pattern observed across multiple tickers in this series, notwithstanding the source tool's own assessment that the figures "appear reasonable." We have excluded these TTM figures from the summary table above and used FY2024/FY2025 annual figures as the analytical base. Separately, and distinct from the TTM aggregation issue, we flag the 36.3% year-over-year decline in FY2025 net income (versus FY2024) as a genuine reported result requiring further investigation into its cause (possible one-time items, minority interest allocation changes, or impairments) before drawing conclusions about underlying operating trends. Readers should independently verify actual TTM performance and the FY2025 earnings decline driver via SRE's most recent 10-Q and 10-K filings.</p>
+  <h3>Industry-Specific Ratios</h3>
+  <table class="data-table">
+    <tr><th>Ratio</th><th>Value</th></tr>
+    <tr><td>Regulated Rate Base Growth</td><td class="placeholder">{{RATE_BASE_GROWTH}}</td></tr>
+    <tr><td>Oncor Ownership Stake</td><td class="placeholder">{{ONCOR_STAKE}}</td></tr>
+    <tr><td>LNG Export Capacity (Sempra Infrastructure)</td><td class="placeholder">{{LNG_CAPACITY}}</td></tr>
+    <tr><td>Debt / EBITDA</td><td class="placeholder">{{DEBT_EBITDA}}</td></tr>
+  </table>
+
+  <h2 class="section-title">Investment Risks</h2>
+  <div class="risk-item">
+    <span class="risk-tag">Operational</span>
+    <p>Exposure to California wildfire risk and associated liability and mitigation costs at SDG&amp;E and SoCalGas, as well as execution risk on large LNG infrastructure development projects.</p>
+  </div>
+  <div class="risk-item">
+    <span class="risk-tag">Financial</span>
+    <p>Large, ongoing capital expenditure requirements across three segments create sensitivity to interest rates and capital market access; the significant FY2025 net income decline warrants monitoring for recurrence.</p>
+  </div>
+  <div class="risk-item">
+    <span class="risk-tag">Regulatory</span>
+    <p>Rate case outcomes in California and Texas, along with federal LNG export permitting and international trade policy, directly affect earnings across Sempra's three segments.</p>
+  </div>
+  <div class="risk-item">
+    <span class="risk-tag">Legal</span>
+    <p>The company faces ongoing wildfire-related litigation and liability exposure in California, as well as environmental and permitting litigation risk associated with LNG infrastructure development.</p>
+  </div>
+  <h3>Disclosure Flags</h3>
+  <p>We flag the likely TTM data-aggregation error described above as a data-quality risk for any analysis relying on automated trailing-twelve-month feeds for this ticker. We also flag the substantial FY2025 net income decline as requiring independent verification of its underlying cause before being incorporated into any earnings-quality assessment.</p>
+
+  <h2 class="section-title">Environmental, Social &amp; Governance</h2>
+  <div class="esg-grid">
+    <div class="esg-card">
+      <h4>Environmental</h4>
+      <p class="placeholder">{{ESG_ENVIRONMENTAL — wildfire mitigation programs, LNG emissions profile, and clean energy transition targets not independently verified for this report}}</p>
+    </div>
+    <div class="esg-card">
+      <h4>Social</h4>
+      <p class="placeholder">{{ESG_SOCIAL — customer affordability and workforce programs not independently verified for this report}}</p>
+    </div>
+    <div class="esg-card">
+      <h4>Governance</h4>
+      <p class="placeholder">{{ESG_GOVERNANCE — board composition and executive compensation structure not independently verified for this report}}</p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="analyst-line">Prepared by the Equity Research Desk — publicly sourced information only.</div>
+    <div>This report is for informational purposes only and does not constitute investment advice or a solicitation to buy or sell any security. All data is sourced from publicly available third-party sources believed to be reliable but not independently audited; figures marked with placeholders indicate data points that could not be verified as of the report date. Past performance is not indicative of future results. Readers should conduct their own due diligence and consult a licensed financial advisor before making investment decisions.</div>
+  </footer>
+
+</div>
+</body>
+</html>

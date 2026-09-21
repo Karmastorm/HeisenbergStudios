@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — SOLV</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #e9edf2;
+    color: var(--text);
+    font-family: "Georgia", "Times New Roman", serif;
+    line-height: 1.55;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.12);
+    padding: 40px 50px 60px;
+  }
+
+  .report-header {
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .firm-name {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .company-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+  }
+
+  .reco-banner {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .reco-main {
+    flex: 0 0 170px;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .reco-main .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+
+  .reco-main .value {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+
+  .reco-stats {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--gray-bg);
+  }
+
+  .reco-stat {
+    padding: 10px 14px;
+    border-left: 1px solid var(--border);
+  }
+
+  .reco-stat .label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    display: block;
+  }
+
+  .reco-stat .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .basic-info {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+
+  .basic-info td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .basic-info td.k {
+    color: var(--muted);
+    width: 38%;
+  }
+
+  .basic-info td.v {
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  section { margin-bottom: 32px; }
+
+  h2.section-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: var(--navy);
+    padding: 8px 14px;
+    margin: 0 0 14px 0;
+    border-left: 5px solid var(--accent);
+  }
+
+  h3.sub-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    margin: 18px 0 10px;
+  }
+
+  p.body-text { font-size: 15px; margin: 0 0 12px; }
+
+  ul.bullet-list { margin: 0 0 12px 0; padding-left: 20px; }
+  ul.bullet-list li { margin-bottom: 6px; font-size: 15px; }
+
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  .thesis-box .thesis-label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-dark);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  table.data-table th {
+    background: var(--navy);
+    color: #fff;
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  table.data-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background: var(--gray-bg); }
+
+  .risk-item { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+
+  .risk-tag {
+    flex: 0 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    background: var(--red);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .risk-tag.op { background: #b8860b; }
+  .risk-tag.fin { background: var(--red); }
+  .risk-tag.reg { background: #6a3d9a; }
+  .risk-tag.legal { background: #444; }
+
+  .esg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
+  .esg-card {
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: 4px;
+    padding: 12px 14px;
+  }
+
+  .esg-card.environmental { border-top-color: #2e7d32; }
+  .esg-card.social { border-top-color: #1565c0; }
+  .esg-card.governance { border-top-color: #6a1b9a; }
+
+  .esg-card h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px;
+    color: var(--navy);
+  }
+
+  .esg-card ul { margin: 0; padding-left: 16px; font-size: 13px; }
+  .esg-card li { margin-bottom: 4px; }
+
+  .peer-note {
+    font-size: 12.5px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: -6px;
+    margin-bottom: 12px;
+  }
+
+  footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  footer .analyst-line { margin-bottom: 8px; font-size: 12px; color: var(--text); }
+
+  @media (max-width: 700px) {
+    .page { padding: 24px 18px; }
+    .reco-banner { flex-direction: column; }
+    .reco-stats { grid-template-columns: repeat(2, 1fr); }
+    .esg-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Solventum Corporation</h1>
+      <div class="ticker-line">SOLV &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Healthcare / Medical Instruments &amp; Supplies</div>
+    </div>
+    <div class="report-date">
+      September 15, 2026<br>
+      Analyst: [Name Not Specified]
+    </div>
+  </div>
+
+  <!-- ============ RECOMMENDATION BANNER ============ -->
+  <div class="reco-banner">
+    <div class="reco-main">
+      <span class="label">Recommendation</span>
+      <span class="value" style="color:#b8860b;">HOLD</span>
+    </div>
+    <div class="reco-stats">
+      <div class="reco-stat">
+        <span class="label">Current Price</span>
+        <span class="value">~$72–$92 (very wide range across sources — see note)</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Target Price (Consensus)</span>
+        <span class="value">~$82–$85 (varies by source/date)</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Market Cap</span>
+        <span class="value">~$12.6–15.7 billion (varies by source/date)</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Implied Upside</span>
+        <span class="value">~9–17% (consensus average, source-dependent)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BASIC INFORMATION ============ -->
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">SOLV</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Healthcare</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Medical Instruments &amp; Supplies</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$60.70 – $85.92 (one source); another source's 52-week figures diverge somewhat — verify current range directly</td></tr>
+      <tr><td class="k">Shares Outstanding</td><td class="v">~173 million (one source, dated mid-2026)</td></tr>
+      <tr><td class="k">P/E Ratio (TTM)</td><td class="v">Reported inconsistently across sources — figures ranged from ~7.9x to ~9.7x to ~33.6x, likely reflecting different GAAP-vs-adjusted EPS bases and snapshot dates; verify directly against a single source before use</td></tr>
+      <tr><td class="k">Dividend</td><td class="v">None identified in sources reviewed (one source explicitly listed dividend yield as "N/A")</td></tr>
+      <tr><td class="k">Beta</td><td class="v">~0.48 (one source) — notably low, suggesting historically muted correlation with broad market moves</td></tr>
+      <tr><td class="k">Corporate History</td><td class="v">Spun off from 3M as a standalone public company on April 1, 2024 (originally listed at $69.10/share per one source); headquartered in Eagan/Maplewood area, Minnesota</td></tr>
+      <tr><td class="k">CEO</td><td class="v">Bryan Hanson (President and CEO)</td></tr>
+      <tr><td class="k">Analyst Ratings</td><td class="v">Mixed/neutral-to-cautiously-positive — sources show anywhere from 3 Buy/7 Hold/1 Sell to 7 Buy/5 Hold/3 Sell across different snapshots, with an overall consensus rating ranging from "Hold" to "Buy" depending on source and date</td></tr>
+      <tr><td class="k">Float</td><td class="v placeholder">{{Not independently sourced in this summary — verify against Solventum's most recent proxy statement}}</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted); margin-top:-14px;">Note: SOLV pricing and valuation data showed an unusually wide spread across sources reviewed (current price cited variously at ~$72, ~$78, ~$90, and ~$92; market cap from ~$12.6B to ~$15.7B; P/E from ~8x to ~34x). This likely reflects a combination of genuinely stale snapshots from different months in 2026 and inconsistent GAAP-vs-adjusted EPS bases used across providers, compounded by the company's active portfolio restructuring (divestitures, a pending further separation) which can distort period-over-period comparisons. Verify all figures against a single, current, clearly-labeled data source before use.</p>
+  </section>
+
+  <!-- ============ INVESTMENT SUMMARY ============ -->
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Solventum, spun off from 3M in April 2024, is in the midst of a significant, multi-stage portfolio transformation: having already divested its Purification & Filtration business (September 2025), the company is now pursuing a further separation (spin-off or sale) of its Health Information Systems (HIS) segment to sharpen focus on its core MedSurg and Dental businesses. Q2 2026 results were strong on an organic and adjusted basis — sales of $2.21 billion (+9.5% organic YoY), adjusted operating margin of 28.4%, and adjusted EPS of $2.55 (including $0.34 from advance orders and $0.48 from a one-time tariff refund) — prompting management to raise full-year 2026 guidance for organic sales growth (to 2.5–3.0%), adjusted EPS (to $7.10–7.20), and free cash flow (to $200–300 million). However, GAAP operating margin was only 8.2% in the same quarter, dragged down by elevated SG&A and legal costs tied to separation activities and litigation — a persistent and structurally important gap between adjusted and GAAP profitability that reflects both the ongoing costs of separating from 3M (now nearing completion, with ~70% of transition service agreements exited) and, more significantly, Solventum's contractual obligation to indemnify 3M for uninsured liabilities related to the Bair Hugger patient-warming-system litigation — a mass tort matter involving thousands of pending lawsuits that Solventum inherited as part of its spin-off terms. Given the combination of genuine underlying operational improvement, an unusually complex and still-evolving corporate structure (pending HIS separation, ERP cutover completion), and a legacy legal liability of uncertain ultimate magnitude, this name is best characterized as a HOLD: the operational story is improving, but the "true," all-in cost of legacy 3M liabilities and the terms/timing of the HIS separation remain genuine unknowns that could move the valuation meaningfully in either direction.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Solventum reported Q2 2026 sales of $2.21 billion, up 2.2% on a reported basis but 9.5% organically (the divergence reflects the September 2025 sale of the Purification & Filtration business, which reduced total-company growth by a net 8.3 percentage points versus organic growth, partially offset by 1.0 percentage point from currency and contribution from the December 2025 Acera acquisition). Gross margin was 60.1% including a one-time tariff refund (55.6% excluding it); adjusted operating income margin was 28.4%, while GAAP operating margin was only 8.2%, reflecting a 20.1% increase in SG&A driven primarily by separation-related activities and net legal costs. Adjusted EPS was $2.55 (including $0.34 from advance orders ahead of ERP cutover activity and $0.48 from the tariff refund); GAAP EPS was $0.53 — a large gap analysts should track closely given how much of the adjusted figure depends on items that will not recur. All three reportable segments (MedSurg, Dental Solutions, Health Information Systems) generated organic growth and expanded operating margins in the quarter, with MedSurg remaining the largest segment and HIS producing the highest segment margin. Management raised full-year 2026 guidance: organic sales growth to 2.5–3.0% (3.5–4.0% excluding an approximately 100-basis-point impact from planned SKU exits), adjusted EPS to $7.10–7.20, adjusted operating margin to 22.2–22.7%, and free cash flow to $200–300 million (from a prior estimate of approximately $200 million). Management specifically flagged that Q3 2026 growth would decelerate temporarily as roughly $125 million of advance orders (pulled forward ahead of ERP cutover activity) reverse. On corporate structure, Solventum announced its strategic intent to separate the Health Information Systems segment — evaluating either a spin-off or a sale, potentially to a scaled health-information-technology player — in order to sharpen focus on the remaining MedSurg and Dental businesses, while management stated it continues to view both remaining segments as central to its long-term medical-technology strategy. Separation activities from 3M are nearing completion: as of Q2 2026, Solventum had exited nearly 70% of its approximately 200 transition service agreements (on pace to exit 90% by year-end 2026) and migrated approximately 950 of 1,200 total systems, including the majority of ERP implementations.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Full-year 2026 guidance (as raised following Q2) calls for organic sales growth of 2.5–3.0% (3.5–4.0% excluding planned SKU exits), adjusted operating margin of 22.2–22.7%, adjusted diluted EPS of $7.10–7.20, and free cash flow of $200–300 million. Management has explicitly guided for a temporary Q3 2026 growth deceleration as approximately $125 million of pulled-forward advance orders reverse — analysts should model this expected sequential softening rather than treating any resulting Q3 miss-versus-prior-trend as a fundamental deterioration. Beyond 2026, the trajectory and financial profile of the business will depend significantly on the outcome (spin-off vs. sale, and resulting capital structure) of the pending Health Information Systems separation, which was not yet finalized as of the sources reviewed.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Solventum's valuation multiples are difficult to pin down precisely given the wide dispersion in P/E and price figures across sources reviewed (see Basic Information note), but consensus price targets clustered in the $82–$85 range across most current sources, implying roughly 9–17% upside from various recent price snapshots — a relatively modest implied return consistent with the "neutral"-to-"cautiously positive" analyst consensus rating seen across sources (ranging from 3 Buy/7 Hold/1 Sell to 7 Buy/5 Hold/3 Sell in different snapshots). One narrative-based source cited a DCF-derived "intrinsic value" of approximately $90.17 (implying the stock was meaningfully undervalued at the time), while acknowledging this reflects updated discount-rate and forward-P/E assumptions following portfolio-reshaping news — a useful data point but one that should be treated as one analyst's model output rather than settled fact given how much Solventum's near-term capital structure and segment mix remain in flux pending the HIS separation decision.</p>
+  </section>
+
+  <!-- ============ BUSINESS DESCRIPTION ============ -->
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Solventum Corporation, a healthcare company headquartered in Minnesota, develops, manufactures, and commercializes solutions addressing critical customer and patient needs, leveraging material science, data science, and digital capabilities inherited from its former parent, 3M. The company was spun off from 3M as a standalone public company on April 1, 2024, and currently operates through three reportable segments: MedSurg (the largest segment, offering negative pressure wound therapy, advanced wound dressings, advanced skin care, synthetic tissue matrices, I.V. site management, sterilization assurance, temperature management — including the Bair Hugger patient-warming system — surgical supplies, medical tapes and wraps, stethoscopes, and medical electrodes), Dental Solutions (a comprehensive suite of dental and orthodontic products including brackets, aligners, and restorative cements), and Health Information Systems (healthcare software and AI-driven medical coding solutions, currently the subject of a planned separation). The company previously also operated a Purification & Filtration segment, which was divested in September 2025 (Solventum retained the smaller Drinking Water filtration business, now reported within "All Other" along with residual supply agreements to 3M assumed at spin-off).</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>MedSurg segment product adoption and innovation (wound care, skin care, temperature management, sterilization) — the largest single revenue contributor</li>
+      <li>Dental Solutions segment growth in orthodontic and restorative products</li>
+      <li>Health Information Systems' AI-driven medical coding capabilities and international market expansion, cited by management as a key reason the segment could grow faster as a standalone entity or under a scaled health-IT owner than within Solventum's current structure</li>
+      <li>Cost and operational discipline from the "Transform for the Future" restructuring program, supporting margin expansion as separation-related and one-time costs wind down over time</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Ongoing separation costs from 3M (ERP migration, transition service agreement exits, legal/consulting fees), which are elevating SG&A and depressing GAAP (though not adjusted) operating margin — expected to wind down as the separation nears completion (90% of transition service agreements targeted to be exited by year-end 2026)</li>
+      <li>Legal costs and indemnification obligations tied to the Bair Hugger patient-warming-system litigation inherited from 3M under the terms of the Separation and Distribution Agreement — a structurally significant, disclosed cost driver distinct from ordinary restructuring expense</li>
+      <li>Restructuring costs under the "Transform for the Future" program ($11 million of employee termination costs and $31 million of other costs, including third-party consulting and asset write-downs, disclosed for 2026)</li>
+      <li>Costs associated with the pending Health Information Systems separation process itself, alongside continued integration costs from the December 2025 Acera acquisition</li>
+    </ul>
+  </section>
+
+  <!-- ============ INDUSTRY OVERVIEW & COMPETITIVE POSITIONING ============ -->
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Solventum operates in the global medical instruments and supplies industry, competing across several distinct sub-categories: wound care and surgical/temperature-management products (MedSurg), dental and orthodontic products (Dental Solutions), and healthcare information technology/medical coding software (Health Information Systems, pending separation). This multi-segment structure means Solventum competes against a different set of rivals in each business line rather than facing a single, unified competitive landscape — a structural characteristic shared with several other recently-spun-off industrial/healthcare conglomerate successor companies (e.g., GE Vernova, GE Aerospace, and Kratos Defense in other reports in this series, each of which also emerged from or is pursuing corporate separations).</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low-to-moderate — established medical-device regulatory approval requirements (FDA clearance/approval) and decades of accumulated clinical evidence and hospital/dental-practice relationships create meaningful barriers, particularly in MedSurg's more specialized product categories.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — Solventum continues to rely on certain legacy 3M supply agreements assumed at spin-off, a transitional dependency that should diminish as the company's independent supply chain and manufacturing footprint matures.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate-to-high — hospital systems, group purchasing organizations, and dental practices are sophisticated, often large-scale buyers with meaningful negotiating leverage, particularly for more commoditized supply categories within MedSurg.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate — alternative wound-care, temperature-management, and dental-product technologies exist from multiple established competitors; Health Information Systems faces substitution risk from a broad and growing field of healthcare IT and AI-driven coding software vendors.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — direct competition from large, diversified medical-device and healthcare-technology companies including Becton Dickinson, Baxter International, Zimmer Biomet, Abbott, Align Technology (dental/orthodontics), and numerous healthcare IT vendors in the HIS category.</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Solventum's moat, inherited substantially from its decades as part of 3M, rests on established clinical relationships, brand recognition in specific product categories (e.g., Bair Hugger in temperature management, despite the associated litigation), and material-science and data-science capabilities developed under 3M's R&D umbrella. One bullish narrative source specifically frames Solventum's diversified mix of MedSurg, Dental Solutions, and Health Information Systems as "an underpinning for long-term growth potential" and groups the company with premium large-cap MedTech peers (Boston Scientific, Edwards Lifesciences, Becton Dickinson) in some analyst commentary — though this framing should be weighed against the company's still-unsettled corporate structure (the pending HIS separation would remove one of these three legs from the current portfolio) and its below-industry-average current profitability metrics on a GAAP basis.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: large-cap medical device and diversified healthcare-supplies companies. Figures are approximate and drawn from a single comparative snapshot with a stated date of "Apr/06" (year not fully specified in the source) — treat as illustrative and verify against current data before use.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Price (snapshot)</th><th>1-Year Return (snapshot)</th></tr>
+      <tr><td>Solventum</td><td>$63.25</td><td>−3.17%</td></tr>
+      <tr><td>Becton, Dickinson and Co.</td><td>$155.32</td><td>−24.26%</td></tr>
+      <tr><td>Baxter International</td><td>$16.65</td><td>−41.86%</td></tr>
+      <tr><td>Zimmer Biomet Holdings</td><td>$91.00</td><td>−13.20%</td></tr>
+      <tr><td>Abbott</td><td>$102.30</td><td>−18.07%</td></tr>
+      <tr><td>Align Technology</td><td>$171.87</td><td>+12.08%</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted);">Note: this comparison table's snapshot date and the specific $63.25 price for Solventum are inconsistent with other, more recent sources cited elsewhere in this report (which showed prices in the $72–$92 range); it is included here for directional peer-group context only and should not be treated as Solventum's current price. Interestingly, several large, well-established MedTech peers also showed significant negative trailing 1-year returns in this snapshot, suggesting sector-wide, not Solventum-specific, valuation pressure may have been at play during that period.</p>
+  </section>
+
+  <!-- ============ VALUATION ============ -->
+  <section>
+    <h2 class="section-title">Valuation</h2>
+
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified cost of capital assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled — highly sensitive to the outcome of the pending HIS separation, which will materially change Solventum's revenue base, margin profile, and capital structure}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — recommend an explicit forecast that separately scenarios the HIS-retained vs. HIS-separated cases, alongside a distinct, disclosed reserve/liability estimate for the Bair Hugger litigation}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>One narrative-based source cited a DCF-derived estimate of approximately $90.17 (described as "28.6% undervalued" relative to the stock's price at that time) — this reflects one analyst's model and specific discount-rate/forward-P/E assumptions rather than a consensus view, and predates finalization of the HIS separation decision</td></tr>
+    </table>
+
+    <h3 class="sub-title">Relative Valuation</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Solventum (SOLV)</th><th>Peer Reference</th></tr>
+      <tr><td>P/E (basis varies by source)</td><td>Reported inconsistently: ~8x to ~34x across sources</td><td class="placeholder">{{Not independently sourced for a directly comparable basis}}</td></tr>
+      <tr><td>Return on Equity</td><td>~34.8% (one source) — notably strong, though likely influenced by the company's leveraged, post-spin-off capital structure rather than purely operational returns</td><td class="placeholder">{{Not independently sourced}}</td></tr>
+      <tr><td>Consensus Price Target</td><td>~$82–$85</td><td class="placeholder">{{Not independently sourced for peers}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">Given the substantial inconsistency in basic valuation metrics (P/E, market cap, current price) across sources reviewed — likely reflecting a combination of stale data, GAAP-vs-adjusted EPS confusion, and the genuine complexity introduced by Solventum's active portfolio restructuring — any firm valuation conclusion drawn from this research should be treated with considerable caution. The consensus price target range ($82–$85) implies modest upside (roughly 9–17%) from most recent price points, consistent with a "Hold"-leaning overall analyst posture. The single most important unresolved variable for valuation is the outcome and terms of the Health Information Systems separation (spin-off vs. sale, and the resulting capital allocation), alongside continued uncertainty about the ultimate cost of the Bair Hugger litigation indemnification obligation — both of which should be modeled as explicit scenarios rather than assumed away in a base case.</p>
+  </section>
+
+  <!-- ============ FINANCIAL ANALYSIS ============ -->
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q2 2025</th><th>Q2 2026</th><th>FY2026 Guidance</th></tr>
+      <tr><td>Sales (Reported)</td><td class="placeholder">{{Implied ~$2.16B based on 2.2% reported YoY growth}}</td><td>$2.21B (+2.2% reported; +9.5% organic)</td><td class="placeholder">{{Implied from 2.5–3.0% organic growth guidance on FY2025 base}}</td></tr>
+      <tr><td>Gross Margin</td><td class="placeholder">{{Not directly sourced}}</td><td>60.1% (incl. tariff refund); 55.6% (excl. refund)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Adjusted Operating Margin</td><td class="placeholder">{{Not directly sourced}}</td><td>28.4%</td><td>22.2%–22.7% (full year)</td></tr>
+      <tr><td>GAAP Operating Margin</td><td class="placeholder">{{Not directly sourced}}</td><td>8.2% (pressured by higher SG&amp;A/legal costs)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Adjusted EPS</td><td class="placeholder">{{Not directly sourced}}</td><td>$2.55 (incl. $0.34 advance orders, $0.48 tariff refund)</td><td>$7.10–$7.20 (full year, raised)</td></tr>
+      <tr><td>GAAP EPS</td><td class="placeholder">{{Not directly sourced}}</td><td>$0.53</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Free Cash Flow</td><td class="placeholder">{{Not directly sourced}}</td><td class="placeholder">{{Not directly sourced for the quarter}}</td><td>$200M–$300M (full year, raised from ~$200M)</td></tr>
+    </table>
+
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">Solventum's Q2 2026 results present one of the more pronounced GAAP-versus-adjusted divergences seen across this report series: adjusted operating margin of 28.4% versus a GAAP operating margin of just 8.2%, and adjusted EPS of $2.55 versus GAAP EPS of $0.53. While some of this gap reflects legitimate, disclosed one-time items (separation costs, a genuinely temporary tariff refund, advance-order timing benefits that management itself flagged as pulled forward from Q3), a meaningful portion also reflects an ongoing, structurally embedded cost: legal expenses tied to the Bair Hugger litigation indemnification obligation. Because Solventum has contractually agreed to bear 3M's uninsured Bair Hugger liabilities, manage the litigation, and pay associated legal expenses, this is not a one-time item in the way separation costs eventually will be — it is a standing legal-cost exposure of uncertain multi-year duration and magnitude (the underlying litigation is a still-active, multidistrict mass tort matter with thousands of pending cases, as detailed under Investment Risks below). Analysts should therefore be cautious about assuming GAAP margins will converge fully toward adjusted margins once separation costs wind down — the litigation-related cost component may persist independently of the 3M separation timeline. Additionally, the two large one-time benefits embedded in Q2 2026 adjusted EPS ($0.34 advance orders, $0.48 tariff refund) together account for roughly 32% of the $2.55 adjusted EPS figure — a useful reminder to examine the quality and recurrence of adjusted-EPS components rather than treating the headline adjusted number as a clean run-rate.</p>
+
+    <h3 class="sub-title">Industry-Specific Ratios</h3>
+    <table class="data-table">
+      <tr><th>Ratio</th><th>Value</th></tr>
+      <tr><td>3M transition service agreements exited (as of Q2 2026)</td><td>~70% (targeting 90% by year-end 2026)</td></tr>
+      <tr><td>Systems migrated (of ~1,200 total)</td><td>~950 (including majority of ERP implementations)</td></tr>
+      <tr><td>Advance-order pull-forward reversing in Q3 2026</td><td>~$125 million</td></tr>
+      <tr><td>SKU-exit impact on full-year organic growth</td><td>~100 basis points</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT RISKS ============ -->
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+
+    <div class="risk-item">
+      <span class="risk-tag op">Operational</span>
+      <span>Solventum's separation from 3M, while nearing completion, still involves substantial ongoing execution risk (remaining ~30% of transition service agreements, ~250 remaining systems to migrate) that could disrupt operations, margins, or cash flow if delayed or mismanaged. The pending Health Information Systems separation (spin-off or sale, not yet finalized) introduces a second, concurrent major corporate-structure transition, compounding execution complexity.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag fin">Financial</span>
+      <span>The substantial and persistent gap between adjusted and GAAP profitability (28.4% vs. 8.2% operating margin in Q2 2026) means investors relying primarily on adjusted metrics may be underestimating the company's true, all-in cost structure — particularly given that a meaningful portion of this gap relates to a standing legal-cost obligation (Bair Hugger indemnification) rather than purely temporary separation costs. Q3 2026 organic growth is explicitly guided to decelerate as approximately $125 million of pulled-forward advance orders reverse.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag reg">Regulatory</span>
+      <span>As a medical-device and healthcare-software company, Solventum is subject to ongoing FDA and international regulatory oversight across its product categories; the pending Health Information Systems separation, if structured as a sale, may also require regulatory review depending on the acquirer and deal structure.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag legal">Legal</span>
+      <span>Solventum has contractually agreed, under its Separation and Distribution Agreement with 3M, to indemnify 3M for uninsured liabilities related to the Bair Hugger patient-warming-system litigation, to manage that litigation, and to pay associated legal expenses. This is a substantial, still-active mass tort matter: sources reviewed cite over 7,500 (per SEC filings as of the 2024 spin-off) to as many as 8,784 (per a September 2025 litigation-tracking source) pending lawsuits alleging that the Bair Hugger device causes surgical site infections, consolidated in multidistrict litigation in the U.S. District Court for the District of Minnesota. While 3M has won the bellwether trials that have gone to verdict to date (2018 and a more recent trial per sources reviewed), and a federal court dismissed a large tranche of cases in 2019 for lack of scientific support (a decision that was later reinstated/reconsidered through appeals, per the litigation-tracking sources), plaintiffs have reportedly revived parts of their theory through amended complaints, and the ultimate scope, duration, and cost of this litigation to Solventum remains genuinely uncertain. This is a materially different type of legal risk than the more routine, resolvable disputes seen in most other reports in this series, and warrants direct review of Solventum's most recent 10-K/10-Q litigation-reserve disclosures rather than reliance on this summary alone.</span>
+    </div>
+
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or disclosed material weaknesses in internal controls were identified in the sources reviewed for this summary — verify directly against Solventum's most recent 10-K/10-Q auditor opinion before relying on this. One source noted CEO Bryan Hanson's total 2024 compensation was reported as 93% "other compensation" (non-salary) — worth understanding directly via the company's proxy statement rather than from this summary alone.}}</p>
+  </section>
+
+  <!-- ============ ESG ============ -->
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental">
+        <h4>Environmental</h4>
+        <ul class="placeholder">
+          <li>{{ESG_ENV — no specific emissions, manufacturing-footprint, or sustainability metrics were independently sourced in this summary; note that Solventum's former parent 3M has faced substantial, separate PFAS ("forever chemicals") litigation and settlements — one source specifically referenced 3M settling federal PFAS lawsuits around the time of the Solventum spin-off — and readers should confirm directly whether any PFAS-related liabilities were retained by 3M or could touch Solventum given the shared corporate history, since this was not conclusively addressed in the sources reviewed for this summary}}</li>
+        </ul>
+      </div>
+      <div class="esg-card social">
+        <h4>Social</h4>
+        <ul class="placeholder">
+          <li>{{ESG_SOC — no specific labor standards or workforce diversity data were independently sourced in this summary}}</li>
+        </ul>
+      </div>
+      <div class="esg-card governance">
+        <h4>Governance</h4>
+        <ul>
+          <li>A notable executive departure was disclosed: Chris Barry, Executive VP and Group President of MedSurg, departed effective December 31, 2025, per one source — a leadership-continuity data point in the company's largest segment worth monitoring</li>
+          <li>CEO Bryan Hanson's compensation structure was reported by one source as 93% "other compensation" versus 7% salary for 2024, with disclosed option exercises and share sales — worth reviewing directly via the company's own proxy statement</li>
+          <li class="placeholder">{{ESG_GOV — broader board composition not sourced beyond the above in this summary}}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER / DISCLOSURES ============ -->
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 15, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party financial data sources (Investing.com, TradingView, Kraken, WallStreetZen, TipRanks, MarketBeat, Simply Wall St, StockAnalysis.com, TradingKey, Trading Economics, company earnings materials and SEC filings, litigation-tracking sites, and various financial media) that may be delayed, inconsistent, or subject to revision. Basic valuation figures (price, market cap, P/E) for Solventum showed an unusually wide and hard-to-reconcile spread across sources reviewed, likely compounded by the company's active, multi-stage portfolio restructuring; all figures should be independently verified against a single, current, clearly-dated data source. This report also relies in part on litigation-tracking websites (Drugwatch, Miller & Zois, Lawsuit Information Center, Bair Hugger Facts) for detail on the Bair Hugger litigation beyond what was found in SEC filings directly — these are advocacy/legal-marketing sources with their own perspectives and should be cross-checked against Solventum's own 10-K/10-Q litigation disclosures for the company's official position and any disclosed reserve amounts. All figures should be independently verified against primary sources before being used for any actual investment decision. This is not a research report from a registered investment adviser or broker-dealer, does not constitute investment advice, and should not be relied upon as such.
+  </footer>
+
+</div>
+</body>
+</html>

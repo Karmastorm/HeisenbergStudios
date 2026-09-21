@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — Iron Mountain Incorporated (IRM)</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--text);
+    background: #ffffff;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+  }
+  .report-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 48px;
+  }
+  .report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+  }
+  .firm-name {
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .company-title {
+    font-size: 26px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .reco-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--gray-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+  }
+  .reco-main .label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+  }
+  .reco-main .value {
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .reco-stats {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 28px;
+  }
+  .reco-stats div .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+  .reco-stats div .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+  }
+  h2.section-title {
+    font-size: 18px;
+    color: var(--navy);
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 6px;
+    margin-top: 40px;
+    margin-bottom: 16px;
+  }
+  h3 {
+    font-size: 15px;
+    color: var(--navy);
+    margin-top: 22px;
+    margin-bottom: 8px;
+  }
+  table.basic-info, table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+  table.basic-info td, table.basic-info th,
+  table.data-table td, table.data-table th {
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    text-align: left;
+  }
+  table.basic-info th, table.data-table th {
+    background: var(--gray-bg);
+    color: var(--navy);
+    font-weight: bold;
+  }
+  table.basic-info td:first-child {
+    font-weight: bold;
+    color: var(--muted);
+    width: 32%;
+  }
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 14.5px;
+  }
+  ul {
+    margin-top: 4px;
+    padding-left: 22px;
+  }
+  li {
+    margin-bottom: 6px;
+  }
+  .peer-note {
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 8px;
+  }
+  .risk-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+  }
+  .risk-item .risk-tag {
+    display: inline-block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: bold;
+    color: #fff;
+    background: var(--muted);
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .esg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 12px;
+  }
+  .esg-card {
+    background: var(--gray-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+  .esg-card h4 {
+    margin-top: 0;
+    color: var(--navy);
+    font-size: 14px;
+  }
+  .placeholder {
+    color: #8a8fa3;
+    font-style: italic;
+  }
+  footer {
+    margin-top: 48px;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .analyst-line {
+    margin-bottom: 6px;
+  }
+  p { font-size: 14.5px; }
+</style>
+</head>
+<body>
+<div class="report-container">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Iron Mountain Incorporated</h1>
+      <div class="ticker-line">NYSE: IRM &nbsp;|&nbsp; Sector: Real Estate &nbsp;|&nbsp; Industry: REIT — Specialty (Information Management &amp; Data Centers)</div>
+    </div>
+    <div class="report-date">
+      Report Date: September 19, 2026<br>
+      Analyst: Equity Research Desk
+    </div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main">
+      <div class="label">Recommendation</div>
+      <div class="value" style="color:var(--green);">BUY</div>
+    </div>
+    <div class="reco-stats">
+      <div>
+        <div class="label">Current Price</div>
+        <div class="value">$114.34</div>
+      </div>
+      <div>
+        <div class="label">Target Price</div>
+        <div class="value">$146.20</div>
+      </div>
+      <div>
+        <div class="label">Market Cap</div>
+        <div class="value">$34.04B</div>
+      </div>
+      <div>
+        <div class="label">Implied Upside/Downside</div>
+        <div class="value" style="color:var(--green);">+27.86%</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Basic Information</h2>
+  <table class="basic-info">
+    <tr><td>Ticker</td><td>IRM (NYSE)</td></tr>
+    <tr><td>Exchange</td><td>New York Stock Exchange</td></tr>
+    <tr><td>Sector</td><td>Real Estate</td></tr>
+    <tr><td>Industry</td><td>REIT — Specialty (Information Management &amp; Data Centers)</td></tr>
+    <tr><td>52-Week Range</td><td>$77.77 – $134.68</td></tr>
+    <tr><td>Average Daily Volume</td><td>2,887,858 shares</td></tr>
+    <tr><td>Float</td><td class="placeholder">{{FLOAT_SHARES}}</td></tr>
+    <tr><td>Shares Outstanding</td><td>297.70 million</td></tr>
+    <tr><td>Major Shareholders</td><td class="placeholder">{{MAJOR_SHAREHOLDERS — institutional ownership detail not independently verified; primarily held by index funds and institutional asset managers (e.g., Vanguard, BlackRock, State Street per typical large-cap REIT ownership patterns)}}</td></tr>
+  </table>
+
+  <h2 class="section-title">Investment Summary</h2>
+  <div class="thesis-box">
+    <strong>Investment Thesis:</strong> Iron Mountain is a global leader in records and information management, transitioning its business mix toward higher-growth digital transformation, data governance, and data center/colocation services, while retaining a large, sticky, cash-generative physical records storage base. We rate the stock BUY. The 11-analyst rating distribution is strongly bullish (6 Strong Buy, 4 Buy, 0 Hold, 0 Sell, 1 Strong Sell — over 90% Buy-or-better with no Hold ratings at all), and the average price target of $146.20 implies +27.86% upside from the current $114.34. We flag a likely TTM data-aggregation error in third-party financial data (see Earnings Quality Notes) and note the company's currently thin reported net margin (2.10%), which reflects heavy depreciation and real estate investment/development spending typical of a REIT in growth-capex mode rather than a fundamental earnings-quality concern.
+  </div>
+
+  <h3>Recent Developments</h3>
+  <p>Iron Mountain reported FY2025 revenue of $6,902 million, up 12.23% year-over-year from $6,150 million in FY2024, driven by continued growth in its Global Data Center segment and Digital Solutions offerings alongside stable records-management revenue. Net income declined to $144.59 million from $180.16 million, and EPS fell from $0.61 to $0.49, reflecting elevated depreciation, interest expense, and continued capital investment in data center capacity expansion. Despite the near-term earnings pressure, the stock's market cap rose 15.9%, suggesting the market is looking through near-term reported earnings toward the company's growth investment thesis, particularly in data centers.</p>
+
+  <h3>Earnings Forecast</h3>
+  <p>We expect continued double-digit revenue growth driven by data center leasing and digital transformation service adoption, with net income and EPS remaining pressured near-term by heavy capital investment and associated depreciation, before improving as data center capacity is leased up and reaches stabilized occupancy.</p>
+
+  <h3>Valuation Summary</h3>
+  <p>At $114.34, IRM trades at a P/E of 81.51x, which appears extremely elevated but is heavily distorted by the company's currently thin net income base relative to its growing revenue and cash flow generation; REIT investors typically focus on funds from operations (FFO) rather than GAAP net income/P/E for names undergoing heavy development capex, such as Iron Mountain's data center buildout. The stock trades well above its 52-week low of $77.77 but remains meaningfully below its 52-week high of $134.68, and the strongly bullish analyst distribution supports further upside.</p>
+
+  <h2 class="section-title">Business Description</h2>
+  <p>Iron Mountain Incorporated is a global leader in storage and information management services, serving approximately 95% of the Fortune 1000. The company's traditional business stores physical records, documents, and other media for corporate and government clients, generating highly stable, recurring storage revenue with very high customer retention. In recent years, Iron Mountain has diversified into digital transformation and data governance services (scanning, digitizing, and managing client information) and, increasingly, into data center and colocation services, positioning the company to benefit from enterprise digitization and AI/cloud-driven data center demand.</p>
+  <h3>Key Revenue Drivers</h3>
+  <ul>
+    <li>Records and information management storage revenue, characterized by high retention rates and durable, recurring cash flow.</li>
+    <li>Digital transformation and data governance service revenue as enterprises digitize physical records.</li>
+    <li>Global Data Center segment revenue from colocation and data center leasing, a key growth driver benefiting from cloud and AI-related demand.</li>
+    <li>Secure destruction and other ancillary information management services.</li>
+  </ul>
+  <h3>Key Expense Drivers</h3>
+  <ul>
+    <li>Real estate and facility operating costs across a global network of storage and data center properties.</li>
+    <li>Heavy capital expenditure and associated depreciation related to data center capacity expansion.</li>
+    <li>Interest expense on debt used to finance data center development and past acquisitions.</li>
+    <li>Labor and logistics costs for records management and secure transport/destruction services.</li>
+  </ul>
+
+  <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+  <p>Iron Mountain operates at the intersection of two distinct industries: the mature, consolidated records/information management industry (where it holds a dominant global position with limited direct large-scale competition) and the rapidly growing data center/colocation industry (where it competes against both pure-play data center REITs and hyperscale cloud providers' own infrastructure buildouts). This dual positioning provides a stable cash-generating base to fund growth investment in the higher-multiple data center business.</p>
+  <h3>Porter's Five Forces</h3>
+  <table class="data-table">
+    <tr><th>Force</th><th>Assessment</th></tr>
+    <tr><td>Threat of New Entrants</td><td>Low (records management) / High (data centers) — records management has high switching costs and scale barriers; data centers face substantial new entrant and hyperscaler self-build competition.</td></tr>
+    <tr><td>Bargaining Power of Suppliers</td><td>Moderate — power, land, and construction costs for data center buildout represent a meaningful and rising input cost.</td></tr>
+    <tr><td>Bargaining Power of Buyers</td><td>Low (records management, due to high switching costs and long-term contracts) / Moderate (data centers, where large hyperscale tenants can negotiate favorably).</td></tr>
+    <tr><td>Threat of Substitutes</td><td>Low (records management, given legal/regulatory retention requirements) / Moderate (data centers, given cloud provider self-build alternatives).</td></tr>
+    <tr><td>Competitive Rivalry</td><td>Low-to-Moderate in records management (highly consolidated); High in data centers (intense competition from Digital Realty, Equinix, and hyperscalers).</td></tr>
+  </table>
+  <h3>Competitive Advantage</h3>
+  <p>Iron Mountain's dominant, sticky records management franchise generates stable free cash flow that funds its data center growth investment without over-relying on external capital, and its global logistics/security infrastructure and long-standing enterprise relationships provide a differentiated entry point into digital transformation and data center services versus pure-play data center competitors.</p>
+  <div class="peer-note">Peer companies shown for comparative context; figures sourced from public financial data as of report date.</div>
+  <table class="data-table">
+    <tr><th>Company</th><th>Ticker</th><th>Market Cap</th><th>P/E</th><th>Net Margin</th></tr>
+    <tr><td>Iron Mountain</td><td>IRM</td><td>$34.04B</td><td>81.51x</td><td>2.10%</td></tr>
+    <tr><td>Digital Realty Trust</td><td>DLR</td><td class="placeholder">{{DLR_MCAP}}</td><td class="placeholder">{{DLR_PE}}</td><td class="placeholder">{{DLR_MARGIN}}</td></tr>
+    <tr><td>Equinix</td><td>EQIX</td><td class="placeholder">{{EQIX_MCAP}}</td><td class="placeholder">{{EQIX_PE}}</td><td class="placeholder">{{EQIX_MARGIN}}</td></tr>
+  </table>
+
+  <h2 class="section-title">Valuation</h2>
+  <h3>Absolute Valuation — Discounted Cash Flow (Illustrative)</h3>
+  <table class="data-table">
+    <tr><th>Assumption</th><th>Value</th></tr>
+    <tr><td>Terminal Growth Rate</td><td class="placeholder">{{TERMINAL_GROWTH}}</td></tr>
+    <tr><td>Discount Rate (WACC)</td><td class="placeholder">{{WACC}}</td></tr>
+    <tr><td>Implied Fair Value / Share</td><td class="placeholder">{{DCF_FAIR_VALUE}}</td></tr>
+  </table>
+  <h3>Relative Valuation</h3>
+  <table class="data-table">
+    <tr><th>Metric</th><th>IRM</th><th>Peer Average</th></tr>
+    <tr><td>P/E (TTM)</td><td>81.51x</td><td class="placeholder">{{PEER_AVG_PE}}</td></tr>
+    <tr><td>Dividend Yield</td><td>3.02%</td><td class="placeholder">{{PEER_AVG_YIELD}}</td></tr>
+  </table>
+  <h3>Valuation Conclusion</h3>
+  <p>While IRM's headline GAAP P/E appears very high, this is a function of heavy depreciation and growth capex against a still-small net income base, not a signal of fundamental overvaluation; FFO-based and revenue-growth-adjusted metrics (not independently modeled here) are more appropriate for assessing this name. Combined with the strongly bullish, Hold-free analyst distribution and meaningful implied upside to the average price target, we rate the shares BUY.</p>
+
+  <h2 class="section-title">Financial Analysis</h2>
+  <h3>Historical &amp; Forecast Summary</h3>
+  <table class="data-table">
+    <tr><th>Metric</th><th>FY2024</th><th>FY2025</th><th>FY2027E</th></tr>
+    <tr><td>Revenue ($M)</td><td>6,150</td><td>6,902</td><td class="placeholder">{{REV_2027E}}</td></tr>
+    <tr><td>Net Income ($M)</td><td>180.16</td><td>144.59</td><td class="placeholder">{{NI_2027E}}</td></tr>
+    <tr><td>EPS ($)</td><td>0.61</td><td>0.49</td><td class="placeholder">{{EPS_2027E}}</td></tr>
+    <tr><td>Operating Margin</td><td>19.72%</td><td>20.34%</td><td class="placeholder">{{OPMARGIN_2027E}}</td></tr>
+    <tr><td>Net Margin</td><td>2.93%</td><td>2.10%</td><td class="placeholder">{{NETMARGIN_2027E}}</td></tr>
+  </table>
+  <h3>Earnings Quality Notes</h3>
+  <p>Trailing-twelve-month (TTM) figures pulled from third-party data reported revenue of $28,649 million and net income of $863.2 million — roughly 4.15x and 5.97x the corresponding FY2025 annual figures ($6,902 million revenue and $144.59 million net income), respectively. This is consistent with the recurring data-aggregation error pattern observed across multiple tickers in this series; the source tool itself separately flagged the TTM operating income figure ($4,476 million) as anomalous relative to recent quarterly operating margins. We have excluded these TTM figures from the summary table above and used FY2024/FY2025 annual figures as the analytical base. Readers should independently verify actual TTM performance via IRM's most recent 10-Q and 10-K filings. Separately, we note that IRM's thin GAAP net margin (2.10% in FY2025) is a genuine feature of its current growth-capex/depreciation profile (heavy data center investment) rather than a data error, and is best assessed via FFO/AFFO metrics rather than GAAP net income.</p>
+  <h3>Industry-Specific Ratios</h3>
+  <table class="data-table">
+    <tr><th>Ratio</th><th>Value</th></tr>
+    <tr><td>Funds From Operations (FFO) / Share</td><td class="placeholder">{{FFO_PER_SHARE}}</td></tr>
+    <tr><td>Data Center Segment Revenue Growth</td><td class="placeholder">{{DC_SEGMENT_GROWTH}}</td></tr>
+    <tr><td>Records Management Customer Retention Rate</td><td class="placeholder">{{RM_RETENTION_RATE}}</td></tr>
+    <tr><td>Debt / EBITDA</td><td class="placeholder">{{DEBT_EBITDA}}</td></tr>
+  </table>
+
+  <h2 class="section-title">Investment Risks</h2>
+  <div class="risk-item">
+    <span class="risk-tag">Operational</span>
+    <p>Continued heavy investment in data center capacity carries execution risk around construction timelines, lease-up pace, and power availability, particularly amid intense industry-wide competition for data center capacity.</p>
+  </div>
+  <div class="risk-item">
+    <span class="risk-tag">Financial</span>
+    <p>The company's thin GAAP net margin and reliance on continued capital investment create sensitivity to interest rate increases and capital market access; a slowdown in data center leasing could pressure returns on recently deployed capital.</p>
+  </div>
+  <div class="risk-item">
+    <span class="risk-tag">Regulatory</span>
+    <p>Data privacy, records retention, and environmental regulations governing both the records management and data center businesses could increase compliance costs or affect facility siting and operations.</p>
+  </div>
+  <div class="risk-item">
+    <span class="risk-tag">Legal</span>
+    <p>As a global information management provider, the company faces litigation and contractual risk related to data security, records handling errors, and service-level obligations to enterprise and government clients.</p>
+  </div>
+  <h3>Disclosure Flags</h3>
+  <p>We flag the likely TTM data-aggregation error described above as a data-quality risk for any analysis relying on automated trailing-twelve-month feeds for this ticker. We also note that one Strong Sell rating exists within an otherwise strongly bullish analyst distribution, warranting monitoring of that dissenting view's rationale.</p>
+
+  <h2 class="section-title">Environmental, Social &amp; Governance</h2>
+  <div class="esg-grid">
+    <div class="esg-card">
+      <h4>Environmental</h4>
+      <p class="placeholder">{{ESG_ENVIRONMENTAL — data center energy efficiency and renewable energy sourcing initiatives not independently verified for this report}}</p>
+    </div>
+    <div class="esg-card">
+      <h4>Social</h4>
+      <p class="placeholder">{{ESG_SOCIAL — data security, privacy practices, and workforce programs not independently verified for this report}}</p>
+    </div>
+    <div class="esg-card">
+      <h4>Governance</h4>
+      <p class="placeholder">{{ESG_GOVERNANCE — board composition and executive compensation structure not independently verified for this report}}</p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="analyst-line">Prepared by the Equity Research Desk — publicly sourced information only.</div>
+    <div>This report is for informational purposes only and does not constitute investment advice or a solicitation to buy or sell any security. All data is sourced from publicly available third-party sources believed to be reliable but not independently audited; figures marked with placeholders indicate data points that could not be verified as of the report date. Past performance is not indicative of future results. Readers should conduct their own due diligence and consult a licensed financial advisor before making investment decisions.</div>
+  </footer>
+
+</div>
+</body>
+</html>

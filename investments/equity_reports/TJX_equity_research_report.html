@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — TJX</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  .placeholder { color:#8a8fa3; font-style:italic; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">The TJX Companies, Inc.</h1>
+      <div class="ticker-line">TJX &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Consumer Discretionary / Off-Price Apparel &amp; Home Retail</div>
+    </div>
+    <div class="report-date">September 17, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#1e7e34;">BUY</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">~$123</span></div>
+      <div class="reco-stat"><span class="label">Target Price</span><span class="value">$169.80 (avg.)</span></div>
+      <div class="reco-stat"><span class="label">Target Range</span><span class="value">$136 – $198</span></div>
+      <div class="reco-stat"><span class="label">Implied Upside/Downside</span><span class="value">~38%</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">TJX</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Consumer Discretionary</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Off-Price Apparel &amp; Home Retail</td></tr>
+      <tr><td class="k">CEO</td><td class="v">Ernie Herrman (Chairman &amp; CEO)</td></tr>
+      <tr><td class="k">Headquarters</td><td class="v">Framingham, Massachusetts</td></tr>
+      <tr><td class="k">Consensus Rating</td><td class="v">Buy (22 analysts)</td></tr>
+      <tr><td class="k">Q2 Dividends Paid</td><td class="v">$529 million</td></tr>
+      <tr><td class="k">Q2 Share Repurchases</td><td class="v">$798 million (5.1 million shares)</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      TJX Companies delivered a Q2 FY2027 print that "well exceeded expectations" (CEO Ernie Herrman's words), with consolidated comparable sales up 4% — above the company's own plan — and pretax profit margin expanding meaningfully even before adjusting for a one-time tariff-refund benefit. The off-price retail model remains structurally advantaged in the current environment: as full-price retailers work through excess and closeout inventory amid soft discretionary spending, TJX's buying organization is able to source branded merchandise at steep discounts and pass compelling value to an increasingly value-seeking consumer. Growth was broad-based across HomeGoods (+7%), TJX Canada (+6%), and TJX International (+7%), while the flagship U.S. Marmaxx (Marshalls/TJ Maxx) division underperformed at +1% comps, a divergence worth monitoring but not yet concerning given Marmaxx's scale and the strength elsewhere in the portfolio. Management's decision to raise full-year guidance and to accelerate long-term store growth to 4% annually starting FY2028 (raising the long-term global store target to roughly 7,500) signals confidence that the current momentum is structural, not a one-quarter anomaly. We rate TJX a BUY on continued off-price share gains, margin resilience, and a shareholder-return program (buybacks plus dividend) that continues at scale.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">TJX's Q2 FY2027 results (reported August 19, 2026) showed revenue of $15.2 billion, up 5% year-over-year, with consolidated comparable sales up 4%, above the company's plan. GAAP diluted EPS rose 24% YoY to $1.36, while adjusted diluted EPS rose 11% YoY to $1.22, excluding a $0.14-per-share tariff-refund benefit that is included in the GAAP figure. GAAP pretax profit margin expanded 1.9 percentage points YoY to 13.3%, while adjusted pretax margin expanded 0.5 points to 11.9%. By segment, comparable sales grew 7% at HomeGoods, 6% at TJX Canada, and 7% at TJX International, while the flagship U.S. Marmaxx division (Marshalls/TJ Maxx) grew a comparatively modest 1%, below internal expectations. CEO Ernie Herrman specifically highlighted strength in HomeGoods, Canada, and International, while noting Marmaxx's underperformance. Management announced plans to accelerate unit growth to approximately 4% annually starting in FY2028, raising the company's long-term global store count target to roughly 7,500 locations. TJX paid $529 million in dividends and repurchased $798 million of stock (5.1 million shares) in the quarter.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Full-year FY2027 guidance was raised across every metric following the Q2 beat: comparable sales growth of +3% to +4% (from a prior range), diluted EPS of $5.31–$5.36 GAAP ($5.15–$5.20 adjusted), and pretax margin of 12.3%–12.4% GAAP (12.0%–12.1% adjusted). The increase reflects management's confidence that above-plan comp growth and margin expansion are sustainable through the back half of the fiscal year, including the critical holiday selling season.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Consensus rating is Buy across 22 covering analysts, with an average 12-month price target of $169.80 (median $175), implying roughly 38% upside from the current price of approximately $123. The target range spans $136 (low) to $198 (high). We view the consensus target as reasonably achievable given the breadth of the Q2 beat and raised guidance, though the Marmaxx underperformance is worth watching for any read-through to slowing U.S. off-price demand at the largest, most mature segment.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">The TJX Companies is the largest off-price apparel and home fashion retailer in the world, operating under banners including T.J. Maxx, Marshalls, and Sierra in the U.S. (collectively "Marmaxx"), HomeGoods and Homesense (home décor), and international banners including Winners and T.K. Maxx across Canada, Europe, and Australia. The off-price model relies on an opportunistic buying organization that purchases excess, closeout, and canceled-order inventory from brand-name manufacturers and other retailers at a steep discount, then resells it to consumers at 20%–60% below full retail price. This flexible, low-fixed-commitment buying model allows TJX to maintain strong margins and fresh, "treasure hunt" merchandise assortments regardless of the broader retail cycle, and often benefits from full-price retailers' excess inventory during periods of soft consumer spending.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Broad-based comparable-sales growth across HomeGoods (+7%), TJX Canada (+6%), and TJX International (+7%) in Q2 FY2027</li>
+      <li>Accelerated long-term store growth plan (targeting ~4% annual unit growth toward a ~7,500-store global target starting FY2028)</li>
+      <li>Continued off-price share gains as full-price retailers' excess inventory feeds TJX's opportunistic buying model amid soft discretionary spending</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Store growth and buying-organization investment tied to the accelerated long-term expansion plan</li>
+      <li>Underlying cost of goods dynamics in the core Marmaxx (U.S.) segment, where +1% comps in Q2 FY2027 lagged the rest of the portfolio</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">TJX competes in the global off-price apparel and home retail industry, most directly against Ross Stores and Burlington Stores in the U.S. The off-price channel has benefited structurally in the current environment as full-price retailers carry excess and closeout inventory amid soft discretionary spending, giving off-price buyers like TJX an especially rich sourcing environment.</p>
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low-to-Moderate — off-price buying relationships and scale take years to replicate.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Low — TJX's scale and flexible, non-committed buying give it significant leverage over vendors seeking to offload excess inventory.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate — price-sensitive consumers have many off-price and discount alternatives, but TJX's brand and treasure-hunt appeal support loyalty.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate — dollar stores, online marketplaces, and other off-price chains compete for value-seeking consumers.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>Moderate — Ross Stores and Burlington are the primary direct off-price competitors; full-price retailers are less direct substitutes but supply TJX's inventory pipeline.</td></tr>
+    </table>
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">TJX's moat rests on decades of vendor relationships and buying-team expertise across more than 100 markets globally, enabling it to source inventory other off-price retailers cannot access at comparable scale or price. Its geographic and banner diversification (U.S., Canada, Europe, Australia; apparel and home) also provides resilience that narrower, U.S.-only off-price peers lack.</p>
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major off-price and home-improvement retailers. See separate HD and LOW reports in this series.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>TJX Companies</td><td>TJX</td><td>Consensus target $169.80; ~38% implied upside</td></tr>
+      <tr><td class="placeholder">Ross Stores</td><td class="placeholder">ROST</td><td class="placeholder">{{Not independently sourced for this report — direct off-price apparel competitor, primarily U.S.}}</td></tr>
+      <tr><td class="placeholder">Burlington Stores</td><td class="placeholder">BURL</td><td class="placeholder">{{Not independently sourced for this report — off-price apparel and home, smaller scale}}</td></tr>
+      <tr><td>Home Depot</td><td>HD</td><td>Different discretionary sub-sector; see separate HD report in this series</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — recommend explicit modeling of the accelerated store-growth plan's capex and cannibalization effects}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>Average sell-side price target of $169.80 (22 analysts) as of the report date</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">We rate TJX a <strong>BUY</strong>. The Q2 beat, raised full-year guidance, and accelerated long-term store growth plan all point to durable momentum in the off-price channel, and the current valuation appears to leave room for further upside if the trend holds through the holiday season. The main watch item is whether Marmaxx's below-plan comps in the largest segment persist or reaccelerate.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q2 FY2027</th><th>YoY Change</th><th>FY2027 Guidance</th></tr>
+      <tr><td>Revenue</td><td>$15.2B</td><td>+5%</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Comparable Sales</td><td>+4% (consolidated)</td><td>Above plan</td><td>+3% to +4%</td></tr>
+      <tr><td>GAAP Diluted EPS</td><td>$1.36</td><td>+24%</td><td>$5.31–$5.36</td></tr>
+      <tr><td>Adjusted Diluted EPS</td><td>$1.22</td><td>+11%</td><td>$5.15–$5.20</td></tr>
+      <tr><td>GAAP Pretax Margin</td><td>13.3%</td><td>+1.9 pts</td><td>12.3%–12.4%</td></tr>
+      <tr><td>Adjusted Pretax Margin</td><td>11.9%</td><td>+0.5 pts</td><td>12.0%–12.1%</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">GAAP EPS growth of 24% substantially exceeds adjusted EPS growth of 11%, reflecting a $0.14-per-share one-time tariff-refund benefit included in GAAP results but excluded from the adjusted figure. Investors should focus on the adjusted, tariff-refund-excluded EPS and margin figures as the better indicator of underlying run-rate profitability. The segment divergence — Marmaxx +1% vs. HomeGoods/Canada/International all +6% to +7% — also warrants monitoring, as Marmaxx represents the largest share of consolidated revenue.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>Marmaxx (the largest U.S. segment) posted only +1% comparable sales growth in Q2, well below the +6–7% seen in smaller international and home-goods segments, raising questions about saturation or competitive pressure in the core U.S. apparel off-price market. Accelerated store growth plans carry execution and cannibalization risk if not carefully sequenced by market.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>A meaningful portion of reported GAAP EPS growth (24% vs. 11% adjusted) is attributable to a one-time tariff-refund benefit that will not recur, meaning headline growth rates should not be extrapolated.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span>As a global apparel importer and reseller, TJX remains exposed to tariff policy changes; while Q2 benefited from a refund, future tariff escalation could raise sourcing costs across all divisions.</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against TJX's most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in the sources reviewed — verify directly against TJX's 10-K/10-Q auditor opinion.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul class="placeholder"><li>{{ESG_ENV — packaging/waste reduction and energy-efficiency initiatives not independently sourced in this summary}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul><li>Large global retail employer with substantial exposure to retail labor market and wage-policy dynamics across the U.S., Canada, Europe, and Australia</li><li class="placeholder">{{ESG_SOC — community/workforce program specifics not independently sourced}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul><li>Ernie Herrman serves as combined Chairman and CEO</li><li class="placeholder">{{ESG_GOV — board composition and diversity not independently sourced}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 17, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (company earnings releases, financial media coverage, and sell-side analyst commentary) that may be delayed or inconsistent. All figures should be independently verified against TJX's 10-K/10-Q filings before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

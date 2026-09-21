@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — EOG</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  .placeholder { color:#8a8fa3; font-style:italic; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">EOG Resources, Inc.</h1>
+      <div class="ticker-line">EOG &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Energy / Oil &amp; Gas Exploration &amp; Production</div>
+    </div>
+    <div class="report-date">September 17, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#b8860b;">HOLD</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">~$146</span></div>
+      <div class="reco-stat"><span class="label">Target Price</span><span class="value">$159.82 (avg.)</span></div>
+      <div class="reco-stat"><span class="label">Target Range</span><span class="value">$134 – $193</span></div>
+      <div class="reco-stat"><span class="label">Implied Upside/Downside</span><span class="value">~9.8%</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">EOG</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Energy</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Oil &amp; Gas Exploration &amp; Production</td></tr>
+      <tr><td class="k">Headquarters</td><td class="v">Houston, Texas</td></tr>
+      <tr><td class="k">Consensus Rating</td><td class="v">Buy (32 analysts: 10 Strong Buy, 1 Buy, 21 Hold)</td></tr>
+      <tr><td class="k">Breakeven WTI Price</td><td class="v">Below $50/barrel</td></tr>
+      <tr><td class="k">Net Debt</td><td class="v">$3 billion (cash position $4.9B)</td></tr>
+      <tr><td class="k">Remaining Buyback Authorization</td><td class="v">$11.7 billion</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      EOG Resources posted a record Q2 2026, with adjusted EPS of $5.07 and record adjusted operating cash flow per share of $8.29, generating $2.8 billion of free cash flow in the quarter — described by management as record performance. The company returned just over $1.8 billion to shareholders ($540 million in dividends, $1.3 billion in buybacks) and remains committed to returning at least 70% of annual free cash flow in 2026, backed by $11.7 billion of remaining buyback authorization and a strong balance sheet (net debt of just $3 billion against $4.9 billion of cash). Operationally, EOG continues to drive down well costs across its core basins — Delaware Basin costs fell to under $710/foot, Eagle Ford costs reached a company-record low below $525/foot, and Utica costs fell below $600/foot — while also reporting strong early results from new UAE exploration wells (averaging over 25,000 barrels of oil per well in their first 30 days) and leasing a promising new Austin Chalk sweet spot offering over 100% returns at $65 WTI. With a sub-$50 WTI breakeven price, EOG is well positioned to generate free cash flow across a wide range of commodity-price environments. However, the analyst rating distribution is notably split — 21 of 32 covering analysts rate the stock Hold despite the operational strength — suggesting the market views much of this execution as already reflected in the current valuation. We rate EOG a HOLD: the underlying business quality (low breakeven costs, record free cash flow, disciplined capital returns, and credible new growth optionality in the UAE and Austin Chalk) is excellent, but the modest ~10% implied upside and majority-Hold rating distribution argue against a fresh BUY at current levels.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">EOG Resources' Q2 2026 results showed adjusted EPS of $5.07 (a record level, versus a $4.97 consensus estimate) and revenue of $8.62 billion (versus an $8.04 billion estimate). Net income rose 102.5% year-over-year to $2.72 billion, and operating income rose 102.0% YoY to $3.53 billion, while operating expenses rose 36.5% YoY to $5.09 billion. Operating cash flow was $4.67 billion, and adjusted operating cash flow per share reached a record $8.29. The company generated $2.8 billion of free cash flow in the quarter, described by management as record performance. EOG returned just over $1.8 billion to shareholders, comprising $540 million in dividends and $1.3 billion in share repurchases, with $11.7 billion of buyback authorization remaining and a stated commitment to return at least 70% of annual free cash flow in 2026. The company's cash position rose to $4.9 billion (up approximately $1.1 billion from Q1), against net debt of $3 billion. On the operational side, EOG achieved substantial well-cost reductions: Delaware Basin well costs fell $15/foot to under $710/foot, Eagle Ford direct costs fell below $525/foot (the lowest in company history), and Utica costs fell below $600/foot. Two one-mile lateral exploration wells in the UAE produced on average over 25,000 barrels of oil per well during their first 30 days, flowing naturally with artificial lift to be added soon. The company also leased 60,000 net acres in a new Austin Chalk sweet spot at $1,200/acre, offering over 100% returns at $65 WTI and adding roughly one additional year of drilling inventory.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Full-year 2026 guidance calls for free cash flow of approximately $8 billion at strip pricing, unchanged capital expenditures of $6.5 billion, and production growth of 5% in oil and 14% in total production. The unchanged capex guidance alongside record free cash flow generation reflects continued capital discipline even as production and well-cost efficiency both improve.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Consensus rating is Buy across 32 analysts, though the underlying distribution (10 Strong Buy, 1 Buy, 21 Hold) skews considerably more cautious than the headline rating suggests. The average price target is $159.82, implying roughly 9.8% upside from a current price near $146. The target range spans $134 (low) to $193 (high), with recent analyst actions mixed — Truist raised its target to $137 from $135, while Stifel lowered its target to $150 from $153.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">EOG Resources, Inc. is a leading independent oil and natural gas exploration and production company, with a core asset base concentrated in premier U.S. unconventional plays including the Delaware Basin, Eagle Ford, and Utica Shale, alongside newer exploration activity in the UAE and a recently expanded Austin Chalk position. The company is known industry-wide for its disciplined "premium" drilling-return framework and continuous well-cost reduction culture, which have delivered some of the lowest per-foot drilling costs in the industry across multiple basins. EOG maintains a low breakeven WTI price (below $50/barrel), supporting resilient free cash flow generation and substantial shareholder capital returns even in moderate commodity-price environments.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Record adjusted operating cash flow per share ($8.29) and free cash flow ($2.8 billion in Q2 2026), driven by production growth and improving well economics</li>
+      <li>Strong early results from new UAE exploration wells (averaging over 25,000 barrels of oil per well in the first 30 days), representing a new international growth avenue</li>
+      <li>New Austin Chalk sweet spot acreage (60,000 net acres), offering over 100% returns at $65 WTI and extending the company's premium drilling inventory</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Continuous well-cost reduction initiatives across the Delaware Basin, Eagle Ford, and Utica, which have driven per-foot drilling costs to company-record lows in several basins</li>
+      <li>Capital expenditure of $6.5 billion guided for full-year 2026, held unchanged despite production growth guidance</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">EOG Resources competes in the global oil and gas exploration and production industry, most directly against other large independent producers such as ConocoPhillips (see separate COP report in this series). EOG's low-breakeven-cost structure and premium-return drilling discipline have historically supported best-in-class free cash flow generation relative to peers across a range of commodity-price environments.</p>
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — capital intensity, technical expertise in unconventional drilling, and access to premium acreage create substantial barriers to entry.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — oilfield-services costs can fluctuate with drilling activity levels, though EOG's continuous cost-reduction program has offset much of this pressure.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Low — crude oil and natural gas are commodity goods priced on global benchmarks, limiting individual buyer negotiating leverage.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate-to-Long-Term — renewable energy and electrification represent a structural long-term substitute for fossil fuels.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — intense competition among independent E&amp;P companies for premium acreage, drilling-cost leadership, and capital-return competitiveness.</td></tr>
+    </table>
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">EOG's moat rests on a sub-$50 WTI breakeven cost structure, industry-leading (and continuously improving) per-foot drilling costs across multiple basins, and a disciplined "premium" return framework that has historically generated superior capital efficiency relative to peers. New optionality in the UAE and Austin Chalk extends the company's growth runway beyond its legacy core basins.</p>
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major U.S. independent exploration &amp; production companies. See separate COP, XOM, and CVX reports in this series.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>EOG Resources</td><td>EOG</td><td>Average target $159.82; ~9.8% implied upside; 21 of 32 analysts rate Hold</td></tr>
+      <tr><td>ConocoPhillips</td><td>COP</td><td>See separate COP report in this series</td></tr>
+      <tr><td>Exxon Mobil</td><td>XOM</td><td>See separate XOM report in this series</td></tr>
+      <tr><td>Chevron</td><td>CVX</td><td>See separate CVX report in this series</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — recommend explicit modeling of the UAE and Austin Chalk exploration programs separately from core basin production}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>Average sell-side price target of $159.82 (32 analysts) as of the report date</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">We rate EOG a <strong>HOLD</strong>. Record free cash flow, a sub-$50 breakeven cost structure, continued well-cost reductions, and credible new growth optionality (UAE, Austin Chalk) reflect genuinely excellent operational execution. However, the majority-Hold analyst rating distribution (21 of 32) and modest ~10% implied upside suggest the market has already substantially credited EOG for this quality, leaving less obvious near-term re-rating catalysts than the operational headlines alone might suggest.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q2 2026</th><th>YoY Change / vs. Consensus</th></tr>
+      <tr><td>Adjusted EPS</td><td>$5.07</td><td>Record level; beat $4.97 estimate</td></tr>
+      <tr><td>Revenue</td><td>$8.62 billion</td><td>Beat $8.04 billion estimate</td></tr>
+      <tr><td>Net Income</td><td>$2.72 billion</td><td>+102.5% YoY</td></tr>
+      <tr><td>Operating Income</td><td>$3.53 billion</td><td>+102.0% YoY</td></tr>
+      <tr><td>Operating Cash Flow</td><td>$4.67 billion</td><td class="placeholder">{{YoY change not independently sourced}}</td></tr>
+      <tr><td>Free Cash Flow</td><td>$2.8 billion</td><td>Record performance</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">Net income growth of 102.5% YoY substantially exceeded revenue growth, driven by both higher realized commodity prices and continued well-cost efficiency gains (record-low per-foot costs in the Eagle Ford and reduced costs in the Delaware Basin and Utica). Operating expenses rose 36.5% YoY, a slower pace than revenue and income growth, indicating genuine operating leverage rather than merely price-driven earnings improvement. Investors should note that a portion of the earnings surge reflects favorable commodity-price conditions that are inherently cyclical.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>New UAE exploration wells and the Austin Chalk sweet spot are early-stage; while initial results are strong, sustained production performance and returns at scale have not yet been fully proven across a longer track record.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>A meaningful portion of the Q2 2026 earnings improvement reflects favorable commodity-price conditions, which are cyclical and not assured to persist; a sustained decline in crude oil or natural gas prices would pressure earnings despite EOG's low breakeven cost structure.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span class="placeholder">{{Operations in the UAE introduce international regulatory and geopolitical considerations beyond the company's core U.S. asset base; specific current status not independently verified for this report.}}</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against EOG's most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in the sources reviewed — verify directly against EOG's 10-K/10-Q auditor opinion.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul class="placeholder"><li>{{ESG_ENV — methane-reduction and emissions-intensity targets not independently sourced in this summary}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul class="placeholder"><li>{{ESG_SOC — community relations and workforce safety program specifics not independently sourced}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul class="placeholder"><li>{{ESG_GOV — board composition and diversity not independently sourced}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 17, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (company earnings releases, financial media coverage, and sell-side analyst commentary) that may be delayed or inconsistent. All figures should be independently verified against EOG Resources' 10-K/10-Q filings before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

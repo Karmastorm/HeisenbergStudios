@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — PG</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">The Procter &amp; Gamble Company</h1>
+      <div class="ticker-line">PG &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Consumer Staples / Household &amp; Personal Products</div>
+    </div>
+    <div class="report-date">September 15, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#b8860b;">HOLD</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">~$146–$164 (varies by date)</span></div>
+      <div class="reco-stat"><span class="label">Target Price (Consensus)</span><span class="value">~$160–$164 (25+ analysts)</span></div>
+      <div class="reco-stat"><span class="label">Dividend Streak</span><span class="value">70 consecutive annual increases (one source); 136 consecutive years of payments</span></div>
+      <div class="reco-stat"><span class="label">FY2026 Revenue</span><span class="value">$87.03 billion (+3.26% YoY)</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">PG</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Consumer Staples</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Household &amp; Personal Products</td></tr>
+      <tr><td class="k">Product Categories</td><td class="v">10 categories including Beauty (Pantene, Olay, SK-II), Fabric &amp; Home Care (Tide, Swiffer), Baby/Feminine/Family Care, Grooming, Health Care (Oral-B, Vicks)</td></tr>
+      <tr><td class="k">FY2026 EPS</td><td class="v">GAAP EPS $6.62 (includes $0.13–0.17/share of expected non-core restructuring charges)</td></tr>
+      <tr><td class="k">Dividend</td><td class="v">$1.0885/quarter (raised 3% in April 2026); 70th consecutive annual increase (per one source) — one of the longest unbroken payout-growth streaks in the S&amp;P 500; 136 consecutive years of dividend payments</td></tr>
+      <tr><td class="k">Analyst Ratings</td><td class="v">"Buy" consensus (25 analysts, one source)</td></tr>
+      <tr><td class="k">CEO / Headquarters</td><td class="v">Shailesh Jejurikar (President and CEO); headquartered in Cincinnati, Ohio</td></tr>
+      <tr><td class="k">Recent M&amp;A</td><td class="v">Announced acquisition of supplements maker Thorne for $3.8 billion (CEO confirmed on CNBC)</td></tr>
+      <tr><td class="k">FY2026 Cash Return to Shareholders</td><td class="v">Approximately $15 billion guided</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted); margin-top:-14px;">Note: sources showed a meaningful spread in current price (from ~$146 to ~$164) likely reflecting different snapshot dates across 2026; one source's analyst target of $163.77 was itself noted as having been slightly reduced from $164.09. Verify against a live quote.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Procter &amp; Gamble delivered its strongest organic sales quarter in several periods in fiscal Q3 2026 — revenue of $21.24 billion (+7% YoY), organic sales growth above 3%, and operating margin expansion to 25% (from 24%) — with growth across all 10 product categories for the first time in years, led by high-single-digit growth in Skin and Personal Care and mid-single-digit growth in Hair Care, Family Care, and Home Care, alongside organic sales growth in all seven geographic regions. However, the very next quarter (fiscal Q4 2026) told a more mixed story: net sales rose only 2% to $21.2 billion (missing the ~$21.38 billion consensus), organic revenue was flat, and shares fell roughly 3% on the report; Health Care (Oral-B, Vicks) was the worst-performing division with volume down 3%, while Baby/Feminine/Family Care and Grooming both saw volume decline 1%. Management maintained rather than raised full-year guidance amid a "very challenging geopolitical and economic environment" (specifically flagging a $1 billion after-tax cost headwind and Middle East-related uncertainty), and is not projecting a significant demand upswing for fiscal 2027, guiding to modest 1–3% all-in sales growth and 1–5% EPS growth. Against this operationally mixed but not alarming backdrone, P&G's defining characteristic remains its extraordinary capital-return consistency (70 consecutive years of dividend increases, 136 consecutive years of payments, ~$15 billion in expected FY2026 shareholder returns) — the kind of stability income-oriented investors specifically seek from a mega-cap consumer staples holding. Given the genuine quarter-to-quarter volatility in organic growth (strong Q3, flat Q4) and margin pressure from energy costs and incremental business investment (core gross margin down 100bps, core operating margin down 80bps in one quarter cited), this is a HOLD: P&G remains a high-quality, dividend-compounding holding, but the stock does not currently offer a compelling valuation gap, and near-term organic growth momentum is genuinely uncertain heading into fiscal 2027.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">P&G's fiscal Q3 2026 results (reported around April 2026) showed net sales of $21.24 billion (+7% YoY) with organic sales growth above 3% and core EPS of $1.59, ahead of analyst expectations — growth was broad-based across all 10 product categories for the first time in years, with Skin and Personal Care growing high-single-digits and Hair Care, Family Care, and Home Care growing mid-single-digits; North America organic sales grew 4% and Greater China grew 3% despite ongoing regional challenges. The company returned $3.2 billion to shareholders in the quarter ($2.5 billion in dividends, $600 million-plus in buybacks) and announced a 3% dividend increase, marking (per that quarter's framing) the seventh consecutive annual increase noted in that specific release — a figure that should be reconciled against the separately-cited "70th consecutive annual increase" figure from a different source, which likely refers to the full historical streak rather than a specific recent-years count. Core gross margin was down 100 basis points and core operating margin down 80 basis points year-over-year, impacted by energy costs and incremental business investment; management flagged a $1 billion after-tax cost headwind for the upcoming period and noted Middle East geopolitical conflict had introduced uncertainty potentially affecting where results land within full-year guidance ranges. By fiscal Q4 2026 (reported July 29, 2026), results were more mixed: net sales rose only 2% to $21.2 billion (missing the ~$21.38 billion consensus), organic revenue was flat, and adjusted EPS of $1.43 (beating a $1.41 estimate) still represented a share-price decline reaction (shares fell ~3%) given the underwhelming sales headline. GAAP net income was $3.04 billion ($1.26/share), down from $3.62 billion ($1.48/share) a year earlier. By division, Beauty was the top performer (+3% volume growth), Fabric and Home Care also grew volume (+1%), while Baby/Feminine/Family Care and Grooming both declined 1% in volume, and Health Care was the worst performer (-3% volume, driven by declining oral-care sales). For full fiscal year 2026, revenue reached $87.03 billion (+3.26% YoY) with earnings of $15.75 billion (+0.45% YoY). Looking to fiscal 2027, P&G guided to all-in sales growth of 1–3%, organic sales growth of in-line to a level including a 30-50 basis point headwind from brand/product-form/go-to-market discontinuations, and diluted EPS growth of 1–5% versus fiscal 2026 GAAP EPS of $6.62 (which itself includes $0.13-0.17/share of expected non-core restructuring charges). CEO Shailesh Jejurikar confirmed the company is acquiring supplements brand Thorne for $3.8 billion, and the company separately confirmed plans with Egypt's government to expand local manufacturing and exports to Gulf/African markets.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Fiscal 2027 guidance calls for all-in sales growth of 1–3%, organic sales growth roughly in line with fiscal 2026 (net of a 30-50bp discontinuation headwind), and diluted EPS growth of 1–5% versus fiscal 2026's GAAP EPS of $6.62. Management explicitly stated it is "not projecting a significant upswing in demand" for the coming fiscal year, a notably measured framing for a company management itself describes as focused on "foundation building" in a "challenging geopolitical and economic environment," with initiatives centered on automation, AI-driven R&amp;D, and targeted category/market interventions expected to show visible impact within 12–24 months.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Consensus price targets cluster around $160–$164 (25 analysts, one source citing $160.61 implying ~10% upside; another citing $163.77, recently trimmed from $164.09), suggesting a modest but not dramatic valuation gap. One third-party model (TIKR) specifically valued P&G at approximately $202 by mid-2030, implying roughly 35% total return (about 8% annually) from a cited ~$150 price — a longer-horizon, more optimistic view than the shorter 12-month consensus targets, resting on the thesis that operating-margin leverage from the Q3 2026 organic-growth recovery is not yet fully reflected in the stock price.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">The Procter &amp; Gamble Company, headquartered in Cincinnati, Ohio, is a global consumer packaged goods company operating across 10 product categories organized into segments including Beauty (Pantene, Olay, SK-II), Grooming, Health Care (Oral-B, Vicks), Fabric &amp; Home Care (Tide, Swiffer), and Baby, Feminine &amp; Family Care. The company sells its products in more than 180 countries and territories through a mix of mass merchandisers, e-commerce, grocery, membership club, drug, and specialty stores. P&amp;G's business model centers on strong, globally recognized brands across daily-use household and personal-care categories, generally providing more resilient (though not immune) demand characteristics than discretionary consumer categories, supported by a decades-long track record of consistent dividend growth.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Broad-based organic sales growth across all 10 product categories (achieved in Q3 fiscal 2026, though moderating to flat in Q4), with Beauty and Fabric &amp; Home Care as recent standout performers</li>
+      <li>Geographic diversification, with North America and Greater China both contributing positive organic growth in the strongest recent quarter cited</li>
+      <li>New product innovation (e.g., Oral-B iO's dual cleaning technology) and brand extensions (e.g., Native's limited-edition collections at Walmart)</li>
+      <li>The pending $3.8 billion Thorne supplements-brand acquisition, extending P&amp;G into the wellness/supplements category</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Energy costs and incremental business investment, which pressured core gross margin (-100bps) and core operating margin (-80bps) in the quarter cited</li>
+      <li>A disclosed $1 billion after-tax cost headwind, with Middle East geopolitical uncertainty specifically flagged as a factor affecting where results land within guidance ranges</li>
+      <li>Brand, product-form, and go-to-market discontinuations, expected to create a 30-50bp organic-growth headwind in fiscal 2027 as part of ongoing portfolio simplification</li>
+      <li>Restructuring charges ($0.13-0.17/share expected impact on fiscal 2026 GAAP EPS)</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">P&amp;G operates in the global household and personal products industry, a large, mature, and relatively defensive consumer staples category characterized by steady but modest structural growth (the U.S. Household Products industry is forecast to grow roughly 3.3% over the next three years per one source, close to P&amp;G's own guided range). The industry's primary competitive dynamics center on brand loyalty, private-label competition, input-cost management (particularly energy and raw materials), and geographic/geopolitical exposure given P&amp;G's operations across more than 180 countries.</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — P&amp;G's brand portfolio, marketing scale, and global distribution infrastructure represent enormous barriers for new entrants in most core categories.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — energy and raw-material cost inflation has been a specifically disclosed margin pressure ($1 billion after-tax headwind flagged), though P&amp;G's purchasing scale provides some offsetting leverage.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate — large retail partners (Walmart, Costco, Amazon) have meaningful negotiating leverage, and private-label alternatives provide consumers a lower-cost substitute in many categories.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate — private-label and smaller challenger brands compete across most of P&amp;G's categories, though brand loyalty in categories like Beauty and Oral Care provides some insulation.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — Unilever, Colgate-Palmolive (see separate CL report in this series), Kimberly-Clark (see separate KMB report), and numerous category-specific and private-label competitors all compete directly with P&amp;G across its various product lines.</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">P&amp;G's moat rests on an unusually broad portfolio of category-leading, globally recognized brands (Tide, Pampers, Gillette, Olay, Oral-B, and others), decades of marketing and R&amp;D investment, and a global distribution and manufacturing footprint (including active expansion, e.g., the confirmed Egypt manufacturing partnership) that smaller competitors cannot easily replicate. The company's extraordinary dividend consistency (70 consecutive years of increases) is itself a reflection of this moat's durability through multiple economic cycles.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major global consumer staples/household products companies. See separate KO, PEP, CL, KMB, and MDLZ reports in this series.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>Procter &amp; Gamble</td><td>PG</td><td>70-year dividend growth streak; FY2026 revenue $87.03B</td></tr>
+      <tr><td>Colgate-Palmolive</td><td>CL</td><td>See separate CL report in this series</td></tr>
+      <tr><td>Kimberly-Clark</td><td>KMB</td><td>See separate KMB report in this series</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled — P&amp;G's mature, staples-industry growth profile suggests a terminal rate near or slightly above long-run GDP growth}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>One third-party model (TIKR) valued PG at approximately $202 by mid-2030, implying ~35% total return (~8% annually) from a cited ~$150 price — not independently verified or rebuilt in this summary</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">P&amp;G's consensus price targets imply modest (~10%) near-term upside, consistent with a mature, defensively-positioned staples holding rather than a name offering significant valuation dislocation. One source noted that despite 5% average annual EPS growth over the trailing three years, the share price actually fell 3% per year over the same period — an unusual divergence suggesting either multiple compression or that the market had previously priced in more growth than P&amp;G delivered; this dynamic is worth understanding directly before assuming automatic re-rating.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>FQ3 2026</th><th>FQ4 2026</th><th>FY2027 Guidance</th></tr>
+      <tr><td>Net Sales</td><td>$21.24B (+7% YoY)</td><td>$21.2B (+2% YoY; missed ~$21.38B est.)</td><td>All-in sales +1–3%</td></tr>
+      <tr><td>Organic Sales Growth</td><td>&gt;3% (all 10 categories, all 7 regions)</td><td>Flat (unchanged)</td><td>Roughly in line with FY2026 (net of 30-50bp discontinuation headwind)</td></tr>
+      <tr><td>Core/Adjusted EPS</td><td>$1.59 (beat estimates)</td><td>$1.43 (beat $1.41 est.)</td><td class="placeholder">{{FY2026 core EPS guided $6.83–$7.09}}</td></tr>
+      <tr><td>GAAP EPS</td><td class="placeholder">{{Not directly sourced}}</td><td>$1.26 (down from $1.48 YoY)</td><td>FY2027 growth of 1–5% vs. FY2026 GAAP EPS of $6.62</td></tr>
+      <tr><td>Operating Margin</td><td>25% (up from 24%)</td><td class="placeholder">{{Not directly sourced}}</td><td class="placeholder">{{Not separately guided}}</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">P&amp;G's results show genuine quarter-to-quarter organic-growth volatility (>3% in Q3 fiscal 2026 down to flat in Q4) within the same fiscal year — a useful reminder that a single strong quarter should not be extrapolated as a durable trend without confirmation in subsequent periods, which in this case did not materialize. Sources reviewed cited differing dividend-streak figures (seven consecutive years in one quarter's specific release framing versus 70 consecutive years in another, broader-historical source) — these likely refer to different measurement windows and should be reconciled directly against P&amp;G's own investor relations materials rather than treated as contradictory.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>Health Care (Oral-B, Vicks) was the worst-performing division in the most recent quarter detailed, with volume down 3% driven by declining oral-care sales; Baby/Feminine/Family Care and Grooming also saw volume declines. Management itself is not projecting a significant demand upswing for fiscal 2027.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>Core gross and operating margins both contracted year-over-year in the quarter cited (energy costs, incremental investment), and a disclosed $1 billion after-tax cost headwind adds further near-term margin pressure.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span>Middle East geopolitical conflict was specifically flagged by management as introducing uncertainty that could affect where fiscal 2026 results land within guidance ranges — an ongoing, disclosed macro/geopolitical risk factor.</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against P&amp;G's most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in sources reviewed — verify directly against P&amp;G's 10-K/10-Q auditor opinion. One source flagged "4 Warning Signs" for a differently-ticked company (APOG) in a section discussing PG — this appears to be a data-source labeling error and should be disregarded; verify any GuruFocus-sourced warning signs directly against a PG-specific query.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul class="placeholder"><li>{{ESG_ENV — not independently sourced in this summary}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul class="placeholder"><li>{{ESG_SOC — not independently sourced in this summary}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul><li>P&amp;G's extraordinary, multi-decade dividend consistency (70 consecutive years of increases, 136 consecutive years of payments per sources reviewed) reflects a long-standing, conservative capital-allocation and governance culture</li><li class="placeholder">{{ESG_GOV — board composition and executive compensation structure not sourced beyond the above}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 15, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (Simply Wall St, Yahoo Finance, CNBC, StockAnalysis.com, TIKR.com, and P&amp;G's own investor relations materials) that may be delayed or inconsistent. All figures should be independently verified against P&amp;G's 10-K/10-Q filings before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

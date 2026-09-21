@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — T</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">AT&amp;T Inc.</h1>
+      <div class="ticker-line">T &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Communication Services / Telecom Services</div>
+    </div>
+    <div class="report-date">September 15, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#4caf50;">BUY</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">~$24–$26</span></div>
+      <div class="reco-stat"><span class="label">Target Price (one source)</span><span class="value">~$27 (RBC)</span></div>
+      <div class="reco-stat"><span class="label">Dividend Yield</span><span class="value">~4.3–4.4%</span></div>
+      <div class="reco-stat"><span class="label">Market Cap</span><span class="value">~$171 billion (one recent snapshot)</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">T</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Communication Services</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Telecom Services</td></tr>
+      <tr><td class="k">Segments</td><td class="v">Communications, Latin America</td></tr>
+      <tr><td class="k">Dividend</td><td class="v">$1.11/share annualized; yield ~4.3–4.4% across sources/dates</td></tr>
+      <tr><td class="k">Capital Return Plan (2026–2028)</td><td class="v">~$45 billion or more in cumulative dividends and buybacks; ~$24 billion of buybacks planned, including ~$10 billion in 2026 alone (raised from an earlier $8 billion target)</td></tr>
+      <tr><td class="k">CEO / Headquarters</td><td class="v">John Stankey (CEO); headquartered in Dallas, TX</td></tr>
+      <tr><td class="k">Float</td><td class="v placeholder">{{Not independently sourced — verify against AT&amp;T's proxy statement}}</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted); margin-top:-14px;">Note: reported current price varied across sources and dates from roughly $23.38 (premarket, July 22 earnings reaction) to $24.93 (Aug 18) to $26.1 (referenced against an RBC $27 target in a more recent Yahoo Finance source). Verify against a live quote.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      AT&amp;T continues to execute a disciplined, well-communicated "converged connectivity" strategy — bundling fiber, fixed wireless, and postpaid wireless — that is producing consistently strong subscriber and cash-flow results: Q2 2026 postpaid phone net adds of 432,000 (beating consensus estimates of ~338,500), a record combined 646,000 internet net additions (367,000 fiber, 279,000 fixed wireless), and free cash flow of $4.7 billion, above guidance. The Lumen mass-markets fiber acquisition (closed Q1 2026) is accelerating AT&amp;T's fiber build (2026 targeted as its largest-ever fiber expansion year, reaching 8 million new locations, more than 4 million from Lumen) even though it modestly diluted fiber ARPU in the near term. Management raised its 2026 share-repurchase target to approximately $10 billion (from $8 billion) while reaffirming full-year adjusted EPS guidance of $2.25–2.35 and free cash flow of $18 billion or more, and reiterated a 2026–2028 cumulative shareholder-return commitment of $45 billion or more. The combination of accelerating fiber/wireless convergence, a well-covered ~4.3–4.4% dividend yield, and increasing buybacks (explicitly framed by management as capturing a perceived valuation disparity in the stock) supports a constructive stance, tempered by AT&amp;T's continued exposure to legacy copper-network decline and the general capital intensity of the telecom business.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">AT&amp;T reported Q2 2026 revenue of $31.6 billion (+2.3% YoY, slightly below the $31.8 billion consensus), driven by growth in Advanced Connectivity (fiber and wireless) revenue and favorable Mexico foreign-exchange impacts. Adjusted EPS was $0.65 (+20% YoY from $0.54, beating the $0.59 consensus by ~10%), and adjusted EBITDA grew 5.2% YoY. Postpaid phone net additions were 432,000 (versus a ~338,500 consensus estimate) with postpaid phone churn of 0.86%. Internet net additions totaled a record combined 646,000 (367,000 fiber, 279,000 fixed wireless). AT&amp;T now reaches more than 38.6 million total consumer and business fiber locations and remains on track to exceed 40 million by year-end 2026; more than 42% (42.5% per one source) of AT&amp;T home-internet customers also subscribe to AT&amp;T wireless, a convergence rate the company specifically links to lower churn and higher customer lifetime value. Fiber ARPU declined 1.3% year-over-year, which CFO Pascal Desroches attributed primarily to the full-quarter impact of the Lumen transaction (acquired customers carry lower ARPU); excluding the Lumen footprint, fiber ARPU was approximately flat. Free cash flow reached $4.7 billion, above guidance. Management raised the 2026 share-repurchase target to approximately $10 billion (up from $8 billion, a roughly 25% increase), explicitly citing a desire to "capture perceived stock valuation disparities," with the company on pace to repurchase nearly $1 billion in July alone. AT&amp;T reaffirmed full-year guidance: adjusted EPS of $2.25–2.35, free cash flow of $18 billion or more, capital investment of $23–24 billion, low-single-digit consolidated service revenue growth, and 3–4% adjusted EBITDA growth. Management also noted a "tipping point" reached in legacy copper retirement, with plans to discontinue legacy services in more than 30% of wire centers by late 2026.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">AT&amp;T's long-term 2026–2028 outlook calls for low-single-digit annual service revenue growth, maintenance of the current $1.11/share annualized dividend, and cumulative shareholder returns (dividends plus buybacks) of $45 billion or more, including approximately $24 billion in total buybacks with roughly $10 billion targeted for 2026 alone. Management expects capital investment to be more "ratable" (evenly spread) in the second half of 2026, with free cash flow growth projected to be strongest in the fourth quarter, and 2026 advanced connectivity service revenue growth guided at 5% or more with segment EBITDA growth of 6% or more.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">AT&amp;T trades with a dividend yield of roughly 4.3–4.4%, and one source specifically referenced an RBC price target of $27 against a then-current price of $26.10, implying modest single-digit upside; another, earlier source referenced the stock at $24.93 with a $170.62 billion market cap. Given a bottom-line earnings beat coupled with a modest top-line miss in the most recent quarter, one source specifically noted this mixed signal may explain why the stock has not re-rated more aggressively despite consistent operational execution and guidance reaffirmation.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">AT&amp;T Inc., headquartered in Dallas, Texas, provides telecommunications and technology services worldwide, operating through two segments: Communications (wireless voice/data services, fiber and fixed-wireless broadband, and business connectivity solutions for U.S. consumer and business customers) and Latin America (operations in Mexico). AT&amp;T's core strategic focus is "convergence" — bundling fiber or fixed-wireless home internet with postpaid wireless service to increase customer retention, average revenue per account, and lifetime value. The company's first-quarter-2026 acquisition of Lumen's mass-markets fiber business significantly accelerated its fiber footprint expansion, and 2026 is targeted internally as AT&amp;T's largest-ever fiber build year.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Postpaid phone net additions (432,000 in Q2 2026, beating consensus) and low churn (0.86%)</li>
+      <li>Fiber and fixed-wireless internet net additions (a record combined 646,000 in Q2 2026), accelerated by the Lumen acquisition's expanded footprint</li>
+      <li>Rising wireless/broadband "convergence" rate (42–45% of internet customers also taking AT&amp;T wireless), which management links directly to lower churn and higher lifetime value</li>
+      <li>Advanced Connectivity segment revenue growth (guided at 5%+ for 2026, with EBITDA growth of 6%+)</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Substantial capital investment ($23–24 billion planned for 2026) to support the largest-ever fiber expansion year (8 million new locations targeted, over 4 million from the Lumen footprint)</li>
+      <li>Legacy copper-network retirement costs, with more than 30% of wire centers targeted for legacy-service discontinuation by late 2026 — a disclosed "tipping point" in this multi-year transition</li>
+      <li>Fiber ARPU dilution from the Lumen-acquired customer base (lower ARPU than AT&amp;T's organic fiber base), though management indicates this is a mix effect rather than pricing weakness in the core business</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">AT&amp;T competes in the mature, oligopolistic U.S. telecom industry alongside Verizon and T-Mobile (see separate research reports for both in this series), with an increasingly important "convergence" competitive dynamic across all three major carriers as they each pursue bundled fiber/fixed-wireless-plus-wireless strategies. AT&amp;T's Lumen acquisition specifically accelerates its fiber scale, a key differentiator versus T-Mobile (which relies more heavily on fixed wireless access rather than fiber) and a direct competitive response to Verizon's own Frontier Communications fiber acquisition (see separate VZ research report).</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — spectrum scarcity and fiber/network capital intensity keep the market an effective oligopoly of three national carriers.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — network equipment and fiber-construction suppliers hold some leverage amid an industry-wide fiber-buildout race across all three major carriers.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate-to-high — consumers can switch between the "Big Three" carriers, though AT&amp;T's convergence strategy (bundling internet and wireless) is specifically designed to raise switching costs and reduce churn.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Rising — satellite broadband (e.g., Starlink) is an emerging substitute in underserved areas; fixed wireless access itself is both an AT&amp;T growth product and a substitute threat to traditional cable broadband competitors.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — Verizon and T-Mobile are AT&amp;T's direct national competitors, each pursuing their own fiber/convergence and 5G strategies; Comcast and Charter compete for broadband customers in overlapping footprints.</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">AT&amp;T's moat rests on its large-scale national wireless network, an accelerating fiber footprint (now over 38.6 million locations, targeting 40 million-plus by year-end 2026) significantly boosted by the Lumen acquisition, and a demonstrated ability to convert bundled internet-plus-wireless "convergence" into lower churn and higher customer lifetime value — a strategy management describes as central to its competitive positioning versus Verizon and T-Mobile.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major U.S. telecom carriers. See separate VZ and TMUS research reports in this series for detailed comparison figures.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Dividend Yield</th><th>Notes</th></tr>
+      <tr><td>AT&amp;T</td><td>T</td><td>~4.3–4.4%</td><td>Record fiber/wireless net-adds momentum; largest-ever fiber build year in 2026</td></tr>
+      <tr><td>Verizon</td><td>VZ</td><td>~5.5–6.6% (per separate VZ report)</td><td>Also executing a fiber-led turnaround via the Frontier acquisition</td></tr>
+      <tr><td>T-Mobile</td><td>TMUS</td><td>~1.8–2.2% (per separate TMUS report)</td><td>Growth leader among the three carriers, but facing its own rate-plan-modernization controversy</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled — mature telecom growth suggests a terminal rate near long-run GDP growth}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — recommend explicit forecast through 2028, the end of AT&amp;T's stated cumulative shareholder-return commitment period}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td class="placeholder">{{No third-party DCF estimate was clearly isolated in sources reviewed}}</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">AT&amp;T's combination of a well-covered dividend (supported by $4.7 billion in Q2 2026 free cash flow alone against the dividend commitment), increasing buybacks explicitly aimed at a perceived valuation gap, and consistent fiber/wireless convergence execution supports a reasonable risk/reward, though the modest scale of the RBC target ($27 versus a ~$26 price in one source) suggests the market has already priced in much of the near-term operational improvement — total return here is likely to be driven more by the dividend and buyback program than by significant multiple re-rating.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q2 2025</th><th>Q2 2026</th><th>FY2026 Guidance</th></tr>
+      <tr><td>Revenue</td><td>$30.8B</td><td>$31.6B (+2.3% YoY)</td><td>Low-single-digit service revenue growth</td></tr>
+      <tr><td>Adjusted EPS</td><td>$0.54</td><td>$0.65 (+20% YoY; beat $0.59 est.)</td><td>$2.25–$2.35 (full year)</td></tr>
+      <tr><td>Adjusted EBITDA Growth</td><td class="placeholder">{{Baseline}}</td><td>+5.2% YoY</td><td>3–4% (full year)</td></tr>
+      <tr><td>Free Cash Flow</td><td class="placeholder">{{Not directly sourced}}</td><td>$4.7B (above guidance)</td><td>$18B+ (full year)</td></tr>
+      <tr><td>Postpaid Phone Net Adds</td><td class="placeholder">{{Below Q2 2026 level}}</td><td>432,000 (vs. ~338,500 est.)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Fiber + Fixed Wireless Net Adds</td><td class="placeholder">{{Below record level}}</td><td>646,000 (record; 367K fiber + 279K FWA)</td><td class="placeholder">{{8M new fiber locations targeted for the year}}</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">AT&amp;T's results show a genuine, well-itemized bottom-line beat (EPS +20% YoY) alongside a modest revenue miss versus consensus — a combination one source specifically flagged as limiting the stock's re-rating despite otherwise strong subscriber metrics. The 1.3% fiber ARPU decline was clearly and specifically attributed by management to the Lumen acquisition's lower-ARPU customer base rather than core pricing weakness (ARPU approximately flat excluding Lumen), a useful, transparent disclosure that should be incorporated into forward ARPU modeling rather than treated as an underlying pricing-power concern.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>Legacy copper-network retirement (targeting over 30% of wire centers by late 2026) requires careful execution to avoid customer disruption. Continued heavy capital investment ($23–24B in 2026) to sustain the largest-ever fiber build year carries execution risk.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>Fiber ARPU dilution from the Lumen acquisition, while explained, bears monitoring for whether it stabilizes as guided. AT&amp;T's capital-intensive business model requires sustained free cash flow generation to support both its dividend and expanded buyback commitments.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span class="placeholder">{{No specific major regulatory risk beyond general telecom industry considerations (spectrum policy, FCC oversight) was identified in the sources reviewed for this summary.}}</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against AT&amp;T's most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in sources reviewed — verify directly against AT&amp;T's 10-K/10-Q auditor opinion. One source noted "notable T insider transactions" without further detail — worth investigating directly via SEC Form 4 filings.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul class="placeholder"><li>{{ESG_ENV — legacy copper-network retirement may carry disposal/recycling considerations; no specific emissions or sustainability metrics were independently sourced in this summary}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul class="placeholder"><li>{{ESG_SOC — not independently sourced in this summary}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul><li>Management's explicit framing of increased buybacks as "capturing perceived stock valuation disparities" reflects an active, opportunistic capital-allocation stance</li><li class="placeholder">{{ESG_GOV — board composition and executive compensation not sourced beyond the above}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 15, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (Investing.com, Yahoo Finance, AT&amp;T's own investor relations materials, ad-hoc-news.de, and various financial media) that may be delayed or inconsistent. All figures should be independently verified against AT&amp;T's 10-K/10-Q filings before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — UNH</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  .placeholder { color:#8a8fa3; font-style:italic; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">UnitedHealth Group Incorporated</h1>
+      <div class="ticker-line">UNH &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Health Care / Managed Health Care</div>
+    </div>
+    <div class="report-date">September 18, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#1e7e34;">BUY</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">$373.52</span></div>
+      <div class="reco-stat"><span class="label">Target Price</span><span class="value">$475.23 (avg.)</span></div>
+      <div class="reco-stat"><span class="label">Market Cap</span><span class="value">$335.3B</span></div>
+      <div class="reco-stat"><span class="label">Implied Upside</span><span class="value">~+27.2%</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">UNH</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Health Care</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Managed Health Care</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$255.97 – $461.62</td></tr>
+      <tr><td class="k">Consensus Rating</td><td class="v">Buy (27 analysts: 16 Strong Buy, 7 Buy, 4 Hold)</td></tr>
+      <tr><td class="k">TTM Revenue / Net Income</td><td class="v">$450.53 billion / $14.12 billion</td></tr>
+      <tr><td class="k">P/E (TTM) / Forward P/E</td><td class="v">24.15x / 17.63x</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      UnitedHealth Group, the largest U.S. health insurer, reported TTM revenue of $450.53 billion (up 6.6% year-over-year) but net income of $14.12 billion, down 33.7%, reflecting continued elevated medical cost trends that have pressured margins across the managed care industry over the past year. The stock trades well below its 52-week high of $461.62 at $373.52, roughly 19% off that peak, but the analyst rating distribution remains decisively bullish — 23 of 27 analysts (85%) rate Buy or Strong Buy — with an average price target of $475.23 implying substantial upside of roughly 27.2%. We rate UNH a BUY, viewing the current earnings pressure as a cyclical medical-cost-trend headwind rather than a structural impairment, supported by the stock's meaningful discount to its 52-week high and a strongly bullish analyst base.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">UnitedHealth Group's trailing-twelve-month results showed revenue of $450.53 billion (up 6.6% year-over-year), while net income declined 33.7% to $14.12 billion, following a similar full-year 2025 pattern of 11.91% revenue growth alongside a 16.31% earnings decline. The divergence reflects the elevated medical cost trend (higher-than-expected utilization, particularly in Medicare Advantage) that has affected the broader managed care industry over the past year. The stock has traded within a wide 52-week range of $255.97 to $461.62.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text placeholder">{{No specific forward-quarter or full-year 2026 EPS/medical loss ratio guidance was independently sourced for this report — recommend reviewing UnitedHealth's most recent earnings call transcript for management's outlook on medical cost trend normalization.}}</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Consensus rating is Buy across 27 analysts (16 Strong Buy, 7 Buy, 4 Hold, 0 Sell), an 85% Buy/Strong Buy majority. The average price target of $475.23 (range $313–$529) implies approximately 27.2% upside from the current price of $373.52, reflecting expectations of margin recovery as elevated medical cost trends normalize.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">UnitedHealth Group is the largest health insurer in the United States, operating through UnitedHealthcare (health benefits) and Optum (health services, including OptumHealth, OptumInsight, and OptumRx pharmacy benefit management), providing an integrated model spanning insurance, care delivery, and pharmacy services.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>UnitedHealthcare premium revenue across Medicare Advantage, Medicaid, and commercial employer-sponsored health plans</li>
+      <li>Optum Health, Insight, and Rx segment revenue from care delivery, data analytics, and pharmacy benefit management services</li>
+      <li>Continued enrollment growth across its integrated insurance and services platform</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Medical cost trend — elevated utilization, particularly in Medicare Advantage, has been the primary driver of the past year's margin pressure</li>
+      <li class="placeholder">{{Specific medical loss ratio and administrative expense figures not independently sourced for this report}}</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">UnitedHealth competes in the U.S. managed care industry against other large national health insurers. The entire managed care industry has faced elevated medical cost trend pressure over the past year, suggesting UNH's margin compression is substantially an industry-wide phenomenon rather than company-specific execution failure.</p>
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — scale, provider network relationships, and regulatory approval requirements create significant barriers to entry in health insurance.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — healthcare providers and pharmaceutical companies negotiate reimbursement rates, with some leverage varying by regional market concentration.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate — large employer groups and government programs (Medicare, Medicaid) can negotiate terms, though switching costs for integrated benefit administration are meaningful.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Low — health insurance is a highly regulated, necessary product with few direct substitutes for comprehensive coverage.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — intense competition among large national managed care organizations for Medicare Advantage and commercial enrollment.</td></tr>
+    </table>
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">UnitedHealth's moat rests on its unmatched scale as the largest U.S. health insurer, its integrated Optum services platform spanning care delivery, data analytics, and pharmacy benefit management, and extensive provider network relationships built over decades.</p>
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major U.S. health care companies. See separate JNJ, ABBV, MRK, PFE, TMO, ABT, DHR, ISRG, and AMGN reports in this series.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>UnitedHealth Group</td><td>UNH</td><td>Largest U.S. health insurer; trading well below 52-week high amid medical cost trend pressure</td></tr>
+      <tr><td>Johnson &amp; Johnson</td><td>JNJ</td><td>See separate JNJ report in this series</td></tr>
+      <tr><td>AbbVie</td><td>ABBV</td><td>See separate ABBV report in this series</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — requires explicit modeling of medical cost trend normalization assumptions}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>Average sell-side price target of $475.23 (27 analysts) as of the report date</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">We rate UNH a <strong>BUY</strong>. Despite significant near-term net income pressure from elevated medical cost trend, the stock's substantial discount to its 52-week high, an 85% Buy/Strong Buy analyst consensus, and ~27% implied upside to target reflect expectations that current margin pressure is cyclical rather than structural.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>2025</th><th>TTM</th></tr>
+      <tr><td>Revenue</td><td>$447.96 billion (+11.91%)</td><td>$450.53 billion (+6.6%)</td></tr>
+      <tr><td>Net Income</td><td>$12.06 billion (-16.31%)</td><td>$14.12 billion (-33.7%)</td></tr>
+      <tr><td>P/E (TTM) / Forward P/E</td><td class="placeholder">{{N/A}}</td><td>24.15x / 17.63x</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">The persistent gap between revenue growth and declining net income over both the trailing year and full-year 2025 reflects sustained medical cost trend pressure rather than a one-time item, warranting continued monitoring of medical loss ratio trends in upcoming quarters before assuming margin normalization.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>Elevated medical cost trend, particularly in Medicare Advantage, has driven significant margin compression over the past year and may take multiple quarters to normalize.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>Continued net income decline despite revenue growth raises questions about near-term earnings trajectory and the pace of any margin recovery.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span class="placeholder">{{Medicare Advantage reimbursement policy, risk-adjustment methodology changes, and broader health care regulatory policy represent ongoing industry-wide considerations; specific current developments not independently verified for this report.}}</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against UnitedHealth's most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in the sources reviewed — verify directly against UnitedHealth's 10-K/10-Q auditor opinion.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul class="placeholder"><li>{{ESG_ENV — operational emissions targets not independently sourced}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul><li>Access to affordable healthcare and Medicare Advantage plan quality/star ratings are closely monitored by regulators and investors alike</li><li class="placeholder">{{ESG_SOC — specific program details not independently sourced}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul class="placeholder"><li>{{ESG_GOV — board composition and diversity not independently sourced}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 18, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (financial data aggregators and sell-side analyst rating summaries) that may be delayed or inconsistent. All figures should be independently verified against UnitedHealth Group's 10-K/10-Q filings and live market data before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

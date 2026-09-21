@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — RKLB</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #e9edf2;
+    color: var(--text);
+    font-family: "Georgia", "Times New Roman", serif;
+    line-height: 1.55;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.12);
+    padding: 40px 50px 60px;
+  }
+
+  .report-header {
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .firm-name {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .company-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+  }
+
+  .reco-banner {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .reco-main {
+    flex: 0 0 170px;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .reco-main .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+
+  .reco-main .value {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+
+  .reco-stats {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--gray-bg);
+  }
+
+  .reco-stat {
+    padding: 10px 14px;
+    border-left: 1px solid var(--border);
+  }
+
+  .reco-stat .label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    display: block;
+  }
+
+  .reco-stat .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .basic-info {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+
+  .basic-info td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .basic-info td.k {
+    color: var(--muted);
+    width: 38%;
+  }
+
+  .basic-info td.v {
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  section { margin-bottom: 32px; }
+
+  h2.section-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: var(--navy);
+    padding: 8px 14px;
+    margin: 0 0 14px 0;
+    border-left: 5px solid var(--accent);
+  }
+
+  h3.sub-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    margin: 18px 0 10px;
+  }
+
+  p.body-text { font-size: 15px; margin: 0 0 12px; }
+
+  ul.bullet-list { margin: 0 0 12px 0; padding-left: 20px; }
+  ul.bullet-list li { margin-bottom: 6px; font-size: 15px; }
+
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  .thesis-box .thesis-label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-dark);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  table.data-table th {
+    background: var(--navy);
+    color: #fff;
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  table.data-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background: var(--gray-bg); }
+
+  .risk-item { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+
+  .risk-tag {
+    flex: 0 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    background: var(--red);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .risk-tag.op { background: #b8860b; }
+  .risk-tag.fin { background: var(--red); }
+  .risk-tag.reg { background: #6a3d9a; }
+  .risk-tag.legal { background: #444; }
+
+  .esg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
+  .esg-card {
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: 4px;
+    padding: 12px 14px;
+  }
+
+  .esg-card.environmental { border-top-color: #2e7d32; }
+  .esg-card.social { border-top-color: #1565c0; }
+  .esg-card.governance { border-top-color: #6a1b9a; }
+
+  .esg-card h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px;
+    color: var(--navy);
+  }
+
+  .esg-card ul { margin: 0; padding-left: 16px; font-size: 13px; }
+  .esg-card li { margin-bottom: 4px; }
+
+  .peer-note {
+    font-size: 12.5px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: -6px;
+    margin-bottom: 12px;
+  }
+
+  footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  footer .analyst-line { margin-bottom: 8px; font-size: 12px; color: var(--text); }
+
+  @media (max-width: 700px) {
+    .page { padding: 24px 18px; }
+    .reco-banner { flex-direction: column; }
+    .reco-stats { grid-template-columns: repeat(2, 1fr); }
+    .esg-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Rocket Lab Corporation</h1>
+      <div class="ticker-line">RKLB &nbsp;|&nbsp; NASDAQ &nbsp;|&nbsp; Industrials / Aerospace &amp; Defense (Space Launch &amp; Systems)</div>
+    </div>
+    <div class="report-date">
+      September 15, 2026<br>
+      Analyst: [Name Not Specified]
+    </div>
+  </div>
+
+  <!-- ============ RECOMMENDATION BANNER ============ -->
+  <div class="reco-banner">
+    <div class="reco-main">
+      <span class="label">Recommendation</span>
+      <span class="value" style="color:#4caf50;">BUY (speculative / high-risk)</span>
+    </div>
+    <div class="reco-stats">
+      <div class="reco-stat">
+        <span class="label">Current Price</span>
+        <span class="value">~$62–$65</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Target Price (Consensus)</span>
+        <span class="value">~$111–$113 (17–18 analysts); bear case ~$95, bull case (Stifel) $150</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Market Cap</span>
+        <span class="value">~$37.7–$41.2 billion</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Implied Upside</span>
+        <span class="value">~73–95% (consensus average, unusually wide range)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BASIC INFORMATION ============ -->
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">RKLB</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NASDAQ</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Industrials</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Aerospace &amp; Defense (Space Launch Services &amp; Space Systems)</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$14.71 – $151.00 (extremely wide — shares are down ~57% from the 52-week high at current levels)</td></tr>
+      <tr><td class="k">Shares Outstanding</td><td class="v">~598 million (rising — Q3 2026 weighted share count guided to ~641 million)</td></tr>
+      <tr><td class="k">P/E Ratio (TTM)</td><td class="v">Not meaningful — company is not yet GAAP profitable (TTM EPS approximately −$0.28)</td></tr>
+      <tr><td class="k">Price/Sales Ratio</td><td class="v">~52.4x (per one source) — an unusually high multiple reflecting the market's growth expectations rather than current profitability</td></tr>
+      <tr><td class="k">Dividend</td><td class="v">None</td></tr>
+      <tr><td class="k">Beta</td><td class="v">~2.2–3.9 (varies significantly by source) — very high volatility even by speculative-growth-stock standards</td></tr>
+      <tr><td class="k">Founder / CEO</td><td class="v">Sir Peter Beck (Founder, Chairman, President &amp; CEO); founded 2006; headquartered in Long Beach, California</td></tr>
+      <tr><td class="k">Analyst Ratings</td><td class="v">Broadly positive — sources cite 17–18 analysts with roughly 3 Strong Buy, 11 Buy, 4 Hold, 0 Sell (one recent snapshot); consensus rating "Buy"</td></tr>
+      <tr><td class="k">Float</td><td class="v placeholder">{{Not independently sourced in this summary — verify against Rocket Lab's most recent proxy statement}}</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted); margin-top:-14px;">Note: RKLB is an extremely volatile, pre-profitability growth stock. Consensus price targets cited across sources ranged from approximately $67.71 (a recently trimmed fair-value estimate) to $111–$113 (broader consensus) to $135–$150 (individual bullish outliers from KeyBanc and Stifel), alongside explicit bear-case scenarios near $94–$95. This is one of the widest target dispersions seen across the reports in this series and should be treated as reflecting genuine, substantial uncertainty rather than a data inconsistency to be resolved.</p>
+  </section>
+
+  <!-- ============ INVESTMENT SUMMARY ============ -->
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Rocket Lab is executing an ambitious transformation from a dedicated small-satellite launch provider into a vertically integrated space prime, evidenced by record Q2 2026 revenue of $234 million (+62% YoY) and a record backlog of $2.36 billion (+137% YoY, with 60% from Space Systems and 40% from Launch), further extended by more than $1 billion in additional contracts signed in Q3. The company's most consequential recent move is its announced ~$8 billion agreement to acquire Iridium Communications, which would create a fully integrated space powerhouse designing, building, launching, and operating its own satellite constellations — a deal expected to close in 2027 pending regulatory and shareholder approval, financed partly via a $3.6 billion committed bridge loan. The single most important near-term catalyst and risk is the medium-lift Neutron rocket: a Stage 1 tank test failure earlier in 2026 pushed the target launch to Q4 2026, and management itself has acknowledged the year-end window is "narrowing," with any further slip into 2027 representing the central bear-case scenario cited across multiple analyst notes reviewed. The company remains unprofitable (Q2 2026 GAAP net loss of $49.3 million, FY2025 free cash flow of negative $321.8 million) and has diluted shareholders meaningfully to fund growth and the Iridium deal ($1.53 billion raised via at-the-market equity offerings in H1 2026 alone, with the ATM program subsequently terminated). Given the combination of a genuinely differentiated, rapidly scaling business and extreme execution/dilution/valuation risk, this is a speculative, high-conviction growth position rather than a core holding — appropriate only for investors who can tolerate the possibility of a binary, Neutron-launch-dependent outcome and further dilution.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Rocket Lab reported record Q2 2026 revenue of $234.1 million (+62% YoY, +16.8% sequentially), with Space Systems contributing $189.5 million and Launch Services $44.6 million; the results beat consensus expectations. GAAP net loss was $49.26 million (narrower than the prior-year loss but still a miss on EPS after $8.58 million in acquisition-related costs), with GAAP EPS of −$0.08 versus a −$0.06 estimate. GAAP operating expenses rose to $142.1 million (from $132.5 million in Q1), reflecting integration of the Mynaric acquisition and continued Neutron investment; the company also recorded a non-recurring tariff-refund benefit largely offset by an inventory reserve against its Neutron Flight 2 vehicle. Backlog reached a record $2.36 billion (+137% YoY, +6.1% sequentially), with approximately 45.5% expected to convert to revenue within 12 months. The company closed acquisitions of Mynaric (laser communications) and Motiv during the quarter, and announced its intent to acquire Iridium Communications for approximately $8 billion, aiming to become a fully vertically integrated space applications provider, with a $3.6 billion bridge loan committed for financing; the deal is targeted to close in 2027 pending approvals. The company raised $1.08 billion during Q2 via its at-the-market equity offering program (bringing H1 2026 ATM proceeds to $1.53 billion) before subsequently terminating the program. Rocket Lab also introduced its "GHOST" globally-deployable launch system for suborbital and orbital launches from anywhere in the world, and secured more than $437 million in new launch contracts across Electron, HASTE, and Neutron vehicles during Q2 plus post-quarter signings, alongside major awards including a $397 million Space Force SB-AMTI contract and a $160 million geostationary domain awareness contract. Most significantly for near-term sentiment, a Stage 1 tank test failure pushed Neutron's target debut launch to Q4 2026, with CEO Peter Beck acknowledging the year-end launch window is narrowing; shares fell as much as 9.9% in the after-hours session following the Q2 earnings release despite the record revenue and backlog, reflecting investor focus on dilution, cash burn, and Neutron timeline risk rather than the top-line results. Separately, Rocket Lab filed a GAO protest against a NASA Mars Telecommunications Network award to Blue Origin, alleging eligibility violations and a flawed technical review. CEO Peter Beck sold shares across July 6–8, 2026 at prices between $81.59 and $101.57, which sources characterize as consistent with systematic diversification at elevated valuations rather than a signal of concern; more broadly, company insiders were net sellers of approximately $77 million over a trailing 12-month period per one source.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Management guided Q3 2026 revenue to $250–$265 million (another record) with an Adjusted EBITDA loss of $17–$23 million, GAAP gross margins of 29–31%, non-GAAP gross margins of 35–37%, and non-GAAP operating expenses of $121–$127 million — margin guidance that softened somewhat from prior levels, reflecting Mynaric integration and continued Neutron investment. Forward revenue estimates cited by one source show FY2026 revenue of approximately $958 million rising to $1.36 billion in FY2027, with negative average EPS estimated in both years, reflecting continued heavy investment spending. CFO Adam Spice indicated meaningful cash-flow improvement is likely to follow Neutron's first test flight by 18–24 months, framing sustained profitability as fundamentally a 2027-and-beyond story contingent on that launch occurring roughly on schedule.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Rocket Lab trades at a price-to-sales ratio of approximately 52.4x (per one source) — an extremely high multiple reflective of a pre-profitability, high-growth story rather than any current earnings basis. Consensus analyst price targets cluster around $111–$113 (implying roughly 73–95% upside across various snapshots and current-price assumptions), with individual targets ranging from a Street-high Stifel target of $150 to explicit bear-case scenarios near $94–$95 contingent on Neutron slipping further and Iridium integration proving difficult. Notably, every major peer in the small-satellite/new-space cohort reviewed (AST SpaceMobile, Planet Labs, Intuitive Machines, Kratos Defense) was also trading well below its own consensus target at the time of the sources reviewed, suggesting a sector-wide de-rating/skepticism dynamic rather than an RKLB-specific valuation problem — though RKLB's backlog and revenue scale were repeatedly described as more mature than most of these peers.</p>
+  </section>
+
+  <!-- ============ BUSINESS DESCRIPTION ============ -->
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Rocket Lab Corporation, headquartered in Long Beach, California, is a space company providing launch services and space systems solutions in the United States, Canada, Japan, and internationally. The company operates through two segments: Launch Services (dedicated and rideshare launches via its operational Electron small-lift rocket, its suborbital HASTE vehicle, and its new medium-lift Neutron rocket currently in late-stage development) and Space Systems (spacecraft engineering, design, components, manufacturing, and on-orbit mission operations, recently expanded via the Mynaric laser-communications and Motiv acquisitions). Founded by Sir Peter Beck in 2006, Rocket Lab has evolved from a dedicated small-satellite launcher into a broader space infrastructure and space-systems provider, and — pending completion of its announced acquisition of Iridium Communications — is positioning itself to become a fully vertically integrated space company that designs, builds, launches, and operates its own satellite constellations rather than solely serving third-party satellite customers.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Space Systems segment growth (contributed $189.5 million of Q2 2026's $234.1 million total revenue), increasingly driven by large satellite-manufacturing and constellation contracts rather than one-off components</li>
+      <li>Electron and HASTE launch cadence and new contract signings (more than $437 million in new launch contracts in Q2 2026 plus post-quarter signings; 16th Electron mission of the year completed by mid-September 2026)</li>
+      <li>Government and defense contracts, including Space Force and Space Development Agency awards (e.g., the $397 million SB-AMTI contract), positioning Rocket Lab as a credible non-SpaceX prime contractor for national security space missions</li>
+      <li>Neutron rocket commercialization (pending successful first flight), which management and bullish analysts view as the key unlock for mega-constellation deployment contracts and materially higher-value launch revenue</li>
+      <li>The pending Iridium acquisition, which would add recurring satellite-communications-services revenue to Rocket Lab's currently more project/contract-based revenue mix</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Neutron rocket development and manufacturing scale-up, described by management as driving "continued elevated cash outflows" for an extended period</li>
+      <li>Integration costs and increased operating expenses from recent acquisitions (Mynaric, Motiv, and the much larger pending Iridium transaction), including $8.58 million in acquisition-related costs in Q2 2026 alone</li>
+      <li>Production-related headcount growth (up 240 to 1,688 in Q2 2026) to support Neutron and Space Systems scaling</li>
+      <li>Financing costs associated with the $3.6 billion Iridium bridge loan and continued equity issuance (though the specific ATM program used in H1 2026 has since been terminated)</li>
+    </ul>
+  </section>
+
+  <!-- ============ INDUSTRY OVERVIEW & COMPETITIVE POSITIONING ============ -->
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Rocket Lab operates in the rapidly growing commercial and government space launch and space-systems industry, a market shaped overwhelmingly by SpaceX's dominant position in launch cadence and cost, alongside a cohort of smaller, newer public "new space" companies (AST SpaceMobile, Planet Labs, Intuitive Machines, Kratos Defense) each pursuing different niches (satellite communications, Earth observation, lunar/planetary missions, hypersonic/defense technology, respectively). Government and defense demand — particularly U.S. Space Force and Space Development Agency contracts seeking reliable, non-SpaceX-dependent launch and space-systems providers — has been a significant and growing demand driver, evidenced by Rocket Lab's substantial recent defense-related contract wins. The broader "new space" sector experienced a notable, largely sector-wide selloff in the weeks preceding this report, with every major peer reviewed trading below its own consensus price target, suggesting broad valuation reassessment across the group rather than isolated, company-specific concerns.</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low-to-moderate — orbital launch and spacecraft manufacturing require extraordinary capital investment, technical expertise, and regulatory approval, though the "new space" era has seen more entrants than the historical legacy-aerospace industry, and Rocket Lab itself is a relatively young (2006-founded) example of successful new entry.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — specialized aerospace-grade components and materials suppliers hold some leverage; Rocket Lab's vertical-integration strategy (including recent acquisitions like Mynaric for laser communications) is partly a deliberate response to reduce this dependency over time.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate — government customers (NASA, Space Force, SDA) are sophisticated, large buyers, though Rocket Lab's positioning as a credible non-SpaceX alternative provides some negotiating leverage given government interest in supplier diversification for national security reasons.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Low for dedicated small/medium-lift launch and specialized space-systems services at Rocket Lab's demonstrated reliability level, though rideshare launches on larger vehicles (including SpaceX's) represent a lower-cost substitute for some customer missions not requiring dedicated, precisely-timed launches.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High and intensifying — SpaceX dominates the broader launch market by cost and cadence; Rocket Lab competes more directly with smaller "new space" peers and legacy aerospace/defense primes (e.g., for Space Force contracts) in its specific niches; the pending Iridium acquisition would also position Rocket Lab against established satellite-communications operators.</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Rocket Lab's moat, to the extent one exists at this stage of the company's development, rests on its demonstrated launch reliability (16+ Electron missions completed in 2026 alone), an increasingly diversified revenue base spanning both launch and space systems (providing more resilience than single-product-line "new space" peers), and — pending Neutron's successful debut and the Iridium acquisition's completion — the prospect of becoming one of very few vertically integrated space companies capable of designing, building, launching, and operating its own constellations. One source specifically frames Rocket Lab's larger, more diversified backlog ($2.36 billion) as making its "setup materially more mature" than peers like AST SpaceMobile despite a similar overall risk profile. However, this moat remains substantially unproven relative to SpaceX's scale and cost advantages, and is directly contingent on Neutron's success — a still-unrealized, binary technical and schedule risk.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: publicly traded "new space" companies. Figures are approximate and vary meaningfully by source and date — this entire cohort has shown significant recent volatility, so verify against a single consistent, current data source before use.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Market Cap</th><th>Backlog</th><th>Consensus Upside</th></tr>
+      <tr><td>Rocket Lab</td><td>RKLB</td><td>~$37.7–41.2B</td><td>$2.36B (+137% YoY)</td><td>~73–95%</td></tr>
+      <tr><td>AST SpaceMobile</td><td>ASTS</td><td>~$17.96–20.5B</td><td>~$1.3B</td><td>~28–33%</td></tr>
+      <tr><td>Planet Labs</td><td>PL</td><td class="placeholder">{{Not independently sourced}}</td><td>~$816M (one source)</td><td>~95–102%</td></tr>
+      <tr><td>Intuitive Machines</td><td>LUNR</td><td class="placeholder">{{Not independently sourced}}</td><td class="placeholder">{{Not independently sourced}}</td><td>~90–99%</td></tr>
+      <tr><td>Kratos Defense</td><td>KTOS</td><td class="placeholder">{{Not independently sourced}}</td><td class="placeholder">{{Not independently sourced}}</td><td class="placeholder">{{Not independently sourced as an upside figure; YTD return cited at −40.7% in one source, worse than RKLB's own decline}}</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted);">One source's observation that Rocket Lab's ~57% decline from its 52-week high is nonetheless smaller than Kratos Defense's ~40.7% YTD decline was used to argue Rocket Lab commands a relative "scarcity premium" within the sector — an interesting framing, though it should be treated as one analyst's interpretation rather than an established fact.</p>
+  </section>
+
+  <!-- ============ VALUATION ============ -->
+  <section>
+    <h2 class="section-title">Valuation</h2>
+
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — a pre-profitability company with this risk profile likely warrants a higher-than-average discount rate; requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled — highly sensitive to whether Neutron and Iridium both succeed as planned versus a scenario where one or both face significant setbacks}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — recommend explicit scenario-based modeling (bull/base/bear) given management's own framing of profitability as contingent on Neutron's first flight plus an 18–24 month follow-on period, and the binary nature of the Iridium deal closing}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>Reported estimates span an unusually wide range: a recently trimmed analyst fair-value estimate of ~$67.71, a broader consensus average of ~$111–$113, explicit bear-case scenarios of ~$94–$95, and a Street-high bull case (Stifel) of $150 — this dispersion is itself the central valuation fact for RKLB and should not be collapsed into a single "target" figure</td></tr>
+    </table>
+
+    <h3 class="sub-title">Relative Valuation</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Rocket Lab (RKLB)</th><th>Peer Reference (ASTS / PL)</th></tr>
+      <tr><td>Price/Sales</td><td>~52.4x</td><td class="placeholder">{{Not independently sourced for direct comparison}}</td></tr>
+      <tr><td>Revenue Scale (Q2 2026)</td><td>$234.1 million (record)</td><td>ASTS: $31.5 million (per one source); much smaller absolute scale despite a substantial market cap</td></tr>
+      <tr><td>Backlog</td><td>$2.36 billion</td><td>ASTS: ~$1.3 billion; Planet Labs: ~$816 million (both smaller than RKLB's)</td></tr>
+    </table>
+
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">Rocket Lab's premium valuation relative to revenue is partially justified by its larger absolute revenue scale and backlog relative to most "new space" peers, and one source specifically argues RKLB's market cap "looks expensive on absolute scale but reasonable on revenue-per-dollar-of-market-cap" versus AST SpaceMobile. That said, this remains a fundamentally speculative valuation resting on two largely binary, unresolved catalysts: Neutron's first successful flight (targeted Q4 2026, already delayed once, with management itself flagging a "narrowing" window) and the Iridium acquisition closing as planned in 2027. Given the unusually wide dispersion of price targets across sources reviewed (from a ~$68 fair-value trim to a $150 bull case), any single target should be treated as one scenario among several rather than a consensus expectation, and position-sizing should reflect the genuinely binary nature of the key near-term catalysts.</p>
+  </section>
+
+  <!-- ============ FINANCIAL ANALYSIS ============ -->
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q1 2026</th><th>Q2 2026</th><th>Q3 2026 Guidance</th></tr>
+      <tr><td>Revenue</td><td>$200.3M</td><td>$234.1M (+62% YoY, +16.8% sequentially; record)</td><td>$250M–$265M (guided; another record)</td></tr>
+      <tr><td>Gross Margin</td><td>38.2%</td><td class="placeholder">{{Not directly sourced as a single figure for Q2}}</td><td>29–31% GAAP; 35–37% non-GAAP (guided — a sequential softening)</td></tr>
+      <tr><td>Backlog</td><td>$2.2B</td><td>$2.36B (+6.1% sequentially, +137% YoY; record)</td><td class="placeholder">{{Not separately guided; &gt;$1B in additional Q3 signings already reported}}</td></tr>
+      <tr><td>GAAP Net Loss</td><td class="placeholder">{{Not directly sourced}}</td><td>$49.26M (narrowed YoY; EPS −$0.08 vs. −$0.06 estimate)</td><td class="placeholder">{{Not separately guided (GAAP)}}</td></tr>
+      <tr><td>Adjusted EBITDA</td><td class="placeholder">{{Not directly sourced}}</td><td class="placeholder">{{Not directly sourced as a single figure}}</td><td>Loss of $17M–$23M (guided)</td></tr>
+      <tr><td>GAAP Operating Expenses</td><td>$132.5M</td><td>$142.1M</td><td class="placeholder">{{Non-GAAP opex guided at $121M–$127M}}</td></tr>
+      <tr><td>Cash Position / Liquidity</td><td class="placeholder">{{$828M at one point cited}}</td><td>~$2.4B (total cash position, per one source)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">Rocket Lab's headline revenue and backlog growth are strong and consistently corroborated across sources — a positive signal on the demand side of the business. However, several distinct earnings-quality considerations deserve attention. First, the company remains meaningfully unprofitable on both a GAAP and cash-flow basis (FY2025 free cash flow of negative $321.8 million per one source), and Q3 2026 guidance shows sequentially softening gross margins (35–37% non-GAAP, down from Q1's 38.2%), attributed to Mynaric integration and continued Neutron investment — a trend worth monitoring for whether it stabilizes or continues deteriorating. Second, the company has funded its growth and pending Iridium acquisition substantially through equity dilution ($1.53 billion raised via ATM in H1 2026 alone, with Q3 weighted share count guided up to approximately 641 million shares) — existing shareholders have already experienced, and may continue to experience, meaningful dilution. Third, a non-recurring tariff-refund benefit in Q2 2026 was largely offset by an inventory reserve against the Neutron Flight 2 vehicle — a useful example of two roughly offsetting one-time items that headline "beat" framing could otherwise obscure. Finally, insiders (including CEO Peter Beck) have been net sellers of company stock over the trailing 12 months per one source — while characterized by that source as likely routine diversification rather than a negative signal, this is a data point analysts should track directly via SEC Form 4 filings rather than accept at face value from secondary commentary.</p>
+
+    <h3 class="sub-title">Industry-Specific Ratios</h3>
+    <table class="data-table">
+      <tr><th>Ratio</th><th>Value</th></tr>
+      <tr><td>Backlog composition</td><td>~40% Launch / ~60% Space Systems</td></tr>
+      <tr><td>Backlog conversion within 12 months</td><td>~45.5%</td></tr>
+      <tr><td>Electron missions completed (2026, as of mid-September)</td><td>16</td></tr>
+      <tr><td>Total launch backlog (missions)</td><td>90+ launches (highest in company history)</td></tr>
+      <tr><td>Production-related headcount (Q2 2026)</td><td>1,688 (+240 QoQ)</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT RISKS ============ -->
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+
+    <div class="risk-item">
+      <span class="risk-tag op">Operational</span>
+      <span>Neutron's first flight, already delayed once following a Stage 1 tank test failure, remains the single largest operational risk — management has acknowledged the Q4 2026 launch window is "narrowing," and any further delay into 2027 is explicitly cited across multiple sources as the primary bear-case scenario, both for the launch business directly and for the broader mega-constellation/defense-payload opportunity Neutron is meant to unlock. Integration of recent (Mynaric, Motiv) and pending (Iridium) acquisitions adds meaningful additional operational complexity concurrent with the Neutron program.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag fin">Financial</span>
+      <span>The company remains unprofitable with substantial negative free cash flow (−$321.8 million in FY2025 per one source) and has diluted shareholders significantly to fund growth ($1.53 billion raised via ATM in H1 2026 alone). The pending $8 billion Iridium acquisition, financed partly via a $3.6 billion bridge loan, adds substantial financing and integration risk on top of already-elevated cash consumption tied to Neutron. Sustained cash burn will eventually require either achieved profitability or additional capital raises, which could mean further dilution.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag reg">Regulatory</span>
+      <span>The pending Iridium acquisition requires regulatory and shareholder approval and is not expected to close until 2027, introducing deal-completion risk over an extended timeline. Rocket Lab's own GAO protest against NASA's Mars Telecommunications Network award to Blue Origin illustrates the kind of government-contract-award disputes that are a routine but real feature of operating as a government-dependent space contractor.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag legal">Legal</span>
+      <span>Rocket Lab has faced securities fraud class-action litigation, with multiple law-firm investor-alert notices identified in sources reviewed (dated April 2025) inviting investors with losses to inquire about a securities fraud class action; the current status and resolution of this matter was not independently verified in this summary and should be checked directly against SEC filings or court records before drawing conclusions about its materiality today.</span>
+    </div>
+
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or disclosed material weaknesses in internal controls were identified in the sources reviewed for this summary — verify directly against Rocket Lab's most recent 10-K/10-Q auditor opinion before relying on this.}}</p>
+  </section>
+
+  <!-- ============ ESG ============ -->
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental">
+        <h4>Environmental</h4>
+        <ul class="placeholder">
+          <li>{{ESG_ENV — no specific emissions, launch-related environmental-impact data, or sustainability metrics were independently sourced in this summary; rocket launches carry inherent environmental considerations (propellant emissions, potential debris) worth reviewing directly in Rocket Lab's own disclosures}}</li>
+        </ul>
+      </div>
+      <div class="esg-card social">
+        <h4>Social</h4>
+        <ul class="placeholder">
+          <li>{{ESG_SOC — no specific labor standards, workforce diversity, or community-relations data were independently sourced in this summary}}</li>
+        </ul>
+      </div>
+      <div class="esg-card governance">
+        <h4>Governance</h4>
+        <ul>
+          <li>Founder Peter Beck holds the combined roles of Founder, Chairman, President, and CEO — a concentration of leadership roles common among founder-led growth companies but worth noting as a governance structure consideration</li>
+          <li>Reported insider selling (including by CEO Beck) and net insider sales of approximately $77 million over a trailing 12-month period per one source are worth monitoring, though characterized by that source as likely routine diversification rather than a negative signal</li>
+          <li class="placeholder">{{ESG_GOV — board composition and executive compensation structure not sourced beyond the above in this summary; the historical securities-fraud litigation noted under Investment Risks may also carry governance implications worth investigating directly}}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER / DISCLOSURES ============ -->
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 15, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party financial data sources (Investing.com, The Motley Fool, TradingView, StockAnalysis.com, CNBC, CNN, Kraken, TipRanks, Simply Wall St, Quartr, Seeking Alpha, company earnings materials and press releases, and various financial media) that may be delayed, inconsistent, or subject to revision. Rocket Lab is an unusually volatile, pre-profitability growth stock, and consensus price-target dispersion across sources reviewed was exceptionally wide (from a ~$68 trimmed fair-value estimate to a $150 bull-case target) — this reflects genuine analyst disagreement about binary catalysts (Neutron's first flight, the Iridium acquisition close) rather than a data-quality issue, and readers should treat any single figure in this report as one scenario among several. All figures should be independently verified against primary sources (Rocket Lab's 10-K/10-Q filings and investor relations disclosures) before being used for any actual investment decision. This is not a research report from a registered investment adviser or broker-dealer, does not constitute investment advice, and should not be relied upon as such.
+  </footer>
+
+</div>
+</body>
+</html>

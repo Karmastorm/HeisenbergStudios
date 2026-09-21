@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — American Water Works Company, Inc. (AWK)</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--text);
+    background: #ffffff;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+  }
+  .report-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 48px;
+  }
+  .report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+  }
+  .firm-name {
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .company-title {
+    font-size: 26px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .reco-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--gray-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+  }
+  .reco-main .label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+  }
+  .reco-main .value {
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .reco-stats {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 28px;
+  }
+  .reco-stats div .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+  .reco-stats div .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+  }
+  h2.section-title {
+    font-size: 18px;
+    color: var(--navy);
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 6px;
+    margin-top: 40px;
+    margin-bottom: 16px;
+  }
+  h3 {
+    font-size: 15px;
+    color: var(--navy);
+    margin-top: 22px;
+    margin-bottom: 8px;
+  }
+  table.basic-info, table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+  table.basic-info td, table.basic-info th,
+  table.data-table td, table.data-table th {
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    text-align: left;
+  }
+  table.basic-info th, table.data-table th {
+    background: var(--gray-bg);
+    color: var(--navy);
+    font-weight: bold;
+  }
+  table.basic-info td:first-child {
+    font-weight: bold;
+    color: var(--muted);
+    width: 32%;
+  }
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 14.5px;
+  }
+  ul {
+    margin-top: 4px;
+    padding-left: 22px;
+  }
+  li {
+    margin-bottom: 6px;
+  }
+  .peer-note {
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 8px;
+  }
+  .risk-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+  }
+  .risk-item .risk-tag {
+    display: inline-block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: bold;
+    color: #fff;
+    background: var(--muted);
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .esg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 12px;
+  }
+  .esg-card {
+    background: var(--gray-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+  .esg-card h4 {
+    margin-top: 0;
+    color: var(--navy);
+    font-size: 14px;
+  }
+  .placeholder {
+    color: #8a8fa3;
+    font-style: italic;
+  }
+  footer {
+    margin-top: 48px;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .analyst-line {
+    margin-bottom: 6px;
+  }
+  p { font-size: 14.5px; }
+</style>
+</head>
+<body>
+<div class="report-container">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">American Water Works Company, Inc.</h1>
+      <div class="ticker-line">NYSE: AWK &nbsp;|&nbsp; Sector: Utilities &nbsp;|&nbsp; Industry: Regulated Water</div>
+    </div>
+    <div class="report-date">
+      Report Date: September 19, 2026<br>
+      Analyst: Equity Research Desk
+    </div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main">
+      <div class="label">Recommendation</div>
+      <div class="value" style="color:#b8860b;">HOLD</div>
+    </div>
+    <div class="reco-stats">
+      <div>
+        <div class="label">Current Price</div>
+        <div class="value">$135.90</div>
+      </div>
+      <div>
+        <div class="label">Target Price</div>
+        <div class="value">$141.45</div>
+      </div>
+      <div>
+        <div class="label">Market Cap</div>
+        <div class="value">$27.01B</div>
+      </div>
+      <div>
+        <div class="label">Implied Upside/Downside</div>
+        <div class="value" style="color:var(--green);">+4.08%</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Basic Information</h2>
+  <table class="basic-info">
+    <tr><td>Ticker</td><td>AWK (NYSE)</td></tr>
+    <tr><td>Exchange</td><td>New York Stock Exchange</td></tr>
+    <tr><td>Sector</td><td>Utilities</td></tr>
+    <tr><td>Industry</td><td>Regulated Water</td></tr>
+    <tr><td>52-Week Range</td><td>$120.57 – $145.64</td></tr>
+    <tr><td>Average Daily Volume</td><td>3,584,568 shares</td></tr>
+    <tr><td>Float</td><td class="placeholder">{{FLOAT_SHARES}}</td></tr>
+    <tr><td>Shares Outstanding</td><td>198.73 million</td></tr>
+    <tr><td>Major Shareholders</td><td class="placeholder">{{MAJOR_SHAREHOLDERS — institutional ownership detail not independently verified; primarily held by index funds and institutional asset managers (e.g., Vanguard, BlackRock, State Street per typical large-cap utility ownership patterns)}}</td></tr>
+  </table>
+
+  <h2 class="section-title">Investment Summary</h2>
+  <div class="thesis-box">
+    <strong>Investment Thesis:</strong> American Water Works is the largest publicly traded regulated water and wastewater utility in the United States, operating approximately 80 surface water treatment plants and 520 groundwater treatment plants across multiple states. We rate the stock HOLD. The 13-analyst rating distribution has Hold as the clear largest bucket (9 of 13, 69.2%), matching the source's own explicit "Hold" consensus label. The average price target of $141.45 implies only modest +4.08% upside from the current $135.90. We flag a likely TTM data-aggregation error in third-party financial data (see Earnings Quality Notes).
+  </div>
+
+  <h3>Recent Developments</h3>
+  <p>American Water Works reported FY2025 revenue of $5,140 million, up 9.74% year-over-year from $4,684 million in FY2024, with net income growing 5.71% to $1,111 million from $1,051 million and EPS rising from $5.39 to $5.69. Net margin declined modestly from 22.44% to 21.62%. The company continues to execute a large, multi-year capital investment program in water and wastewater infrastructure across its regulated service territories, supported by constructive regulatory relationships typical of the regulated water utility sector.</p>
+
+  <h3>Earnings Forecast</h3>
+  <p>We expect continued mid-single-digit EPS growth driven by regulated rate-base investment in water and wastewater infrastructure, supported by ongoing municipal acquisitions that expand American Water's regulated customer base, tempered by the Hold-majority analyst distribution's signal of measured near-term growth expectations.</p>
+
+  <h3>Valuation Summary</h3>
+  <p>At $135.90, AWK trades at a P/E of 23.56x, at the higher end of the utility sector, consistent with regulated water utilities' historically premium valuations reflecting their highly stable, essential-service earnings profiles. The stock trades in the upper half of its 52-week range of $120.57–$145.64. Given the Hold-majority analyst distribution matching the source's own explicit "Hold" consensus label and modest implied upside, we view the shares as fairly valued at current levels.</p>
+
+  <h2 class="section-title">Business Description</h2>
+  <p>American Water Works Company, Inc. is the largest publicly traded water and wastewater utility company in the United States, providing regulated and market-based drinking water, wastewater, and other related services to an estimated 14 million people across 14 states. The company operates approximately 80 surface water treatment plants and 520 groundwater treatment plants, and continues to grow its regulated customer base through both organic infrastructure investment and municipal water system acquisitions.</p>
+  <h3>Key Revenue Drivers</h3>
+  <ul>
+    <li>Regulated water and wastewater utility revenue across American Water's 14-state footprint, driven by customer growth, rate base expansion, and approved rate case outcomes.</li>
+    <li>Municipal water and wastewater system acquisitions that expand the company's regulated customer base.</li>
+    <li>Infrastructure investment surcharges and other regulatory mechanisms that support timely cost recovery for capital investment.</li>
+  </ul>
+  <h3>Key Expense Drivers</h3>
+  <ul>
+    <li>Capital expenditure on water and wastewater treatment plant upgrades, pipe replacement, and infrastructure resilience across a 14-state footprint.</li>
+    <li>Operations and maintenance costs across approximately 80 surface water and 520 groundwater treatment plants.</li>
+    <li>Interest expense on debt used to fund the company's substantial capital investment program.</li>
+    <li>Water quality compliance costs associated with evolving environmental regulations (e.g., PFAS treatment requirements).</li>
+  </ul>
+
+  <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+  <p>The U.S. regulated water utility industry is highly fragmented, with the majority of water systems still owned by municipalities, providing a long runway for consolidation by well-capitalized investor-owned utilities like American Water. Water utilities typically enjoy premium valuations relative to electric and gas utilities given their extremely stable, essential-service demand profile and long regulatory track record of constructive rate case outcomes.</p>
+  <h3>Porter's Five Forces</h3>
+  <table class="data-table">
+    <tr><th>Force</th><th>Assessment</th></tr>
+    <tr><td>Threat of New Entrants</td><td>Low — regulated water utilities operate in protected service territories with extremely high capital and regulatory barriers to entry.</td></tr>
+    <tr><td>Bargaining Power of Suppliers</td><td>Moderate — treatment chemicals, pipe, and construction/equipment suppliers have some pricing power.</td></tr>
+    <tr><td>Bargaining Power of Buyers</td><td>Low — regulated ratepayers have no practical alternative to municipal or regulated water and wastewater service.</td></tr>
+    <tr><td>Threat of Substitutes</td><td>Very Low — water and wastewater service has no practical substitute.</td></tr>
+    <tr><td>Competitive Rivalry</td><td>Low — regulated water utilities generally do not face direct competition within their assigned service territories, though there is competition among investor-owned utilities to acquire municipal systems.</td></tr>
+  </table>
+  <h3>Competitive Advantage</h3>
+  <p>American Water Works' scale as the largest publicly traded regulated water utility, its multi-state diversification, and its demonstrated track record of successfully acquiring and integrating municipal water systems provide a durable, long-runway growth platform relative to smaller regional water utility peers.</p>
+  <div class="peer-note">Peer companies shown for comparative context; figures sourced from public financial data as of report date.</div>
+  <table class="data-table">
+    <tr><th>Company</th><th>Ticker</th><th>Market Cap</th><th>P/E</th><th>Net Margin</th></tr>
+    <tr><td>American Water Works</td><td>AWK</td><td>$27.01B</td><td>23.56x</td><td>21.62%</td></tr>
+    <tr><td>Eversource Energy</td><td>ES</td><td>$25.51B</td><td>17.54x</td><td>12.49%</td></tr>
+    <tr><td>WEC Energy Group</td><td>WEC</td><td>$33.62B</td><td>19.97x</td><td>15.89%</td></tr>
+  </table>
+
+  <h2 class="section-title">Valuation</h2>
+  <h3>Absolute Valuation — Discounted Cash Flow (Illustrative)</h3>
+  <table class="data-table">
+    <tr><th>Assumption</th><th>Value</th></tr>
+    <tr><td>Terminal Growth Rate</td><td class="placeholder">{{TERMINAL_GROWTH}}</td></tr>
+    <tr><td>Discount Rate (WACC)</td><td class="placeholder">{{WACC}}</td></tr>
+    <tr><td>Implied Fair Value / Share</td><td class="placeholder">{{DCF_FAIR_VALUE}}</td></tr>
+  </table>
+  <h3>Relative Valuation</h3>
+  <table class="data-table">
+    <tr><th>Metric</th><th>AWK</th><th>Peer Average</th></tr>
+    <tr><td>P/E (TTM)</td><td>23.56x</td><td class="placeholder">{{PEER_AVG_PE}}</td></tr>
+    <tr><td>Dividend Yield</td><td>2.63%</td><td class="placeholder">{{PEER_AVG_YIELD}}</td></tr>
+  </table>
+  <h3>Valuation Conclusion</h3>
+  <p>AWK's premium P/E relative to electric utility peers is consistent with the water utility sector's historically higher valuation multiples, reflecting its extremely stable, essential-service demand profile. Given the Hold-majority analyst distribution matching the source's own explicit "Hold" consensus label and modest implied upside, we rate the shares HOLD.</p>
+
+  <h2 class="section-title">Financial Analysis</h2>
+  <h3>Historical &amp; Forecast Summary</h3>
+  <table class="data-table">
+    <tr><th>Metric</th><th>FY2024</th><th>FY2025</th><th>FY2027E</th></tr>
+    <tr><td>Revenue ($M)</td><td>4,684</td><td>5,140</td><td class="placeholder">{{REV_2027E}}</td></tr>
+    <tr><td>Net Income ($M)</td><td>1,051</td><td>1,111</td><td class="placeholder">{{NI_2027E}}</td></tr>
+    <tr><td>EPS ($)</td><td>5.39</td><td>5.69</td><td class="placeholder">{{EPS_2027E}}</td></tr>
+    <tr><td>Net Margin</td><td>22.44%</td><td>21.62%</td><td class="placeholder">{{NETMARGIN_2027E}}</td></tr>
+  </table>
+  <h3>Earnings Quality Notes</h3>
+  <p>Trailing-twelve-month (TTM) figures pulled from third-party data reported revenue of $20,699 million and net income of $4,294 million — approximately 4.03x and 3.87x the corresponding FY2025 annual figures ($5,140 million revenue and $1,111 million net income), respectively. This ratio is consistent with the recurring data-aggregation error pattern observed across multiple tickers in this series, notwithstanding the source tool's own assessment that the TTM EPS figure "appears reasonable." We have excluded these TTM figures from the summary table above and used FY2024/FY2025 annual figures as the analytical base. Readers should independently verify actual TTM performance via AWK's most recent 10-Q and 10-K filings before relying on any trailing-twelve-month figures from automated data aggregators.</p>
+  <h3>Industry-Specific Ratios</h3>
+  <table class="data-table">
+    <tr><th>Ratio</th><th>Value</th></tr>
+    <tr><td>Regulated Rate Base Growth</td><td class="placeholder">{{RATE_BASE_GROWTH}}</td></tr>
+    <tr><td>Population Served</td><td>~14 million</td></tr>
+    <tr><td>Number of Treatment Plants (Surface / Groundwater)</td><td>~80 / ~520</td></tr>
+    <tr><td>Debt / EBITDA</td><td class="placeholder">{{DEBT_EBITDA}}</td></tr>
+  </table>
+
+  <h2 class="section-title">Investment Risks</h2>
+  <div class="risk-item">
+    <span class="risk-tag">Operational</span>
+    <p>Aging water and wastewater infrastructure across a 14-state footprint creates ongoing maintenance and replacement risk, alongside water quality compliance risk from evolving contaminant regulations such as PFAS treatment requirements.</p>
+  </div>
+  <div class="risk-item">
+    <span class="risk-tag">Financial</span>
+    <p>Large, ongoing capital expenditure requirements for infrastructure replacement and municipal acquisitions create sensitivity to interest rates and capital market access.</p>
+  </div>
+  <div class="risk-item">
+    <span class="risk-tag">Regulatory</span>
+    <p>Rate case outcomes across American Water's 14-state regulatory footprint directly determine allowed returns on invested capital, and evolving water quality standards (including PFAS regulation) could increase compliance costs.</p>
+  </div>
+  <div class="risk-item">
+    <span class="risk-tag">Legal</span>
+    <p>The company faces ongoing legal and regulatory risk related to water quality compliance, infrastructure incidents, and municipal acquisition disputes typical of a large, multi-state regulated water utility.</p>
+  </div>
+  <h3>Disclosure Flags</h3>
+  <p>We flag for readers that the Hold-dominated analyst rating distribution (9 of 13 analysts, 69.2%) is corroborated by the source's own explicit "Hold" consensus label. We also flag the likely TTM data-aggregation error described above as a data-quality risk for any analysis relying on automated trailing-twelve-month feeds for this ticker.</p>
+
+  <h2 class="section-title">Environmental, Social &amp; Governance</h2>
+  <div class="esg-grid">
+    <div class="esg-card">
+      <h4>Environmental</h4>
+      <p class="placeholder">{{ESG_ENVIRONMENTAL — PFAS treatment investment, water conservation initiatives, and infrastructure resiliency programs not independently verified for this report}}</p>
+    </div>
+    <div class="esg-card">
+      <h4>Social</h4>
+      <p class="placeholder">{{ESG_SOCIAL — customer affordability programs and workforce initiatives not independently verified for this report}}</p>
+    </div>
+    <div class="esg-card">
+      <h4>Governance</h4>
+      <p class="placeholder">{{ESG_GOVERNANCE — board composition and executive compensation structure not independently verified for this report}}</p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="analyst-line">Prepared by the Equity Research Desk — publicly sourced information only.</div>
+    <div>This report is for informational purposes only and does not constitute investment advice or a solicitation to buy or sell any security. All data is sourced from publicly available third-party sources believed to be reliable but not independently audited; figures marked with placeholders indicate data points that could not be verified as of the report date. Past performance is not indicative of future results. Readers should conduct their own due diligence and consult a licensed financial advisor before making investment decisions.</div>
+  </footer>
+
+</div>
+</body>
+</html>

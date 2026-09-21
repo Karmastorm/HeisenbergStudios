@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — COP</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  .placeholder { color:#8a8fa3; font-style:italic; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">ConocoPhillips</h1>
+      <div class="ticker-line">COP &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Energy / Oil &amp; Gas Exploration &amp; Production</div>
+    </div>
+    <div class="report-date">September 17, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#1e7e34;">BUY</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">~$132</span></div>
+      <div class="reco-stat"><span class="label">Target Price</span><span class="value">$145.44 (avg.)</span></div>
+      <div class="reco-stat"><span class="label">Target Range</span><span class="value">$126 – $189</span></div>
+      <div class="reco-stat"><span class="label">Implied Upside/Downside</span><span class="value">~10.4%</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">COP</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Energy</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Oil &amp; Gas Exploration &amp; Production</td></tr>
+      <tr><td class="k">CEO</td><td class="v">Ryan Lance (Chairman &amp; CEO)</td></tr>
+      <tr><td class="k">Headquarters</td><td class="v">Houston, Texas</td></tr>
+      <tr><td class="k">Consensus Rating</td><td class="v">Buy (27 analysts; majority Strong Buy — 15 analysts)</td></tr>
+      <tr><td class="k">Q3 2026 Declared Dividend</td><td class="v">$0.84 per share (payable September 1, 2026)</td></tr>
+      <tr><td class="k">Q2 2026 Shareholder Returns</td><td class="v">$3.0 billion ($2.0B buybacks, doubled; $1.0B dividends)</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      ConocoPhillips delivered a sharply improved Q2 2026, with GAAP net income more than doubling year-over-year to $3.9 billion ($3.23/share, versus $2.0 billion/$1.56 in Q2 2025) and adjusted earnings of $4.0 billion ($3.24/share, versus $1.8 billion/$1.42 a year earlier), driven substantially by a 36% year-over-year increase in average realized commodity prices to $62.33/BOE alongside record production of 2,248 thousand barrels of oil equivalent per day. The company doubled share repurchases to $2.0 billion in the quarter, remains on track to return 45% of cash from operations to shareholders in 2026, and achieved its $5 billion asset-disposition target ahead of schedule — evidence of continued portfolio high-grading and capital discipline. Strategically, ConocoPhillips is diversifying its international footprint with a new 42% interest in the Kirkuk joint venture in Iraq, a re-entry agreement for Syria operations, and expanded LNG offtake to 12 million tonnes per annum, broadening its growth avenues beyond core U.S. shale (Permian Delaware and Midland, Eagle Ford, and Bakken). CEO Ryan Lance reaffirmed the company is "executing well, delivering on our strategy" and remains on track for a $7 billion free-cash-flow target by 2029. With 15 of 27 analysts rating the stock Strong Buy and roughly 10% implied upside to the average target, we rate COP a BUY: the combination of a leaner cost structure, disciplined capital returns, and genuine international growth diversification supports continued outperformance, tempered by the inherent cyclicality of commodity-price-driven earnings.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">ConocoPhillips' Q2 2026 results showed GAAP net income of $3.9 billion ($3.23 per share), more than doubling from $2.0 billion ($1.56 per share) in Q2 2025, while adjusted earnings rose to $4.0 billion ($3.24 per share) from $1.8 billion ($1.42 per share) a year earlier. Six-month 2026 GAAP earnings totaled $6.1 billion ($5.00 per share), with adjusted earnings of $6.3 billion ($5.13 per share). Operating cash flow was $7.4 billion in the quarter ($7.2 billion excluding working-capital effects). Production totaled 2,248 thousand barrels of oil equivalent per day, with Lower 48 output of 1,479 MBOED, including 720 MBOED from the Delaware Basin, 202 MBOED from the Midland Basin, 363 MBOED from the Eagle Ford, and 189 MBOED from the Bakken. Average realized price was $62.33 per barrel of oil equivalent, up 36% year-over-year. The company doubled share repurchases to $2.0 billion in the quarter and paid $1.0 billion in ordinary dividends, for total shareholder distributions of $3.0 billion, keeping the company on track for a 45% cash-from-operations return target in 2026. ConocoPhillips achieved its $5 billion asset-disposition target ahead of schedule and made several notable strategic moves: acquiring a 42% interest in the Kirkuk joint venture in Iraq, securing a re-entry agreement for Syria operations, and expanding LNG offtake capacity to 12 million tonnes per annum. CEO Ryan Lance stated the company is "executing well, delivering on our strategy, and remain on track" to achieve $7 billion of free cash flow by 2029.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Full-year 2026 guidance was reaffirmed following the Q2 print. Q3 2026 production is guided to a range of 2.29–2.32 million barrels of oil equivalent per day, implying continued sequential production growth. Management's longer-term target of $7 billion in free cash flow by 2029 remains intact per CEO commentary.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Consensus rating is Buy across 27 analysts, with a majority (15) rating the stock Strong Buy. The average price target is $145.44, implying roughly 10.4% upside from a current price near $132. The target range spans $126 (low) to $189 (high), with the wide upper end reflecting bullish scenarios tied to sustained commodity-price strength and continued execution on the international diversification strategy.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">ConocoPhillips is a leading independent exploration and production company, with a diversified global asset base spanning U.S. unconventional plays (the Delaware and Midland Basins within the Permian, the Eagle Ford, and the Bakken) alongside international operations. Under CEO Ryan Lance, the company has pursued a disciplined capital-allocation strategy emphasizing low-cost supply, portfolio high-grading through asset dispositions, and substantial shareholder capital returns via dividends and share repurchases. Recent strategic moves — a stake in the Kirkuk joint venture in Iraq, a Syria re-entry agreement, and expanded LNG offtake commitments — reflect a deliberate diversification of the company's growth base beyond core U.S. shale.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Record production of 2,248 MBOED in Q2 2026, led by Lower 48 unconventional output across the Delaware Basin, Midland Basin, Eagle Ford, and Bakken</li>
+      <li>A 36% year-over-year increase in average realized commodity prices to $62.33/BOE</li>
+      <li>New international growth avenues: the Kirkuk (Iraq) joint venture, Syria re-entry agreement, and LNG offtake expansion to 12 million tonnes per annum</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Capital expenditure associated with Permian, Eagle Ford, and Bakken development, alongside new international project investment</li>
+      <li>Costs associated with integrating and developing the new Kirkuk joint venture interest and Syria re-entry</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">ConocoPhillips competes in the global oil and gas exploration and production industry, most directly against other large independent producers and, on scale, against the integrated majors Chevron and ExxonMobil (see separate CVX and XOM reports in this series). As a pure-play E&amp;P company without integrated downstream refining operations, ConocoPhillips' earnings are more directly leveraged to commodity price movements than the diversified integrated majors, a dynamic clearly visible in its 36% YoY realized-price-driven earnings surge in Q2 2026.</p>
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — capital intensity, technical expertise in unconventional drilling, and access to reserves create substantial barriers to entry.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — oilfield-services costs can fluctuate with drilling activity levels across the industry.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Low — crude oil and natural gas are commodity goods priced on global benchmarks, limiting individual buyer negotiating leverage; new LNG offtake agreements introduce longer-term contracted pricing structures.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate-to-Long-Term — renewable energy and electrification represent a structural long-term substitute for fossil fuels.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — intense competition among independent E&amp;P companies and integrated majors for reserves, production growth, and capital-return leadership.</td></tr>
+    </table>
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">ConocoPhillips' moat rests on a low-cost, diversified unconventional asset base across multiple premier U.S. basins, a disciplined capital-allocation track record (including the ahead-of-schedule $5 billion asset-disposition target), and an emerging international diversification strategy (Iraq, Syria, LNG) that reduces reliance on any single basin or region.</p>
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major U.S. exploration &amp; production and integrated oil and gas companies. See separate XOM, CVX, EOG, and OXY reports in this series.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>ConocoPhillips</td><td>COP</td><td>Average target $145.44; ~10.4% implied upside; 15 of 27 analysts rate Strong Buy</td></tr>
+      <tr><td>Exxon Mobil</td><td>XOM</td><td>See separate XOM report in this series</td></tr>
+      <tr><td>Chevron</td><td>CVX</td><td>See separate CVX report in this series</td></tr>
+      <tr><td>EOG Resources</td><td>EOG</td><td>See separate EOG report in this series</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — recommend explicit modeling of realized-price sensitivity and international project execution risk}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>Average sell-side price target of $145.44 (27 analysts) as of the report date</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">We rate COP a <strong>BUY</strong>. Sharply improved earnings driven by both production growth and higher realized prices, doubled share buybacks, an ahead-of-schedule asset-disposition program, and genuine international growth diversification collectively support a constructive stance, reinforced by a majority Strong Buy analyst rating distribution. The primary consideration is that COP's pure-play E&amp;P earnings profile is more directly exposed to commodity price cyclicality than integrated peers.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q2 2025</th><th>Q2 2026</th><th>YoY Change</th></tr>
+      <tr><td>GAAP Net Income</td><td>$2.0B ($1.56/share)</td><td>$3.9B ($3.23/share)</td><td>+95%</td></tr>
+      <tr><td>Adjusted Earnings</td><td>$1.8B ($1.42/share)</td><td>$4.0B ($3.24/share)</td><td>+122%</td></tr>
+      <tr><td>Operating Cash Flow</td><td class="placeholder">{{Not independently sourced}}</td><td>$7.4 billion</td><td class="placeholder">{{Not independently sourced}}</td></tr>
+      <tr><td>Production</td><td class="placeholder">{{Not independently sourced}}</td><td>2,248 MBOED</td><td class="placeholder">{{Not independently sourced}}</td></tr>
+      <tr><td>Average Realized Price</td><td class="placeholder">{{Not independently sourced}}</td><td>$62.33/BOE</td><td>+36%</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">GAAP and adjusted earnings were closely aligned in Q2 2026 ($3.9B vs. $4.0B), indicating limited distortion from one-time items. The sharp year-over-year earnings improvement was driven by both genuine production growth and a 36% increase in realized commodity prices; investors should note that the price component of this improvement is cyclical and not assured to persist, while the production and cost-discipline components represent more durable, company-specific execution gains.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>A substantial portion of the Q2 2026 earnings improvement was driven by a 36% YoY increase in realized commodity prices, a cyclical factor not assured to persist; a reversal in crude oil or natural gas prices would directly pressure earnings given COP's pure-play E&amp;P business model.</span></div>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>New international operations (Kirkuk joint venture in Iraq, Syria re-entry) introduce geopolitical and execution risk beyond the company's core, more established U.S. unconventional asset base.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span class="placeholder">{{No specific major financial-statement risk beyond general commodity-price cyclicality was identified in the sources reviewed for this report.}}</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span class="placeholder">{{Operations in Iraq and Syria introduce sanctions and geopolitical regulatory considerations that warrant close monitoring; specific current status not independently verified for this report.}}</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against ConocoPhillips' most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in the sources reviewed — verify directly against ConocoPhillips' 10-K/10-Q auditor opinion.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul class="placeholder"><li>{{ESG_ENV — methane-reduction and emissions-intensity targets not independently sourced in this summary}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul class="placeholder"><li>{{ESG_SOC — community relations and workforce safety program specifics not independently sourced}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul><li>Ryan Lance serves as combined Chairman and CEO</li><li class="placeholder">{{ESG_GOV — board composition and diversity not independently sourced}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 17, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (company earnings releases, financial media coverage, and sell-side analyst commentary) that may be delayed or inconsistent. All figures should be independently verified against ConocoPhillips' 10-K/10-Q filings before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

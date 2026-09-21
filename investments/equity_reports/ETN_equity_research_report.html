@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — ETN</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #e9edf2;
+    color: var(--text);
+    font-family: "Georgia", "Times New Roman", serif;
+    line-height: 1.55;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.12);
+    padding: 40px 50px 60px;
+  }
+
+  .report-header {
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .firm-name {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .company-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+  }
+
+  .reco-banner {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .reco-main {
+    flex: 0 0 170px;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .reco-main .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+
+  .reco-main .value {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+
+  .reco-stats {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--gray-bg);
+  }
+
+  .reco-stat {
+    padding: 10px 14px;
+    border-left: 1px solid var(--border);
+  }
+
+  .reco-stat .label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    display: block;
+  }
+
+  .reco-stat .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .basic-info {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+
+  .basic-info td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .basic-info td.k {
+    color: var(--muted);
+    width: 38%;
+  }
+
+  .basic-info td.v {
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  section { margin-bottom: 32px; }
+
+  h2.section-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: var(--navy);
+    padding: 8px 14px;
+    margin: 0 0 14px 0;
+    border-left: 5px solid var(--accent);
+  }
+
+  h3.sub-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    margin: 18px 0 10px;
+  }
+
+  p.body-text { font-size: 15px; margin: 0 0 12px; }
+
+  ul.bullet-list { margin: 0 0 12px 0; padding-left: 20px; }
+  ul.bullet-list li { margin-bottom: 6px; font-size: 15px; }
+
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  .thesis-box .thesis-label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-dark);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  table.data-table th {
+    background: var(--navy);
+    color: #fff;
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  table.data-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background: var(--gray-bg); }
+
+  .risk-item { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+
+  .risk-tag {
+    flex: 0 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    background: var(--red);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .risk-tag.op { background: #b8860b; }
+  .risk-tag.fin { background: var(--red); }
+  .risk-tag.reg { background: #6a3d9a; }
+  .risk-tag.legal { background: #444; }
+
+  .esg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
+  .esg-card {
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: 4px;
+    padding: 12px 14px;
+  }
+
+  .esg-card.environmental { border-top-color: #2e7d32; }
+  .esg-card.social { border-top-color: #1565c0; }
+  .esg-card.governance { border-top-color: #6a1b9a; }
+
+  .esg-card h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px;
+    color: var(--navy);
+  }
+
+  .esg-card ul { margin: 0; padding-left: 16px; font-size: 13px; }
+  .esg-card li { margin-bottom: 4px; }
+
+  .peer-note {
+    font-size: 12.5px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: -6px;
+    margin-bottom: 12px;
+  }
+
+  footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  footer .analyst-line { margin-bottom: 8px; font-size: 12px; color: var(--text); }
+
+  @media (max-width: 700px) {
+    .page { padding: 24px 18px; }
+    .reco-banner { flex-direction: column; }
+    .reco-stats { grid-template-columns: repeat(2, 1fr); }
+    .esg-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Eaton Corporation plc</h1>
+      <div class="ticker-line">ETN &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Industrials / Electrical Equipment &amp; Parts</div>
+    </div>
+    <div class="report-date">
+      September 15, 2026<br>
+      Analyst: [Name Not Specified]
+    </div>
+  </div>
+
+  <!-- ============ RECOMMENDATION BANNER ============ -->
+  <div class="reco-banner">
+    <div class="reco-main">
+      <span class="label">Recommendation</span>
+      <span class="value" style="color:#4caf50;">BUY</span>
+    </div>
+    <div class="reco-stats">
+      <div class="reco-stat">
+        <span class="label">Current Price</span>
+        <span class="value">~$391–$425 (highly volatile in recent sessions — see note)</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Target Price (Consensus)</span>
+        <span class="value">~$477–$478 (23–27 analysts)</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Market Cap</span>
+        <span class="value">~$154–$165 billion</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Implied Upside</span>
+        <span class="value">~12–22% (source/date-dependent)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BASIC INFORMATION ============ -->
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">ETN</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Industrials</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Electrical Equipment &amp; Parts (Industrial Products / Power Management)</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$311.92 – $478.00</td></tr>
+      <tr><td class="k">Shares Outstanding</td><td class="v">~388.4 million</td></tr>
+      <tr><td class="k">P/E Ratio (TTM)</td><td class="v">~39.5–39.8x (varies by source)</td></tr>
+      <tr><td class="k">Forward P/E (NTM)</td><td class="v">~26.4–31.4x (varies by source)</td></tr>
+      <tr><td class="k">Dividend (Quarterly / Yield)</td><td class="v">~$1.10/quarter / ~1.0–1.3% (varies by source and date)</td></tr>
+      <tr><td class="k">Beta</td><td class="v">~0.96–1.12 (varies by source) — roughly market-level volatility on a trailing basis, though the stock has shown elevated day-to-day swings recently amid AI-infrastructure sentiment shifts</td></tr>
+      <tr><td class="k">Employees</td><td class="v">~97,000</td></tr>
+      <tr><td class="k">Corporate Structure</td><td class="v">American-Irish multinational power management company; primary administrative center in Beachwood, Ohio; incorporated in Ireland (ISIN IE00B8KQN827)</td></tr>
+      <tr><td class="k">Analyst Ratings</td><td class="v">Widely "Buy"-rated (e.g., 23–27 analysts, mostly Buy, 1 Sell per one source) — though at least one "Strong Sell" outlier rating was noted anchoring the low end of the target range in another source</td></tr>
+      <tr><td class="k">Float</td><td class="v placeholder">{{Not independently sourced in this summary — verify against Eaton's most recent proxy statement}}</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted); margin-top:-14px;">Note: Eaton's shares fell approximately 7–8% on September 14–15, 2026 in a sympathy selloff tied to GE Vernova's fresh Sell rating from GLJ Research (see Investment Summary) and broader AI-infrastructure sentiment concerns, despite no company-specific negative news about Eaton itself. Prices cited across sources therefore span a wide recent range (from the low-$390s post-selloff to the mid-$420s shortly before it); all price-dependent figures in this report should be re-verified against a live quote.</p>
+  </section>
+
+  <!-- ============ INVESTMENT SUMMARY ============ -->
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Eaton has executed one of the more striking corporate transformations in industrials, pivoting a historically vehicle-parts-and-hydraulics-oriented power-management company into a central beneficiary of the AI data-center buildout. The company posted record Q2 2026 results — sales up 21% YoY to $8.53 billion (14% organic growth) and record adjusted EPS of $3.15 — driven by an Electrical Global segment that grew 44% YoY to $2.5 billion (18% organic, plus a 25-point contribution from the newly acquired Boyd Thermal business), with data-center organic revenue specifically up 65% against an underlying market growing at 23%. Total U.S. data-center backlog across the industry has reached 307 gigawatts (management characterizes this as roughly 15 years of backlog at 2025 build rates), and Eaton's own total Electrical backlog is up 103% year-over-year (54% organic, excluding Boyd). The $9.55 billion Boyd Thermal acquisition, completed March 2026, gives Eaton a "grid to chip" portfolio spanning electrical power distribution through to liquid cooling — positioning it as a design partner for chip providers rather than merely an equipment vendor. Management is simultaneously executing a planned separation of the slower-growing Mobility business via a Reverse Morris Trust transaction with Dana (expected to close Q1 2027, delivering a $1.1 billion cash distribution), sharpening the remaining company's focus on electrical/data-center growth. Despite this strong operational picture, Eaton's shares fell 7–8% on September 14–15, 2026 in a sympathy selloff tied to a bearish analyst call on sector peer GE Vernova and broader weekend commentary about AI-development pace — a decline one source explicitly attributed to sector sentiment rather than any Eaton-specific negative development. This combination of strong fundamentals and a recent, seemingly sentiment-driven pullback is the core of the current opportunity, tempered by a genuine, elevated valuation (forward P/E in the high-20s to low-30s) that leaves room for disappointment if data-center capex growth decelerates.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Eaton reported record Q2 2026 sales of $8.53 billion (+21% YoY: 14% organic growth, 7% from acquisitions), with adjusted EPS of $3.15 (a Q2 record, up 7% YoY) and segment margins of 23.1%, both above expectations. Electrical Global segment sales were a record $2.5 billion (+44% YoY: 18% organic, 25 points from Boyd Thermal's first full quarter post-acquisition, 1% FX), with record segment operating profit of $499 million (+41% YoY) and operating margin of 19.8% (+60 bps sequentially). Aerospace segment sales were also a record $1.2 billion (+13% YoY: 7% organic, 6% from an acquisition), with record segment operating profit of $278 million (+16% YoY). The Mobility segment's organic sales declined 2%, reflecting management's intentional exit from low-margin business lines ahead of the planned separation. Orders remained very strong: the twelve-month rolling average of orders was up 33% organically, and total Electrical backlog at quarter-end was up 103% year-over-year (or 43% per one slightly different source citation — likely reflecting different measurement windows), with a rolling-twelve-month book-to-bill ratio of 1.2–1.3 across Electrical Americas, Electrical Global, and Aerospace. Management confirmed total U.S. data-center backlog across the industry has reached 307 gigawatts, with the majority of conversion expected in 2028 and beyond, and identified four essential technical building blocks for the industry's transition to 800-volt direct current data-center architectures (medium-voltage solid-state transformers, DC breakers, and related technologies), for which Boyd Thermal's "grid to chip" capabilities position Eaton as a design partner for chip providers. Management raised full-year 2026 guidance: organic growth to 11–13% (from 9–11%), segment margins to 24.1–24.5%, and adjusted EPS to $13.40–$13.60 (midpoint $13.50, up $0.22). The company separately announced a planned Reverse Morris Trust separation of its Mobility business with Dana, expected to close in Q1 2027 and deliver a $1.1 billion cash distribution to Eaton; no share repurchases are planned for 2026 given the Boyd Thermal acquisition, though quarterly dividends continue. UBS upgraded Eaton to Buy from Neutral with a $515 price target (up from $450), citing strong sales growth and improving momentum. Most recently, on September 14–15, 2026, Eaton shares fell approximately 7–8% in a sympathy selloff alongside GE Vernova and Vertiv, triggered by GLJ Research's bearish initiation on GE Vernova and broader weekend AI-development-pace concerns (following public commentary from Anthropic's CEO); sources reviewed explicitly characterized this as a sector-sentiment-driven decline rather than reflecting any Eaton-specific negative news.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Full-year 2026 guidance (as raised following Q2) calls for organic growth of 11–13%, segment margins of 24.1–24.5%, and adjusted EPS of $13.40–$13.60. Q3 2026 guidance specifically calls for organic growth of 13.5–15.5% and segment margins of 24.6–25.0% (a 150–190 basis-point sequential step-up from Q2's 23.1%, which if achieved would largely erase the year-over-year margin deficits that affected the first half of 2026), with adjusted EPS of $3.46–$3.56. Full-year free cash flow is expected between $3.9 billion and $4.3 billion, with capital expenditures planned at approximately $1.15 billion. Management noted Electrical Global organic growth is expected to decelerate somewhat in the second half, which one source flagged as potentially reflecting either conservative guidance or some demand pull-forward — a nuance worth monitoring rather than a clear red flag on the evidence reviewed.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Eaton trades at a meaningful premium (forward P/E in the high-20s to low-30s depending on source and date) reflecting its position as a direct beneficiary of AI data-center capital spending, alongside more traditional, steadier electrical-equipment end markets (utility, machine OEM, commercial/institutional construction). The consensus price target of approximately $477–$478 (23–27 analysts) implies roughly 12–22% upside depending on which recent price point is used, a range narrower than some higher-beta pure-play data-center-infrastructure peers (e.g., Vertiv's consensus implies a similar or larger percentage gap in some sources reviewed) — consistent with Eaton's more diversified, lower-volatility profile relative to those peers.</p>
+  </section>
+
+  <!-- ============ BUSINESS DESCRIPTION ============ -->
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Eaton Corporation plc, an American-Irish multinational power management company with its primary administrative center in Beachwood, Ohio, operates through five reporting segments: Electrical Americas, Electrical Global, Aerospace, Vehicle, and eMobility (with Vehicle/Mobility currently being separated via a planned Reverse Morris Trust transaction with Dana, expected to close Q1 2027). The Electrical segments (Americas and Global) design and manufacture electrical equipment, power distribution, backup power, and cooling systems serving utilities, data centers, commercial/institutional construction, industrial, and machine OEM end markets — and represent Eaton's primary current growth engine given surging AI data-center capital spending. The Aerospace segment provides fuel, hydraulic, and pneumatic systems for commercial and military aircraft. Eaton's March 2026 acquisition of Boyd Thermal (a U.S.-based global leader in thermal components, systems, and ruggedized solutions for data-center, aerospace, and other end markets, employing more than 6,000 people across North America, Asia, and Europe) significantly expanded Eaton's data-center-relevant portfolio into liquid cooling, positioning the company with an integrated "grid to chip" offering.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Data-center electrical infrastructure demand — the single largest growth driver, with data-center organic revenue up 65% YoY in Q2 2026 against an underlying market growing at 23%, and industry-wide U.S. data-center backlog at 307 gigawatts</li>
+      <li>Boyd Thermal's liquid-cooling and thermal-management portfolio, contributing 25 percentage points of Electrical Global segment growth in its first full quarter post-acquisition and extending Eaton's addressable market from electrical distribution into thermal/cooling systems</li>
+      <li>Broader Electrical Global end-market strength beyond data centers — EMEA and APAC electrical revenues both up 20% YoY, utilities up low-teens, commercial/institutional up low-teens, machine OEM up more than 20%</li>
+      <li>Aerospace segment growth from commercial OEM and aftermarket strength (+7% organic in Q2 2026)</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Temporary negative price/cost dynamics in Electrical Americas, which pressured segment margins year-over-year in the first half of 2026 but are expected to normalize in the second half as new capacity comes online and pricing catches up</li>
+      <li>Capacity-expansion capital expenditure (~$1.15 billion planned for full-year 2026) to meet surging data-center demand, alongside ongoing capacity-ramp challenges and still-extended lead times in some product lines</li>
+      <li>Boyd Thermal acquisition-related transaction costs ($1 million in Q2 2026, $36 million for the first six months of 2026)</li>
+      <li>An elevated effective tax rate (28.1% in Q2 2026), driven by higher income in high-tax jurisdictions and acquisition-related taxes, which reduced Q2 EPS by approximately $0.15 versus what segment profit performance alone would have implied</li>
+    </ul>
+  </section>
+
+  <!-- ============ INDUSTRY OVERVIEW & COMPETITIVE POSITIONING ============ -->
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Eaton operates in the global electrical equipment and power management industry, an industry currently experiencing a historic demand surge driven by AI data-center capital expenditure alongside more traditional secular tailwinds (grid modernization, electrification, industrial automation). The industry-wide U.S. data-center backlog of 307 gigawatts (roughly 15 years of backlog at 2025 build rates, per Eaton's own CEO) illustrates the scale of this demand wave, though the bulk of conversion into actual revenue is expected to occur in 2028 and beyond — meaning current order and backlog figures represent forward-looking demand signals more than near-term revenue certainty. The broader "electrical infrastructure for AI" trade has also become a distinct, closely-watched market segment in its own right, evidenced by the fact that Eaton's own share price moved on sentiment about a sector peer (GE Vernova) rather than on Eaton-specific news during the September 2026 selloff discussed above.</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low-to-moderate — established electrical-equipment manufacturers benefit from deep customer relationships, certification/reliability track records, and manufacturing scale, though the sheer scale of current demand has created room for well-funded new entrants and expanded competition in specific sub-segments like liquid cooling.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — component and raw-material suppliers have some leverage amid the current capacity-constrained environment, evidenced by Eaton's own extended lead times in some product lines and its strategic decision to acquire (rather than merely partner with) Boyd Thermal to secure thermal-management capability.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Low currently — hyperscale data-center operators and utilities are competing for scarce electrical-equipment capacity, giving suppliers like Eaton pricing power; management explicitly pulled forward planned price increases from Q4 into Q3 2026 to support guidance, indicating a favorable near-term pricing environment.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Low for core electrical distribution equipment (no viable substitute for grid-connection and power-distribution hardware), though the specific technology path for data-center power architecture (e.g., 800-volt DC transition) remains an evolving, competitively contested standard-setting process.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High and intensifying — Vertiv Holdings and Schneider Electric compete directly in data-center power and cooling infrastructure; nVent Electric, Hubbell, and Generac compete in adjacent electrical-equipment categories; all are currently experiencing similar AI-infrastructure-driven demand and, per sources reviewed, similarly volatile recent share-price behavior tied to sector sentiment.</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Eaton's moat combines a broad, diversified electrical-equipment product portfolio (spanning Electrical Americas, Electrical Global, and now, via Boyd Thermal, thermal/liquid-cooling systems) with deep, long-standing customer relationships across utilities, data-center operators, and industrial/commercial construction. The Boyd Thermal acquisition specifically extends this moat by giving Eaton a "grid to chip" integrated offering — a broader scope than pure electrical-distribution competitors can offer, positioning Eaton as a design partner rather than a component vendor for next-generation data-center architectures (e.g., the 800-volt DC transition). Eaton's diversification across Electrical, Aerospace, and (until its planned separation) Mobility segments also provides more resilience than single-end-market-focused competitors, though this diversification benefit will diminish somewhat once the Mobility separation completes in Q1 2027.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major electrical-equipment and data-center-infrastructure companies. Figures are approximate and vary meaningfully by source and date — verify against a single consistent data source before use.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Recent Price</th><th>Consensus Target / Implied Upside</th></tr>
+      <tr><td>Eaton</td><td>ETN</td><td>~$391–$425 (volatile; see note)</td><td>~$477–478 average target; ~12–22% implied upside (source/date-dependent)</td></tr>
+      <tr><td>Vertiv Holdings</td><td>VRT</td><td>~$239–$263 (also fell sharply in the same September 2026 selloff)</td><td>Consensus ~$338–$358; GLJ Research street-high target of $381 (~45% implied upside per one source) — notably, GLJ is bullish on Vertiv while bearish on GE Vernova, underscoring this is a company-specific rather than blanket sector call</td></tr>
+      <tr><td>Hubbell</td><td>HUBB</td><td>~$455 (one source)</td><td>~$566 target; ~24% implied upside (one source)</td></tr>
+      <tr><td>Generac</td><td>GNRC</td><td class="placeholder">{{Not independently sourced}}</td><td>~52% implied upside per one source — the widest consensus gap among the peer cohort reviewed</td></tr>
+      <tr><td>nVent Electric</td><td>NVT</td><td class="placeholder">{{Not independently sourced}}</td><td class="placeholder">{{Not independently sourced}}</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted);">Note: GLJ Research's simultaneous bearish call on GE Vernova and bullish/upgraded call on Vertiv (moved Hold to Buy in August 2026) is a useful data point: it suggests the September 2026 sector selloff reflected broad sentiment/positioning dynamics more than a uniform analyst view on data-center-infrastructure valuations across all names.</p>
+  </section>
+
+  <!-- ============ VALUATION ============ -->
+  <section>
+    <h2 class="section-title">Valuation</h2>
+
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified cost of capital assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled — given that the bulk of the 307 GW industry data-center backlog is expected to convert in 2028 and beyond, a DCF here is highly sensitive to assumptions about the pace and durability of that conversion, similar to the dynamic flagged in the related GE Vernova report}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — recommend an explicit forecast that separately models the pending Mobility separation (Reverse Morris Trust with Dana, expected Q1 2027) rather than treating Eaton as a single consolidated entity beyond that date}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td class="placeholder">{{No third-party DCF-based fair-value estimate was found in the sources reviewed for this summary}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Relative Valuation</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Eaton (ETN)</th><th>Peer Reference (Vertiv / Hubbell)</th></tr>
+      <tr><td>Forward P/E</td><td>~26–31x (varies by source/date)</td><td class="placeholder">{{Not independently sourced for direct comparison}}</td></tr>
+      <tr><td>Consensus Price-Target Upside</td><td>~12–22%</td><td>Vertiv ~29% (consensus) to ~45% (GLJ street-high); Hubbell ~24%; Generac ~52% (all per sources reviewed)</td></tr>
+      <tr><td>Total Electrical Backlog Growth (YoY)</td><td>+103% (or +43% per an alternate source citation — verify current figure directly)</td><td class="placeholder">{{Vertiv backlog cited at $15.0 billion in one source, without a comparable YoY growth figure independently sourced}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">Eaton's implied consensus upside (~12–22%) is more modest than several higher-beta, more purely data-center-infrastructure-focused peers (Vertiv, Generac) in the sources reviewed, consistent with Eaton's larger scale, more diversified end-market mix, and lower relative volatility. This makes Eaton arguably a "steadier" way to gain AI-data-center-infrastructure exposure than some smaller, more concentrated peers, at the cost of somewhat less torque to the theme if data-center capex growth continues to accelerate. The September 2026 sympathy selloff — explicitly attributed by multiple sources to sector sentiment rather than Eaton-specific fundamentals — may represent a tactical entry opportunity if that attribution proves accurate, though this should be weighed against the genuine, still-elevated valuation multiple and the execution risk inherent in the pending Mobility segment separation.</p>
+  </section>
+
+  <!-- ============ FINANCIAL ANALYSIS ============ -->
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q2 2025</th><th>Q2 2026</th><th>FY2026 Guidance</th></tr>
+      <tr><td>Total Sales</td><td class="placeholder">{{Implied ~$7.05B based on 21% YoY growth}}</td><td>$8.53B (+21% YoY; record)</td><td class="placeholder">{{Implied from 11–13% organic growth guidance on a ~$27.45B FY2025 base}}</td></tr>
+      <tr><td>Electrical Global Segment Sales</td><td class="placeholder">{{Implied ~$1.74B based on 44% YoY growth}}</td><td>$2.5B (+44% YoY; record)</td><td class="placeholder">{{Guided to decelerate somewhat in H2 2026 per management commentary}}</td></tr>
+      <tr><td>Aerospace Segment Sales</td><td class="placeholder">{{Implied ~$1.06B based on 13% YoY growth}}</td><td>$1.2B (+13% YoY; record)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Adjusted EPS</td><td class="placeholder">{{Implied ~$2.94 based on 7% YoY growth}}</td><td>$3.15 (+7% YoY; Q2 record)</td><td>$13.40–$13.60 (full year, raised)</td></tr>
+      <tr><td>Segment Margins</td><td class="placeholder">{{Not directly sourced}}</td><td>23.1%</td><td>24.1%–24.5% (full year)</td></tr>
+      <tr><td>Net Income</td><td>$982M</td><td>$821M (down YoY, driven by higher effective tax rate)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">Eaton's Q2 2026 headline growth is strong and well-corroborated across sources, but two nuances are worth flagging. First, net income attributable to shareholders actually declined year-over-year ($821 million versus $982 million in Q2 2025) despite record adjusted EPS and segment margins — this divergence is explained by a higher effective tax rate (28.1%, up from a prior-year level, driven by higher income in high-tax jurisdictions and acquisition-related taxes), which reduced EPS by approximately $0.15 versus what segment performance alone would imply. This is a legitimate reminder that "record adjusted EPS" and "record net income" are not the same claim, and analysts should track the GAAP figure alongside the adjusted one. Second, one detailed source flagged that Electrical Global organic growth is expected to decelerate in the second half of 2026, questioning whether this reflects conservative guidance-setting or genuine demand pull-forward (customers ordering ahead of anticipated price increases or supply constraints) — this is exactly the kind of forward-looking growth-durability question that, in the related GE Vernova and GE Aerospace reports, has become the subject of explicit bull/bear analyst disagreement, and a similar level of scrutiny is warranted here even though no comparably prominent bearish call on Eaton specifically was identified in the sources reviewed.</p>
+
+    <h3 class="sub-title">Industry-Specific Ratios</h3>
+    <table class="data-table">
+      <tr><th>Ratio</th><th>Value</th></tr>
+      <tr><td>Data-center organic revenue growth (Q2 2026 YoY)</td><td>+65% (vs. ~23% underlying market growth)</td></tr>
+      <tr><td>Industry-wide U.S. data-center backlog</td><td>307 gigawatts (~15 years at 2025 build rates)</td></tr>
+      <tr><td>Total Electrical backlog growth (YoY)</td><td>+103% (or +43%, per differing source citations — verify current figure)</td></tr>
+      <tr><td>Rolling 12-month book-to-bill ratio (Electrical/Aerospace)</td><td>1.2–1.3x</td></tr>
+      <tr><td>Boyd Thermal acquisition price / employees</td><td>$9.55 billion (net of cash acquired) / &gt;6,000 employees</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT RISKS ============ -->
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+
+    <div class="risk-item">
+      <span class="risk-tag op">Operational</span>
+      <span>Capacity-ramp challenges persist across some product lines, with lead times still extended despite improvement, per management's own commentary. The pending Mobility segment separation (Reverse Morris Trust with Dana, targeted Q1 2027) introduces execution and integration/separation risk over the coming year, and management's intentional exit from low-margin Mobility business lines is already visibly pressuring that segment's organic growth (−2% in Q2 2026).</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag fin">Financial</span>
+      <span>Eaton trades at an elevated valuation (forward P/E in the high-20s to low-30s), leaving meaningful room for multiple compression if data-center capex growth decelerates — a risk directly analogous to the one just materializing for sector peer GE Vernova via GLJ Research's bearish initiation. No share repurchases are planned for 2026 due to the Boyd Thermal acquisition, somewhat limiting near-term capital-return flexibility, though quarterly dividends continue. An elevated effective tax rate (28.1% in Q2 2026) has also been a direct, disclosed drag on net income relative to segment-level profit performance.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag reg">Regulatory</span>
+      <span class="placeholder">{{No specific major regulatory risk beyond general electrical-equipment industry standards and international operations (Ireland incorporation, global manufacturing footprint) was identified in the sources reviewed for this summary — verify against Eaton's most recent 10-K risk-factor disclosure for any tariff, trade-policy, or jurisdiction-specific regulatory matters.}}</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag legal">Legal</span>
+      <span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against Eaton's most recent 10-K legal proceedings disclosure.}}</span>
+    </div>
+
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or disclosed material weaknesses in internal controls were identified in the sources reviewed for this summary — verify directly against Eaton's most recent 10-K/10-Q auditor opinion before relying on this. One source noted a CEO's (Heath B. Monesmith) recent transactions were a topic of investor interest without further detail — worth checking directly via SEC Form 4 filings; note the current CEO is referenced elsewhere in sources reviewed as Paulo Ruiz, so this name discrepancy should be resolved directly against Eaton's own investor relations materials before relying on either.}}</p>
+  </section>
+
+  <!-- ============ ESG ============ -->
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental">
+        <h4>Environmental</h4>
+        <ul class="placeholder">
+          <li>{{ESG_ENV — Eaton's core business (electrical distribution, grid infrastructure, and now liquid cooling for data centers) is positioned as enabling the broader electrification and energy-efficiency transition, but no specific emissions targets, net-zero commitments, or detailed sustainability metrics were independently sourced in this summary — recommend reviewing Eaton's own sustainability disclosures directly}}</li>
+        </ul>
+      </div>
+      <div class="esg-card social">
+        <h4>Social</h4>
+        <ul class="placeholder">
+          <li>{{ESG_SOC — no specific labor standards, workforce diversity, or community-relations data were independently sourced in this summary}}</li>
+        </ul>
+      </div>
+      <div class="esg-card governance">
+        <h4>Governance</h4>
+        <ul>
+          <li>Eaton is executing a significant portfolio-simplification move (the planned Mobility segment separation via Reverse Morris Trust with Dana) — a disciplined capital-allocation and strategic-focus decision that, if executed cleanly, is generally viewed favorably from a governance/capital-allocation standpoint</li>
+          <li class="placeholder">{{ESG_GOV — board composition and executive compensation structure not sourced beyond a noted, unresolved discrepancy in the sources reviewed about the company's current CEO name (see Disclosure Flags above) — this should be confirmed directly rather than relied upon from this summary}}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER / DISCLOSURES ============ -->
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 15, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party financial data sources (Investing.com, CNBC, Google Finance, StockAnalysis.com, TradingView, Kraken, Yahoo Finance, company earnings materials and SEC filings, 24/7 Wall St., AOL/Yahoo syndicated content, and various financial media) that may be delayed, inconsistent, or subject to revision. This report was compiled the day after a sector-wide sympathy selloff (September 14–15, 2026) tied to a bearish analyst call on peer GE Vernova rather than any Eaton-specific development — given the recency and volatility of this episode, price and market-cap figures in this report should be treated as unusually time-sensitive and re-verified against a live data source before use. Sources reviewed also showed an unresolved discrepancy regarding the company's current CEO name (Paulo Ruiz vs. Heath B. Monesmith cited in different sources) that should be confirmed directly rather than relied upon from this report. All figures should be independently verified against primary sources (Eaton's 10-K/10-Q filings and investor relations disclosures) before being used for any actual investment decision. This is not a research report from a registered investment adviser or broker-dealer, does not constitute investment advice, and should not be relied upon as such.
+  </footer>
+
+</div>
+</body>
+</html>

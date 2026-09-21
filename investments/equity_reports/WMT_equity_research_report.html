@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — WMT</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Walmart Inc.</h1>
+      <div class="ticker-line">WMT &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Consumer Staples / Discount &amp; General Merchandise Retail</div>
+    </div>
+    <div class="report-date">September 15, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#4caf50;">BUY</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">~$104–$116 (post-selloff — see note)</span></div>
+      <div class="reco-stat"><span class="label">Target Price (Consensus)</span><span class="value">~$127 (43 analysts)</span></div>
+      <div class="reco-stat"><span class="label">P/E Ratio</span><span class="value">~40x</span></div>
+      <div class="reco-stat"><span class="label">FY2026 Revenue</span><span class="value">$713.16 billion (+4.73% YoY)</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">WMT</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Consumer Staples</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Discount &amp; General Merchandise Retail</td></tr>
+      <tr><td class="k">Fiscal Year</td><td class="v">Ends late January; company currently in fiscal year 2027 (started Feb. 2026)</td></tr>
+      <tr><td class="k">Dividend</td><td class="v">$0.25/share; yield ~0.9% (per one source) — below the industry average of 1.4%; payout ratio ~35% of earnings, ~58% of cash flow; increased at ~4.0%/year average over the past 10 years</td></tr>
+      <tr><td class="k">CEO / Headquarters</td><td class="v">Doug McMillon (Chairman); John Furner (CEO); John David Rainey (CFO); headquartered in Bentonville, Arkansas</td></tr>
+      <tr><td class="k">Analyst Ratings</td><td class="v">"Buy" consensus (43 analysts, one source)</td></tr>
+      <tr><td class="k">Recent M&amp;A</td><td class="v">Agreed to acquire French connected-TV advertising platform Vibe.co for ~$1.4 billion (expected to close by end of fiscal 2027), building on the earlier Vizio TV-maker acquisition, folding into Walmart Connect's ad-media offering</td></tr>
+      <tr><td class="k">Other Initiatives</td><td class="v">15-year nuclear energy agreement to support longer-term power/data-center-adjacent initiatives</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted); margin-top:-14px;">Note: sources showed meaningfully different prices across 2026 snapshots (from ~$104 post-earnings-selloff to ~$116 pre-earnings and ~$115.78 in a later, separate source) — likely reflecting the sharp ~9% single-day decline following the Q2 FY2027 report (see below) followed by some subsequent recovery. Verify against a live quote.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Walmart delivered a genuinely paradoxical Q2 fiscal 2027 report: the company beat on revenue ($187.94 billion vs. $186.77 billion consensus) and adjusted EPS ($0.81 vs. an unclear but likely-beaten estimate), raised full-year guidance for both net sales growth (to 4-5%, from a prior 3.5-4.5%) and adjusted EPS (to $2.80-2.87, from a prior $2.75-2.85), and reported robust e-commerce growth (+23-24% globally) — yet shares fell approximately 9% on the day, because U.S. comparable sales grew only 2.6% (below the ~3.5% Wall Street expected), partly due to a 0.8-point headwind from new price caps on certain drugs in the health and wellness business. This is a genuine, informative disconnect: the market's negative reaction centered specifically on the quality and composition of the comp-sales miss rather than on the company's raised full-year outlook, consistent with pre-earnings analyst commentary that explicitly framed the "deeper question" as "whether Walmart can convert customer traffic into higher-quality profit" rather than simply hitting headline revenue/EPS numbers. Management's own framing on the earnings call is reassuring on the underlying trajectory: almost half of underlying profit growth is now coming from higher-margin membership, advertising, and marketplace businesses (not core low-margin retail), digital incremental margins continue improving, and management explicitly rejected the narrative that declining in-store comparable sales signal declining store relevance — noting stores now handle more total unit volume than ever as last-mile fulfillment nodes for pickup and delivery. Q3 guidance reflects deliberate, late-Q2-initiated price investments expected to support Walmart U.S. sales growth improvement, alongside more than $2 billion of incremental fuel-cost headwinds for the full fiscal year and a modest, disclosed 20-basis-point drag from Vibe.co acquisition integration. Given a still-premium but not unreasonable valuation (P/E ~40x, EPS growth of 32% projected over the next three years per one source) against a business genuinely diversifying its profit mix toward higher-margin, faster-growing segments (advertising, membership, marketplace), and a stock that has already absorbed a sharp single-day correction on a comp-sales quality concern rather than a fundamental deterioration, this supports a BUY.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Walmart reported Q2 fiscal 2027 (quarter ended July 31, 2026) revenue of $187.94 billion (beating the $186.77 billion consensus), with adjusted EPS of $0.81 (versus expectations reported inconsistently across sources — one cites a $0.74 estimate, another suggests it was "not immediately clear" if $0.81 compared favorably to a $0.74 figure). GAAP net income was $6.37 billion ($0.80/share), down from $7.03 billion ($0.88/share) a year earlier; adjusted EPS excluded the impact of a loss on investments and included a benefit from a tax matter. Total revenue rose 5.9% YoY, with global e-commerce sales up 23-24% (sources vary slightly). U.S. comparable sales grew 2.6%, below the ~3.5% Wall Street had expected, with the shortfall partly attributed to a 0.8-percentage-point headwind in health and wellness from new price caps on certain drugs taking effect. Gross profit rate improved to 25.4%, boosted by a tariff-refund benefit (a dynamic also seen at Home Depot in this report series). Shares fell approximately 9% on the day, as Wall Street focused on the comparable-sales shortfall and underlying sales-guidance composition rather than the headline revenue/EPS beat. Despite the stock reaction, management raised full-year fiscal 2027 guidance: net sales growth to 4-5% (from a prior 3.5-4.5%) and adjusted EPS to $2.80-2.87 (from a prior $2.75-2.85). For Q3, Walmart guided net sales growth of 3-3.75% and adjusted EPS of $0.62-0.64, with weaker Q3 operating-income-growth guidance reflecting the full-quarter effect of price investments initiated late in Q2; management specifically said Q2 and Q3 operating income growth should be assessed together, averaging approximately 10% per quarter on that combined basis. The outlook assumes current fuel-cost levels persist, with more than $2 billion in incremental fuel-related costs expected for fiscal 2027; the pending Vibe.co acquisition and integration are expected to reduce operating income growth by approximately 20 basis points. Management expects Walmart U.S. sales growth to improve in Q3 as the price investments support customer value and market-share gains, and expects Sam's Club U.S. and International to remain accretive to enterprise growth in both Q3 and Q4; Flipkart's Big Billion Days event timing is expected to reduce Q3 sales growth by more than 100 basis points (as Walmart laps the prior-year event), with a similar offsetting benefit expected in Q4. On the earnings call, management specifically highlighted that almost half of underlying profit growth came from membership, advertising, and marketplace businesses (not core retail), and expressed confidence that operating income can continue growing faster than revenue, though it did not extend formal guidance beyond fiscal 2027. Walmart U.S. e-commerce incremental margins have generally ranged from high-single to low-double digits in recent quarters, with management seeing further improvement potential as advertising continues outgrowing e-commerce and delivery density rises. Management explicitly rejected the view that lower in-store comparable sales imply declining store relevance, noting stores now handle more total unit volume than ever, serving as last-mile fulfillment nodes for pickup and delivery orders. Separately, Walmart agreed to acquire French connected-TV advertising platform Vibe.co for approximately $1.4 billion, building on its earlier Vizio TV-maker acquisition, to expand Walmart Connect's commerce-media/advertising capabilities for small and mid-sized advertisers, and entered a 15-year nuclear energy agreement to support longer-term power initiatives.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Full-year fiscal 2027 guidance (as raised following Q2) calls for net sales growth of 4-5% and adjusted EPS of $2.80-2.87. Q3 specifically is guided to net sales growth of 3-3.75% and adjusted EPS of $0.62-0.64, with management explicitly asking investors to assess combined Q2-Q3 operating income growth together (approximately 10% per quarter on that blended basis) given the deliberate timing of price investments. One source's EPS-growth forecast projects 32% cumulative EPS growth over the next three years, well above the ~4.2% per-year revenue growth forecast for Walmart specifically (versus a 5.1% industry growth forecast) — implying continued margin/profit-mix improvement (advertising, membership, marketplace) is expected to be the primary earnings driver rather than pure top-line expansion.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Walmart trades at a P/E near 40x, a premium valuation one pre-earnings source explicitly questioned ("Can Digital Growth Support WMT's Premium Valuation?"), with the same source noting "Walmart's valuation has little room for weak guidance" — a caution that proved directly relevant given the ~9% post-earnings decline despite raised full-year guidance. The consensus 12-month price target of $127.43 (43 analysts) implied approximately 17.9% upside from one cited price point. A separate reverse-valuation exercise cited in sources reviewed illustrated that sustained high-single-digit EPS growth would be needed for Walmart's premium multiple to become "less demanding" without the share price declining — framing the valuation question explicitly around earnings-growth durability rather than near-term price action alone.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Walmart Inc., headquartered in Bentonville, Arkansas, operates retail, wholesale, and e-commerce businesses worldwide, including Walmart U.S. discount stores/supercenters, Sam's Club membership warehouse clubs (U.S. and international), and Walmart International operations (including Flipkart in India). Beyond core merchandise retail, Walmart has been rapidly diversifying its profit mix toward higher-margin businesses: Walmart Connect (retail media/advertising, recently expanded via the Vizio and pending Vibe.co acquisitions), membership fees (Sam's Club and Walmart+), and a growing third-party Marketplace — collectively described by management as contributing almost half of underlying profit growth in the most recent quarter, a structural shift management believes will let operating income continue growing faster than revenue over time.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>E-commerce growth (23-26% globally across recent quarters cited), with an increasing share of orders fulfilled via same-day or sub-three-hour delivery</li>
+      <li>Higher-margin business lines — membership, advertising (Walmart Connect), and marketplace — now contributing almost half of underlying profit growth, a deliberate strategic shift beyond low-margin core retail</li>
+      <li>Sam's Club U.S. and International, both expected to remain accretive to enterprise growth in Q3 and Q4 fiscal 2027</li>
+      <li>Store network serving an expanded role as last-mile fulfillment infrastructure for pickup/delivery, supporting total unit-volume growth even amid softer in-store comparable-sales metrics</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Deliberate price investments initiated in Q2 fiscal 2027, whose full-quarter effect weighs on Q3 operating-income-growth guidance but is intended to support Walmart U.S. market-share gains</li>
+      <li>Elevated fuel costs — more than $2 billion in incremental fuel-related expense guided for fiscal 2027, assuming current fuel-cost levels persist</li>
+      <li>Health and wellness segment headwind (0.8 percentage points to U.S. comparable sales) from new price caps on certain drugs</li>
+      <li>Vibe.co acquisition integration costs, expected to reduce operating income growth by approximately 20 basis points</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Walmart operates in the broader U.S. discount/general-merchandise retail industry, competing against Target, Costco (see separate COST report in this series, primarily in the warehouse-club sub-segment via Sam's Club), and increasingly against Amazon in e-commerce and advertising. Walmart's strategic pivot toward advertising, membership, and marketplace — mirroring similar moves by Amazon — reflects an industry-wide recognition that retail media and higher-margin adjacent businesses are increasingly central to profitability in a mature, competitive core-retail environment.</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — Walmart's scale, supply-chain infrastructure, and store/fulfillment network density represent enormous barriers to entry in general-merchandise retail.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Low — Walmart's purchasing scale gives it substantial negotiating leverage with suppliers across virtually all categories.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate-to-high — U.S. comparable sales growth of 2.6% (below expectations) suggests some consumer price sensitivity, even as Walmart's low-price positioning generally benefits from budget-conscious shopping behavior during periods of economic pressure.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate — Amazon and other e-commerce platforms compete directly, though Walmart's expanding same-day/rapid-delivery capabilities and physical store network as fulfillment infrastructure provide a differentiated hybrid advantage.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — Target, Costco, and Amazon are Walmart's primary competitors across overlapping categories (general merchandise, membership retail, e-commerce/advertising respectively).</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Walmart's moat rests on unmatched physical retail scale combined with an increasingly sophisticated omnichannel fulfillment infrastructure — management's explicit framing that stores now handle "more total unit volume than ever" as last-mile fulfillment nodes reflects a genuine structural advantage over pure e-commerce competitors, since Walmart can offer both broad physical accessibility and rapid delivery from the same footprint. The rapidly scaling advertising (Walmart Connect) and membership businesses extend this moat into higher-margin categories that leverage Walmart's existing customer traffic and data.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major U.S. discount/general-merchandise and membership-club retailers. See separate COST report in this series.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>Walmart</td><td>WMT</td><td>P/E ~40x; FY2026 revenue $713.16B; e-commerce growth 23-26%</td></tr>
+      <tr><td>Costco</td><td>COST</td><td>See separate COST report in this series — a HOLD in that report given valuation, versus Walmart's BUY here following its post-earnings selloff</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled — the central question is whether the higher-margin advertising/membership/marketplace mix shift sustains above-retail-average earnings growth over the long term}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td class="placeholder">{{No third-party DCF estimate was clearly isolated in sources reviewed; one source noted "no risks detected for WMT" from its own automated risk-check tool, without further detail}}</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">Walmart's ~9% single-day decline despite raised full-year guidance is a useful illustration of a premium-multiple stock (P/E ~40x) where the market demands not just growth but a specific quality of growth (comparable sales, not just e-commerce and mix-shift benefits). The consensus $127.43 target (implying ~17.9% upside from one cited price point) suggests analysts view the post-earnings selloff as an overreaction to the comp-sales miss relative to the more durable, structurally positive profit-mix shift toward advertising, membership, and marketplace.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q2 FY2026</th><th>Q2 FY2027</th><th>FY2027 Guidance</th></tr>
+      <tr><td>Revenue</td><td class="placeholder">{{Implied ~$177.5B based on 5.9% YoY growth}}</td><td>$187.94B (+5.9% YoY, beat $186.77B est.)</td><td>Net sales +4–5% (raised from +3.5–4.5%)</td></tr>
+      <tr><td>U.S. Comparable Sales</td><td class="placeholder">{{Higher, given the miss vs. expectations}}</td><td>+2.6% (missed ~3.5% expected)</td><td class="placeholder">{{Expected to improve in Q3 per management}}</td></tr>
+      <tr><td>Global E-commerce Growth</td><td class="placeholder">{{Prior quarters also strong, e.g. +26% in Q1}}</td><td>+23–24% (source-dependent)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Adjusted EPS</td><td class="placeholder">{{Not directly sourced}}</td><td>$0.81</td><td>$2.80–$2.87 (full year, raised from $2.75–2.85)</td></tr>
+      <tr><td>GAAP Net Income</td><td>$7.03B ($0.88/share)</td><td>$6.37B ($0.80/share)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Gross Profit Rate</td><td class="placeholder">{{Lower, given the improvement cited}}</td><td>25.4% (boosted by tariff-refund benefit)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">Walmart's Q2 FY2027 results present a genuinely instructive earnings-quality case: a clean revenue and (likely) EPS beat, plus raised full-year guidance, still produced a sharp negative stock reaction because the underlying comparable-sales growth (the metric most directly reflecting organic demand) missed expectations and was itself partly explained by a specific, disclosed regulatory headwind (drug price caps) rather than broad demand weakness. Gross margin improvement was partly attributable to a tariff-refund benefit — a one-time item, similar to the dynamic seen in the separate Home Depot report in this series — that should not be extrapolated as a recurring margin tailwind at the same magnitude. Adjusted EPS specifically excluded a loss on investments while including a benefit from an unspecified "tax matter" — both adjustments that should be understood in detail (via Walmart's own reconciliation table) before treating the $0.81 adjusted figure as a clean, comparable measure of operating performance.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>U.S. comparable sales growth (2.6%) missed expectations, and management's own Q3 guidance reflects the deliberate near-term operating-income trade-off from price investments initiated to support share gains — a strategy not yet proven successful in reversing the comp-sales shortfall.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>More than $2 billion in incremental fuel-related costs are guided for fiscal 2027, assuming current fuel-cost levels persist — a risk if fuel prices rise further. The stock's premium valuation (P/E ~40x) leaves limited room for continued comparable-sales softness, as directly evidenced by the ~9% single-day decline on the Q2 miss.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span>New price caps on certain drugs directly created a 0.8-percentage-point headwind to U.S. comparable sales in the health and wellness business — an ongoing, disclosed regulatory factor rather than a one-time item, likely to persist as a comparable-sales drag in subsequent quarters until it laps.</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against Walmart's most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in sources reviewed — verify directly against Walmart's 10-K/10-Q auditor opinion. One source's estimate of Q2 adjusted EPS consensus ($0.74) versus the reported $0.81 figure was described as "not immediately clear" whether comparable — this specific comparison should be verified directly against Walmart's own earnings release and a single consistent analyst consensus source.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul><li>Walmart entered a 15-year nuclear energy agreement to support longer-term power initiatives — a notable, disclosed long-duration energy/sustainability commitment, though further detail on its specific scope was not independently sourced in this summary</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul class="placeholder"><li>{{ESG_SOC — not independently sourced in this summary beyond the health-and-wellness drug-price-cap dynamic, which touches on healthcare-affordability policy relevant to Walmart's pharmacy customers}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul><li>Management's explicit, direct pushback against the narrative that declining in-store comparable sales signal declining store relevance reflects a transparent, if debatable, disclosure stance worth weighing against the market's own skeptical reaction to the same data</li><li class="placeholder">{{ESG_GOV — board composition and executive compensation structure not sourced beyond the above}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 15, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (CNBC, IndMoney, StockAnalysis.com, Simply Wall St, TradingKey, and Walmart's own investor relations materials) that may be delayed or inconsistent. All figures should be independently verified against Walmart's 10-K/10-Q filings before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

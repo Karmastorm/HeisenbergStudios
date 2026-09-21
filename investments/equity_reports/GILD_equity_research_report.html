@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — GILD</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #e9edf2;
+    color: var(--text);
+    font-family: "Georgia", "Times New Roman", serif;
+    line-height: 1.55;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.12);
+    padding: 40px 50px 60px;
+  }
+
+  .report-header {
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .firm-name {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .company-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+  }
+
+  .reco-banner {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .reco-main {
+    flex: 0 0 170px;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .reco-main .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+
+  .reco-main .value {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+
+  .reco-stats {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--gray-bg);
+  }
+
+  .reco-stat {
+    padding: 10px 14px;
+    border-left: 1px solid var(--border);
+  }
+
+  .reco-stat .label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    display: block;
+  }
+
+  .reco-stat .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .basic-info {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+
+  .basic-info td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .basic-info td.k {
+    color: var(--muted);
+    width: 38%;
+  }
+
+  .basic-info td.v {
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  section { margin-bottom: 32px; }
+
+  h2.section-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: var(--navy);
+    padding: 8px 14px;
+    margin: 0 0 14px 0;
+    border-left: 5px solid var(--accent);
+  }
+
+  h3.sub-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    margin: 18px 0 10px;
+  }
+
+  p.body-text { font-size: 15px; margin: 0 0 12px; }
+
+  ul.bullet-list { margin: 0 0 12px 0; padding-left: 20px; }
+  ul.bullet-list li { margin-bottom: 6px; font-size: 15px; }
+
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  .thesis-box .thesis-label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-dark);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  table.data-table th {
+    background: var(--navy);
+    color: #fff;
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  table.data-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background: var(--gray-bg); }
+
+  .risk-item { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+
+  .risk-tag {
+    flex: 0 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    background: var(--red);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .risk-tag.op { background: #b8860b; }
+  .risk-tag.fin { background: var(--red); }
+  .risk-tag.reg { background: #6a3d9a; }
+  .risk-tag.legal { background: #444; }
+
+  .esg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
+  .esg-card {
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: 4px;
+    padding: 12px 14px;
+  }
+
+  .esg-card.environmental { border-top-color: #2e7d32; }
+  .esg-card.social { border-top-color: #1565c0; }
+  .esg-card.governance { border-top-color: #6a1b9a; }
+
+  .esg-card h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px;
+    color: var(--navy);
+  }
+
+  .esg-card ul { margin: 0; padding-left: 16px; font-size: 13px; }
+  .esg-card li { margin-bottom: 4px; }
+
+  .peer-note {
+    font-size: 12.5px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: -6px;
+    margin-bottom: 12px;
+  }
+
+  footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  footer .analyst-line { margin-bottom: 8px; font-size: 12px; color: var(--text); }
+
+  @media (max-width: 700px) {
+    .page { padding: 24px 18px; }
+    .reco-banner { flex-direction: column; }
+    .reco-stats { grid-template-columns: repeat(2, 1fr); }
+    .esg-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Gilead Sciences, Inc.</h1>
+      <div class="ticker-line">GILD &nbsp;|&nbsp; NASDAQ &nbsp;|&nbsp; Healthcare / Drug Manufacturers — General (Biopharmaceuticals)</div>
+    </div>
+    <div class="report-date">
+      September 15, 2026<br>
+      Analyst: [Name Not Specified]
+    </div>
+  </div>
+
+  <!-- ============ RECOMMENDATION BANNER ============ -->
+  <div class="reco-banner">
+    <div class="reco-main">
+      <span class="label">Recommendation</span>
+      <span class="value" style="color:#4caf50;">BUY</span>
+    </div>
+    <div class="reco-stats">
+      <div class="reco-stat">
+        <span class="label">Current Price</span>
+        <span class="value">~$149</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Target Price (Consensus)</span>
+        <span class="value">~$158–$159</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Market Cap</span>
+        <span class="value">~$178–186B</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Implied Upside</span>
+        <span class="value">~6–21% (source-dependent)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BASIC INFORMATION ============ -->
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">GILD</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NASDAQ</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Healthcare</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Drug Manufacturers — General (Biopharmaceuticals)</td></tr>
+      <tr><td class="k">Average Daily Volume (Liquidity)</td><td class="v">~7M shares (3-month average, per one source)</td></tr>
+      <tr><td class="k">Beta</td><td class="v">~0.35 (low, per one source) — defensive, large-cap pharma profile</td></tr>
+      <tr><td class="k">Dividend</td><td class="v">$0.82/quarter cash dividend; trailing yield reported between ~0.02% and ~2.5% across sources (see note below)</td></tr>
+      <tr><td class="k">Major Shareholders</td><td class="v">Predominantly large institutional holders (typical for a mega-cap pharma); specific names not independently verified in this summary</td></tr>
+      <tr><td class="k">Float</td><td class="v placeholder">{{Not independently sourced — verify against most recent proxy/13F data}}</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted); margin-top:-14px;">Note: Dividend yield figures varied enormously across data providers searched (0.02% to 2.4%), likely reflecting data errors or stale caches at some sources. Verify directly against Gilead's investor relations page before use — the $0.82/quarter cash dividend figure (per Yahoo Finance, ex-date Sep. 15, 2026) is the most consistently corroborated figure.</p>
+  </section>
+
+  <!-- ============ INVESTMENT SUMMARY ============ -->
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Gilead's core HIV franchise — anchored by Biktarvy and the newly launched long-acting PrEP drug Yeztugo (lenacapavir) — is accelerating rather than decelerating, with management raising full-year 2026 HIV growth guidance twice this year (to 9–10% from an original 6–8%) on the back of PrEP sales that doubled year-over-year to a $4 billion annual run rate. The market appears to be anchoring on deeply negative headline GAAP and non-GAAP EPS figures (driven almost entirely by acquired in-process R&D charges from recent deals) rather than the underlying base-business economics, which show high-single-digit product sales growth, 87% product gross margins, and an "excluding acquisition effects" non-GAAP EPS run-rate in the high single digits. The gap between a depressed headline multiple and a growing, high-margin core business is the central mispricing thesis, though it should be weighed against a well-known 2033 U.S. patent cliff for Biktarvy and intensifying competitive and pricing pressure in HIV.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Gilead reported Q2 2026 total product sales of $7.6 billion (up 8% YoY, up 10% sequentially), with HIV sales of $5.7 billion (+12% YoY) driven by Biktarvy ($3.8B, +7% YoY) and PrEP products (Descovy $801M, +60% YoY; Yeztugo $232M, +40% sequentially, now over $1B in quarterly PrEP sales for the first time). Trodelvy (oncology) sales rose 26% YoY to $457 million with back-to-back FDA approvals in first-line metastatic triple-negative breast cancer; Livdelzi sales more than doubled YoY. Reported non-GAAP diluted EPS was negative $6.75 due to acquisition-related charges, but management cites an underlying, acquisition-adjusted non-GAAP EPS of approximately $2.27 for the quarter. The company raised full-year 2026 base business sales guidance to $29.8–$30.1 billion and full-year HIV growth guidance to 9–10%.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Full-year 2026 guidance (as of the Q2 2026 update) calls for total product sales of $30.1–$30.4 billion and GAAP diluted loss per share of $(3.75) to $(3.40), reflecting acquisition-related charges; illustrative non-GAAP EPS excluding acquisition effects is cited around $8.50–$8.85 for the year. Consensus 2027 EPS estimates run near $9.50–$9.75, implying a meaningful rebound in reported profitability once one-time acquisition charges roll off.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">On a normal (acquisition-adjusted) earnings basis, Gilead trades at a mid-single-digit-percentage discount to its 29-analyst consensus price target of roughly $158–$159, with individual targets ranging from about $120 to $180. GAAP-basis P/E is not meaningful this year given the negative reported EPS from acquisition charges; valuation should be assessed on adjusted/non-GAAP earnings and against large-cap pharma peers (AbbVie, Amgen, Merck, Bristol Myers, Pfizer).</p>
+  </section>
+
+  <!-- ============ BUSINESS DESCRIPTION ============ -->
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Gilead Sciences, headquartered in Foster City, California, is a biopharmaceutical company focused on discovering, developing, and commercializing medicines for life-threatening diseases, primarily in HIV, viral hepatitis (B and C), and oncology, with a smaller presence in inflammation/respiratory disease and other areas. Its HIV franchise — anchored by Biktarvy (treatment) and the Descovy/Yeztugo PrEP (prevention) portfolio — is the company's largest and fastest-growing segment. The Liver Disease franchise includes Epclusa, Vemlidy, and Livdelzi (for primary biliary cholangitis). Gilead's oncology business, built through acquisitions (Kite for CAR-T cell therapies Yescarta/Tecartus; Immunomedics for Trodelvy), targets hematologic and solid tumor cancers. The company also markets Veklury (remdesivir) for COVID-19, a legacy revenue line that is now shrinking.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Biktarvy volume and pricing in HIV treatment (largest single product, ~$3.8B/quarter)</li>
+      <li>Yeztugo and Descovy PrEP adoption — the fastest-growing part of the HIV franchise, now at a ~$4B annual run rate</li>
+      <li>Trodelvy expansion into new oncology indications (e.g., first-line triple-negative breast cancer)</li>
+      <li>Livdelzi and other liver-disease product uptake</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>R&D spend (~$1.4B/quarter) supporting an extensive HIV, oncology, and virology pipeline</li>
+      <li>SG&A investment behind product launches, notably Yeztugo (SG&A +12% YoY in Q2 2026)</li>
+      <li>Acquired in-process R&D and integration charges from recent M&A, which are currently the primary driver of negative reported (GAAP/non-GAAP) EPS</li>
+    </ul>
+  </section>
+
+  <!-- ============ INDUSTRY OVERVIEW & COMPETITIVE POSITIONING ============ -->
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Gilead competes in the large-cap biopharmaceutical industry, with its core exposure concentrated in HIV treatment and prevention, viral hepatitis, and oncology. The HIV treatment/prevention market is large, durable, and characterized by high switching costs once patients are stabilized on a regimen, but it is also increasingly competitive as long-acting injectable and oral options proliferate. U.S. policy dynamics — including Affordable Care Act subsidy changes that Gilead has flagged as a near-term headwind to Biktarvy demand, and ongoing U.S. drug-pricing/IRA negotiation dynamics — are an important industry-level swing factor for the whole sector, not unique to Gilead.</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low-to-moderate — high R&D, clinical trial, and regulatory barriers to entry in HIV and oncology, though well-funded large pharma and biotech competitors (Merck, ViiV/GSK) actively contest the space.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Low — pharmaceutical manufacturing inputs are generally not a major bottleneck for a company of Gilead's scale.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Rising — U.S. payers, PBMs, and government programs (via IRA drug-price negotiation and ACA-related coverage shifts) are exerting increasing pricing and access pressure.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate-to-high in HIV — competing long-acting injectable and oral regimens (e.g., ViiV's Cabenuva, Merck's islatravir-based combinations in development) could erode Biktarvy/Yeztugo share over time.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — direct competition from AbbVie, Amgen, Bristol Myers Squibb, Merck, and Pfizer across overlapping therapeutic areas, plus specialized HIV competition from ViiV Healthcare (GSK).</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Gilead's moat rests on its entrenched position in HIV treatment and prevention, built over two decades of clinical leadership, physician relationships, and patient switching costs once stabilized on a regimen. Yeztugo's twice-yearly dosing and reported 70%+ six-month persistency give it a meaningful convenience advantage in PrEP versus daily oral alternatives. The company's oncology moat is comparatively newer and less established, built through acquisitions (Kite, Immunomedics) rather than organic leadership.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: large-cap biopharmaceutical companies with overlapping virology/oncology/immunology exposure. Figures are approximate and should be verified against a single consistent data source.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Focus Overlap</th><th>Notes</th></tr>
+      <tr><td>Gilead Sciences</td><td>GILD</td><td>HIV, liver disease, oncology</td><td>Market cap ~$178–186B; consensus target ~$158–159; GAAP EPS currently negative on acquisition charges</td></tr>
+      <tr><td>AbbVie</td><td>ABBV</td><td>Immunology, oncology</td><td class="placeholder">{{Not independently sourced in this summary}}</td></tr>
+      <tr><td>Amgen</td><td>AMGN</td><td>Oncology, inflammation</td><td class="placeholder">{{Not independently sourced in this summary}}</td></tr>
+      <tr><td>Merck &amp; Co.</td><td>MRK</td><td>Oncology, HIV pipeline (islatravir, in partnership with Gilead)</td><td class="placeholder">{{Not independently sourced in this summary}}</td></tr>
+      <tr><td>Bristol Myers Squibb</td><td>BMY</td><td>Oncology</td><td class="placeholder">{{Not independently sourced in this summary}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ VALUATION ============ -->
+  <section>
+    <h2 class="section-title">Valuation</h2>
+
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified cost of capital assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled — note the 2033 U.S. Biktarvy patent cliff is a key long-horizon consideration}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — recommend explicit forecast through at least 2033 given Biktarvy's patent expiry timeline}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>Simply Wall St's DCF-based fair value estimate, cited alongside a $180 analyst target in one source, provides a useful external reference point but was not independently rebuilt here</td></tr>
+    </table>
+
+    <h3 class="sub-title">Relative Valuation</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Gilead (GILD)</th><th>Peer Range (large-cap pharma)</th></tr>
+      <tr><td>Trailing P/E (GAAP)</td><td>Negative (acquisition charges distort the figure)</td><td class="placeholder">{{Not independently sourced}}</td></tr>
+      <tr><td>Forward P/E (non-GAAP, ~2027 basis)</td><td>~15–17x on consensus ~$9.50–9.75 2027 EPS at current price</td><td class="placeholder">{{Not independently sourced}}</td></tr>
+      <tr><td>Dividend Yield</td><td>~2.2–2.5% (per most credible sources; some sources showed clearly erroneous 0.02% figures)</td><td class="placeholder">{{Not independently sourced}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">Because GAAP and even headline non-GAAP EPS are currently negative due to acquisition-related charges, conventional trailing P/E is not meaningful for Gilead this year. On a forward, acquisition-adjusted earnings basis and against a 29-analyst consensus target of roughly $158–$159 (range $120–$180), the stock appears modestly undervalued to fairly valued, with the investment case resting on (1) the market correctly discounting through the temporary acquisition-charge EPS drag, and (2) continued execution on Yeztugo/PrEP growth to offset the eventual Biktarvy patent cliff.</p>
+  </section>
+
+  <!-- ============ FINANCIAL ANALYSIS ============ -->
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q2 2025</th><th>Q2 2026</th><th>FY2026 Guidance</th></tr>
+      <tr><td>Total Product Sales</td><td class="placeholder">{{Implied ~$7.0B based on 8% YoY growth}}</td><td>$7.6B (+8% YoY)</td><td>$30.1B–$30.4B</td></tr>
+      <tr><td>Base Business Sales</td><td class="placeholder">{{Not directly sourced}}</td><td class="placeholder">{{Up sequentially 12%}}</td><td>$29.8B–$30.1B (+6–7% YoY)</td></tr>
+      <tr><td>HIV Sales</td><td class="placeholder">{{Implied ~$5.1B based on 12% YoY growth}}</td><td>$5.7B (+12% YoY)</td><td>+9–10% YoY growth guided</td></tr>
+      <tr><td>Non-GAAP Diluted EPS (reported)</td><td class="placeholder">{{Not directly sourced}}</td><td>$(6.75)</td><td class="placeholder">{{GAAP guidance: $(3.75) to $(3.40)}}</td></tr>
+      <tr><td>Non-GAAP EPS excl. acquisition effects</td><td class="placeholder">{{Not directly sourced}}</td><td>$2.27</td><td>~$8.50–$8.85 (illustrative, full year)</td></tr>
+    </table>
+
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">Reported EPS (both GAAP and headline non-GAAP) is currently heavily distorted by acquired in-process R&D and acquisition-integration charges, producing a negative $6.75 non-GAAP diluted EPS in Q2 2026 despite an underlying, acquisition-adjusted figure of approximately $2.27 for the same quarter. Operating margin was reported as negative 94% in Q2 2026 "reflecting acquisitions," versus approximately 49% excluding acquired IP R&D — a very large adjustment that warrants careful scrutiny of what management includes and excludes. Product gross margin, a cleaner measure of core profitability, was a healthy 87% and flat year-over-year. Analysts should track the cadence and size of these acquisition-related charges closely, since they can obscure the underlying earnings trajectory.</p>
+
+    <h3 class="sub-title">Industry-Specific Ratios</h3>
+    <table class="data-table">
+      <tr><th>Ratio</th><th>Value</th></tr>
+      <tr><td>PrEP annual run-rate</td><td>~$4 billion</td></tr>
+      <tr><td>Yeztugo 6-month persistency rate</td><td>&gt;70%</td></tr>
+      <tr><td>Product gross margin</td><td>87% (flat YoY)</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT RISKS ============ -->
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+
+    <div class="risk-item">
+      <span class="risk-tag op">Operational</span>
+      <span>Biktarvy demand has been softer than expected in the U.S. due to insurance coverage shifts linked to Affordable Care Act subsidy changes, a headwind management expects to persist near term before HIV market growth normalizes to 2–3% annually.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag fin">Financial</span>
+      <span>Reported GAAP and non-GAAP EPS are currently negative due to large acquisition-related and acquired in-process R&D charges; investors must look through these to underlying base-business economics, which creates near-term earnings-quality and forecasting uncertainty.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag reg">Regulatory</span>
+      <span>Exposure to U.S. drug-pricing policy, including Medicare price negotiation under the Inflation Reduction Act and broader political pressure on pharmaceutical pricing; a court ruling on parallel importation of Gilead medications from overseas was also a notable recent legal/regulatory development.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag legal">Legal</span>
+      <span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary beyond the import-related court ruling noted above — verify against Gilead's most recent 10-K legal proceedings disclosure.}}</span>
+    </div>
+
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or disclosed material weaknesses in internal controls were identified in the sources reviewed for this summary — verify directly against Gilead's most recent 10-K/10-Q auditor opinion before relying on this.}}</p>
+  </section>
+
+  <!-- ============ ESG ============ -->
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental">
+        <h4>Environmental</h4>
+        <ul class="placeholder">
+          <li>{{ESG_ENV — one source noted "efforts to integrate sustainability and address climate change," but no specific metrics (emissions, energy use, waste) were independently sourced in this summary}}</li>
+        </ul>
+      </div>
+      <div class="esg-card social">
+        <h4>Social</h4>
+        <ul>
+          <li>Global access programs for HIV medicines are a recurring theme in Gilead's public positioning, though specific program details were not independently sourced here</li>
+          <li>Opened a new 182,000 sq. ft. research center (referenced in recent coverage), signaling continued R&D investment</li>
+          <li class="placeholder">{{ESG_SOC — labor standards/diversity data not sourced in this summary}}</li>
+        </ul>
+      </div>
+      <div class="esg-card governance">
+        <h4>Governance</h4>
+        <ul>
+          <li>One source flagged "diversity within the senior management team and board of directors" as an area of investor consideration</li>
+          <li>MSCI and other third-party ESG rating providers publish a formal ESG score for Gilead (rated on a scale from AAA to CCC) — specific current rating not independently verified in this summary</li>
+          <li class="placeholder">{{ESG_GOV — executive compensation and succession-planning detail not sourced in this summary}}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER / DISCLOSURES ============ -->
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 15, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party financial data sources (Yahoo Finance, Morningstar, Seeking Alpha, eToro, Kraken, company earnings materials, and various financial media) that may be delayed, inconsistent, or subject to revision. Reported dividend yield, market cap, and P/E figures varied meaningfully across providers searched — in at least one case implausibly (a 0.02% dividend yield figure that conflicts with the company's stated $0.82/quarter cash dividend). All figures should be independently verified against primary sources (Gilead's 10-K/10-Q filings and investor relations disclosures) before being used for any actual investment decision. This is not a research report from a registered investment adviser or broker-dealer, does not constitute investment advice, and should not be relied upon as such.
+  </footer>
+
+</div>
+</body>
+</html>

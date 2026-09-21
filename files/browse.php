@@ -56,9 +56,9 @@ function format_size(int $bytes): string {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($folderRow['display_name'] ?? 'Files'); ?> - My Toolbox Site</title>
-    <link rel="stylesheet" href="../assets/css/themes.css?v=7">
-    <link rel="stylesheet" href="../assets/css/fonts.css?v=7">
-    <link rel="stylesheet" href="../assets/css/main.css?v=7">
+    <link rel="stylesheet" href="../assets/css/themes.css?v=8">
+    <link rel="stylesheet" href="../assets/css/fonts.css?v=8">
+    <link rel="stylesheet" href="../assets/css/main.css?v=8">
 </head>
 <body data-theme="light">
     <?php include __DIR__ . '/../includes/header.php'; ?>
@@ -72,6 +72,16 @@ function format_size(int $bytes): string {
             </div>
         <?php else: ?>
             <h1 class="page-title"><?php echo htmlspecialchars($folderRow['display_name']); ?></h1>
+
+            <?php if ($folderRow['folder_path'] === 'analysis/research'): ?>
+                <div class="card" style="margin-bottom:1.5rem;">
+                    <div class="card-body">
+                        <span class="card-headline">Equity Sector Reports</span>
+                        <p class="card-synopsis">132 equity research reports, grouped by sector with a sector jump menu.</p>
+                        <p><a href="../investments/equity_reports.php">Browse equity sector reports &rarr;</a></p>
+                    </div>
+                </div>
+            <?php endif; ?>
 
             <?php if (empty($files)): ?>
                 <p>No files have been uploaded to this folder yet.</p>

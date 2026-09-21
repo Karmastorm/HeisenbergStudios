@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — COST</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #e9edf2;
+    color: var(--text);
+    font-family: "Georgia", "Times New Roman", serif;
+    line-height: 1.55;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.12);
+    padding: 40px 50px 60px;
+  }
+
+  .report-header {
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .firm-name {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .company-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+  }
+
+  .reco-banner {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .reco-main {
+    flex: 0 0 170px;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .reco-main .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+
+  .reco-main .value {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+
+  .reco-stats {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--gray-bg);
+  }
+
+  .reco-stat {
+    padding: 10px 14px;
+    border-left: 1px solid var(--border);
+  }
+
+  .reco-stat .label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    display: block;
+  }
+
+  .reco-stat .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .basic-info {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+
+  .basic-info td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .basic-info td.k {
+    color: var(--muted);
+    width: 38%;
+  }
+
+  .basic-info td.v {
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  section { margin-bottom: 32px; }
+
+  h2.section-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: var(--navy);
+    padding: 8px 14px;
+    margin: 0 0 14px 0;
+    border-left: 5px solid var(--accent);
+  }
+
+  h3.sub-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    margin: 18px 0 10px;
+  }
+
+  p.body-text { font-size: 15px; margin: 0 0 12px; }
+
+  ul.bullet-list { margin: 0 0 12px 0; padding-left: 20px; }
+  ul.bullet-list li { margin-bottom: 6px; font-size: 15px; }
+
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  .thesis-box .thesis-label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-dark);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  table.data-table th {
+    background: var(--navy);
+    color: #fff;
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  table.data-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background: var(--gray-bg); }
+
+  .risk-item { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+
+  .risk-tag {
+    flex: 0 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    background: var(--red);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .risk-tag.op { background: #b8860b; }
+  .risk-tag.fin { background: var(--red); }
+  .risk-tag.reg { background: #6a3d9a; }
+  .risk-tag.legal { background: #444; }
+
+  .esg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
+  .esg-card {
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: 4px;
+    padding: 12px 14px;
+  }
+
+  .esg-card.environmental { border-top-color: #2e7d32; }
+  .esg-card.social { border-top-color: #1565c0; }
+  .esg-card.governance { border-top-color: #6a1b9a; }
+
+  .esg-card h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px;
+    color: var(--navy);
+  }
+
+  .esg-card ul { margin: 0; padding-left: 16px; font-size: 13px; }
+  .esg-card li { margin-bottom: 4px; }
+
+  .peer-note {
+    font-size: 12.5px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: -6px;
+    margin-bottom: 12px;
+  }
+
+  footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  footer .analyst-line { margin-bottom: 8px; font-size: 12px; color: var(--text); }
+
+  @media (max-width: 700px) {
+    .page { padding: 24px 18px; }
+    .reco-banner { flex-direction: column; }
+    .reco-stats { grid-template-columns: repeat(2, 1fr); }
+    .esg-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Costco Wholesale Corporation</h1>
+      <div class="ticker-line">COST &nbsp;|&nbsp; NASDAQ &nbsp;|&nbsp; Consumer Staples / Discount &amp; Warehouse Retail (Membership Clubs)</div>
+    </div>
+    <div class="report-date">
+      September 15, 2026<br>
+      Analyst: [Name Not Specified]
+    </div>
+  </div>
+
+  <!-- ============ RECOMMENDATION BANNER ============ -->
+  <div class="reco-banner">
+    <div class="reco-main">
+      <span class="label">Recommendation</span>
+      <span class="value" style="color:#b8860b;">HOLD</span>
+    </div>
+    <div class="reco-stats">
+      <div class="reco-stat">
+        <span class="label">Current Price</span>
+        <span class="value">~$905–$920</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Target Price (Consensus)</span>
+        <span class="value">~$1,072–$1,090 (varies by source)</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Market Cap</span>
+        <span class="value">~$400–408 billion</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Implied Upside</span>
+        <span class="value">~14–19% (consensus average)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BASIC INFORMATION ============ -->
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">COST</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NASDAQ</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Consumer Staples</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Discount &amp; Warehouse Retail (Membership Clubs)</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$844.06 – $1,096.50 (52-week high set May 19, 2026; low set December 16, 2025)</td></tr>
+      <tr><td class="k">Shares Outstanding</td><td class="v">~443.5 million</td></tr>
+      <tr><td class="k">P/E Ratio (TTM)</td><td class="v">~45–48x (varies by source and date; one older source cited ~52x, another ~46x — reflects genuine multiple compression as the stock has pulled back from its 52-week high)</td></tr>
+      <tr><td class="k">Forward P/E (NTM)</td><td class="v">~42–43x</td></tr>
+      <tr><td class="k">PEG Ratio</td><td class="v">~4.5–5.8 (varies by source/date) — well above 1.0, a common valuation caution signal even for a high-quality compounder</td></tr>
+      <tr><td class="k">Dividend (Quarterly / Yield)</td><td class="v">~$1.47/quarter / ~0.6–0.65% (a 13% dividend increase was reported in 2026, per one source)</td></tr>
+      <tr><td class="k">Beta</td><td class="v">~0.86–0.98 (varies by source) — roughly market-level to slightly below-market volatility, consistent with a defensive consumer-staples profile</td></tr>
+      <tr><td class="k">Employees</td><td class="v">~341,000</td></tr>
+      <tr><td class="k">Fiscal Year End</td><td class="v">Late August/early September (approximately 52- or 53-week fiscal year); Q4/full-year FY2026 results were not yet reported as of this report's date and are expected in late September 2026</td></tr>
+      <tr><td class="k">Analyst Ratings</td><td class="v">Strongly "Buy"-skewed across sources (e.g., 39 analysts with an average "Buy" rating in one source; 23–24 Buy vs. 2 Sell in others)</td></tr>
+      <tr><td class="k">Float</td><td class="v placeholder">{{Not independently sourced in this summary — verify against Costco's most recent proxy statement}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT SUMMARY ============ -->
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Costco continues to execute at an exceptionally high level on virtually every operating metric that matters for a membership-based retailer: fiscal Q3 2026 (ended May 10, 2026) delivered net sales of $69.15 billion (+11.6% YoY, well ahead of consensus), comparable sales up 9.8% (6.6% excluding gas/FX), digitally-enabled comparable sales up 21.5% (a third consecutive quarter of 20%+ digital growth), membership fee income of $1.37 billion (+10.7% YoY, aided by the 2024 U.S./Canada fee increase), 41.2 million paid Executive memberships (+9.6% YoY), and a U.S./Canada renewal rate of 92.2% — figures that collectively support the well-worn characterization of Costco's membership model as "unbreakable." The core investment debate is not about business quality, which is essentially undisputed across every source reviewed, but about valuation: Costco trades at a trailing P/E in the mid-to-high 40s and a PEG ratio around 4.5–5.8, an unusually rich multiple that "leaves no margin for a soft quarter," as multiple analysts put it, and one that sits well above the stock's own 10-year median P/E of roughly 37. Management itself has flagged live cost pressures (tariffs, resin inflation, memory-chip costs, wage/healthcare inflation, Middle East shipping risk) and has been deliberately compressing "core-on-core" margins by reinvesting in lower prices to widen Costco's value gap versus competitors — a strategy that is working commercially but structurally caps near-term margin expansion. Given the combination of best-in-class, well-documented operational execution and a valuation that provides little cushion for even a modest deceleration, this is a HOLD: existing holders have every reason for conviction in the business, but the risk/reward for new money at the current multiple is more balanced than the operational narrative alone would suggest.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Costco's most recently reported full quarter, fiscal Q3 2026 (ended May 10, 2026), showed net sales of $69.15 billion (+11.6% YoY) and total revenue (including membership fees) of $70.53 billion, both above Wall Street expectations (analysts had modeled ~$69.8 billion in net sales per one source). Net income was $2.19 billion, or $4.93 per diluted share (+15% YoY from $1.90 billion / $4.28 per share), meeting adjusted EPS expectations. Comparable sales rose 9.8% company-wide (6.6% excluding gasoline-price inflation and foreign exchange), with the U.S. up 9.4% (6.8% adjusted), Canada up 10.7% (6.2% adjusted), and Other International up 11.2% (5.9% adjusted). Digitally-enabled comparable sales grew 21.5% (20.8% adjusted for FX) — the third consecutive quarter of 20%+ digital growth, driven by improvements to the mobile app, personalized product recommendations, and digital membership card functionality. Membership fee income reached $1.37 billion (+10.7% YoY, or +11% per a slightly different source citation), with roughly a quarter of the growth attributable to the 2024 U.S./Canada membership fee increase; paid Executive memberships reached 41.2 million (+9.6% YoY), total paid members reached 82.9 million (+4.1%), and total cardholders reached ~148.5–149 million (+4%). Renewal rates remained very high: 92.2% in the U.S./Canada (up 10 basis points sequentially) and 89.7% worldwide. Pharmacy was a standout ancillary growth driver, benefiting from increased GLP-1 medication demand and "significant market share gains" per management; fresh and nonfoods categories both achieved high-single-digit comparable sales growth. Gross margin compressed modestly (roughly 20–21 basis points YoY), which one detailed source attributed to deliberate price investments (notably in Kirkland Signature items) funded through SG&A leverage and high-margin membership-fee flow-through rather than core merchandise margin expansion — a sign of Costco intentionally trading near-term margin for market share and member value. Costco opened four new warehouses in Q3 2026 (three in the U.S., one in Canada) and operated 931 total warehouses by quarter-end (639 in the U.S. and Puerto Rico, with the remainder spread across Canada, Mexico, Japan, the U.K., Korea, Australia, Taiwan, China, Spain, France, Sweden, Iceland, and New Zealand). More recently, Costco reported August 2026 net sales of $23.70 billion (a monthly sales figure, not a full quarterly report) and announced plans to open 14 new warehouses across the U.S. and Canada. The company also raised its quarterly dividend by approximately 13% in 2026 and, amid an Iran-related conflict driving oil prices higher, capped and raised prices on Kirkland and Mobil 1 motor oil due to supply constraints. Separately, Costco has been reported to be exploring a Medicare Advantage-related product offering and continuing to expand delivery options for items like custom sheet cakes and party platters.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Costco does not appear to issue detailed forward same-store-sales or EPS guidance in the way some other companies in this report series do, consistent with its historical practice of reporting monthly sales figures and quarterly results without extensive forward guidance; consensus analyst expectations reviewed imply continued mid-to-high-single-digit comparable sales growth and double-digit digital growth persisting into the fiscal Q4 2026 and full-year results (not yet reported as of this summary). Management has explicitly flagged tariff impacts, resin inflation, memory-chip costs, and Middle East shipping-related risk as live cost pressures being actively managed, alongside continued reinvestment in price to sustain Costco's value proposition relative to competitors.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Costco trades at a substantial valuation premium to its most direct retail peers: a trailing P/E in the mid-to-high 40s versus Walmart's high-30s-to-low-40s and BJ's Wholesale Club's low-20s, a premium multiple analysts across sources broadly agree is "defensible" given Costco's superior comparable-sales growth, membership renewal economics, and Executive-member penetration — but one that several sources also explicitly caution "leaves no margin for a soft quarter." Consensus price targets clustered around $1,072–$1,090 across the more recent sources reviewed (implying roughly 14–19% upside from current levels), though target dispersion was notably wide in at least one source ($781 to $1,315), and PEG ratios in the 4.5–5.8 range signal the market is pricing in continued high growth rather than treating Costco as a value opportunity at current levels.</p>
+  </section>
+
+  <!-- ============ BUSINESS DESCRIPTION ============ -->
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Costco Wholesale Corporation, founded in 1983 and headquartered in Issaquah, Washington, operates a global chain of membership-based warehouse clubs offering a limited selection of nationally-branded and private-label (Kirkland Signature) merchandise across a wide range of categories, sold at high volumes with rapid inventory turnover. The company's distinctive business model earns the substantial majority of its operating profit from recurring membership fees rather than merchandise markup, enabling Costco to sell products at near-break-even prices — reinforcing its reputation as a price leader, driving high customer traffic and loyalty, and sustaining renewal rates near 90% globally (and above 92% in its largest U.S./Canada market). As of the most recently reported quarter, Costco operated 931 warehouses across 14 countries, with the large majority (639) in the U.S. and Puerto Rico, and meaningful and often faster-growing international operations in Canada, Mexico, Japan, the U.K., Korea, Australia, Taiwan, China, Spain, France, Sweden, Iceland, and New Zealand. Costco holds an estimated majority share (cited as over 60% by one source) of the domestic U.S. warehouse-club market.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Comparable sales growth across merchandise categories (fresh foods, nonfoods, pharmacy — the latter significantly boosted by GLP-1 medication demand), consistently running in the high-single to low-double digits</li>
+      <li>Membership fee growth from new member sign-ups, periodic fee increases (the most recent U.S./Canada increase implemented in 2024 continues to contribute to year-over-year growth), and rising Executive membership penetration (Executive members reportedly spend roughly three times more on average than basic members)</li>
+      <li>Digitally-enabled sales growth, which has now exceeded 20% year-over-year for three consecutive quarters, driven by app improvements, personalization, and digital membership functionality</li>
+      <li>New warehouse openings, both domestically and internationally, with international markets (Other International, Canada) frequently posting faster comparable-sales growth than the U.S. in recent periods</li>
+      <li>Ancillary businesses including gasoline (benefiting from elevated fuel prices and record volumes in some periods), pharmacy, and travel/other services</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Deliberate price investments (e.g., in Kirkland Signature products) designed to widen Costco's value gap versus competitors, which have modestly compressed core merchandise gross margin even as overall profitability has grown via membership-fee flow-through and SG&A leverage</li>
+      <li>Tariff-related cost pressure, resin inflation, memory-chip cost inflation, and Middle East shipping disruption — all explicitly flagged by management as active 2026 cost headwinds</li>
+      <li>Rising wage and healthcare costs, a general retail-sector cost pressure specifically cited in analyst commentary reviewed</li>
+      <li>Heavy, ongoing capital expenditure on new warehouse construction and distribution infrastructure globally, which suppresses near-term free cash flow even as it supports Costco's long-term growth algorithm</li>
+    </ul>
+  </section>
+
+  <!-- ============ INDUSTRY OVERVIEW & COMPETITIVE POSITIONING ============ -->
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Costco operates in the mature, highly competitive discount and warehouse retail industry, specifically the membership-club sub-segment alongside Walmart's Sam's Club and BJ's Wholesale Club. One source specifically distinguishes the "pure warehouse club" sub-segment (a combined ~$431 billion in 2024 sales across the four major U.S./North American operators — Costco, Sam's Club, BJ's, and PriceSmart, per that source) as smaller but faster-growing than the broader supercenter/discount retail category dominated by Walmart. Costco's international expansion continues to outpace its U.S. business in comparable-sales growth in several recent periods, reflecting a still-substantial runway for warehouse-club penetration outside its home market, tempered by the operational challenge of adapting Costco's U.S.-honed model to markets with different labor laws and zoning restrictions (specifically flagged as a risk in parts of Europe by one source).</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Very low — the membership-club model requires massive scale, deep supplier relationships, and years of accumulated member trust and renewal behavior to be commercially viable; realistically only Walmart (via Sam's Club) and BJ's Wholesale Club compete at meaningful scale in the U.S.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Low-to-moderate — Costco's massive purchasing scale and limited-SKU model (offering fewer total products than a typical supermarket, but at very high volume per SKU) give it substantial negotiating leverage with suppliers, a structural advantage central to its "treasure hunt" and low-price positioning.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Low at the individual member level (Costco sets prices and membership terms, with very limited individual negotiating power) but the aggregate "buyer" — members' collective willingness to renew — is central to the entire business model, evidenced by renewal rates near 90-92% that management and analysts treat as the single most important health metric.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate — traditional supermarkets, other discount retailers, and e-commerce platforms (including Amazon) all compete for a share of household consumer spending, though Costco's membership-fee-funded pricing model creates a distinct value proposition that is difficult for non-membership retailers to fully replicate.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High but concentrated — Walmart's Sam's Club is the most direct scale competitor, though Costco is repeatedly described across sources as outperforming Sam's Club on renewal rates, Executive-tier penetration, and digital comparable-sales growth; BJ's Wholesale Club is a smaller, more narrowly regional pure-play competitor.</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Costco's moat is widely regarded as one of the strongest and most durable in all of retail, built on a self-reinforcing cycle: membership fees fund near-break-even merchandise pricing, which drives high member traffic and loyalty (evidenced by renewal rates consistently near or above 90%), which in turn supports enormous purchasing scale and negotiating leverage with suppliers, further reinforcing Costco's ability to offer low prices. Rising Executive membership penetration (up meaningfully over the past decade per Morningstar, with Executive members spending roughly three times more than basic members) further strengthens this high-margin, highly predictable membership-fee revenue stream. Morningstar and multiple other sources reviewed treat this moat as effectively unassailable in the near-to-medium term, with the primary risks being execution-related (international expansion into markets with different labor/zoning regimes) rather than competitive-displacement risk.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major U.S. warehouse-club and discount-retail operators. Figures are approximate and vary meaningfully by source and date — verify against a single consistent data source before use.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Trailing P/E</th><th>Notes</th></tr>
+      <tr><td>Costco</td><td>COST</td><td>~45–52x (wide range across sources/dates)</td><td>Premium multiple broadly described as "defensible" given superior comp growth and membership economics; PEG ~4.5–5.8</td></tr>
+      <tr><td>Walmart</td><td>WMT</td><td>~38–42x</td><td>Cited as the most direct scale comp; Sam's Club is Walmart's membership-club format, generally described as trailing Costco on renewal rates and Executive-tier penetration</td></tr>
+      <tr><td>BJ's Wholesale Club</td><td>BJ</td><td>~21–23x</td><td>The closest pure-play warehouse-club comp; materially smaller scale (~$12 billion market cap per one source) and lower multiple than Costco</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted);">Note: Costco's premium over Walmart was independently estimated at roughly 23% and over BJ's at roughly 113% by one specific source's calculation — these figures should be treated as illustrative given the general spread in P/E figures across sources, but the directional conclusion (Costco commands a meaningful premium to both peers) was consistent across every source reviewed.</p>
+  </section>
+
+  <!-- ============ VALUATION ============ -->
+  <section>
+    <h2 class="section-title">Valuation</h2>
+
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified cost of capital assumptions; Costco's low beta (~0.86–0.98) and investment-grade, defensive-retail profile would generally support a relatively modest discount rate}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled — the central valuation question is whether current high-single/low-double-digit comparable-sales growth and 20%+ digital growth are sustainable at scale over a multi-year terminal period, or whether they should be expected to normalize toward Costco's historical mid-single-digit range}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — recommend an explicit forecast incorporating Costco's continued international warehouse expansion runway alongside its now-two-year-old U.S./Canada membership fee increase cycling out of year-over-year comparisons}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td class="placeholder">{{No single, clearly-attributed third-party DCF-based fair-value estimate was isolated in the sources reviewed for this summary; multiple sources instead relied on relative (P/E, PEG) valuation and price-target methodologies}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Relative Valuation</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Costco (COST)</th><th>Peer Reference (Walmart / BJ's)</th></tr>
+      <tr><td>Trailing P/E</td><td>~45–52x</td><td>Walmart ~38–42x; BJ's ~21–23x</td></tr>
+      <tr><td>Forward P/E</td><td>~42–43x</td><td class="placeholder">{{Not independently sourced for direct comparison}}</td></tr>
+      <tr><td>PEG Ratio</td><td>~4.5–5.8</td><td class="placeholder">{{Not independently sourced for peers}}</td></tr>
+      <tr><td>Revenue Growth (most recent quarter cited)</td><td>+11.6% (Q3 FY2026)</td><td>Walmart ~6.1% (Q1 FY2027, per one source)</td></tr>
+    </table>
+
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">Costco's premium multiple relative to Walmart and BJ's Wholesale Club is consistently described across sources as commercially justified by superior growth, renewal economics, and membership-tier penetration — and Costco's recent revenue growth (nearly double Walmart's in the comparison cited) lends real support to that view. However, several of the same sources that endorse the premium as "defensible" also explicitly warn that the current multiple "leaves no margin for a soft quarter" and that "any comparable traffic dip below 2% or Executive membership stall could trigger sharp multiple compression." This is a genuinely two-sided setup: the business quality case for Costco is about as strong and well-documented as any company in this report series, but the valuation leaves unusually little room for error, which is the primary reason this report lands on HOLD rather than BUY despite the clearly positive operational trajectory.</p>
+  </section>
+
+  <!-- ============ FINANCIAL ANALYSIS ============ -->
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q3 FY2025</th><th>Q3 FY2026</th><th>YTD FY2026 (36 weeks)</th></tr>
+      <tr><td>Net Sales</td><td>$62.0B</td><td>$69.15B (+11.6% YoY)</td><td>$203.37B (+9.6% YoY)</td></tr>
+      <tr><td>Total Revenue (incl. membership fees)</td><td class="placeholder">{{Not directly sourced}}</td><td>$70.53B</td><td>$207.43B</td></tr>
+      <tr><td>Net Income</td><td>$1.90B</td><td>$2.19B (+15% YoY)</td><td>$6.23B (+13.5% YoY)</td></tr>
+      <tr><td>Diluted EPS</td><td>$4.28</td><td>$4.93</td><td>$14.01 (vs. $12.34 prior year)</td></tr>
+      <tr><td>Comparable Sales Growth</td><td class="placeholder">{{Not directly sourced}}</td><td>+9.8% (+6.6% ex-gas/FX)</td><td class="placeholder">{{Not separately sourced as a YTD figure}}</td></tr>
+      <tr><td>Digitally-Enabled Comp Sales Growth</td><td class="placeholder">{{Not directly sourced}}</td><td>+21.5% (+20.8% ex-FX)</td><td class="placeholder">{{Third consecutive quarter of 20%+ growth}}</td></tr>
+      <tr><td>Membership Fee Income</td><td class="placeholder">{{Implied ~$1.24B based on 10.7% YoY growth}}</td><td>$1.37B (+10.7% YoY)</td><td class="placeholder">{{Not separately sourced as a YTD figure}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">Costco's Q3 FY2026 results are well-corroborated across multiple independent sources with consistent figures, a positive signal on data reliability. One detailed source specifically flagged that gross margin compressed roughly 20 basis points year-over-year, and that this compression was "entirely offset by sudden and sharp SG&A leverage and a surge in high-margin membership fees" — an important structural observation: Costco's reported net income growth (+15% YoY) is being driven partly by operating leverage and membership-fee flow-through rather than purely by core merchandise margin expansion, and in fact reflects a deliberate strategic choice (price investment in Kirkland Signature and other items) to widen Costco's competitive value gap at the expense of near-term core margin. This is a genuinely different earnings-quality dynamic than a company where margin expansion reflects pure operating improvement — analysts should understand that Costco's current profitability growth is substantially a function of successfully monetizing member loyalty and scale (membership fees, SG&A leverage) rather than pricing power on merchandise itself, which is consistent with, and supportive of, the company's stated long-term strategy but worth distinguishing from a margin story driven by merchandise pricing power.</p>
+
+    <h3 class="sub-title">Industry-Specific Ratios</h3>
+    <table class="data-table">
+      <tr><th>Ratio</th><th>Value</th></tr>
+      <tr><td>U.S./Canada membership renewal rate</td><td>92.2% (up 10 bps sequentially)</td></tr>
+      <tr><td>Worldwide membership renewal rate</td><td>89.7%</td></tr>
+      <tr><td>Paid Executive memberships</td><td>41.2 million (+9.6% YoY)</td></tr>
+      <tr><td>Total paid members / total cardholders</td><td>82.9 million / ~148.5–149 million</td></tr>
+      <tr><td>Total warehouses (14 countries)</td><td>931 (639 in the U.S. and Puerto Rico)</td></tr>
+      <tr><td>Estimated U.S. warehouse-club market share</td><td>&gt;60% (per one source)</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT RISKS ============ -->
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+
+    <div class="risk-item">
+      <span class="risk-tag op">Operational</span>
+      <span>International expansion into markets with stricter labor laws and zoning restrictions (specifically flagged for parts of Europe by Morningstar) could slow Costco's ability to replicate its U.S. warehouse model globally at its historical pace. Heavy, ongoing capital expenditure on warehouse and distribution-center construction suppresses near-term free cash flow, though this is generally viewed as productive reinvestment given Costco's strong return on equity (~29%).</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag fin">Financial</span>
+      <span>Costco's valuation (trailing P/E in the mid-to-high 40s, PEG of ~4.5–5.8) leaves unusually little margin for a soft quarter or growth deceleration — multiple analysts explicitly warn that a comparable-sales dip below approximately 2%, or a stall in Executive membership growth, could trigger sharp multiple compression regardless of the underlying business quality. Management has flagged tariff exposure, resin inflation, memory-chip cost inflation, and rising wage/healthcare costs as live, disclosed cost pressures for 2026.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag reg">Regulatory</span>
+      <span>Tariff policy remains an active and disclosed risk (management specifically cited tariff impacts in recent guidance commentary), as does FX volatility given Costco's substantial and growing international operations. Labor-law and zoning regulatory differences in international expansion markets (noted above) also represent a regulatory dimension of the broader international growth opportunity.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag legal">Legal</span>
+      <span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against Costco's most recent 10-K legal proceedings disclosure.}}</span>
+    </div>
+
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or disclosed material weaknesses in internal controls were identified in the sources reviewed for this summary — verify directly against Costco's most recent 10-K/10-Q auditor opinion before relying on this. Multiple sources noted that recent insider trading activity at Costco has skewed toward selling — this is a data point worth independent verification via SEC Form 4 filings rather than treating as inherently negative, since insider sales at a company trading near all-time-high valuations are common and not necessarily indicative of a negative view on the business.}}</p>
+  </section>
+
+  <!-- ============ ESG ============ -->
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental">
+        <h4>Environmental</h4>
+        <ul class="placeholder">
+          <li>{{ESG_ENV — no specific emissions, energy-use, or sustainability-target metrics were independently sourced in this summary; recommend reviewing Costco's own sustainability disclosures directly}}</li>
+        </ul>
+      </div>
+      <div class="esg-card social">
+        <h4>Social</h4>
+        <ul>
+          <li>Costco is widely recognized in retail-industry commentary for above-industry-average employee wages and benefits relative to many discount-retail peers, a factor some analysts and commentators link to its low employee turnover and strong operational execution, though specific current wage figures were not independently sourced in this summary</li>
+          <li>Costco's pharmacy business has seen growth partly attributed to GLP-1 medication demand, positioning the company as a channel for a broader public-health and healthcare-access trend, alongside a reported exploration of Medicare Advantage-related offerings</li>
+          <li class="placeholder">{{ESG_SOC — broader workforce diversity and community-relations data not sourced in this summary}}</li>
+        </ul>
+      </div>
+      <div class="esg-card governance">
+        <h4>Governance</h4>
+        <ul>
+          <li>Costco's dividend policy (a recent ~13% increase, per one source) and consistent shareholder-return practices are a governance/capital-allocation positive worth noting alongside the company's continued heavy reinvestment in growth</li>
+          <li class="placeholder">{{ESG_GOV — board composition and executive compensation structure not sourced in this summary}}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER / DISCLOSURES ============ -->
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 15, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party financial data sources (Gotrade, Morningstar, CNBC, Google Finance, StockAnalysis.com, Yahoo Finance, CNN, TipRanks, Digital Commerce 360, company earnings materials and SEC filings, 24/7 Wall St., TradingKey, TS2.tech, and various financial media) that may be delayed, inconsistent, or subject to revision. Costco's fiscal Q4/full-year 2026 results had not yet been reported as of this report's date (September 15, 2026) and were expected in late September 2026; this report therefore relies on fiscal Q3 2026 (ended May 10, 2026) as the most recent full quarterly reporting period, supplemented by monthly sales figures (e.g., August 2026 net sales) where available. Valuation multiples (P/E, PEG) showed some variation across sources and dates reviewed, reflecting the stock's movement over 2026 relative to its 52-week range. All figures should be independently verified against primary sources (Costco's 10-K/10-Q filings and investor relations disclosures) before being used for any actual investment decision. This is not a research report from a registered investment adviser or broker-dealer, does not constitute investment advice, and should not be relied upon as such.
+  </footer>
+
+</div>
+</body>
+</html>

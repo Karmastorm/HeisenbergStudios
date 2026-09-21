@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — META</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #e9edf2;
+    color: var(--text);
+    font-family: "Georgia", "Times New Roman", serif;
+    line-height: 1.55;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.12);
+    padding: 40px 50px 60px;
+  }
+
+  .report-header {
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .firm-name {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .company-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+  }
+
+  .reco-banner {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .reco-main {
+    flex: 0 0 170px;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .reco-main .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+
+  .reco-main .value {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+
+  .reco-stats {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--gray-bg);
+  }
+
+  .reco-stat {
+    padding: 10px 14px;
+    border-left: 1px solid var(--border);
+  }
+
+  .reco-stat .label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    display: block;
+  }
+
+  .reco-stat .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .basic-info {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+
+  .basic-info td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .basic-info td.k {
+    color: var(--muted);
+    width: 38%;
+  }
+
+  .basic-info td.v {
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  section { margin-bottom: 32px; }
+
+  h2.section-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: var(--navy);
+    padding: 8px 14px;
+    margin: 0 0 14px 0;
+    border-left: 5px solid var(--accent);
+  }
+
+  h3.sub-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    margin: 18px 0 10px;
+  }
+
+  p.body-text { font-size: 15px; margin: 0 0 12px; }
+
+  ul.bullet-list { margin: 0 0 12px 0; padding-left: 20px; }
+  ul.bullet-list li { margin-bottom: 6px; font-size: 15px; }
+
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  .thesis-box .thesis-label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-dark);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  table.data-table th {
+    background: var(--navy);
+    color: #fff;
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  table.data-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background: var(--gray-bg); }
+
+  .risk-item { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+
+  .risk-tag {
+    flex: 0 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    background: var(--red);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .risk-tag.op { background: #b8860b; }
+  .risk-tag.fin { background: var(--red); }
+  .risk-tag.reg { background: #6a3d9a; }
+  .risk-tag.legal { background: #444; }
+
+  .esg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
+  .esg-card {
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: 4px;
+    padding: 12px 14px;
+  }
+
+  .esg-card.environmental { border-top-color: #2e7d32; }
+  .esg-card.social { border-top-color: #1565c0; }
+  .esg-card.governance { border-top-color: #6a1b9a; }
+
+  .esg-card h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px;
+    color: var(--navy);
+  }
+
+  .esg-card ul { margin: 0; padding-left: 16px; font-size: 13px; }
+  .esg-card li { margin-bottom: 4px; }
+
+  .peer-note {
+    font-size: 12.5px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: -6px;
+    margin-bottom: 12px;
+  }
+
+  footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  footer .analyst-line { margin-bottom: 8px; font-size: 12px; color: var(--text); }
+
+  @media (max-width: 700px) {
+    .page { padding: 24px 18px; }
+    .reco-banner { flex-direction: column; }
+    .reco-stats { grid-template-columns: repeat(2, 1fr); }
+    .esg-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Meta Platforms, Inc.</h1>
+      <div class="ticker-line">META &nbsp;|&nbsp; NASDAQ &nbsp;|&nbsp; Communication Services / Internet Content &amp; Information</div>
+    </div>
+    <div class="report-date">
+      September 15, 2026<br>
+      Analyst: [Name Not Specified]
+    </div>
+  </div>
+
+  <!-- ============ RECOMMENDATION BANNER ============ -->
+  <div class="reco-banner">
+    <div class="reco-main">
+      <span class="label">Recommendation</span>
+      <span class="value" style="color:#4caf50;">BUY</span>
+    </div>
+    <div class="reco-stats">
+      <div class="reco-stat">
+        <span class="label">Current Price</span>
+        <span class="value">~$650–$665</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Target Price (Consensus)</span>
+        <span class="value">~$785–$830 (wide range across sources: $640–$886)</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Market Cap</span>
+        <span class="value">~$1.65–1.70 trillion</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Implied Upside</span>
+        <span class="value">~20–35% (source-dependent)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BASIC INFORMATION ============ -->
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">META</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NASDAQ</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Communication Services</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Internet Content &amp; Information / Technology Services</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$520.26 – $790.80</td></tr>
+      <tr><td class="k">Shares Outstanding</td><td class="v">~2.55 billion</td></tr>
+      <tr><td class="k">P/E Ratio (TTM)</td><td class="v">~22.4–24.4x (source-dependent)</td></tr>
+      <tr><td class="k">Forward P/E (NTM)</td><td class="v">~21.75x (per one source)</td></tr>
+      <tr><td class="k">Dividend (Annual / Yield)</td><td class="v">~$2.10 / ~0.32%</td></tr>
+      <tr><td class="k">Beta</td><td class="v">~1.20 (per one source)</td></tr>
+      <tr><td class="k">Average Daily Volume (Liquidity)</td><td class="v">~18–19M shares (10-day/3-month average)</td></tr>
+      <tr><td class="k">Analyst Ratings</td><td class="v">Widely reported around 47–63 covering analysts, roughly 38–55 Buy, single-digit Hold, and 0 Sell across multiple sources reviewed — an unusually one-sided "Strong Buy"/"Moderate Buy" consensus</td></tr>
+      <tr><td class="k">Governance Note</td><td class="v">Dual-class share structure; CEO Mark Zuckerberg holds Class B super-voting shares, concentrating voting control</td></tr>
+      <tr><td class="k">Float</td><td class="v placeholder">{{Not independently sourced in this summary — verify against Meta's most recent proxy statement}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT SUMMARY ============ -->
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Meta's core advertising business (Family of Apps) remains highly profitable and growing at scale — Q2 2026 revenue rose 28% year-over-year to $60.8 billion, with ad impressions up 14% and average price per ad up 12%, and 3.6 billion daily active users across the app family. However, Q2 2026 marked the first year-over-year profit decline of Meta's AI-capex era: net income fell 14% to $15.8 billion as total costs rose 55%, driven partly by one-off items ($2.4 billion in legal charges and $1.18 billion in severance) but also by a structural, multi-year increase in depreciation from a rapidly growing AI/data-center asset base. The market's reaction was sharp (shares fell roughly 10% after hours following the Q2 print) but the stock has since staged a meaningful recovery, particularly after Meta's roughly $18 billion youth-safety settlement removed a major litigation overhang that some analysts had modeled at tail risk as high as $1.4 trillion. The mispricing thesis rests on whether the market is now appropriately distinguishing between one-time costs (legal settlement, severance) that will not recur at this magnitude, structural but manageable costs (rising D&A from AI infrastructure), and Reality Labs' persistent multibillion-dollar losses, which show no clear path to profitability but are financially small relative to Family of Apps' scale.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Meta reported Q2 2026 revenue of $60.80 billion (+28% YoY, beating consensus of ~$60.2 billion), but GAAP diluted EPS of $6.18 missed consensus of ~$7.17–7.23 by roughly 14%. Total expenses rose 55% YoY to $42 billion, driven by $2.40 billion in legal charges, $1.18 billion in severance from a May 2026 headcount reduction, and a 46% YoY increase in depreciation and amortization tied to Meta's expanding AI infrastructure (a ~$225 billion property, plant & equipment base). Reality Labs posted a $4.62 billion operating loss on just $431 million of revenue (up 16% YoY). Capital expenditures reached $31.08 billion for the quarter, pushing free cash flow down 91% YoY to $784 million; Meta halted share buybacks and its long-term debt stood at $83.7 billion (with reports of additional borrowing to fund capex). Full-year 2026 capex guidance was set at $130–$145 billion. Most significantly for the legal/regulatory overhang, Meta agreed in September 2026 to pay $12.7–$18 billion over 10 years to settle youth-safety and privacy litigation involving 47 states and territories, including new mandated protections for users under 18 (two-hour daily usage limits, nighttime restrictions, disabled notifications during school hours). Meta will take a ~$10 billion one-time charge in Q3 2026 related to this settlement. An active FTC antitrust case (concerning potential divestiture of Instagram and/or WhatsApp) also remains outstanding, though analysts view a near-term structural remedy as unlikely, with any resolution and appeals potentially extending to 2027.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Management guided Q3 2026 revenue to $61–64 billion and full-year 2026 total expenses to $165–169 billion (reflecting the legal charges), while reiterating that full-year 2026 operating income is expected to exceed 2025 levels and that Reality Labs' full-year operating losses should remain similar to 2025. Consensus estimates (per one source) call for 2026 EPS of approximately $32.81 and net income growth of roughly 22% next year, modestly below the ~25% growth forecast for the broader Interactive Media & Services industry.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Meta trades at a lower P/E (~22–24x TTM) than several hyperscaler peers despite comparable or superior core-advertising growth, with the wide dispersion in reported consensus price targets across sources ($640 to $886, with clusters near $785 and $828–830) reflecting genuine analyst disagreement about how to weigh AI-capex-driven margin pressure against the resolved youth-safety overhang and continued ad-business strength. The near-unanimous "Buy" analyst consensus (as many as 55 Buy ratings and zero Sell ratings in one source) is notable for a mega-cap stock and suggests broad conviction in the core thesis despite near-term earnings volatility.</p>
+  </section>
+
+  <!-- ============ BUSINESS DESCRIPTION ============ -->
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Meta Platforms, Inc., headquartered in Menlo Park, California, develops products that enable people to connect and share across mobile devices, personal computers, virtual reality (VR) headsets, and AI-powered smart glasses. The company reports through two segments: Family of Apps (FoA) — comprising Facebook, Instagram, Messenger, WhatsApp, and Threads — and Reality Labs (RL), which develops AR/VR hardware (Meta Quest headsets) and AI-powered wearables (Ray-Ban Meta smart glasses). Family of Apps generates the overwhelming majority of revenue and all of the company's operating profit through digital advertising, supplemented by a smaller and growing "Other Revenue" line (subscriptions such as Meta One, business messaging). Reality Labs remains a persistent loss-making segment, framed by management as a long-duration bet on the next computing platform (AR/VR, AI wearables) rather than a near-term profit center. Meta was founded by Mark Zuckerberg, Dustin Moskovitz, Chris Hughes, Andrew McCollum, and Eduardo Saverin in 2004 and rebranded from Facebook, Inc. in 2021.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Digital advertising volume and pricing across Facebook, Instagram, and Messenger (ad impressions +14% YoY, average price per ad +12% YoY in Q2 2026)</li>
+      <li>Daily active user growth and engagement across the app family (3.6 billion daily actives; Instagram surpassed 2 billion daily actives; Threads exceeded 500 million monthly actives)</li>
+      <li>AI-powered ad targeting and creative tools (Advantage+ and related automation products), which management credits with improving ad performance and driving "Family of Apps Other" revenue growth (+73% YoY in one quarter cited)</li>
+      <li>Emerging Reality Labs hardware/software revenue (Quest headsets, Ray-Ban Meta smart glasses) — small in absolute terms but growing (+16% YoY)</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>AI/data-center capital expenditures (Q2 2026: $31.08 billion; full-year 2026 guided to $130–$145 billion) and the resulting depreciation and amortization burden, which rose 46% YoY and is expected to climb for years given the size of the underlying PP&E base</li>
+      <li>Reality Labs operating losses (~$4.6 billion in Q2 2026 alone, ~$8.6 billion year-to-date), guided to remain similar to 2025's full-year loss level</li>
+      <li>Legal and regulatory charges — most notably the ~$18 billion youth-safety settlement (a ~$10 billion one-time Q3 2026 charge) and $2.4 billion in Q2 2026 legal charges related to ongoing litigation</li>
+      <li>Severance and workforce restructuring costs ($1.18 billion in Q2 2026 tied to a May 2026 headcount reduction; headcount fell 3% quarter-over-quarter to over 75,000)</li>
+    </ul>
+  </section>
+
+  <!-- ============ INDUSTRY OVERVIEW & COMPETITIVE POSITIONING ============ -->
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Meta competes in the global digital advertising industry, where it remains one of the two or three dominant players (alongside Google/Alphabet, with Amazon a fast-growing third) through its unmatched scale of engaged users across Facebook, Instagram, WhatsApp, and Messenger. It also competes for user attention and ad dollars against TikTok, Snapchat, and YouTube, and is simultaneously investing heavily to establish a position in AI infrastructure and next-generation computing platforms (AR/VR headsets, AI-powered smart glasses) via Reality Labs. The industry's defining current dynamic — shared with Alphabet, Amazon, and Microsoft — is a massive capital arms race in AI infrastructure, alongside intensifying regulatory and legal scrutiny (in Meta's case, particularly around platform safety for minors and antitrust concerns regarding its multi-app structure).</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low in core social-advertising given massive network effects and user-base scale (3.6 billion daily actives), though new entrants can and do emerge in adjacent attention categories (e.g., TikTok's rise in short-form video).</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Rising — AI chip suppliers (notably Nvidia) and data-center construction/energy providers hold meaningful leverage amid industry-wide AI infrastructure demand, a dynamic shared across all major hyperscalers.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate — advertisers have some ability to shift budgets across Meta, Google, Amazon, and TikTok, but Meta's targeting precision and reach maintain meaningful pricing power, evidenced by a 12% YoY increase in average price per ad even as impressions also grew.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate-to-high for user attention — TikTok, YouTube, and emerging AI-native consumer products compete directly for time spent; a durable shift in usage patterns toward AI chat interfaces could also, over the long term, divert some advertising budgets.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — direct competition with Alphabet/Google (Search, YouTube) and Amazon (retail media) for ad dollars, and with TikTok, Snapchat, and increasingly AI-native platforms for user engagement and time spent.</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Meta's moat is built on unmatched scale and network effects across its app family (3.6 billion daily active people), combined with a sophisticated, AI-enhanced ad-targeting and recommendation engine that management credits with directly improving both user engagement and advertiser return on ad spend. The breadth of its app portfolio (Facebook, Instagram, WhatsApp, Messenger, Threads) provides significant cross-platform data and engagement advantages that are difficult for single-app competitors to replicate. Reality Labs represents a longer-duration, less-proven attempt to extend this moat into a next-generation computing platform, but has not yet demonstrated a path to profitability.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: "Magnificent Seven" hyperscalers/digital advertising leaders with overlapping ad or AI infrastructure exposure. Figures are approximate and vary by source and date — verify against a single consistent data source before use.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Market Cap</th><th>P/E Ratio</th><th>1-Yr Analyst Price Target Upside</th></tr>
+      <tr><td>Meta Platforms</td><td>META</td><td>~$1.65–1.70T</td><td>~22–24x</td><td>~20–35% (source-dependent)</td></tr>
+      <tr><td>Alphabet</td><td>GOOG/GOOGL</td><td>~$4.10–4.25T</td><td>~17–25x (source-dependent)</td><td>~23–26%</td></tr>
+      <tr><td>Amazon</td><td>AMZN</td><td>~$2.35T (one source, earlier date)</td><td>~34x (one source)</td><td>~18% (one source)</td></tr>
+      <tr><td>Microsoft</td><td>MSFT</td><td>~$3.80T (one source, earlier date)</td><td>~37x (one source)</td><td>~11% (one source)</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted);">One source specifically flagged Meta as offering the highest implied upside based on average analyst price targets among the four major hyperscalers compared, despite having delivered the weakest trailing one-year stock performance of the group (down over 26% in that period per the same source) — an interesting divergence between recent price action and forward-looking analyst sentiment worth investigating further.</p>
+  </section>
+
+  <!-- ============ VALUATION ============ -->
+  <section>
+    <h2 class="section-title">Valuation</h2>
+
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified cost of capital assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — given the sharp near-term free cash flow compression (down 91% YoY in Q2 2026) from elevated capex, a DCF here is highly sensitive to the assumed capex normalization timeline and Reality Labs' loss trajectory}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>One third-party source cited Meta trading approximately 32.5% below its estimated fair value based on a discounted cash flow / analyst-forecast model, alongside a consensus price target near $828 versus a then-current price of ~$616 — not independently rebuilt or reconciled here</td></tr>
+    </table>
+
+    <h3 class="sub-title">Relative Valuation</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Meta (META)</th><th>Hyperscaler Peer Range</th></tr>
+      <tr><td>P/E (TTM)</td><td>~22–24x</td><td>~17–37x across GOOG/GOOGL, AMZN, MSFT (highly source-dependent)</td></tr>
+      <tr><td>Forward P/E (NTM)</td><td>~21.75x</td><td class="placeholder">{{Not independently sourced for direct comparison}}</td></tr>
+      <tr><td>Consensus 1-Year Price Target Upside</td><td>~20–35% (wide range)</td><td>~11–26% across MSFT/AMZN/GOOGL (source-dependent)</td></tr>
+    </table>
+
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">Meta's relative valuation discount to some hyperscaler peers, combined with a near-unanimous analyst "Buy" consensus and one of the higher implied-upside readings among the four major hyperscalers compared, suggests the market may not yet be fully crediting the resolution of the youth-safety litigation overhang or the underlying strength of the core advertising business (28% revenue growth, expanding ad pricing power). The central offsetting consideration is the sharp, multi-year step-up in depreciation and capex tied to AI infrastructure, which structurally compresses near-term free cash flow and margins regardless of core ad-business health — any DCF-based valuation should model this capex/D&A trajectory explicitly rather than relying on trailing-multiple comparisons alone.</p>
+  </section>
+
+  <!-- ============ FINANCIAL ANALYSIS ============ -->
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q2 2025</th><th>Q2 2026</th><th>FY2026 Guidance</th></tr>
+      <tr><td>Revenue</td><td>$47.52B</td><td>$60.80B (+28% YoY)</td><td class="placeholder">{{Q3 2026 guided at $61–64B; no single full-year figure provided}}</td></tr>
+      <tr><td>Total Expenses</td><td class="placeholder">{{Implied ~$27.1B based on 55% YoY growth}}</td><td>$42.0B (+55% YoY)</td><td>$165B–$169B (full year, reflecting legal charges)</td></tr>
+      <tr><td>GAAP Operating Income</td><td class="placeholder">{{Implied ~$20.4B based on 8% YoY decline}}</td><td>$18.8B (−8% YoY; 31% operating margin, down from 43%)</td><td>"Above 2025 operating income" (qualitative guidance)</td></tr>
+      <tr><td>Net Income</td><td class="placeholder">{{Implied ~$18.4B based on 14% YoY decline}}</td><td>$15.8B (−14% YoY)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Diluted EPS</td><td class="placeholder">{{Not directly sourced}}</td><td>$6.18 (missed ~$7.17–7.23 consensus by ~14%)</td><td class="placeholder">{{Not guided}}</td></tr>
+      <tr><td>Reality Labs Operating Loss</td><td class="placeholder">{{Not directly sourced for Q2 2025}}</td><td>$4.62B (on $431M revenue, +16% YoY)</td><td>"Similar to 2025" full-year loss level (qualitative guidance)</td></tr>
+      <tr><td>Capital Expenditures</td><td class="placeholder">{{Not directly sourced for Q2 2025}}</td><td>$31.08B</td><td>$130B–$145B (full year)</td></tr>
+      <tr><td>Free Cash Flow</td><td class="placeholder">{{Down 91% YoY implies a substantially higher prior-year figure}}</td><td>$784M (−91% YoY)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">Q2 2026 was the first quarter of Meta's AI-capex era in which costs grew materially faster than revenue. Of the $1.7 billion year-over-year decline in operating income, $3.58 billion was attributable to two flagged one-off items ($2.40 billion in legal charges, $1.18 billion in severance) — adding these back implies underlying operating income would have grown roughly 9% YoY to approximately $22.4 billion, though even this adjusted figure reflects a compressed ~37% operating margin versus 43% a year earlier. Depreciation and amortization rose 46% YoY, a structural (not one-time) consequence of a ~$225 billion property, plant & equipment base that will mechanically pressure margins for years regardless of near-term revenue trends. Analysts should separately track: (1) the core Family of Apps advertising business (healthy, ~28% growth, ~39% segment margin per one source), (2) one-time legal/severance charges (should not recur at this magnitude following the youth-safety settlement), and (3) the structural AI-capex/D&A trajectory (likely to persist and grow for the foreseeable future).</p>
+
+    <h3 class="sub-title">Industry-Specific Ratios</h3>
+    <table class="data-table">
+      <tr><th>Ratio</th><th>Value</th></tr>
+      <tr><td>Family daily active people (across all apps)</td><td>3.6 billion (+3% YoY)</td></tr>
+      <tr><td>Instagram daily active users</td><td>&gt;2 billion</td></tr>
+      <tr><td>Threads monthly active users</td><td>&gt;500 million</td></tr>
+      <tr><td>Average price per ad (YoY change)</td><td>+12%</td></tr>
+      <tr><td>Ad impressions (YoY change)</td><td>+14%</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT RISKS ============ -->
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+
+    <div class="risk-item">
+      <span class="risk-tag op">Operational</span>
+      <span>Reality Labs continues to post large, sustained operating losses ($4.6 billion in Q2 2026 alone, ~$8.6 billion year-to-date) with no demonstrated path to profitability; management itself guides full-year losses to remain similar to 2025 rather than improving. Workforce reductions (headcount down 3% quarter-over-quarter) also signal ongoing organizational adjustment costs.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag fin">Financial</span>
+      <span>Free cash flow collapsed 91% year-over-year in Q2 2026 as $31 billion of quarterly capex consumed nearly all operating cash flow; Meta has halted share buybacks and taken on additional debt (long-term debt of $83.7 billion, with reports of further borrowing) to fund continued AI infrastructure investment guided at $130–$145 billion for full-year 2026.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag reg">Regulatory</span>
+      <span>An active FTC antitrust case against Meta remains outstanding, with the tail risk of a required divestiture of Instagram and/or WhatsApp, though analysts view a near-term structural remedy as unlikely and any resolution could extend to 2027 with appeals. Meta also faces EU regulatory exposure (Digital Services Act, Digital Markets Act) affecting data practices and ad targeting, a dynamic shared with other large platform companies.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag legal">Legal</span>
+      <span>Meta agreed in September 2026 to pay $12.7–$18 billion over 10 years to settle youth social-media-addiction and privacy litigation involving 47 states and territories (including Cambridge Analytica-related privacy claims), taking a ~$10 billion one-time Q3 2026 charge; the company continues to face thousands of additional individual lawsuits alleging platform harm to minors, and a federal trial involving 29 state attorneys general was still in progress as of some sources reviewed, with testimony alleging internal safety tools were "designed to fail." Separately, at least one shareholder derivative action (Santa Clara County, alleging the board treated regulatory fines as a mere cost of doing business) was noted in sources reviewed.</span>
+    </div>
+
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or disclosed material weaknesses in internal controls were identified in the sources reviewed for this summary — verify directly against Meta's most recent 10-K/10-Q auditor opinion before relying on this. Sources noted "youth-related trials in the US and other markets, which could result in material losses" as an issuer-disclosed risk factor directly from Meta's own Q2 2026 10-Q cautionary language — this is a self-disclosed litigation risk, not evidence of an adverse outcome, but it warrants direct review of the full 10-Q risk-factor section.}}</p>
+  </section>
+
+  <!-- ============ ESG ============ -->
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental">
+        <h4>Environmental</h4>
+        <ul class="placeholder">
+          <li>{{ESG_ENV — Meta's rapidly growing AI/data-center capex ($130–145B guided for 2026) plausibly carries substantial energy and water-use implications; specific emissions, renewable-energy, or carbon-neutrality metrics were not independently sourced in this summary — recommend reviewing Meta's own sustainability reporting directly}}</li>
+        </ul>
+      </div>
+      <div class="esg-card social">
+        <h4>Social</h4>
+        <ul>
+          <li>Youth-safety practices are the single most prominent Social/ESG issue for Meta currently: the company agreed to a $12.7–$18 billion, 10-year settlement mandating new protections for users under 18, including two-hour daily usage limits, nighttime restrictions, disabled push notifications during school hours, and stronger age-assurance systems</li>
+          <li>Ongoing litigation and public testimony (in at least one federal trial) has alleged that internal safety tools were "designed to fail," a serious reputational and governance concern that should be weighed independently of the financial settlement terms</li>
+          <li class="placeholder">{{ESG_SOC — broader labor standards/workforce diversity data not sourced in this summary}}</li>
+        </ul>
+      </div>
+      <div class="esg-card governance">
+        <h4>Governance</h4>
+        <ul>
+          <li>Dual-class share structure concentrates voting control with CEO Mark Zuckerberg via Class B super-voting shares — a structure some investors and at least one cited shareholder derivative action have challenged in the context of the company's handling of regulatory fines and litigation</li>
+          <li>Reported insider selling by executives including CTO Andrew Bosworth and CFO Susan Li under 10b5-1 trading plans was noted in one source — routine for large-cap executives, but the pattern is worth monitoring in context</li>
+          <li class="placeholder">{{ESG_GOV — board composition and formal succession-planning detail not sourced in this summary}}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER / DISCLOSURES ============ -->
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 15, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party financial data sources (Yahoo Finance, CNBC, Robinhood, TradingView, Simply Wall St, Morningstar, eToro, company earnings materials and 10-Q filings, and various financial media) that may be delayed, inconsistent, or subject to revision. Market cap, P/E, and analyst price-target figures varied meaningfully across providers and reporting dates searched — the consensus price target alone ranged from roughly $640 to $886 depending on source and date. All figures should be independently verified against primary sources (Meta's 10-K/10-Q filings and investor relations disclosures) before being used for any actual investment decision. This is not a research report from a registered investment adviser or broker-dealer, does not constitute investment advice, and should not be relied upon as such.
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — SLB</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  .placeholder { color:#8a8fa3; font-style:italic; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">SLB (Schlumberger Limited)</h1>
+      <div class="ticker-line">SLB &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Energy / Oilfield Services &amp; Equipment</div>
+    </div>
+    <div class="report-date">September 17, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#1e7e34;">BUY</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">~$56</span></div>
+      <div class="reco-stat"><span class="label">Target Price</span><span class="value">$61.65 (avg.)</span></div>
+      <div class="reco-stat"><span class="label">Consensus</span><span class="value">Moderate Buy</span></div>
+      <div class="reco-stat"><span class="label">Implied Upside/Downside</span><span class="value">~10%</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">SLB</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Energy</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Oilfield Services &amp; Equipment</td></tr>
+      <tr><td class="k">CEO</td><td class="v">Olivier Le Peuch</td></tr>
+      <tr><td class="k">Consensus Rating</td><td class="v">Moderate Buy (23 analysts: 2 Strong Buy, 18 Buy, 2 Hold, 1 Sell)</td></tr>
+      <tr><td class="k">FY2026 Shareholder Return Target</td><td class="v">&gt;$4 billion (dividends + buybacks)</td></tr>
+      <tr><td class="k">Recent Acquisition</td><td class="v">ChampionX (production chemicals &amp; artificial lift)</td></tr>
+      <tr><td class="k">Data Center Solutions Target</td><td class="v">$2B+ annualized run rate by end of 2027</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      SLB delivered a Q2 2026 print strong enough to send shares up 9.6% on the day, with revenue of $8.97 billion (+3% sequentially) beating the $8.67 billion consensus, and adjusted EPS of $0.55 topping the $0.51 estimate by nearly 8%. The quarter marked the third consecutive quarter of sequential margin expansion, with adjusted EBITDA margin reaching approximately 24% (+83 basis points sequentially) even as the company continues integrating its ChampionX acquisition, whose production chemicals and artificial lift businesses are already contributing accretively. Digital revenue grew 9% sequentially to $697 million with a robust ~35% EBITDA margin and 15% year-over-year growth in annual recurring revenue, and management is targeting a new $2 billion-plus annualized run rate for data-center-related solutions by the end of 2027 — a genuine emerging growth vector connecting oilfield-services expertise to the broader AI/data-center infrastructure buildout. CEO Olivier Le Peuch described "broad-based international growth" and noted the market is "starting to exhibit upcycle characteristics" driven by inventory replenishment and supply diversification. With 20 of 23 covering analysts rating the stock Buy or Strong Buy, only 2 Hold and a single Sell, and management guiding to accelerating revenue growth into Q4 2026 (exceeding $10 billion, ~5% YoY), we rate SLB a BUY: broad-based international growth, successful ChampionX integration, an emerging digital/AI-adjacent growth vector, and a decisively bullish analyst consensus together support continued upside.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">SLB's Q2 2026 results showed revenue of $8.97 billion, up 3% sequentially and ahead of the $8.67 billion consensus estimate, with adjusted EPS of $0.55, beating the $0.51 estimate by roughly 7.8%. GAAP EPS was impacted by $0.03 of merger-related charges tied to the ChampionX acquisition. Adjusted EBITDA margin expanded to approximately 24%, up 83 basis points sequentially, marking the third consecutive quarter of sequential margin expansion despite ongoing cost pressures; pre-tax segment operating margin expanded 49 basis points, and the Production Systems segment margin returned above 20%. ChampionX's production chemicals and artificial lift businesses provided accretive contributions to the quarter, with integration synergies continuing to unfold. Digital revenue reached $697 million, up 9% sequentially, with a digital EBITDA margin of approximately 35% and 15% year-over-year growth in annual recurring revenue; management emphasized that "the future of our industry is Digital." CEO Olivier Le Peuch highlighted broad-based international growth and noted the market is beginning to exhibit upcycle characteristics driven by inventory replenishment and supply diversification efforts across the industry. Shares jumped 9.6% following the earnings release.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Management guided to Q3 2026 sequential revenue growth of 3–4% and Q4 2026 revenue exceeding $10 billion, representing approximately 5% year-over-year growth. Full-year 2026 capital investment is targeted at approximately $2.5 billion, with shareholder returns exceeding $4 billion via dividends and buybacks, including a minimum buyback commitment of $2.4 billion. Management separately targets a new $2 billion-plus annualized run rate for data-center-related solutions by the end of 2027.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Consensus rating is Moderate Buy across 23 analysts (2 Strong Buy, 18 Buy, 2 Hold, 1 Sell), a decisively bullish distribution relative to several other names in this report series. The average 12-month price target is $61.65, implying roughly 10% upside from a trading price near $56 as of mid-September 2026.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">SLB (formerly Schlumberger Limited) is the world's largest oilfield services company, providing technology, project management, and information solutions to oil and gas exploration and production companies globally. The company's business spans reservoir characterization, drilling, production, and digital/data solutions, and its recent acquisition of ChampionX added production chemicals and artificial lift capabilities that broaden SLB's exposure across the well lifecycle. Under CEO Olivier Le Peuch, SLB has increasingly emphasized digital and AI-enabled offerings, including a newly announced push into data-center-related solutions, positioning the company at the intersection of energy infrastructure and the broader technology/AI infrastructure buildout.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Broad-based international growth in core oilfield-services activity, described by management as showing early upcycle characteristics</li>
+      <li>Digital revenue growth (+9% sequentially, +15% YoY annual recurring revenue), supported by a high (~35%) digital EBITDA margin</li>
+      <li>ChampionX integration, contributing accretive production chemicals and artificial lift revenue and driving continued sequential margin expansion</li>
+      <li>Emerging data-center solutions business, targeting a $2 billion-plus annualized run rate by the end of 2027</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Merger-related integration charges tied to the ChampionX acquisition ($0.03/share impact to GAAP EPS in Q2 2026)</li>
+      <li>Capital investment guided at approximately $2.5 billion for full-year 2026</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">SLB competes in the global oilfield services and equipment industry, a segment distinct from the exploration &amp; production and integrated-major peers elsewhere in this report series (XOM, CVX, COP, EOG). As an oilfield-services provider, SLB's revenue is driven by E&amp;P companies' capital spending activity, which management characterizes as showing early upcycle characteristics as global oil and gas producers begin replenishing inventory and diversifying supply.</p>
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — technical expertise, global scale, and proprietary technology create substantial barriers to entry at SLB's scale.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — specialized equipment and technology inputs give certain suppliers leverage, though SLB's scale provides some negotiating power.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate — large E&amp;P customers can negotiate on price and service terms, though SLB's technology differentiation and digital offerings support pricing power.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Low-to-Moderate — few providers match SLB's global scale and technology breadth, though smaller regional oilfield-services competitors offer lower-cost alternatives for standard services.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — intense competition among major oilfield-services providers (Halliburton, Baker Hughes) for E&amp;P capital-spending budgets.</td></tr>
+    </table>
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">SLB's moat rests on unmatched global scale and technology breadth across the well lifecycle, a growing digital/AI-enabled solutions portfolio with strong recurring-revenue characteristics (~35% digital EBITDA margin), and the newly expanded ChampionX production-chemicals and artificial-lift capabilities. The emerging data-center solutions business represents a differentiated new growth avenue that few oilfield-services peers are positioned to pursue at comparable scale.</p>
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major global oilfield services and equipment companies.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>SLB</td><td>SLB</td><td>Average target $61.65; ~10% implied upside; 20 of 23 analysts rate Buy or Strong Buy</td></tr>
+      <tr><td class="placeholder">Halliburton</td><td class="placeholder">HAL</td><td class="placeholder">{{Not independently sourced for this report — primary direct oilfield-services competitor}}</td></tr>
+      <tr><td class="placeholder">Baker Hughes</td><td class="placeholder">BKR</td><td class="placeholder">{{Not independently sourced for this report — oilfield-services and equipment competitor}}</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — recommend explicit modeling of the digital/data-center solutions growth vector separately from core oilfield-services activity}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>Average sell-side price target of $61.65 (23 analysts) as of the report date</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">We rate SLB a <strong>BUY</strong>. Broad-based international growth, three consecutive quarters of sequential margin expansion, successful ChampionX integration, strong digital-revenue growth, and an emerging data-center solutions business collectively support a constructive stance, reinforced by a decisively bullish analyst rating distribution (20 of 23 Buy or Strong Buy). The primary consideration is SLB's inherent leverage to E&amp;P capital-spending cycles, which remain tied to commodity-price conditions.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q2 2026</th><th>Commentary</th></tr>
+      <tr><td>Revenue</td><td>$8.97 billion</td><td>+3% sequentially; beat $8.67B estimate</td></tr>
+      <tr><td>Adjusted EPS</td><td>$0.55</td><td>Beat $0.51 estimate by ~7.8%</td></tr>
+      <tr><td>Adjusted EBITDA Margin</td><td>~24%</td><td>+83 bps sequentially; third straight quarter of expansion</td></tr>
+      <tr><td>Digital Revenue</td><td>$697 million</td><td>+9% sequentially; ~35% EBITDA margin</td></tr>
+      <tr><td>Annual Recurring Revenue Growth</td><td>+15% YoY</td><td class="placeholder">{{Segment not separately disclosed}}</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">GAAP EPS was reduced by $0.03/share of ChampionX merger-related charges relative to the adjusted figure — a disclosed, integration-related, and reasonably expected-to-be-temporary item. Sequential margin expansion for a third consecutive quarter, achieved despite cost pressures, is a favorable earnings-quality signal indicating genuine operating leverage rather than one-time cost cuts.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>SLB's revenue is directly tied to E&amp;P customers' capital-spending activity, which is itself sensitive to commodity-price cycles; a downturn in oil and gas prices would likely reduce customer spending on oilfield services.</span></div>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>The emerging data-center solutions business is early-stage relative to its $2 billion-plus 2027 target, and execution risk remains in scaling this new growth vector.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>Ongoing ChampionX integration costs, while currently accretive, carry execution risk typical of large acquisitions.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span class="placeholder">{{Environmental and climate-related regulation affecting global E&amp;P capital spending represents an ongoing industry-wide consideration; specific current status not independently verified for this report.}}</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against SLB's most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in the sources reviewed — verify directly against SLB's 10-K/10-Q auditor opinion.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul class="placeholder"><li>{{ESG_ENV — emissions-reduction technology offerings and operational carbon-intensity targets not independently sourced in this summary}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul class="placeholder"><li>{{ESG_SOC — community relations and workforce safety program specifics not independently sourced}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul><li>Olivier Le Peuch serves as CEO</li><li class="placeholder">{{ESG_GOV — board composition and diversity not independently sourced}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 17, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (company earnings releases, financial media coverage, and sell-side analyst commentary) that may be delayed or inconsistent. All figures should be independently verified against SLB's 10-K/10-Q filings before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

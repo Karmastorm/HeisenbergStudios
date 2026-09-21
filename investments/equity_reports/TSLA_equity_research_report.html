@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — TSLA</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Tesla, Inc.</h1>
+      <div class="ticker-line">TSLA &nbsp;|&nbsp; NASDAQ &nbsp;|&nbsp; Consumer Discretionary / Automobile Manufacturers (also AI/Robotics/Energy)</div>
+    </div>
+    <div class="report-date">September 15, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#b8860b;">HOLD (speculative)</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">~$359 (Sept 15, 2026)</span></div>
+      <div class="reco-stat"><span class="label">Target Price (Street Range)</span><span class="value">$130 to $600 (extremely wide)</span></div>
+      <div class="reco-stat"><span class="label">52-Week Range</span><span class="value">$297.38 – $498.83</span></div>
+      <div class="reco-stat"><span class="label">Trailing P/E</span><span class="value">~180–360x (varies by source/date)</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">TSLA</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NASDAQ</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Consumer Discretionary</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Automobile Manufacturers (increasingly diversified into AI, robotics, and energy storage)</td></tr>
+      <tr><td class="k">Segments</td><td class="v">Automotive (vehicle sales, leasing, regulatory credits, FSD software); Energy Generation &amp; Storage; emerging Robotaxi (Cybercab) and Optimus humanoid-robot businesses</td></tr>
+      <tr><td class="k">CEO / Headquarters</td><td class="v">Elon Musk (CEO); headquartered in Austin, Texas</td></tr>
+      <tr><td class="k">FY2025 Revenue</td><td class="v">$94.8 billion, down 3% YoY — Tesla's first annual revenue decline as a public company</td></tr>
+      <tr><td class="k">FY2025 Vehicle Deliveries</td><td class="v">1.64 million units, down 8.6% YoY; BYD overtook Tesla as the world's largest EV maker in 2025 (2.26 million pure-EVs sold)</td></tr>
+      <tr><td class="k">Analyst Target Dispersion</td><td class="v">One source specifically cites a Street range spanning $130 to $600 — among the widest seen in this report series</td></tr>
+      <tr><td class="k">Float</td><td class="v placeholder">{{Not independently sourced — verify against Tesla's proxy statement}}</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Tesla is in the midst of an explicit, CEO-driven strategic pivot away from being primarily a car company toward a bet on autonomy, robotics, and AI — a transition that shows up starkly in the financials: Q2 2026 revenue beat expectations on record deliveries (~480,000 units, ~452,000 produced) and strong energy storage deployment (13.5 GWh), but operating margin collapsed to just 1.4% (from 4.1% a year earlier) as operating expenses surged 47% to $4.35 billion on AI, robotics, and R&D spending, and free cash flow turned sharply negative (roughly -$1.09 billion cited by one source). Management has committed to capex exceeding $25 billion for 2026 with further growth over the next two to three years to fund Robotaxi fleet expansion, Optimus production capacity, a semiconductor fab, solar manufacturing, and AI compute infrastructure — a scale of investment that makes near-term core-automotive profitability almost secondary to the market's view of Tesla's narrative. The robotaxi business, while showing real technical progress (380,000+ cumulative unsupervised miles across six cities with zero notable safety incidents per management), remains tiny in absolute scale — Tesla's entire Texas robotaxi fleet numbers around 42 vehicles versus Waymo's 577 registered vehicles delivering 500,000 paid rides weekly across ten cities — and faces an evolving, city-by-city regulatory patchwork with no federal framework, a risk management itself has flagged (any injury could prompt regulators to "immediately clamp down"). Optimus, meanwhile, has not yet begun meaningful production as of mid-2026, with Musk himself calling it "the hardest product to scale manufacturing that we've ever made." Given the stock's trailing P/E of 180–360x (a multiple that only makes sense if Tesla executes a dominant robotaxi network and mass humanoid-robot deployment) and a Street price-target range spanning $130 to $600 — reflecting genuinely irreconcilable views on whether this transition succeeds — this is a HOLD flagged as explicitly speculative: existing holders are making a long-duration bet on execution across three entirely new businesses simultaneously, and new money faces a valuation with essentially no margin of safety if any of those bets falter.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Tesla reported Q2 2026 results (call held July 22, 2026) that beat revenue expectations on record Q2 deliveries (~480,000 vehicles delivered, ~452,000 produced, per one source) alongside 13.5 GWh of energy storage deployments, but missed EPS estimates (one source cited a 35% EPS miss) as operating margin plunged to 1.4% from 4.1% a year earlier. Operating expenses rose 47% to $4.35 billion, driven by AI infrastructure investment, R&D on autonomous driving and robotics, and increased stock-based compensation; free cash flow was reported negative (one source cited -$1.09 billion) as capital expenditure roughly doubled. CEO Elon Musk characterized it as "a great quarter," highlighting record Q2 deliveries and Model Y as "the best-selling car of any kind in the world," with high FSD take rates in markets where the feature is approved. Active FSD subscriptions rose 56% to 1.48 million total. Robotaxi (Cybercab) production began in July/August 2026, with the service now live in Miami and operating in seven metropolitan areas; cumulative unsupervised robotaxi miles exceeded 380,000 across six cities in two states, with zero notable safety incidents reported by VP of AI Ashok Elluswamy. However, Tesla's Texas robotaxi fleet numbered only around 42 vehicles as of one source's reporting, dramatically smaller than Alphabet's Waymo (577 registered vehicles in the same state, delivering 500,000 paid rides weekly across ten U.S. cities) — illustrating a significant gap between Tesla's geofence/marketing presence and its actual operating capacity. Optimus humanoid-robot production had not yet meaningfully begun as of mid-2026; Musk cautioned that early output would be "extremely slow" given roughly 10,000 unique parts and "no existing supply chain." Management guided full-year 2026 capital expenditure to exceed $25 billion, with further growth over the next two to three years to fund Robotaxi fleet expansion, Optimus production capacity, a semiconductor fab, solar manufacturing, and AI compute infrastructure. Separately, NHTSA closed a 2022 investigation into approximately 695,000 Model 3 and Model Y vehicles regarding unexpected braking, finding low safety risk — removing one regulatory overhang — but a newer NHTSA audit of Cybercab's safety certification following the Austin launch was reported as of September 12, 2026. Shares reportedly fell as much as 14% around the July 24, 2026 earnings period, with the Street's target range subsequently described as spanning $130 to $600.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Management's own commentary indicates operating expenses will continue growing "beyond and throughout 2026, breaking previous company records" as capex scales to fund the Robotaxi, Optimus, and AI compute buildout — meaning near-term margin pressure is a deliberate, guided outcome rather than a surprise. One source's full-year 2026 consensus EPS estimate was cited at $2.15, implying a trailing P/E near 360x at a stock price in the high $300s using that figure — an extraordinarily high multiple by any conventional standard, underscoring that the stock's valuation rests almost entirely on non-automotive, longer-duration bets rather than current or near-term earnings power.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Tesla's valuation is unusually difficult to anchor using conventional metrics given the scale of the bet embedded in the stock price: one source explicitly states "the market is not pricing in today's earnings" but rather "a future where Tesla operates the dominant robotaxi network, sells millions of humanoid robots, and runs one of the largest energy storage businesses on the planet." The Street's own price targets reflect this uncertainty directly — a range of $130 to $600 is one of the widest seen across any name in this report series, and should be read as evidence of genuine, fundamental disagreement about execution probability rather than a data-quality issue.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Tesla, Inc., headquartered in Austin, Texas, designs, manufactures, and sells electric vehicles and energy generation and storage systems, and is increasingly positioning itself as an AI and robotics company. The company operates through two officially reported segments — Automotive (vehicle sales, leasing, regulatory credits, and FSD software, historically ~74% of revenue though declining in relative share) and Energy Generation &amp; Storage — but in practice now spans four distinct businesses with very different growth profiles and maturity levels: the core (declining) automotive business; the energy storage business (growing, with reportedly better unit economics than car sales); the Robotaxi/Cybercab autonomous ride-hailing business (very early-stage, ~42 vehicles in Texas as of one source); and the Optimus humanoid-robot business (pre-production as of mid-2026). CEO Elon Musk announced on the Q4 2025 earnings call the end of Model S and Model X production and the conversion of Fremont factory lines to build Optimus robots, alongside a stated vision that "the future is autonomous."</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Vehicle deliveries and Model Y demand specifically (Musk calls it "the best-selling car of any kind in the world"), though full-year deliveries declined 8.6% in 2025 amid intensifying competition, notably from BYD</li>
+      <li>FSD software subscription growth (+56% YoY to 1.48 million active subscriptions) and take rates in FSD-approved markets</li>
+      <li>Energy storage deployment growth (13.5 GWh in Q2 2026), a segment one source specifically flags as carrying better economics than vehicle sales but receiving comparatively little investor attention</li>
+      <li>European registration re-acceleration (more than doubled YoY in May 2026 to 28,610 cars, +57.2% YoY for the first five months of 2026)</li>
+      <li>Longer-term, unproven: Robotaxi network scaling and eventual Optimus humanoid-robot sales, the two businesses driving the bulk of the stock's current valuation premium per multiple sources</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Operating expenses, up 47% YoY in Q2 2026 to $4.35 billion, driven by AI infrastructure investment, autonomous-driving and robotics R&amp;D, and increased stock-based compensation, with management guiding continued growth "throughout 2026"</li>
+      <li>Capital expenditure guided to exceed $25 billion for 2026 alone (roughly doubling versus prior levels per one source), funding Robotaxi fleet expansion, Optimus production capacity, a semiconductor fab, solar manufacturing, and AI compute infrastructure — with further capex growth expected over the next two to three years</li>
+      <li>Loss of the U.S. federal EV tax credit and intensifying Chinese EV competition (specifically BYD), both cited as pressuring per-vehicle profitability</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Tesla competes simultaneously across several distinct, fast-evolving industries: electric vehicles (against BYD, which overtook Tesla as the world's largest EV maker in 2025, and a broad field of legacy automakers electrifying their lineups), autonomous ride-hailing (against Alphabet's Waymo, which is dramatically further ahead in actual operating scale — 577 registered vehicles and 500,000 weekly paid rides in Texas alone versus Tesla's ~42-vehicle fleet in the same state — and Baidu's Apollo Go), humanoid robotics (an emerging, largely unproven category with few direct public-market comparables), and energy storage (against a range of utility-scale and residential storage competitors). One source specifically frames Tesla's stock swings as a product of conflating three businesses that "run on completely different clocks" — quarterly auto and energy results versus the much longer, non-quarterly "Robot Clock" governing Robotaxi and Optimus progress.</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low in autonomous-vehicle technology (extreme R&amp;D and safety-validation barriers); moderate-to-rising in core EVs, where BYD and other Chinese manufacturers have demonstrated the ability to scale quickly and take market share.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Rising for AI compute/chip inputs supporting the autonomy and robotics buildout, a dynamic shared with the hyperscalers in this report series; Optimus specifically has "no existing supply chain" per Musk, implying Tesla must build much of it from scratch.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Rising in core EVs as competition intensifies and the U.S. federal EV tax credit has lapsed, pressuring per-vehicle economics; low for early-stage Robotaxi/Optimus given limited current alternatives, though this will likely shift as those markets mature.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>High and rising in core EVs (BYD and other competitors); low-to-moderate in autonomous ride-hailing given the nascent stage of the entire category, though Waymo's substantially larger operating scale represents a direct, currently more credible alternative.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High across every business line Tesla operates — BYD and legacy automakers in EVs; Waymo (Alphabet) and Baidu's Apollo Go in robotaxis; an emerging and not-yet-clearly-defined competitive field in humanoid robotics.</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Tesla's moat historically rested on EV manufacturing scale, brand, and a direct-sales/vertically-integrated model, but this advantage has visibly eroded as BYD overtook Tesla in global EV sales and Tesla posted its first-ever annual revenue decline in 2025. The company's forward-looking moat thesis instead rests on FSD/autonomy software accumulated driving data and its Dojo/AI compute investments, positioning it (in the bull case) to eventually leapfrog competitors in autonomous capability — though Waymo's current, dramatically larger real-world robotaxi operating scale is a direct, currently-more-credible counterpoint to this thesis that should not be understated.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: EV and autonomous-vehicle competitors. Figures approximate; verify against a current source.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Notes</th></tr>
+      <tr><td>Tesla (TSLA)</td><td>Trailing P/E 180–360x; FY2025 revenue declined 3% YoY (first-ever annual decline); Texas robotaxi fleet ~42 vehicles</td></tr>
+      <tr><td>BYD</td><td>Overtook Tesla as world's largest EV maker in 2025 (2.26M pure-EVs sold vs. Tesla's 1.64M deliveries); not independently researched in this series</td></tr>
+      <tr><td>Waymo (Alphabet)</td><td>577 registered robotaxi vehicles in Texas alone, delivering 500,000 paid rides weekly across ten U.S. cities — dramatically ahead of Tesla's robotaxi operating scale; see separate GOOG report</td></tr>
+      <tr><td>General Motors (GM)</td><td>See separate GM report in this series (Consumer Discretionary batch)</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions; Tesla's business-model uncertainty likely warrants a materially higher discount rate than a mature automaker}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled — the entire valuation question is whether to assume Tesla's terminal state resembles a mature automaker (implying a much lower valuation) or a dominant autonomy/robotics platform (implying the current multiple)}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — recommend explicit, separate scenario modeling for each of Tesla's four distinct businesses (auto, energy, robotaxi, Optimus) given their entirely different maturity and risk profiles}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td class="placeholder">{{No single DCF estimate is meaningful given the scale of disagreement reflected in the $130–$600 Street target range}}</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">Tesla is not meaningfully valuable using conventional automotive-sector multiples — at 180–360x trailing earnings, the stock is priced almost entirely on non-automotive optionality (Robotaxi, Optimus, AI). The extraordinarily wide Street target range ($130 to $600) is the single most informative valuation data point available: it reflects genuine, fundamental disagreement among professional analysts about execution probability across multiple unproven businesses simultaneously, not a data-quality or timing issue. Any position in Tesla should be sized with this range — rather than a single point estimate — explicitly in mind.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q2 2025</th><th>Q2 2026</th><th>Notes</th></tr>
+      <tr><td>Vehicle Deliveries</td><td class="placeholder">{{Below Q2 2026 level}}</td><td>~480,000 (record Q2)</td><td>~452,000 produced</td></tr>
+      <tr><td>Operating Margin</td><td>4.1%</td><td>1.4%</td><td>Sharp decline on rising opex</td></tr>
+      <tr><td>Operating Expenses</td><td class="placeholder">{{Implied ~$2.96B based on 47% YoY growth}}</td><td>$4.35B (+47% YoY)</td><td>AI, R&amp;D, and stock-based comp driven</td></tr>
+      <tr><td>Free Cash Flow</td><td class="placeholder">{{Positive in prior year}}</td><td>~-$1.09B (one source)</td><td>Capex roughly doubled per one source</td></tr>
+      <tr><td>Active FSD Subscriptions</td><td class="placeholder">{{Implied ~949,000 based on 56% YoY growth}}</td><td>1.48 million (+56% YoY)</td><td class="placeholder">{{Not fully driverless — requires active human supervision}}</td></tr>
+      <tr><td>Energy Storage Deployments</td><td class="placeholder">{{Not directly sourced}}</td><td>13.5 GWh</td><td class="placeholder">{{Segment cited as having better economics than car sales}}</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">Tesla's operating-margin collapse (4.1% to 1.4%) and negative free cash flow reflect a deliberate, management-guided strategic choice to prioritize long-duration AI/robotics/autonomy investment over near-term automotive profitability — a genuinely different earnings-quality dynamic than most names in this report series, where margin pressure is typically framed as temporary. Analysts should model Tesla's core automotive economics (increasingly under pressure from competition and the lost EV tax credit) entirely separately from the Robotaxi/Optimus/AI investment case, since blending them into a single "Tesla margin" trend obscures the actual driver of results.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>Robotaxi operates under a fragmented, city-by-city regulatory framework with "not a federal framework" per Tesla's own executives; management has explicitly acknowledged that any single injury incident could lead regulators to "immediately clamp down." Optimus has not yet achieved meaningful production, with Musk himself calling it Tesla's hardest-ever manufacturing scale-up challenge with "no existing supply chain." A newer NHTSA audit of Cybercab's safety certification following the Austin launch was reported as of September 12, 2026.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>Operating margin has collapsed to 1.4% and free cash flow has turned negative amid a capex commitment exceeding $25 billion for 2026 alone, with further growth guided for the next two to three years — a level of sustained cash consumption that requires continued capital-markets access or eventual business-line profitability to sustain.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span>Loss of the U.S. federal EV tax credit pressures core vehicle economics. NHTSA closed one long-running investigation (2022 unexpected-braking probe) favorably in 2026, but opened a new audit of Cybercab's safety certification — illustrating that regulatory scrutiny is an ongoing, evolving feature of Tesla's autonomy push specifically, not a resolved matter.</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No additional specific major litigation beyond the regulatory matters noted above was identified in the sources reviewed for this summary — verify against Tesla's most recent 10-K legal proceedings disclosure, and note that CEO compensation-related shareholder litigation has been a recurring historical matter for Tesla not independently re-verified in this summary.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in sources reviewed — verify directly against Tesla's 10-K/10-Q auditor opinion. CEO compensation structure (a subject of prior high-profile litigation and shareholder votes) was referenced only in passing in sources reviewed and should be independently checked against Tesla's proxy statement given the search request context.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul><li>Tesla's core mission (EVs, energy storage, solar) is explicitly environmental in nature, though the company's growing AI compute infrastructure buildout (supporting Robotaxi/Optimus) plausibly carries its own, separate energy-use implications not independently detailed in sources reviewed</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul class="placeholder"><li>{{ESG_SOC — Robotaxi safety track record (380,000+ unsupervised miles, zero notable incidents per management) is a relevant, self-reported social/safety metric; independent, third-party verification was not found in sources reviewed}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul><li>CEO Elon Musk's simultaneous leadership of Tesla, SpaceX, and other ventures (including reported discussion of a potential Tesla-SpaceX merger per one source's headline) represents an ongoing governance and attention-allocation consideration frequently raised by analysts and investors</li><li class="placeholder">{{ESG_GOV — board composition and detailed executive compensation structure not independently sourced in this summary}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 15, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (Webull, CNBC, IndMoney, TradingKey, StocksToTrade, Phemex, TECHi, and various financial media) that may be delayed or inconsistent. Tesla's Street price-target range ($130–$600) is unusually wide and reflects genuine analyst disagreement rather than a data-quality issue. All figures should be independently verified against Tesla's 10-K/10-Q filings before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

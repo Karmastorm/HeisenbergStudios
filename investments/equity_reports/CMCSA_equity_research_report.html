@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — CMCSA</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Comcast Corporation</h1>
+      <div class="ticker-line">CMCSA &nbsp;|&nbsp; NASDAQ &nbsp;|&nbsp; Communication Services / Telecom Services &amp; Media</div>
+    </div>
+    <div class="report-date">September 15, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#b8860b;">HOLD</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">~$24.50</span></div>
+      <div class="reco-stat"><span class="label">Target Price (Consensus)</span><span class="value">~$30–$43 (wide range)</span></div>
+      <div class="reco-stat"><span class="label">Dividend Yield</span><span class="value">~5.4–5.8%</span></div>
+      <div class="reco-stat"><span class="label">52-Week Range</span><span class="value">$21.28 – $32.86</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">CMCSA</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NASDAQ</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Communication Services</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Telecom Services / Diversified Media</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$21.28 – $32.86</td></tr>
+      <tr><td class="k">Analyst Consensus</td><td class="v">"Hold" (28 analysts, one source); price targets across sources ranged from ~$30 to ~$43</td></tr>
+      <tr><td class="k">Dividend</td><td class="v">$0.33/quarter declared for Q4 2026; trailing yield ~5.4–5.8% across sources/dates</td></tr>
+      <tr><td class="k">Total Debt</td><td class="v">~$90.4 billion (as of June 30, 2026)</td></tr>
+      <tr><td class="k">Corporate Actions</td><td class="v">Completed spin-off of Versant Media Group (cable networks + digital properties) January 2, 2026; announced plan in June 2026 to further spin off NBCUniversal and Sky into an independent company; sold Sky Germany operations May 31, 2026</td></tr>
+      <tr><td class="k">Segments (post-Versant)</td><td class="v">Residential Connectivity &amp; Platforms, Business Services Connectivity, Media, Studios, Theme Parks</td></tr>
+      <tr><td class="k">Float</td><td class="v placeholder">{{Not independently sourced — verify against Comcast's proxy statement}}</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Comcast is in the midst of the most significant corporate restructuring in its history: having completed the spin-off of Versant Media Group (cable networks) in January 2026, the company announced in June 2026 a further plan to spin off NBCUniversal and Sky into an independent entity — leaving a "new Comcast" focused primarily on broadband/wireless connectivity, business services, and theme parks. Operationally, the picture is mixed but showing pockets of genuine improvement: Peacock reached profitability for the first time in Q2 2026 ($189 million of EBITDA on 48 million subscribers, +2 million in the quarter), and wireless net line additions hit a record 448,000, but broadband subscriber losses persist (167,000 lost in Q2, though improved 34,000 year-over-year) amid intensifying fixed-wireless and fiber competition, and broadband ARPU fell 3.8%. Total company net income fell 68.3% year-over-year in Q2 2026 and Adjusted EBITDA fell 13.4% — sharp declines that appear tied substantially to portfolio-restructuring effects (the Versant spin-off removing a profitable segment from comparison) rather than a uniform operating collapse, but which complicate simple year-over-year analysis. Shares have fallen sharply in 2026 (from a 52-week high of $32.86 to around $24.50, including an unexplained 8% single-day drop alongside peer Charter on apparent broadband-repricing concerns with no company-specific news cited). Given the combination of a still-unresolved major spin-off, persistent core-broadband competitive pressure, and a stock that the market and Morningstar both seem to view with real skepticism (a "Hold" consensus despite a demonstrably above-average dividend yield), this is a HOLD: income-oriented investors are being paid well to wait, but the catalysts for a re-rating (successful NBCUniversal/Sky separation, broadband stabilization) remain unproven.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Comcast reported Q2 2026 revenue of $29.9 billion (down 1.2% YoY), net income attributable to Comcast of $3.5 billion (down 68.3% YoY), and Adjusted EBITDA of $8.9 billion (down 13.4% YoY) — though these year-over-year comparisons are complicated by the completed Versant spin-off and other portfolio changes. Broadband subscriber losses were 167,000 for the quarter, an improvement of 34,000 year-over-year, while wireless net line additions reached a record 448,000. Peacock added 2 million paid subscribers to reach 48 million total and generated $189 million of EBITDA — its first profitable quarter — aided by major live events (the earnings call specifically credited World Cup-related engagement). Media segment revenue rose 25% (driven by Peacock), Studios revenue rose 25% (driven by recent theatrical releases including "The Odyssey" and "Super Mario Galaxy"), and Theme Parks revenue rose 3% while EBITDA fell 5% due to specific pressures in Osaka. Broadband ARPU declined 3.8% due to competitive pressure and strategic pricing adjustments, and Theme Parks softness was also noted in Orlando, tied to weaker consumer sentiment and higher travel costs. Corporately, Comcast completed the spin-off of Versant Media Group (cable networks and digital properties) in a tax-free transaction on January 2, 2026, sold its Sky Germany operations on May 31, 2026, and announced a plan in June 2026 to spin off NBCUniversal and Sky into a separate, independent company — a major further step in separating Comcast's connectivity business from its media/content operations. Total debt stood at $90.4 billion as of June 30, 2026. Most recently, Comcast shares fell approximately 8% in a single session alongside a 6% decline in Charter and a 3% decline in T-Mobile, with no specific company filings or analyst actions identified as the cause — one source speculated a broader "broadband repricing" dynamic may be underway across the sector. Options activity has also shown heavy, directionally bearish put volume in Comcast shares per one source. Separately, a now-defunct owner of regional sports networks (Main Street Sports) has filed lawsuits against Comcast and Charter Communications, and Netflix has reportedly discussed adding Peacock and Fox One content to its platform as part of a broader industry bundling trend.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Given the ongoing, major corporate restructuring (the pending NBCUniversal/Sky spin-off), clean forward guidance for "Comcast" as a single consolidated entity is of limited durability — the company's own capital-allocation and reporting structure is expected to change materially once that separation completes. In the interim, management's stated priorities include continued Project Genesis network upgrades (broadband infrastructure investment) and sustaining Peacock's newly achieved profitability, with the broadband subscriber trajectory and wireless growth rate the key near-term operating metrics to watch.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Consensus price targets varied enormously across sources reviewed — from $30.08 (implying ~23% upside, "Hold" consensus per one source) to $42.69 (implying ~74% upside per another, considerably more bullish source) — a dispersion that likely reflects both genuine analyst disagreement about the pending spin-off's value-creation potential and differing snapshot dates across a volatile 2026 for the stock. Comcast's dividend yield (5.4–5.8% across sources) is well above the broader market and most peers in this report series, positioning it as a income-oriented rather than growth-oriented holding pending resolution of its ongoing corporate restructuring.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Comcast Corporation is a global media and technology company operating through Residential Connectivity &amp; Platforms (broadband, wireless, video, and Xfinity-branded services for households), Business Services Connectivity (networking and internet solutions for businesses), Media (NBC and Telemundo networks, the Peacock streaming service, and international cable channels), Studios (NBCUniversal film and television production/distribution), and Theme Parks (Universal Studios resorts and attractions in the U.S. and internationally, including the May 2025-opened Epic Universe). The company has been undergoing a significant, multi-stage portfolio restructuring: it completed the spin-off of Versant Media Group (a portfolio of cable television networks and digital properties) as a tax-free transaction in January 2026, and in June 2026 announced plans to further spin off NBCUniversal and Sky into an independent company — a structural shift that would leave the remaining "Comcast" more narrowly focused on connectivity (broadband, wireless, business services) and theme parks.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Wireless line growth (record 448,000 net additions in Q2 2026) partially offsetting persistent, though improving, broadband subscriber losses</li>
+      <li>Peacock subscriber growth and newly achieved profitability (48 million subscribers, first profitable quarter in Q2 2026), aided by major sports/live events (World Cup, NBA)</li>
+      <li>Theme Parks revenue growth, including the Epic Universe opening (May 2025) contributing to Adjusted EBITDA</li>
+      <li>Studios revenue from theatrical releases (the "Wicked" franchise grossed $1.3 billion worldwide, becoming the top-grossing Broadway-to-feature-film adaptation ever, per the company's own proxy statement)</li>
+      <li>Business Services Connectivity growth, part of overall connectivity revenue growth of 4.2% to $46.0 billion (per the FY2025 proxy statement)</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Broadband ARPU pressure (down 3.8% in Q2 2026) from competitive pricing adjustments made to defend market share against fixed-wireless and fiber competitors</li>
+      <li>Peacock content and marketing investment, though the segment has now turned EBITDA-positive</li>
+      <li>Theme Parks cost pressures specific to certain markets (Osaka EBITDA decline despite revenue growth; Orlando softness tied to consumer sentiment and travel costs)</li>
+      <li>Costs and complexity associated with the ongoing multi-stage spin-off process (Versant completed; NBCUniversal/Sky pending)</li>
+      <li>Network infrastructure investment (Project Genesis upgrades) aimed at improving broadband competitiveness</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Comcast competes in two increasingly distinct industries that its own corporate restructuring is explicitly separating: broadband/wireless telecom (against Charter, AT&amp;T, Verizon, T-Mobile, and a growing set of fixed-wireless-access competitors) and media/entertainment (against Disney, Netflix, and the pending Paramount Skydance/Warner Bros. Discovery combination). Morningstar's assessment is notably cautious on both fronts: it describes Comcast's core cable business as facing "increased pressure from fixed-wireless offerings" and fiber expansion, calling the adjustment "painful" with no expected near-term turnaround, while also stating it is "not optimistic about NBC and Peacock" — though it views the planned spin-off as an opportunity to combine the media business with a larger scaled player. This dual skepticism from a major independent research provider is a meaningful data point for the overall thesis.</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low in broadband infrastructure (extremely high capital costs), but fixed-wireless access from T-Mobile and Verizon functions as a meaningful new-entrant-like substitute without requiring wired infrastructure buildout.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — content and sports-rights costs (NBA, other major sports properties) are a meaningful and rising input cost for the Media segment.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Rising — broadband customers increasingly have credible fixed-wireless and fiber alternatives, evidenced by declining ARPU and persistent (though improving) subscriber losses; Comcast's own reputation for customer service is described as "poor at best" by one source, a competitive disadvantage.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>High and actively eroding Comcast's core cable/broadband business — fixed-wireless access has "proven a viable broadband alternative" per Morningstar, a structural rather than cyclical challenge.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — Charter Communications is Comcast's most direct broadband/cable peer (and has shown correlated recent stock declines); T-Mobile and Verizon compete via fixed wireless; Disney, Netflix, and a potentially combined Paramount-WBD entity compete in media/streaming.</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Comcast's moat in its core connectivity business rests on its extensive existing cable network infrastructure, which provides a platform to meet growing bandwidth demand at relatively low incremental cost — supporting Morningstar's view that the business "should remain a reliable cash generator" even amid competitive pressure. However, this moat is narrower than in the past given the credible fixed-wireless substitute now available to consumers, and the company's media moat (NBCUniversal, Peacock) is viewed with more skepticism, motivating the planned spin-off as a means of unlocking scale through combination with another media player rather than continuing to operate it within the connectivity-focused parent.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major U.S. broadband/cable and media companies. Figures approximate; verify against a current source.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>Comcast</td><td>CMCSA</td><td>Dividend yield ~5.4–5.8%; undergoing major NBCUniversal/Sky spin-off process</td></tr>
+      <tr><td>Charter Communications</td><td>CHTR</td><td>Closest direct cable/broadband peer; showed correlated ~6% decline alongside CMCSA's ~8% drop in the same recent session, with no clear company-specific catalyst identified</td></tr>
+      <tr><td>Verizon</td><td>VZ</td><td>See separate VZ research report in this series — also facing broadband/wireless competitive dynamics</td></tr>
+      <tr><td>T-Mobile</td><td>TMUS</td><td>See separate TMUS research report in this series — fixed-wireless competitor to Comcast's core broadband business</td></tr>
+      <tr><td>Disney</td><td>DIS</td><td>See separate DIS research report in this series — media/streaming competitor</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled — highly sensitive to the terms and value-creation outcome of the pending NBCUniversal/Sky separation}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — recommend separate sum-of-the-parts valuation for the connectivity/theme-parks business versus the to-be-spun-off media business}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td class="placeholder">{{Morningstar's fair value estimate was referenced but not numerically disclosed in sources reviewed; described only as trading at a premium to that estimate}}</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">Comcast's valuation is best approached as a sum-of-the-parts question given the pending NBCUniversal/Sky separation: the remaining connectivity/theme-parks business is a lower-growth, high-cash-flow, high-dividend-yield holding facing genuine structural broadband competition, while the media business being spun off carries its own separate (and per Morningstar, more uncertain) value depending on whether it is combined with a larger scaled media player post-separation. The wide price-target dispersion across sources ($30 to $43) likely reflects different assumptions about how successfully this separation unlocks value versus how much the core broadband business continues to erode.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q2 2025</th><th>Q2 2026</th><th>Notes</th></tr>
+      <tr><td>Revenue</td><td class="placeholder">{{Implied ~$30.3B based on -1.2% YoY}}</td><td>$29.9B (-1.2% YoY)</td><td>Comparisons complicated by Versant spin-off</td></tr>
+      <tr><td>Net Income (attributable)</td><td class="placeholder">{{Implied ~$11.0B based on -68.3% YoY}}</td><td>$3.5B (-68.3% YoY)</td><td>Large decline likely reflects portfolio/restructuring effects, not purely operating deterioration</td></tr>
+      <tr><td>Adjusted EBITDA</td><td class="placeholder">{{Implied ~$10.3B based on -13.4% YoY}}</td><td>$8.9B (-13.4% YoY)</td><td class="placeholder">{{Not fully reconciled to Versant spin-off impact in sources reviewed}}</td></tr>
+      <tr><td>Broadband Net Adds</td><td class="placeholder">{{Loss of ~201,000 based on 34,000 YoY improvement}}</td><td>Loss of 167,000 (improved 34,000 YoY)</td><td class="placeholder">{{Continued losses, but improving trend}}</td></tr>
+      <tr><td>Wireless Net Line Adds</td><td class="placeholder">{{Not directly sourced}}</td><td>448,000 (record)</td><td class="placeholder">{{Best quarter on record}}</td></tr>
+      <tr><td>Peacock EBITDA</td><td class="placeholder">{{Negative (loss) in prior year}}</td><td>+$189M (first profitable quarter)</td><td>48 million paid subscribers (+2M in quarter)</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">The sharp year-over-year declines in net income (-68.3%) and Adjusted EBITDA (-13.4%) warrant caution before being read as pure operating deterioration — they very plausibly reflect, at least in significant part, the removal of the Versant business from the comparable base following its January 2026 spin-off, alongside the Sky Germany divestiture. Sources reviewed did not provide a clean, itemized bridge separating restructuring/divestiture effects from underlying same-store operating performance; a rigorous analysis should obtain Comcast's own pro forma comparable-basis figures from its 10-Q rather than relying on unadjusted headline year-over-year percentages.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>Broadband subscriber losses persist despite improvement, and ARPU is declining (-3.8% in Q2 2026) amid structural fixed-wireless and fiber competition that Morningstar views as unlikely to reverse near-term. Theme Parks softness in specific markets (Osaka, Orlando) reflects both cost pressure and consumer-sentiment sensitivity.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>Total debt of $90.4 billion is substantial, and the ongoing multi-stage spin-off process (Versant completed, NBCUniversal/Sky pending) introduces execution and value-allocation uncertainty. A recent, unexplained ~8% single-day share decline (alongside peer Charter) with no identified company-specific catalyst suggests elevated stock-price volatility and possible broader sector repricing risk.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span class="placeholder">{{No specific major regulatory risk beyond general telecom/media industry considerations was identified in the sources reviewed for this summary.}}</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span>Main Street Sports, a now-defunct owner of regional sports networks, has filed lawsuits against Comcast and Charter Communications; details of the claims and potential exposure were not independently sourced in this summary and should be checked directly against Comcast's 10-K legal proceedings disclosure.</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in sources reviewed — verify directly against Comcast's 10-K/10-Q auditor opinion. GuruFocus flagged "2 Warning Signs" for CMCSA in one source without specifying what they are — worth investigating directly.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul><li>One source referenced Comcast making "significant investments in broadband and sustainability" without further detail — recommend reviewing Comcast's own sustainability disclosures directly</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul><li>Comcast's reputation for customer service is described as "poor at best" by Morningstar — a notable, specifically-flagged customer-experience/social consideration for a consumer-facing utility-like service</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul><li>The company's ongoing, multi-stage portfolio simplification (Versant spin-off completed; NBCUniversal/Sky spin-off announced) reflects an active capital-allocation and corporate-structure strategy shift</li><li class="placeholder">{{ESG_GOV — board composition and executive compensation not sourced beyond the above}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 15, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (SEC filings/proxy statement, Yahoo Finance, GuruFocus, Motley Fool, Robinhood, StockAnalysis.com, Morningstar, TradingKey, and various financial media) that may be delayed or inconsistent. Net income and EBITDA year-over-year comparisons are complicated by the Versant spin-off and other portfolio changes and were not independently reconciled in this summary. All figures should be independently verified against Comcast's 10-K/10-Q filings before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

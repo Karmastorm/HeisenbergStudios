@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — Public Service Enterprise Group Inc. (PEG)</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--text);
+    background: #ffffff;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+  }
+  .report-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 48px;
+  }
+  .report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+  }
+  .firm-name {
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .company-title {
+    font-size: 26px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .reco-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--gray-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+  }
+  .reco-main .label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+  }
+  .reco-main .value {
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .reco-stats {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 28px;
+  }
+  .reco-stats div .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+  .reco-stats div .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+  }
+  h2.section-title {
+    font-size: 18px;
+    color: var(--navy);
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 6px;
+    margin-top: 40px;
+    margin-bottom: 16px;
+  }
+  h3 {
+    font-size: 15px;
+    color: var(--navy);
+    margin-top: 22px;
+    margin-bottom: 8px;
+  }
+  table.basic-info, table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+  table.basic-info td, table.basic-info th,
+  table.data-table td, table.data-table th {
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    text-align: left;
+  }
+  table.basic-info th, table.data-table th {
+    background: var(--gray-bg);
+    color: var(--navy);
+    font-weight: bold;
+  }
+  table.basic-info td:first-child {
+    font-weight: bold;
+    color: var(--muted);
+    width: 32%;
+  }
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 14.5px;
+  }
+  ul {
+    margin-top: 4px;
+    padding-left: 22px;
+  }
+  li {
+    margin-bottom: 6px;
+  }
+  .peer-note {
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 8px;
+  }
+  .risk-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+  }
+  .risk-item .risk-tag {
+    display: inline-block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: bold;
+    color: #fff;
+    background: var(--muted);
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .esg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 12px;
+  }
+  .esg-card {
+    background: var(--gray-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+  .esg-card h4 {
+    margin-top: 0;
+    color: var(--navy);
+    font-size: 14px;
+  }
+  .placeholder {
+    color: #8a8fa3;
+    font-style: italic;
+  }
+  footer {
+    margin-top: 48px;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .analyst-line {
+    margin-bottom: 6px;
+  }
+  p { font-size: 14.5px; }
+</style>
+</head>
+<body>
+<div class="report-container">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Public Service Enterprise Group Incorporated</h1>
+      <div class="ticker-line">NYSE: PEG &nbsp;|&nbsp; Sector: Utilities &nbsp;|&nbsp; Industry: Regulated Electric</div>
+    </div>
+    <div class="report-date">
+      Report Date: September 19, 2026<br>
+      Analyst: Equity Research Desk
+    </div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main">
+      <div class="label">Recommendation</div>
+      <div class="value" style="color:#b8860b;">HOLD</div>
+    </div>
+    <div class="reco-stats">
+      <div>
+        <div class="label">Current Price</div>
+        <div class="value">$69.77</div>
+      </div>
+      <div>
+        <div class="label">Target Price</div>
+        <div class="value">$85.47</div>
+      </div>
+      <div>
+        <div class="label">Market Cap</div>
+        <div class="value">$34.77B</div>
+      </div>
+      <div>
+        <div class="label">Implied Upside/Downside</div>
+        <div class="value" style="color:var(--green);">+22.50%</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Basic Information</h2>
+  <table class="basic-info">
+    <tr><td>Ticker</td><td>PEG (NYSE)</td></tr>
+    <tr><td>Exchange</td><td>New York Stock Exchange</td></tr>
+    <tr><td>Sector</td><td>Utilities</td></tr>
+    <tr><td>Industry</td><td>Regulated Electric</td></tr>
+    <tr><td>52-Week Range</td><td>$69.72 – $87.63</td></tr>
+    <tr><td>Average Daily Volume</td><td>7,513,320 shares</td></tr>
+    <tr><td>Float</td><td class="placeholder">{{FLOAT_SHARES}}</td></tr>
+    <tr><td>Shares Outstanding</td><td>498.42 million</td></tr>
+    <tr><td>Major Shareholders</td><td class="placeholder">{{MAJOR_SHAREHOLDERS — institutional ownership detail not independently verified; primarily held by index funds and institutional asset managers (e.g., Vanguard, BlackRock, State Street per typical large-cap utility ownership patterns)}}</td></tr>
+  </table>
+
+  <h2 class="section-title">Investment Summary</h2>
+  <div class="thesis-box">
+    <strong>Investment Thesis:</strong> Public Service Enterprise Group is a New Jersey-based utility holding company operating primarily through PSE&amp;G, a regulated electric and gas transmission and distribution utility, alongside PSEG Power's nuclear generation fleet. We rate the stock HOLD. The 22-analyst rating distribution has Hold as the clear largest bucket (14 of 22, 63.6%), substantially exceeding the source's headline "Buy" consensus label; we weigh the full distribution over the headline label per our established methodology. The average price target of $85.47 implies +22.50% upside from the current $69.77, but the dominant Hold weighting tempers conviction. We flag a likely TTM data-aggregation error in third-party financial data (see Earnings Quality Notes).
+  </div>
+
+  <h3>Recent Developments</h3>
+  <p>PEG reported FY2025 revenue of $12,168 million, up 18.25% year-over-year from $10,290 million in FY2024, with net income growing 19.13% to $2,111 million from $1,772 million and EPS rising 19.21% from $3.54 to $4.22. Operating margin expanded from 22.87% to 24.49%. The company continues to benefit from strong electricity demand growth in its New Jersey service territory, including data-center-related demand, alongside the stable, carbon-free output of its nuclear generation fleet at PSEG Power.</p>
+
+  <h3>Earnings Forecast</h3>
+  <p>We expect continued mid-to-high single-digit EPS growth driven by regulated rate-base investment at PSE&amp;G and continued strong performance from PSEG Power's nuclear fleet, supported by growing electricity demand from data centers and electrification in New Jersey and the broader PJM market.</p>
+
+  <h3>Valuation Summary</h3>
+  <p>At $69.77, PEG trades at a P/E of 17.36x, reasonable given the company's above-average FY2025 earnings growth. The stock trades near the low end of its 52-week range of $69.72–$87.63, and while the average price target of $85.47 implies substantial upside, the Hold-majority analyst distribution tempers full conviction.</p>
+
+  <h2 class="section-title">Business Description</h2>
+  <p>Public Service Enterprise Group Incorporated is a New Jersey-based diversified energy holding company operating primarily through Public Service Electric and Gas Company (PSE&amp;G), a regulated electric and gas transmission and distribution utility serving approximately 2.4 million electric and 1.9 million gas customers in New Jersey, and PSEG Power, which operates a nuclear generation fleet and other competitive generation assets. The company has increasingly focused its growth strategy on PSE&amp;G's regulated rate base and the stable, carbon-free output of its nuclear fleet.</p>
+  <h3>Key Revenue Drivers</h3>
+  <ul>
+    <li>Regulated electric and gas transmission and distribution revenue from PSE&amp;G, driven by customer growth, rate base expansion, and approved rate case outcomes.</li>
+    <li>Nuclear generation output from PSEG Power, benefiting from PJM capacity market pricing and power purchase agreements.</li>
+    <li>Growing electricity demand in New Jersey, including data-center-related load growth in the broader PJM market.</li>
+    <li>Grid modernization and reliability investment supporting rate-base growth.</li>
+  </ul>
+  <h3>Key Expense Drivers</h3>
+  <ul>
+    <li>Capital expenditure on grid modernization, transmission infrastructure, and nuclear plant maintenance and life extension.</li>
+    <li>Fuel and nuclear operating costs for the PSEG Power generation fleet.</li>
+    <li>Interest expense on debt used to fund the company's capital investment program.</li>
+    <li>Operations and maintenance costs across the regulated utility and nuclear generation businesses.</li>
+  </ul>
+
+  <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+  <p>PEG operates within the PJM Interconnection footprint, a region increasingly characterized by surging electricity demand from data centers and industrial reshoring, layered on historically slow load growth. PSEG's regulated transmission and distribution business benefits from stable, rate-regulated returns, while its nuclear generation fleet provides carbon-free, dispatchable capacity increasingly valued by data-center and hyperscale customers seeking reliable, low-carbon power.</p>
+  <h3>Porter's Five Forces</h3>
+  <table class="data-table">
+    <tr><th>Force</th><th>Assessment</th></tr>
+    <tr><td>Threat of New Entrants</td><td>Low (regulated T&amp;D) / Low-to-Moderate (nuclear generation, given very high capital and regulatory barriers to new nuclear).</td></tr>
+    <tr><td>Bargaining Power of Suppliers</td><td>Moderate — nuclear fuel and construction/equipment suppliers have some pricing power.</td></tr>
+    <tr><td>Bargaining Power of Buyers</td><td>Low (regulated ratepayers) / Rising (large data-center customers seeking long-term nuclear-backed power purchase agreements).</td></tr>
+    <tr><td>Threat of Substitutes</td><td>Low — nuclear generation's carbon-free, baseload characteristics have few practical substitutes for reliability-critical, low-carbon demand.</td></tr>
+    <tr><td>Competitive Rivalry</td><td>Low (regulated T&amp;D) / Moderate (PJM capacity and energy markets, where PSEG Power competes with other generators).</td></tr>
+  </table>
+  <h3>Competitive Advantage</h3>
+  <p>PSEG's combination of a stable, regulated New Jersey transmission and distribution utility with a well-run nuclear generation fleet provides both earnings predictability and exposure to the growing premium for carbon-free, dispatchable power sought by data-center and hyperscale customers within the PJM market.</p>
+  <div class="peer-note">Peer companies shown for comparative context; figures sourced from public financial data as of report date.</div>
+  <table class="data-table">
+    <tr><th>Company</th><th>Ticker</th><th>Market Cap</th><th>P/E</th><th>Net Margin</th></tr>
+    <tr><td>Public Service Enterprise Group</td><td>PEG</td><td>$34.77B</td><td>17.36x</td><td>17.35%</td></tr>
+    <tr><td>Exelon</td><td>EXC</td><td>$43.43B</td><td>15.47x</td><td>11.41%</td></tr>
+    <tr><td>Dominion Energy</td><td>D</td><td>$55.92B</td><td>22.08x</td><td>17.90%</td></tr>
+  </table>
+
+  <h2 class="section-title">Valuation</h2>
+  <h3>Absolute Valuation — Discounted Cash Flow (Illustrative)</h3>
+  <table class="data-table">
+    <tr><th>Assumption</th><th>Value</th></tr>
+    <tr><td>Terminal Growth Rate</td><td class="placeholder">{{TERMINAL_GROWTH}}</td></tr>
+    <tr><td>Discount Rate (WACC)</td><td class="placeholder">{{WACC}}</td></tr>
+    <tr><td>Implied Fair Value / Share</td><td class="placeholder">{{DCF_FAIR_VALUE}}</td></tr>
+  </table>
+  <h3>Relative Valuation</h3>
+  <table class="data-table">
+    <tr><th>Metric</th><th>PEG</th><th>Peer Average</th></tr>
+    <tr><td>P/E (TTM)</td><td>17.36x</td><td class="placeholder">{{PEER_AVG_PE}}</td></tr>
+    <tr><td>Dividend Yield</td><td>3.84%</td><td class="placeholder">{{PEER_AVG_YIELD}}</td></tr>
+  </table>
+  <h3>Valuation Conclusion</h3>
+  <p>PEG's valuation is reasonable relative to peers given its above-average FY2025 earnings growth and nuclear-driven carbon-free generation exposure. Given Hold as the clear largest bucket in the analyst rating distribution, we rate the shares HOLD, viewing the current price as fairly reflecting near-term expectations despite the positive average price target.</p>
+
+  <h2 class="section-title">Financial Analysis</h2>
+  <h3>Historical &amp; Forecast Summary</h3>
+  <table class="data-table">
+    <tr><th>Metric</th><th>FY2024</th><th>FY2025</th><th>FY2027E</th></tr>
+    <tr><td>Revenue ($M)</td><td>10,290</td><td>12,168</td><td class="placeholder">{{REV_2027E}}</td></tr>
+    <tr><td>Net Income ($M)</td><td>1,772</td><td>2,111</td><td class="placeholder">{{NI_2027E}}</td></tr>
+    <tr><td>EPS ($)</td><td>3.54</td><td>4.22</td><td class="placeholder">{{EPS_2027E}}</td></tr>
+    <tr><td>Operating Margin</td><td>22.87%</td><td>24.49%</td><td class="placeholder">{{OPMARGIN_2027E}}</td></tr>
+    <tr><td>Net Margin</td><td>17.22%</td><td>17.35%</td><td class="placeholder">{{NETMARGIN_2027E}}</td></tr>
+  </table>
+  <h3>Earnings Quality Notes</h3>
+  <p>Trailing-twelve-month (TTM) figures pulled from third-party data reported revenue of $47.247 billion and net income of $8.282 billion — approximately 3.88x and 3.92x the corresponding FY2025 annual figures ($12,168 million revenue and $2,111 million net income), respectively. This ratio is consistent with the recurring data-aggregation error pattern observed across multiple tickers in this series, and the source tool itself flagged this as a "potential data anomaly." We have excluded these TTM figures from the summary table above and used FY2024/FY2025 annual figures as the analytical base. Readers should independently verify actual TTM performance via PEG's most recent 10-Q and 10-K filings before relying on any trailing-twelve-month figures from automated data aggregators.</p>
+  <h3>Industry-Specific Ratios</h3>
+  <table class="data-table">
+    <tr><th>Ratio</th><th>Value</th></tr>
+    <tr><td>Regulated Rate Base Growth (PSE&amp;G)</td><td class="placeholder">{{RATE_BASE_GROWTH}}</td></tr>
+    <tr><td>Nuclear Generation Capacity</td><td class="placeholder">{{NUCLEAR_CAPACITY}}</td></tr>
+    <tr><td>Customer Count (Electric / Gas)</td><td>~2.4M / ~1.9M</td></tr>
+    <tr><td>Debt / EBITDA</td><td class="placeholder">{{DEBT_EBITDA}}</td></tr>
+  </table>
+
+  <h2 class="section-title">Investment Risks</h2>
+  <div class="risk-item">
+    <span class="risk-tag">Operational</span>
+    <p>Nuclear plant operational and refueling outage risk at PSEG Power, alongside severe weather exposure typical of the Mid-Atlantic region for the PSE&amp;G distribution network.</p>
+  </div>
+  <div class="risk-item">
+    <span class="risk-tag">Financial</span>
+    <p>Ongoing capital expenditure requirements for grid modernization and nuclear plant maintenance create sensitivity to interest rates and capital market access.</p>
+  </div>
+  <div class="risk-item">
+    <span class="risk-tag">Regulatory</span>
+    <p>Rate case outcomes with the New Jersey Board of Public Utilities directly determine allowed returns on invested capital, and nuclear plant relicensing and PJM capacity market rule changes could affect PSEG Power's economics.</p>
+  </div>
+  <div class="risk-item">
+    <span class="risk-tag">Legal</span>
+    <p>The company faces ongoing legal and regulatory risk related to nuclear plant safety and decommissioning obligations, as well as environmental and infrastructure siting litigation.</p>
+  </div>
+  <h3>Disclosure Flags</h3>
+  <p>We flag for readers that Hold is the clear largest bucket in the 22-analyst rating distribution (14 of 22, 63.6%), substantially exceeding the source's headline "Buy" consensus label; we have weighted the full distribution rather than the headline label in arriving at our HOLD rating. We also flag the likely TTM data-aggregation error described above, which the source tool itself identified as a "potential data anomaly," as a data-quality risk for any analysis relying on automated trailing-twelve-month feeds for this ticker.</p>
+
+  <h2 class="section-title">Environmental, Social &amp; Governance</h2>
+  <div class="esg-grid">
+    <div class="esg-card">
+      <h4>Environmental</h4>
+      <p class="placeholder">{{ESG_ENVIRONMENTAL — nuclear fleet's carbon-free generation profile, emissions reduction targets, and grid resiliency investment not independently verified for this report}}</p>
+    </div>
+    <div class="esg-card">
+      <h4>Social</h4>
+      <p class="placeholder">{{ESG_SOCIAL — customer affordability and workforce programs not independently verified for this report}}</p>
+    </div>
+    <div class="esg-card">
+      <h4>Governance</h4>
+      <p class="placeholder">{{ESG_GOVERNANCE — board composition and executive compensation structure not independently verified for this report}}</p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="analyst-line">Prepared by the Equity Research Desk — publicly sourced information only.</div>
+    <div>This report is for informational purposes only and does not constitute investment advice or a solicitation to buy or sell any security. All data is sourced from publicly available third-party sources believed to be reliable but not independently audited; figures marked with placeholders indicate data points that could not be verified as of the report date. Past performance is not indicative of future results. Readers should conduct their own due diligence and consult a licensed financial advisor before making investment decisions.</div>
+  </footer>
+
+</div>
+</body>
+</html>

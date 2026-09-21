@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — NextEra Energy, Inc. (NEE)</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--text);
+    background: #ffffff;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+  }
+  .report-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 48px;
+  }
+  .report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+  }
+  .firm-name {
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .company-title {
+    font-size: 26px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .reco-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--gray-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+  }
+  .reco-main .label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+  }
+  .reco-main .value {
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .reco-stats {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 28px;
+  }
+  .reco-stats div .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+  .reco-stats div .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+  }
+  h2.section-title {
+    font-size: 18px;
+    color: var(--navy);
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 6px;
+    margin-top: 40px;
+    margin-bottom: 16px;
+  }
+  h3 {
+    font-size: 15px;
+    color: var(--navy);
+    margin-top: 22px;
+    margin-bottom: 8px;
+  }
+  table.basic-info, table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+  table.basic-info td, table.basic-info th,
+  table.data-table td, table.data-table th {
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    text-align: left;
+  }
+  table.basic-info th, table.data-table th {
+    background: var(--gray-bg);
+    color: var(--navy);
+    font-weight: bold;
+  }
+  table.basic-info td:first-child {
+    font-weight: bold;
+    color: var(--muted);
+    width: 32%;
+  }
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 14.5px;
+  }
+  ul {
+    margin-top: 4px;
+    padding-left: 22px;
+  }
+  li {
+    margin-bottom: 6px;
+  }
+  .peer-note {
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 8px;
+  }
+  .risk-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+  }
+  .risk-item .risk-tag {
+    display: inline-block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: bold;
+    color: #fff;
+    background: var(--muted);
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .esg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 12px;
+  }
+  .esg-card {
+    background: var(--gray-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+  .esg-card h4 {
+    margin-top: 0;
+    color: var(--navy);
+    font-size: 14px;
+  }
+  .placeholder {
+    color: #8a8fa3;
+    font-style: italic;
+  }
+  footer {
+    margin-top: 48px;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .analyst-line {
+    margin-bottom: 6px;
+  }
+  p { font-size: 14.5px; }
+</style>
+</head>
+<body>
+<div class="report-container">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">NextEra Energy, Inc.</h1>
+      <div class="ticker-line">NYSE: NEE &nbsp;|&nbsp; Sector: Utilities &nbsp;|&nbsp; Industry: Regulated Electric</div>
+    </div>
+    <div class="report-date">
+      Report Date: September 19, 2026<br>
+      Analyst: Equity Research Desk
+    </div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main">
+      <div class="label">Recommendation</div>
+      <div class="value" style="color:var(--green);">BUY</div>
+    </div>
+    <div class="reco-stats">
+      <div>
+        <div class="label">Current Price</div>
+        <div class="value">$80.47</div>
+      </div>
+      <div>
+        <div class="label">Target Price</div>
+        <div class="value">$98.39</div>
+      </div>
+      <div>
+        <div class="label">Market Cap</div>
+        <div class="value">$167.86B</div>
+      </div>
+      <div>
+        <div class="label">Implied Upside/Downside</div>
+        <div class="value" style="color:var(--green);">+22.27%</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Basic Information</h2>
+  <table class="basic-info">
+    <tr><td>Ticker</td><td>NEE (NYSE)</td></tr>
+    <tr><td>Exchange</td><td>New York Stock Exchange</td></tr>
+    <tr><td>Sector</td><td>Utilities</td></tr>
+    <tr><td>Industry</td><td>Regulated Electric</td></tr>
+    <tr><td>52-Week Range</td><td>$69.37 – $98.75</td></tr>
+    <tr><td>Average Daily Volume</td><td>21,555,574 shares</td></tr>
+    <tr><td>Float</td><td class="placeholder">{{FLOAT_SHARES}}</td></tr>
+    <tr><td>Shares Outstanding</td><td>2.09 billion</td></tr>
+    <tr><td>Major Shareholders</td><td class="placeholder">{{MAJOR_SHAREHOLDERS — institutional ownership detail not independently verified; primarily held by index funds and institutional asset managers (e.g., Vanguard, BlackRock, State Street per typical large-cap utility ownership patterns)}}</td></tr>
+  </table>
+
+  <h2 class="section-title">Investment Summary</h2>
+  <div class="thesis-box">
+    <strong>Investment Thesis:</strong> NextEra Energy is the largest electric utility holding company in the U.S. by market capitalization, combining a stable, regulated Florida electric utility (Florida Power &amp; Light) with the world's largest generator of wind and solar renewable energy through NextEra Energy Resources. We rate the stock BUY. The 20-analyst rating distribution has Strong Buy as the single largest bucket (10 of 20, 50%), with 12 of 20 (60%) rated Buy-or-better versus 7 Hold and 1 Strong Sell, and the average price target of $98.39 implies +22.27% upside from the current $80.47. We flag a likely TTM data-aggregation error in third-party financial data (see Earnings Quality Notes) that should not be relied upon without independent verification.
+  </div>
+
+  <h3>Recent Developments</h3>
+  <p>NextEra Energy reported FY2025 revenue of $27,412 million, up 10.74% year-over-year from $24,753 million in FY2024, while net income declined modestly to $6,835 million from $6,946 million and EPS declined slightly from $3.37 to $3.30, reflecting continued heavy capital investment in renewable generation capacity and grid infrastructure alongside share count growth. The company continues to benefit from strong demand growth tied to data center and broader electrification trends in its core Florida service territory and across its renewable development pipeline.</p>
+
+  <h3>Earnings Forecast</h3>
+  <p>We expect continued mid-to-high single-digit EPS growth driven by rate-base growth at Florida Power &amp; Light and continued expansion of the renewable generation and storage portfolio at NextEra Energy Resources, supported by robust demand growth from data centers and electrification.</p>
+
+  <h3>Valuation Summary</h3>
+  <p>At $80.47, NEE trades at a P/E of 18.09x, reasonable for a utility with above-peer-average growth prospects driven by its renewable energy leadership. The stock trades below the midpoint of its 52-week range of $69.37–$98.75, and the average price target of $98.39 implies meaningful upside, consistent with the Strong-Buy-led analyst distribution.</p>
+
+  <h2 class="section-title">Business Description</h2>
+  <p>NextEra Energy, Inc. is a Florida-based holding company operating through two principal subsidiaries: Florida Power &amp; Light Company (FPL), one of the largest regulated electric utilities in the U.S. serving over 12 million people in Florida, and NextEra Energy Resources, the world's largest generator of renewable energy from wind and solar, along with battery storage assets, across North America. The combination of a stable, rate-regulated utility base and a large-scale competitive renewable generation and development business differentiates NextEra from traditional regulated-only utility peers.</p>
+  <h3>Key Revenue Drivers</h3>
+  <ul>
+    <li>Regulated electric utility revenue from Florida Power &amp; Light, driven by customer growth, rate base expansion, and approved rate increases.</li>
+    <li>Renewable energy generation revenue from wind, solar, and battery storage assets at NextEra Energy Resources, including long-term power purchase agreements.</li>
+    <li>Growth in electricity demand from data centers, electrification, and industrial reshoring within FPL's Florida service territory.</li>
+    <li>Development and sale of renewable energy projects to third parties and yieldco vehicles.</li>
+  </ul>
+  <h3>Key Expense Drivers</h3>
+  <ul>
+    <li>Capital expenditure on grid modernization, generation capacity, and renewable project development.</li>
+    <li>Fuel costs for natural gas and other generation at FPL.</li>
+    <li>Interest expense on debt used to fund the company's large capital investment program.</li>
+    <li>Operations and maintenance costs across a growing renewable generation fleet.</li>
+  </ul>
+
+  <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+  <p>The U.S. regulated electric utility industry is characterized by stable, rate-regulated returns on capital investment, while the renewable energy generation industry is more competitive and driven by project economics, power purchase agreement pricing, and policy support. NextEra's dual exposure to both provides a differentiated growth profile relative to pure regulated utilities, particularly as electricity demand growth accelerates due to data centers and electrification.</p>
+  <h3>Porter's Five Forces</h3>
+  <table class="data-table">
+    <tr><th>Force</th><th>Assessment</th></tr>
+    <tr><td>Threat of New Entrants</td><td>Low (regulated utility, protected service territory) / Moderate (renewable development, where capital and developers can enter more readily).</td></tr>
+    <tr><td>Bargaining Power of Suppliers</td><td>Moderate — turbine, panel, and battery equipment suppliers have some pricing power, particularly amid global supply chain and tariff dynamics.</td></tr>
+    <tr><td>Bargaining Power of Buyers</td><td>Low (regulated utility ratepayers) / Moderate (corporate and utility PPA counterparties for renewable projects, who can negotiate pricing).</td></tr>
+    <tr><td>Threat of Substitutes</td><td>Low — electricity has few practical substitutes; within generation, renewables are themselves displacing fossil generation, a tailwind for NextEra's business mix.</td></tr>
+    <tr><td>Competitive Rivalry</td><td>Low (regulated utility segment, protected territory) / High (renewable development segment, competing against numerous developers and utilities for projects and PPAs).</td></tr>
+  </table>
+  <h3>Competitive Advantage</h3>
+  <p>NextEra's scale as the largest U.S. utility by market cap, its position as the world's largest renewable energy generator, and its demonstrated project development and execution track record provide durable competitive advantages in securing land, interconnection queue positions, and favorable financing for new renewable projects, while FPL's constructive Florida regulatory relationship supports predictable rate-base growth.</p>
+  <div class="peer-note">Peer companies shown for comparative context; figures sourced from public financial data as of report date.</div>
+  <table class="data-table">
+    <tr><th>Company</th><th>Ticker</th><th>Market Cap</th><th>P/E</th><th>Net Margin</th></tr>
+    <tr><td>NextEra Energy</td><td>NEE</td><td>$167.86B</td><td>18.09x</td><td>24.93%</td></tr>
+    <tr><td>Southern Company</td><td>SO</td><td class="placeholder">{{SO_MCAP}}</td><td class="placeholder">{{SO_PE}}</td><td class="placeholder">{{SO_MARGIN}}</td></tr>
+    <tr><td>Duke Energy</td><td>DUK</td><td class="placeholder">{{DUK_MCAP}}</td><td class="placeholder">{{DUK_PE}}</td><td class="placeholder">{{DUK_MARGIN}}</td></tr>
+  </table>
+
+  <h2 class="section-title">Valuation</h2>
+  <h3>Absolute Valuation — Discounted Cash Flow (Illustrative)</h3>
+  <table class="data-table">
+    <tr><th>Assumption</th><th>Value</th></tr>
+    <tr><td>Terminal Growth Rate</td><td class="placeholder">{{TERMINAL_GROWTH}}</td></tr>
+    <tr><td>Discount Rate (WACC)</td><td class="placeholder">{{WACC}}</td></tr>
+    <tr><td>Implied Fair Value / Share</td><td class="placeholder">{{DCF_FAIR_VALUE}}</td></tr>
+  </table>
+  <h3>Relative Valuation</h3>
+  <table class="data-table">
+    <tr><th>Metric</th><th>NEE</th><th>Peer Average</th></tr>
+    <tr><td>P/E (TTM)</td><td>18.09x</td><td class="placeholder">{{PEER_AVG_PE}}</td></tr>
+    <tr><td>Dividend Yield</td><td>3.10%</td><td class="placeholder">{{PEER_AVG_YIELD}}</td></tr>
+  </table>
+  <h3>Valuation Conclusion</h3>
+  <p>NEE's P/E of 18.09x is reasonable relative to its above-average growth profile driven by renewable expansion and FPL rate-base growth. Combined with a Strong-Buy-led analyst distribution and meaningful implied upside to the average price target, we rate the shares BUY.</p>
+
+  <h2 class="section-title">Financial Analysis</h2>
+  <h3>Historical &amp; Forecast Summary</h3>
+  <table class="data-table">
+    <tr><th>Metric</th><th>FY2024</th><th>FY2025</th><th>FY2027E</th></tr>
+    <tr><td>Revenue ($M)</td><td>24,753</td><td>27,412</td><td class="placeholder">{{REV_2027E}}</td></tr>
+    <tr><td>Net Income ($M)</td><td>6,946</td><td>6,835</td><td class="placeholder">{{NI_2027E}}</td></tr>
+    <tr><td>EPS ($)</td><td>3.37</td><td>3.30</td><td class="placeholder">{{EPS_2027E}}</td></tr>
+    <tr><td>Net Margin</td><td>28.06%</td><td>24.93%</td><td class="placeholder">{{NETMARGIN_2027E}}</td></tr>
+  </table>
+  <h3>Earnings Quality Notes</h3>
+  <p>Trailing-twelve-month (TTM) figures pulled from third-party data reported revenue of $110.17 billion and net income of $29.95 billion — both approximately 4.0x and 4.4x the corresponding FY2025 annual figures ($27,412 million revenue and $6,835 million net income), respectively. This ratio is consistent with the recurring data-aggregation error pattern observed across multiple tickers in this series; the source tool itself separately flagged the TTM net income figure as "substantially elevated compared to typical annual patterns." We have excluded these TTM figures from the summary table above and used FY2024/FY2025 annual figures as the analytical base. Readers should independently verify actual TTM performance via NEE's most recent 10-Q and 10-K filings before relying on any trailing-twelve-month figures from automated data aggregators.</p>
+  <h3>Industry-Specific Ratios</h3>
+  <table class="data-table">
+    <tr><th>Ratio</th><th>Value</th></tr>
+    <tr><td>Regulated Rate Base Growth (FPL)</td><td class="placeholder">{{FPL_RATE_BASE_GROWTH}}</td></tr>
+    <tr><td>Renewable Generation Capacity (GW)</td><td class="placeholder">{{RENEWABLE_CAPACITY_GW}}</td></tr>
+    <tr><td>Renewable Development Backlog (GW)</td><td class="placeholder">{{RENEWABLE_BACKLOG_GW}}</td></tr>
+    <tr><td>Debt / EBITDA</td><td class="placeholder">{{DEBT_EBITDA}}</td></tr>
+  </table>
+
+  <h2 class="section-title">Investment Risks</h2>
+  <div class="risk-item">
+    <span class="risk-tag">Operational</span>
+    <p>Exposure to Florida hurricane risk, which can damage utility infrastructure and require substantial storm restoration capital expenditure, as well as execution risk on a large renewable development pipeline.</p>
+  </div>
+  <div class="risk-item">
+    <span class="risk-tag">Financial</span>
+    <p>Large, ongoing capital expenditure requirements create sensitivity to interest rates and capital market access; NextEra's growth model depends on continued access to reasonably priced debt and equity financing.</p>
+  </div>
+  <div class="risk-item">
+    <span class="risk-tag">Regulatory</span>
+    <p>Changes to federal renewable energy tax credits and incentives, as well as Florida rate case outcomes, could affect the economics of both the FPL regulated business and the NextEra Energy Resources renewable development pipeline.</p>
+  </div>
+  <div class="risk-item">
+    <span class="risk-tag">Legal</span>
+    <p>As a large utility and renewable energy developer, the company faces litigation and permitting risk related to project siting, environmental review, and grid interconnection disputes.</p>
+  </div>
+  <h3>Disclosure Flags</h3>
+  <p>We flag the likely TTM data-aggregation error described above as a data-quality risk for any analysis relying on automated trailing-twelve-month feeds for this ticker. We also note one Strong Sell rating exists within an otherwise bullish-leaning analyst distribution, warranting monitoring of that dissenting view's rationale, alongside a meaningful 35% Hold weighting that should temper conviction somewhat versus a purely consensus-driven read.</p>
+
+  <h2 class="section-title">Environmental, Social &amp; Governance</h2>
+  <div class="esg-grid">
+    <div class="esg-card">
+      <h4>Environmental</h4>
+      <p class="placeholder">{{ESG_ENVIRONMENTAL — renewable generation mix, emissions reduction targets, and coal/fossil plant retirement schedule not independently verified for this report}}</p>
+    </div>
+    <div class="esg-card">
+      <h4>Social</h4>
+      <p class="placeholder">{{ESG_SOCIAL — customer affordability and workforce programs not independently verified for this report}}</p>
+    </div>
+    <div class="esg-card">
+      <h4>Governance</h4>
+      <p class="placeholder">{{ESG_GOVERNANCE — board composition and executive compensation structure not independently verified for this report}}</p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="analyst-line">Prepared by the Equity Research Desk — publicly sourced information only.</div>
+    <div>This report is for informational purposes only and does not constitute investment advice or a solicitation to buy or sell any security. All data is sourced from publicly available third-party sources believed to be reliable but not independently audited; figures marked with placeholders indicate data points that could not be verified as of the report date. Past performance is not indicative of future results. Readers should conduct their own due diligence and consult a licensed financial advisor before making investment decisions.</div>
+  </footer>
+
+</div>
+</body>
+</html>

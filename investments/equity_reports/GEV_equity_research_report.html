@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — GEV</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #e9edf2;
+    color: var(--text);
+    font-family: "Georgia", "Times New Roman", serif;
+    line-height: 1.55;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.12);
+    padding: 40px 50px 60px;
+  }
+
+  .report-header {
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .firm-name {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .company-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+  }
+
+  .reco-banner {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .reco-main {
+    flex: 0 0 170px;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .reco-main .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+
+  .reco-main .value {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+
+  .reco-stats {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--gray-bg);
+  }
+
+  .reco-stat {
+    padding: 10px 14px;
+    border-left: 1px solid var(--border);
+  }
+
+  .reco-stat .label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    display: block;
+  }
+
+  .reco-stat .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .basic-info {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+
+  .basic-info td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .basic-info td.k {
+    color: var(--muted);
+    width: 38%;
+  }
+
+  .basic-info td.v {
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  section { margin-bottom: 32px; }
+
+  h2.section-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: var(--navy);
+    padding: 8px 14px;
+    margin: 0 0 14px 0;
+    border-left: 5px solid var(--accent);
+  }
+
+  h3.sub-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    margin: 18px 0 10px;
+  }
+
+  p.body-text { font-size: 15px; margin: 0 0 12px; }
+
+  ul.bullet-list { margin: 0 0 12px 0; padding-left: 20px; }
+  ul.bullet-list li { margin-bottom: 6px; font-size: 15px; }
+
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  .thesis-box .thesis-label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-dark);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  table.data-table th {
+    background: var(--navy);
+    color: #fff;
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  table.data-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background: var(--gray-bg); }
+
+  .risk-item { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+
+  .risk-tag {
+    flex: 0 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    background: var(--red);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .risk-tag.op { background: #b8860b; }
+  .risk-tag.fin { background: var(--red); }
+  .risk-tag.reg { background: #6a3d9a; }
+  .risk-tag.legal { background: #444; }
+
+  .esg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
+  .esg-card {
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: 4px;
+    padding: 12px 14px;
+  }
+
+  .esg-card.environmental { border-top-color: #2e7d32; }
+  .esg-card.social { border-top-color: #1565c0; }
+  .esg-card.governance { border-top-color: #6a1b9a; }
+
+  .esg-card h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px;
+    color: var(--navy);
+  }
+
+  .esg-card ul { margin: 0; padding-left: 16px; font-size: 13px; }
+  .esg-card li { margin-bottom: 4px; }
+
+  .peer-note {
+    font-size: 12.5px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: -6px;
+    margin-bottom: 12px;
+  }
+
+  footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  footer .analyst-line { margin-bottom: 8px; font-size: 12px; color: var(--text); }
+
+  @media (max-width: 700px) {
+    .page { padding: 24px 18px; }
+    .reco-banner { flex-direction: column; }
+    .reco-stats { grid-template-columns: repeat(2, 1fr); }
+    .esg-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">GE Vernova Inc.</h1>
+      <div class="ticker-line">GEV &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Industrials / Electrical Equipment &amp; Parts (Power Generation, Wind, Electrification)</div>
+    </div>
+    <div class="report-date">
+      September 15, 2026<br>
+      Analyst: [Name Not Specified]
+    </div>
+  </div>
+
+  <!-- ============ RECOMMENDATION BANNER ============ -->
+  <div class="reco-banner">
+    <div class="reco-main">
+      <span class="label">Recommendation</span>
+      <span class="value" style="color:#4caf50;">BUY</span>
+    </div>
+    <div class="reco-stats">
+      <div class="reco-stat">
+        <span class="label">Current Price</span>
+        <span class="value">~$875–$960 (highly volatile in recent sessions — see note)</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Target Price (Consensus)</span>
+        <span class="value">~$1,236 average; Street range $470–$1,450</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Market Cap</span>
+        <span class="value">~$241–251 billion</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Implied Upside</span>
+        <span class="value">~30–41% (consensus average, pre-most-recent-selloff)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BASIC INFORMATION ============ -->
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">GEV</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Industrials</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Electrical Equipment &amp; Parts (Power Generation, Wind, Electrification/Grid)</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$252.25 – $1,195.94 (extremely wide range, reflecting the stock's volatility and short public trading history)</td></tr>
+      <tr><td class="k">P/E Ratio (TTM)</td><td class="v">~34.9–49.3x (varies significantly by source and date)</td></tr>
+      <tr><td class="k">Dividend Yield</td><td class="v">~0.17% (token dividend; one source's "17.2%" figure appears to be a decimal-point data error and should be disregarded)</td></tr>
+      <tr><td class="k">Employees</td><td class="v">~75,000–78,000 (varies by source)</td></tr>
+      <tr><td class="k">Corporate History</td><td class="v">Spun off from General Electric as a standalone public company on April 2, 2024 (separate from GE Aerospace)</td></tr>
+      <tr><td class="k">CEO / Headquarters</td><td class="v">Scott L. Strazik (CEO since formation); headquartered in Cambridge, Massachusetts</td></tr>
+      <tr><td class="k">Analyst Ratings</td><td class="v">Historically strongly "Buy"-skewed (e.g., 30 Buy / 0 Sell per one source; 79% Buy / 15% Hold / 5% Sell per another) — though a new, notable "Sell" rating from GLJ Research emerged September 2026 (see Investment Summary)</td></tr>
+      <tr><td class="k">Float</td><td class="v placeholder">{{Not independently sourced in this summary — verify against GE Vernova's most recent proxy statement}}</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted); margin-top:-14px;">Note: GEV is an unusually volatile, recently-IPO'd stock with genuinely wide price swings in the days immediately preceding this report — sources cited a September 11 close of $957.27, a "recent" price near $874–$894, and a September 3 price of $943.34, alongside a fresh 8–9% single-day drop tied to a new Sell rating (see below). Given this, all price-dependent figures (market cap, implied upside) in this report carry more than the usual date-sensitivity and should be verified against a live quote before use.</p>
+  </section>
+
+  <!-- ============ INVESTMENT SUMMARY ============ -->
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      GE Vernova sits at the center of the AI-driven electricity demand supercycle, with its Power segment gas-turbine backlog rising to 116 gigawatts (targeting at least 125 GW by year-end 2026) and total company backlog reaching a record $176 billion after Q2 2026 orders surged 88% year-over-year to $24.2 billion — including more than $5 billion of first-half 2026 data-center-related orders in its Electrification segment alone. Management is scaling gas-turbine production capacity from roughly 20 GW annualized (starting Q3 2026) to 24 GW by 2028 and 30 GW by 2030 to meet this demand, while free cash flow has grown to approximately $10 billion year-to-date (2.5x the prior year). However, this report is being written just days after GLJ Research initiated coverage with a Street-low $470 price target and a Sell rating — roughly half the then-current trading price — explicitly framing GEV as "a cyclical gas-turbine manufacturer priced as a secular compounder," citing specific concerns that turbines scheduled for 2027 delivery were priced under older 2024 contract terms (implying materially thinner margins, ~3 percentage points of backlog margin on the 2027 vintage per GLJ's estimate versus 10–11 points on later vintages). This is a genuinely live, unresolved analyst disagreement rather than settled consensus, and the stock fell 8–9% on the news alone. The mispricing thesis, whichever direction it resolves, depends heavily on whether the current backlog-to-revenue conversion, margin trajectory by contract vintage, and capacity-expansion execution can be independently verified against both the bullish (Morgan Stanley $1,350 target, Guggenheim $1,450 target) and bearish (GLJ $470 target) extremes currently on the Street.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">GE Vernova reported Q2 2026 total orders of $24.2 billion (+88% YoY), with Power segment orders specifically up 134% organically to $16.7 billion, including 52 heavy-duty turbine units (15 HA-class) and 61 aeroderivative units; the company converted 10 GW of slot reservations into firm orders and shipped 3 GW of equipment during the quarter. Total backlog reached a record $176 billion (+$13 billion sequentially), and gas-turbine equipment/slot-reservation backlog specifically grew to 116 GW (from 100 GW three months earlier), with management targeting at least 125 GW under contract by year-end 2026. Adjusted EBITDA grew 61% YoY, aided by strong Power and Electrification segment performance, though the Wind segment remained a significant drag: Wind orders fell 40% YoY (driven by lower North American onshore equipment orders) and posted a $275 million EBITDA loss for the quarter (versus a $165 million loss a year earlier), with full-year Wind losses still guided at approximately $400 million. Management raised full-year 2026 guidance to $45.5–$46.5 billion in revenue (up $1 billion) and $11.5–$12.5 billion in free cash flow (up $5 billion at the low end), while maintaining a 12–14% adjusted EBITDA margin target. The company made a voluntary ~$500 million contribution to its largest pension plan during the quarter. Fitch Ratings upgraded GE Vernova's credit rating to 'A-' from 'BBB+', citing consistent EBITDA margin expansion and strong free cash flow. Most recently and most significantly for near-term sentiment, GLJ Research initiated coverage on September 15, 2026 with a Sell rating and a Street-low $470 price target — roughly 51% below the stock's September 11 close of $957.27 — sending shares down 8–9% in a single session, with sympathy declines in related data-center-power names Eaton (−7%) and Quanta Services (−4%).</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Full-year 2026 guidance calls for revenue of $45.5–$46.5 billion, free cash flow of $11.5–$12.5 billion, and an adjusted EBITDA margin of 12–14% (implying higher absolute adjusted EBITDA given the raised revenue guidance). Management's own commentary frames 2026 as an early stage of a "multi-year growth opportunity" / "electricity investment super cycle," with continued backlog growth expected over at least the next six quarters. GLJ Research's bearish counter-forecast specifically projects Power segment margins of 18.5% in 2027 (versus a consensus estimate of 20.7%), driven by its view that 2027-delivery turbines were priced under less favorable 2024 contract terms before recent price increases took effect.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Analyst price targets on GEV span an unusually wide range — from GLJ Research's $470 (Sell) to Guggenheim's $1,450 (Buy) — reflecting a genuine, current, and significant divergence in how analysts are valuing the stock's growth-versus-cyclicality profile. The broader consensus average (per sources reviewed) was approximately $1,236, implying substantial upside from recent trading levels, but this average predates the GLJ initiation and should be treated as potentially stale given how quickly sentiment can shift on a single high-profile bearish call. A third-party fair-value estimate (InvestingPro, cited at $772.29) sits between the bull and bear extremes and below recent trading levels, offering a useful middle reference point.</p>
+  </section>
+
+  <!-- ============ BUSINESS DESCRIPTION ============ -->
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">GE Vernova Inc., headquartered in Cambridge, Massachusetts, is a global energy technology company that designs, manufactures, and services equipment across the electric power value chain. The company operates through three segments: Power (gas, nuclear, hydro, and steam power-generation technologies, including the world's largest installed gas-turbine fleet, which surpassed four million commercial operating hours with 130 HA-class units commissioned in 21 countries and another 195 under contract), Wind (onshore and offshore wind turbines and blades, currently loss-making), and Electrification (grid solutions, power conversion, electrification software, and solar/storage technologies for transmitting, distributing, converting, storing, and orchestrating electricity). GE Vernova became a standalone public company on April 2, 2024 via a tax-free spinoff from General Electric (separate from GE Aerospace), and management estimates the company's installed base manages approximately 25% of global electricity generation. CEO Scott Strazik previously led GE's Gas Power business before leading GE Vernova through its spinoff.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Gas turbine equipment orders and backlog conversion, overwhelmingly driven by AI data-center power demand and broader grid-reliability needs (Power segment orders +134% organically in Q2 2026)</li>
+      <li>Electrification segment data-center-related orders, which exceeded $5 billion in the first half of 2026 alone, with management citing potential 2–3x revenue-per-gigawatt uplift as solid-state transformers and medium-voltage UPS blocks approach commercialization</li>
+      <li>Services revenue from GE Vernova's large installed base (particularly the aging HA-class turbine fleet, which management expects will drive a growing outage/maintenance workload over the next decade)</li>
+      <li>Onshore and offshore Wind services revenue (a bright spot even as Wind equipment orders have declined sharply)</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Wind segment operating losses — approximately $275 million in Q2 2026 alone, with full-year losses guided at approximately $400 million, driven by weak North American onshore equipment demand and pending clarity on "2-3-2" tariffs affecting wind development</li>
+      <li>Manufacturing capacity-expansion capital expenditure to scale gas-turbine annual output from roughly 20 GW to 24 GW (2028) and 30 GW (2030)</li>
+      <li>A voluntary ~$500 million pension-plan contribution made in Q2 2026, which reduced cash availability for other uses in the period</li>
+      <li>R&D and integration investment in cross-segment "one GE Vernova" solutions (e.g., electrification/gas-power aeroderivative integration, cited as worth up to $500 million in incremental annual orders)</li>
+    </ul>
+  </section>
+
+  <!-- ============ INDUSTRY OVERVIEW & COMPETITIVE POSITIONING ============ -->
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">GE Vernova operates in the global power generation, wind energy, and electrical grid equipment industry, a sector currently experiencing what management and several bullish analysts describe as an "electricity investment super cycle" driven by AI data-center buildout, broader electrification trends, and aging grid infrastructure requiring modernization. The gas-turbine segment specifically operates in an oligopolistic market with high barriers to entry (multi-year manufacturing lead times, deep engineering expertise, and long-lived service relationships), while the Wind segment faces a more fragmented, price-competitive landscape including aggressive Chinese OEMs. A notable emerging competitive/substitution risk was flagged in one source: SpaceX and Tesla's announced plans to build 100 gigawatts per year of solar production capacity, which pressured GEV shares on the news — illustrating that even within the broader "power for AI" theme, the specific technology mix (gas turbines versus solar/storage alternatives) that wins share remains contested.</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low in heavy-duty gas turbines — extreme capital intensity, multi-year lead times, and deep engineering/certification barriers limit new entrants to a handful of established global players; moderate-to-rising in solar/battery-storage alternatives to gas-fired generation for data-center power.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — specialized turbine components and materials suppliers hold some leverage, particularly amid the current industry-wide capacity crunch across the power-equipment supply chain.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Currently low for gas turbines — demand is reported to be "outrunning the company's manufacturing capacity" per one source, giving GE Vernova pricing power on new orders (a dynamic GLJ Research's bear case argues is not yet reflected in older, already-booked 2027-delivery contracts).</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Rising and actively debated — solar-plus-storage (e.g., the SpaceX/Tesla 100 GW/year solar capacity announcement) and grid-scale battery storage are emerging alternatives to gas-turbine generation for some data-center power needs, though gas turbines currently offer dispatchable, always-on power that intermittent renewables cannot match without substantial storage buildout.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — Siemens Energy is the most direct across-the-board competitor (gas turbines, grid technology, wind via Siemens Gamesa); Mitsubishi Power competes closely in heavy-duty gas turbines; Vestas leads global wind turbine installations; Hitachi Energy and ABB compete in grid/HVDC equipment.</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">GE Vernova's moat rests on the scale of its installed gas-turbine base (the largest in the world, surpassing four million commercial operating hours) and multi-decade utility/industrial customer relationships built on trust in long-lived, mission-critical equipment where outages are extremely costly. Its combined Power-Electrification integration strategy ("one GE Vernova") aims to extend this moat by bundling turbine, electrical, and control interfaces for incremental customer value. However, Morningstar specifically notes that GE Vernova's "historical margin and profitability record has been inconsistent" even while occupying "leading positions in oligopolistic markets" — an important qualifier on the durability and monetization of this moat, particularly given the persistent Wind-segment losses that have not yet been resolved.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major global power-generation, wind, and grid-equipment manufacturers. Figures are approximate and vary meaningfully by source — verify against a single consistent data source before use.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Segment Overlap</th><th>Notes</th></tr>
+      <tr><td>GE Vernova (GEV)</td><td>Power (gas/nuclear/hydro/steam), Wind, Electrification</td><td>P/E ~35–49x (wide range); record $176B backlog; Wind segment currently loss-making (~$400M guided FY2026 loss)</td></tr>
+      <tr><td>Siemens Energy</td><td>Gas turbines, grid technology, wind (via Siemens Gamesa)</td><td>Cited as GE Vernova's most direct across-the-board competitor; reported combined gas/grid revenues comparable to GEV in 2024–25, with Gamesa wind-unit volatility affecting consolidated results; specific current valuation multiples not independently sourced in this summary</td></tr>
+      <tr><td>Mitsubishi Power</td><td>Heavy-duty gas turbines</td><td>Benchmark competitor in thermal efficiency (J-series turbines); GE Vernova's latest models compete within single-digit basis-point heat-rate differences per one source; not separately publicly traded (part of Mitsubishi Heavy Industries)</td></tr>
+      <tr><td>Vestas</td><td>Wind turbines</td><td>Global market leader in cumulative wind turbine installations through 2024; specific current valuation multiples not independently sourced in this summary</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ VALUATION ============ -->
+  <section>
+    <h2 class="section-title">Valuation</h2>
+
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified cost of capital assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled — GLJ Research's bear case explicitly argues the market is applying a "secular compounder" terminal-growth assumption to what is fundamentally a cyclical gas-turbine business; this tension should be modeled explicitly with scenario-based terminal assumptions rather than a single point estimate}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — GLJ's bear thesis specifically concerns 2027-vintage contract margins, so an explicit multi-year forecast distinguishing contract-vintage economics (2024-priced vs. more recent, higher-priced orders) is essential rather than a blended average growth rate}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>Reported estimates span an extremely wide range: InvestingPro's fair-value estimate of $772.29 sits between GLJ Research's bearish $470 target and the bullish consensus average near $1,236 (with individual bull targets as high as $1,450) — this dispersion itself is the central valuation fact for this stock right now</td></tr>
+    </table>
+
+    <h3 class="sub-title">Relative Valuation</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>GE Vernova (GEV)</th><th>Peer Reference (Siemens Energy / Mitsubishi Power)</th></tr>
+      <tr><td>P/E (TTM)</td><td>~35–49x (wide range across sources/dates)</td><td class="placeholder">{{Not independently sourced}}</td></tr>
+      <tr><td>Backlog / Revenue Visibility</td><td>$176B total backlog; 116 GW gas-turbine backlog (targeting 125 GW by year-end 2026)</td><td class="placeholder">{{Not independently sourced}}</td></tr>
+      <tr><td>Free Cash Flow (2026 guided)</td><td>$11.5B–$12.5B</td><td class="placeholder">{{Not independently sourced}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">GE Vernova's valuation is currently the subject of an unusually stark and immediate analyst disagreement: bulls point to record backlog growth, accelerating orders, and a credit-rating upgrade as evidence of a durable, multi-year "electricity investment super cycle," while GLJ Research's newly initiated bear case argues the stock's premium P/E assumes secular, steady growth for a business that has always historically been cyclical, with specific, falsifiable claims about weaker margins on 2027-delivery contracts priced under older terms. Given that this divergence emerged in the days immediately before this report was compiled, and that the stock itself has already moved 8–9% in a single session on the bear note, any valuation conclusion here should be treated as provisional — the single highest-value next step for a reader would be to independently verify GLJ's specific margin-by-contract-vintage claim (3% backlog margin on 2027-vintage vs. 10–11% on 2025-vintage) against GE Vernova's own disclosures, since this is the crux of the entire bull/bear split.</p>
+  </section>
+
+  <!-- ============ FINANCIAL ANALYSIS ============ -->
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+
+    <h3 class="sub-title">Recent Results Summary (Consolidated, Q2 2026)</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q2 2025</th><th>Q2 2026</th><th>FY2026 Guidance</th></tr>
+      <tr><td>Total Orders</td><td class="placeholder">{{Implied ~$12.9B based on 88% YoY growth}}</td><td>$24.2B (+88% YoY)</td><td class="placeholder">{{Not guided as a single full-year figure}}</td></tr>
+      <tr><td>Revenue</td><td class="placeholder">{{Implied slightly lower based on 12% YoY growth}}</td><td class="placeholder">{{+12% YoY per one source (specific dollar figure not directly sourced for the quarter)}}</td><td>$45.5B–$46.5B (raised from prior guidance, +~$1B)</td></tr>
+      <tr><td>Adjusted EBITDA</td><td class="placeholder">{{Implied lower based on 61% YoY growth}}</td><td class="placeholder">{{+61% YoY (specific dollar figure not directly sourced for the quarter)}}</td><td>12–14% margin maintained (implies higher absolute EBITDA on higher revenue guide)</td></tr>
+      <tr><td>Total Backlog</td><td class="placeholder">{{Implied ~$163B based on +$13B sequential growth}}</td><td>$176B (record; +$13B sequentially)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Free Cash Flow (YTD)</td><td class="placeholder">{{Implied ~$4B based on "2.5x" comparison}}</td><td>~$10B YTD (2.5x prior-year YTD)</td><td>$11.5B–$12.5B (full year, raised from prior guidance)</td></tr>
+      <tr><td>Gas Turbine Backlog (GW)</td><td class="placeholder">{{Not directly sourced}}</td><td>116 GW (up from 100 GW three months earlier)</td><td>At least 125 GW targeted by year-end 2026</td></tr>
+    </table>
+
+    <h3 class="sub-title">Segment Detail (Q2 2026)</h3>
+    <table class="data-table">
+      <tr><th>Segment</th><th>Revenue</th><th>Key Metrics</th></tr>
+      <tr><td>Power</td><td>$5.5B (+14% YoY, GAAP and organic)</td><td>Orders $16.7B (+134% organic); segment EBITDA margin expanded to 18.8%; 52 heavy-duty units + 61 aeroderivative units booked; equipment backlog 53 GW, slot reservations 63 GW</td></tr>
+      <tr><td>Wind</td><td>$2.0B (−11% YoY, lower Onshore equipment deliveries)</td><td>Orders down 40% YoY; EBITDA loss of $275M (vs. $165M loss YoY); margin −13.6%; management expects approximately breakeven EBITDA in Q3 2026</td></tr>
+      <tr><td>Electrification</td><td class="placeholder">{{Not directly sourced as a standalone quarterly figure}}</td><td>&gt;$5B in first-half 2026 data-center-related orders; cited as a key growth driver alongside Power</td></tr>
+    </table>
+
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">GE Vernova's consolidated results mask a significant divergence between segments: Power and Electrification are driving strong, accelerating growth and margin expansion, while Wind remains a structural drag with a widening EBITDA loss (−13.6% margin in Q2 2026) that management expects to only reach approximately breakeven by Q3 2026, with a full-year loss still guided near $400 million. This is a legitimate earnings-quality consideration — investors should track Power and Electrification metrics separately from consolidated figures to assess the true health of the AI-power-demand thesis, since Wind-segment losses (while shrinking in relative terms) continue to be an offsetting drag on reported consolidated profitability. Separately, GLJ Research's specific, quantitative challenge to reported backlog quality — that 2027-vintage contracts carry materially thinner margins (~3%) than more recently priced 2025-vintage contracts (~10–11%) shipping in 2028 — is an earnings-quality claim that goes directly to whether the headline $176 billion backlog figure should be valued uniformly or discounted for vintage-specific margin risk. This claim was not independently corroborated or refuted by the other sources reviewed and should be checked directly against GE Vernova's own disclosures before being accepted or dismissed.</p>
+
+    <h3 class="sub-title">Industry-Specific Ratios</h3>
+    <table class="data-table">
+      <tr><th>Ratio</th><th>Value</th></tr>
+      <tr><td>Gas turbine annualized production capacity (current / 2028 target / 2030 target)</td><td>~20 GW (starting Q3 2026) / 24 GW / 30 GW</td></tr>
+      <tr><td>HA-class turbine fleet operating hours</td><td>&gt;4 million commercial operating hours; 130 units commissioned in 21 countries; 195 units under contract</td></tr>
+      <tr><td>Data-center-related Electrification orders (H1 2026)</td><td>&gt;$5 billion</td></tr>
+      <tr><td>GE Vernova share of global electricity managed (installed base)</td><td>~25% (per one source)</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT RISKS ============ -->
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+
+    <div class="risk-item">
+      <span class="risk-tag op">Operational</span>
+      <span>Execution risk in the ambitious gas-turbine capacity expansion (20 GW → 24 GW → 30 GW by 2030) is explicitly flagged by multiple sources as a key open question — analysts on the Q2 2026 earnings call specifically pressed management on whether the 30 GW target by 2030 is realistic and how much of that future capacity is already sold. Any delays in this ramp could directly affect the pace at which the $176 billion backlog converts into recognized revenue. The persistent Wind-segment losses (guided at ~$400 million for full-year 2026) also represent an ongoing operational drag not yet resolved despite years of restructuring effort.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag fin">Financial</span>
+      <span>GLJ Research's newly initiated Sell rating specifically argues the stock's valuation assumes secular, non-cyclical growth for a business that has historically been highly cyclical, with a specific, quantitative claim that 2027-delivery gas-turbine contracts carry materially lower backlog margins (~3%) than more recently booked orders — if accurate, this implies analyst consensus 2027 EBITDA estimates could be too high. Guidance for the year is also weighted toward the second half, meaning more of 2026's targeted earnings and cash flow depend on execution yet to occur.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag reg">Regulatory</span>
+      <span>Pending clarity on "2-3-2" tariffs affecting wind development was specifically cited by management as a factor the company is monitoring for potential order-clarity implications in the second half of 2026 — an unresolved trade-policy variable directly affecting the already-struggling Wind segment.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag legal">Legal</span>
+      <span>One source referenced a securities-fraud investigation notice (Levi & Korsinsky, dated July 2024) inviting investors who lost money on GE Vernova to make contact — this is a law-firm solicitation notice rather than confirmation of an active, adjudicated securities-fraud claim, and its current status was not independently verified in this summary; readers should check directly for any updates or resolution of this matter via SEC filings or court records before treating it as a live risk.</span>
+    </div>
+
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or disclosed material weaknesses in internal controls were identified in the sources reviewed for this summary — verify directly against GE Vernova's most recent 10-K/10-Q auditor opinion before relying on this.}}</p>
+  </section>
+
+  <!-- ============ ESG ============ -->
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental">
+        <h4>Environmental</h4>
+        <ul>
+          <li>GE Vernova's own brand positioning ("Vernova" combining "ver" for green and "nova" for new) explicitly frames the company within the energy-transition narrative, though its fastest-growing near-term revenue driver (gas turbines for data centers) is a fossil-fuel technology, creating an interesting tension between the company's stated positioning and its current growth mix</li>
+          <li>The company's Power segment also includes nuclear and hydro technologies, positioned as lower-carbon dispatchable power alternatives to gas, though specific current nuclear/hydro revenue mix was not independently sourced in this summary</li>
+          <li class="placeholder">{{ESG_ENV — no specific emissions targets, net-zero commitments, or detailed sustainability metrics were independently sourced in this summary; recommend reviewing GE Vernova's own sustainability disclosures directly}}</li>
+        </ul>
+      </div>
+      <div class="esg-card social">
+        <h4>Social</h4>
+        <ul class="placeholder">
+          <li>{{ESG_SOC — no specific labor standards, workforce diversity, or community-relations data were independently sourced in this summary}}</li>
+        </ul>
+      </div>
+      <div class="esg-card governance">
+        <h4>Governance</h4>
+        <ul>
+          <li>As a company spun off from General Electric in April 2024, GE Vernova has a relatively short standalone public-company governance track record compared to more established peers — worth noting as a general consideration, though no specific governance controversies beyond the securities-fraud investigation notice referenced above were independently sourced in this summary</li>
+          <li class="placeholder">{{ESG_GOV — board composition, executive compensation structure, and succession-planning detail not sourced in this summary}}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER / DISCLOSURES ============ -->
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 15, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party financial data sources (Investing.com, StockAnalysis.com, CNN, Yahoo Finance, TradingView, Robinhood, Morningstar, Seeking Alpha, company earnings materials and 8-K filings, Turbomachinery Magazine, and various financial media) that may be delayed, inconsistent, or subject to revision. This report was compiled in the immediate aftermath of a significant, newly initiated bearish analyst call (GLJ Research, Sell rating, $470 price target, issued September 15, 2026) that caused an 8–9% single-day share-price decline — given the recency and magnitude of this development, price, market-cap, and consensus-target figures in this report should be treated as unusually time-sensitive and re-verified against a live data source before use. All figures should also be independently verified against primary sources (GE Vernova's 10-K/10-Q filings and investor relations disclosures) before being used for any actual investment decision. This is not a research report from a registered investment adviser or broker-dealer, does not constitute investment advice, and should not be relied upon as such.
+  </footer>
+
+</div>
+</body>
+</html>

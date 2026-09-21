@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — AMZN</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Amazon.com, Inc.</h1>
+      <div class="ticker-line">AMZN &nbsp;|&nbsp; NASDAQ &nbsp;|&nbsp; Consumer Discretionary / Internet &amp; Direct Marketing Retail (also Cloud/AI Infrastructure)</div>
+    </div>
+    <div class="report-date">September 15, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#4caf50;">BUY</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">~$252–$273 (volatile — see note)</span></div>
+      <div class="reco-stat"><span class="label">Target Price (Consensus)</span><span class="value">~$325–$334 (60+ analysts)</span></div>
+      <div class="reco-stat"><span class="label">Market Cap</span><span class="value">&gt;$3 trillion</span></div>
+      <div class="reco-stat"><span class="label">Implied Upside</span><span class="value">~25–35% (consensus average)</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">AMZN</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NASDAQ</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Consumer Discretionary (with substantial Technology/Cloud exposure via AWS)</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Internet &amp; Direct Marketing Retail / Cloud Infrastructure</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$196.00 – $287.20</td></tr>
+      <tr><td class="k">Beta</td><td class="v">~1.44 (one source) — amplifies broad market moves</td></tr>
+      <tr><td class="k">Analyst Ratings</td><td class="v">Overwhelmingly "Buy"/"Strong Buy" — 59 of 61 covering analysts rate Buy or Strong Buy in one source (Sept. 4, 2026 snapshot)</td></tr>
+      <tr><td class="k">Prime Membership</td><td class="v">&gt;200 million subscribers globally (one source)</td></tr>
+      <tr><td class="k">CEO / Headquarters</td><td class="v">Andy Jassy (CEO); headquartered in Seattle, WA</td></tr>
+      <tr><td class="k">Float</td><td class="v placeholder">{{Not independently sourced — verify against Amazon's proxy statement}}</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted); margin-top:-14px;">Note: Amazon's stock has been unusually volatile through 2026 — sources cite prices ranging from ~$195 to ~$273 within the year, with a notable ~8.8% one-month decline in early September even as the S&P 500 rose. Shares surged ~9-15% on the July 30, 2026 earnings print (sources vary on exact magnitude) before subsequently pulling back. Verify against a live quote.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Amazon delivered one of its strongest quarters in years in Q2 2026: revenue of $200.6 billion (+20% YoY, beating the ~$196.5–196.8 billion consensus), AWS growth accelerating to 36.7–37% (its fastest pace since 2021, an 18-quarter growth record, versus 31% consensus expectations), advertising revenue up 26% to $19.8 billion, and AWS's contracted backlog reaching $496 billion — evidence that Amazon's cloud business is not merely stabilizing but genuinely re-accelerating on AI-driven demand. Shares initially surged 9–15% on the print (sources vary) and market capitalization crossed $3 trillion for the first time. However, GAAP EPS of $5.75 was substantially inflated by a $53.4 billion non-cash gain from the revaluation of Amazon's investment in Anthropic — the "clean" non-GAAP consensus figure was only $1.82–1.97 — and management's decision to raise full-year 2026 capex guidance sharply to $220 billion (from $200 billion) pushed trailing free cash flow negative (roughly -$7.6 billion to -$18.2 billion depending on the period cited). The stock has since pulled back meaningfully (down as much as 8.8% in a single month even as the broader market rose), reflecting investor digestion of both the capex scale and Q3 guidance that came in below consensus (partly explained by a Prime Day timing shift into Q2). The combination of genuinely accelerating core-business momentum (AWS, advertising, retail margins all improving) against a market that has recently de-rated the stock despite raising forward EPS estimates (current-year consensus EPS up 44% over 90 days per one source) supports a constructive stance, though investors should track free cash flow trajectory closely given the scale of AI infrastructure spending now underway.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Amazon reported Q2 2026 (fiscal quarter ended June 2026) net sales of $200.6 billion (+20% YoY), beating the ~$196.5–196.8 billion consensus. AWS revenue was $42.2 billion (+36.7–37% YoY, well ahead of the ~31% consensus and representing the segment's fastest growth since 2021), with AWS backlog reaching $496 billion. Advertising revenue rose 26% YoY to $19.8 billion. GAAP diluted EPS was $5.75 (net income $62.65 billion), but this figure was substantially boosted by a non-cash, pre-tax gain of approximately $53.4 billion from the revaluation of Amazon's investment in Anthropic; the non-GAAP consensus estimate, which typically excludes such items, was $1.82 (one source cited an actual non-GAAP figure of $1.97, beating that estimate). Operating margin expanded to 13.7%, and operating income grew 43%. Amazon's AI business and custom chips division each surpassed a $25 billion annualized revenue run rate, both growing at triple-digit percentage rates. Management raised full-year 2026 capital expenditure guidance sharply to approximately $220 billion (from a prior ~$200 billion), reflecting continued aggressive AI data-center infrastructure investment; trailing free cash flow turned negative as a result (cited at roughly -$7.6 billion in one source, -$18.2 billion in another referencing an earlier quarter — treat these as different snapshots rather than contradictory). For Q3 2026, Amazon guided net sales to $197–202 billion (implying 9–12% YoY growth), below the ~$203.9–204.1 billion analyst consensus, which the company attributed partly to a Prime Day timing shift (the event moved from Q3 in 2025 to Q2 in 2026) and an expected 80-basis-point FX headwind; excluding the Prime Day timing effect, Q3 2026 growth "would be nearly 400 basis points higher" per the company's own framing. Operating income guidance for Q3 was set at $22.5–26.5 billion. Separately, shares reportedly fell on news that an inquiry into a fatal Miami plane crash involving Amazon operations had intensified, and Amazon continues to face regulatory scrutiny including a New Jersey antitrust suit and FTC-related litigation risk referenced by at least one analyst source. AWS also announced plans to launch its first cloud infrastructure region in Saudi Arabia in December 2026, part of a broader $5.3 billion investment in the kingdom.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Current-year consensus EPS estimates have risen sharply — from $8.66 to $12.57 over a recent 90-day window per one source (a separate source cites $12.49, up 44.3% over 90 days with 45 analysts raising estimates against just one cut) — reflecting broad analyst conviction in Amazon's improving operating leverage despite the near-term capex/FCF pressure. Q3 2026 guidance of $197–202 billion in net sales and $22.5–26.5 billion in operating income represents the most concrete near-term forward benchmark; AWS growth sustainability and the pace of AI-related capex are the key variables analysts are tracking for subsequent quarters.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Analyst price targets are strongly bullish and fairly tightly clustered around $323–$334 (multiple sources, 40–61 analysts each), with a high estimate of $400–405 and a low estimate of $203–230 across sources — implying roughly 25–37% upside from various recent price snapshots. The 24/7 Wall St. framing that hitting $300 "requires just 19.1% upside and a 21x forward P/E" while 2026 EPS estimates have surged captures the core bull case: operating fundamentals are improving faster than the stock price, creating what several sources characterize as a valuation gap driven by near-term capex/cash-flow optics rather than a deterioration in the underlying business.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Amazon.com, Inc., headquartered in Seattle, Washington, operates through three primary reportable segments: North America and International (e-commerce retail, third-party marketplace services, Prime subscription services, and advertising), and Amazon Web Services (AWS, cloud computing infrastructure and platform services). Beyond its origins as an online retailer, Amazon has built one of the world's largest cloud computing businesses (AWS), a major digital advertising platform, and is now positioning itself as a significant AI infrastructure provider — its own AI business and custom AI chips (Trainium and related silicon) division have each surpassed a $25 billion annualized revenue run rate. Amazon also holds a significant investment stake in AI company Anthropic, whose valuation changes can materially affect Amazon's reported GAAP earnings in a given quarter, as seen in Q2 2026.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>AWS growth, which reaccelerated to its fastest pace since 2021 (36.7–37% YoY) on surging AI infrastructure demand, with a $496 billion contracted backlog providing multi-year visibility</li>
+      <li>Advertising revenue growth (+26% YoY to $19.8 billion), benefiting from closed-loop attribution capabilities one source specifically credits as a differentiator versus competitors</li>
+      <li>Prime membership (&gt;200 million subscribers globally), which drives recurring revenue and shopping frequency</li>
+      <li>AI and custom chips businesses, each now at a &gt;$25 billion annualized run rate and growing at triple-digit rates</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>AI data-center capital expenditure, raised sharply to ~$220 billion for full-year 2026 (from ~$200 billion), the dominant driver of currently negative trailing free cash flow</li>
+      <li>Continued investment in AWS's global infrastructure footprint, including a new Saudi Arabia cloud region (part of a $5.3 billion broader investment) launching December 2026</li>
+      <li>Fulfillment and logistics costs supporting North America and International retail operations</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Amazon operates at the intersection of e-commerce/retail and cloud/AI infrastructure — two of the largest and fastest-evolving industries covered in this report series. In cloud, AWS remains the market leader, though Microsoft Azure (integrated with Office 365 and enterprise software, creating switching costs) and Google Cloud (see separate GOOG report) are both credible, well-resourced competitors; one source specifically frames Microsoft, aided by its OpenAI partnership, as AWS's "most formidable cross-platform rival." In e-commerce, Amazon competes against Walmart, Target, and a broad set of specialized and international retailers, while its advertising business increasingly competes with Google and Meta (see separate GOOG and META reports) for digital ad spend.</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low in cloud infrastructure (extreme capital intensity, $220B+ annual capex scale); moderate in e-commerce, where category-specific and international competitors continue to emerge.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Rising — AI chip suppliers and data-center construction/energy providers hold meaningful leverage amid industry-wide capacity constraints, a dynamic shared with Alphabet, Microsoft, and Meta.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate — large enterprise cloud customers can negotiate across multiple hyperscalers; e-commerce customers have significant choice, though Prime membership and Amazon's marketplace scale create meaningful switching costs.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Low-to-moderate for AWS's core infrastructure services; low for Amazon's logistics/fulfillment scale advantage in e-commerce, which remains difficult for most competitors to replicate.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — Microsoft Azure and Google Cloud in cloud/AI infrastructure; Walmart and other major retailers in e-commerce; Google and Meta in digital advertising.</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Amazon's moat spans multiple businesses: AWS's scale, service breadth, and marketplace ecosystem make it "the default choice for startups and digital-native enterprises" per one source; Prime's 200 million-plus subscriber base creates recurring revenue and shopping-frequency advantages difficult for traditional retailers to replicate; and Amazon's advertising business benefits from closed-loop attribution unavailable to most competitors. The company's early and substantial investment in custom AI silicon (Trainium) and its stake in Anthropic also position it distinctively within the AI infrastructure race.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major hyperscalers and e-commerce competitors. See separate GOOG and META reports in this series for direct hyperscaler comparisons.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>Amazon</td><td>AMZN</td><td>Market cap &gt;$3T; AWS growth reaccelerated to 36.7–37% YoY, fastest since 2021</td></tr>
+      <tr><td>Alphabet (Google Cloud)</td><td>GOOG/GOOGL</td><td>See separate GOOG report — Google Cloud grew 82% YoY in its most recent quarter, faster than AWS on a percentage basis though off a smaller base</td></tr>
+      <tr><td>Microsoft (Azure)</td><td>MSFT</td><td>Not independently researched in this series; frequently cited as AWS's most direct competitive threat given OpenAI partnership and enterprise software integration</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — given currently negative free cash flow from AI capex, a DCF here is highly sensitive to the assumed capex normalization timeline, similar to the dynamic flagged in the separate GOOG report}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td class="placeholder">{{No single third-party DCF estimate was clearly isolated in sources reviewed; one source's proprietary model targeted $353.36 (40.29% upside) as an alternative to consensus price targets}}</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">Amazon's near-unanimous analyst "Buy" consensus (59 of 61 analysts Buy/Strong Buy in one source) alongside a meaningful recent share-price pullback despite rising forward EPS estimates suggests the market may be over-weighting near-term capex/FCF optics relative to genuinely improving AWS, advertising, and retail-margin trends. As with the other major hyperscalers in this report series, the central valuation question is the timing and eventual return on AI infrastructure capex — Amazon's $496 billion AWS backlog provides more revenue visibility than most peers on this front.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q2 2025</th><th>Q2 2026</th><th>Q3 2026 Guidance</th></tr>
+      <tr><td>Net Sales</td><td class="placeholder">{{Implied ~$167.2B based on 20% YoY growth}}</td><td>$200.6B (+20% YoY)</td><td>$197B–$202B (9–12% YoY growth guided)</td></tr>
+      <tr><td>AWS Revenue</td><td class="placeholder">{{Implied ~$30.9B based on 36.7% YoY growth}}</td><td>$42.2B (+36.7–37% YoY)</td><td class="placeholder">{{Not separately guided; $496B backlog cited}}</td></tr>
+      <tr><td>Advertising Revenue</td><td class="placeholder">{{Implied ~$15.7B based on 26% YoY growth}}</td><td>$19.8B (+26% YoY)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>GAAP Diluted EPS</td><td class="placeholder">{{Not directly sourced}}</td><td>$5.75 (incl. ~$53.4B Anthropic gain)</td><td class="placeholder">{{Not guided}}</td></tr>
+      <tr><td>Non-GAAP EPS (consensus basis)</td><td class="placeholder">{{Not directly sourced}}</td><td>$1.82–$1.97 (beat)</td><td class="placeholder">{{Not guided}}</td></tr>
+      <tr><td>Full-Year 2026 Capex Guidance</td><td class="placeholder">{{Prior guidance ~$200B}}</td><td class="placeholder">{{Raised to ~$220B}}</td><td class="placeholder">{{$220B full-year}}</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">Q2 2026 GAAP EPS of $5.75 is heavily distorted by a ~$53.4 billion non-cash, pre-tax gain from the Anthropic investment revaluation — analysts should evaluate Amazon primarily on the non-GAAP/adjusted EPS figure (~$1.82–1.97) and segment-level operating metrics (AWS growth, advertising growth, operating margin) rather than headline GAAP net income, similar to the equity-gain distortion seen in Alphabet's Q2 2026 results (see separate GOOG report). Trailing free cash flow has turned negative amid the sharply raised capex guidance — a deliberate, disclosed strategic choice rather than an operating-performance deterioration, but one that bears monitoring for the pace of eventual normalization.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>Sharply raised AI capex guidance ($220B for 2026) introduces execution risk around capacity buildout and the pace of converting the $496B AWS backlog into recognized revenue. A fatal Miami plane crash inquiry involving Amazon operations was reported to have intensified, with unclear near-term financial or reputational implications.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>Trailing free cash flow has turned meaningfully negative amid the AI capex surge; sustained negative FCF over an extended period would be a genuine financial risk if AI-related revenue does not scale as quickly as spending.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span>Amazon faces a New Jersey antitrust suit and FTC-related litigation risk referenced by at least one analyst source; regulatory scrutiny of Amazon's marketplace and retail practices remains an ongoing consideration.</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{Beyond the antitrust matters noted above, no additional major litigation was identified in the sources reviewed for this summary — verify against Amazon's most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in sources reviewed — verify directly against Amazon's 10-K/10-Q auditor opinion.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul class="placeholder"><li>{{ESG_ENV — Amazon's massive and growing AI/data-center capex plausibly carries significant energy-use implications; no specific current emissions or sustainability metrics were independently sourced in this summary}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul class="placeholder"><li>{{ESG_SOC — the reported Miami plane crash inquiry involving Amazon operations touches on workplace/operational safety; specific details and any Amazon response were not independently sourced in this summary}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul><li>Amazon's strategic equity investment in Anthropic, and the resulting large, non-recurring GAAP earnings swings from its revaluation, is a notable capital-allocation and disclosure consideration for analysts modeling forward earnings</li><li class="placeholder">{{ESG_GOV — board composition and executive compensation not sourced beyond the above}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 15, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (Webull, CNBC, Tickeron, TradingKey, MarketBeat, Yahoo Finance/24-7 Wall St., Investing.com, Public.com, TipRanks, Zacks, Just2Trade, TickerNerd, and various financial media) that may be delayed or inconsistent. Amazon's share price showed significant volatility across 2026 snapshots reviewed. All figures should be independently verified against Amazon's 10-K/10-Q filings before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — GS</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  .placeholder { color:#8a8fa3; font-style:italic; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">The Goldman Sachs Group, Inc.</h1>
+      <div class="ticker-line">GS &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Financials / Investment Banking &amp; Brokerage</div>
+    </div>
+    <div class="report-date">September 18, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#b8860b;">HOLD</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">$951.47</span></div>
+      <div class="reco-stat"><span class="label">Target Price</span><span class="value">$1,142 (avg.)</span></div>
+      <div class="reco-stat"><span class="label">Market Cap</span><span class="value">$288.1B</span></div>
+      <div class="reco-stat"><span class="label">Implied Upside</span><span class="value">~+20.0%</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">GS</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Financials</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Investment Banking &amp; Brokerage</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$740.01 – $1,153.99</td></tr>
+      <tr><td class="k">Consensus Rating (Headline)</td><td class="v">Hold</td></tr>
+      <tr><td class="k">Rating Distribution (25 analysts)</td><td class="v">6 Strong Buy, 1 Buy, 16 Hold, 1 Sell, 1 Strong Sell</td></tr>
+      <tr><td class="k">TTM Revenue / Net Income</td><td class="v">$67.57 billion / $19.98 billion</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted); margin-top:-14px;">Note: despite a sizable average price target implying ~20% upside, the majority rating distribution (16 of 25 analysts, or 64%) sits at Hold, which the source's own headline label reflects — an unusual case where the double-digit implied upside coexists with a consensus Hold rather than Buy.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Goldman Sachs delivered strong TTM results — revenue of $67.57 billion (up 23.3% year-over-year) and net income of $19.98 billion (up 34.8%) — reflecting robust performance across its Global Banking &amp; Markets, Asset &amp; Wealth Management, and Platform Solutions segments. Despite this earnings strength and an average price target of $1,142 implying roughly 20% upside from the current price of $951.47, the underlying analyst rating distribution is headlined as "Hold": only 7 of 25 analysts (28%) rate the stock Buy or Strong Buy, while 16 (64%) rate Hold and 2 rate Sell/Strong Sell. This is a notable divergence from peers JPM, BAC, WFC, and C in this series, where the headline label is Buy. Given the stock's wide 52-week trading range ($740–$1,154) and the source's own Hold consensus label despite the sizable average target, we rate GS a HOLD, weighting the cautious rating distribution alongside the strong reported earnings growth.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Goldman Sachs reported trailing-twelve-month revenue of $67.57 billion (up 23.3% year-over-year) and net income of $19.98 billion (up 34.8%), reflecting strong performance across its three primary divisions: Global Banking &amp; Markets, Asset &amp; Wealth Management, and Platform Solutions. The stock has traded within a wide 52-week range of $740.01 to $1,153.99, reflecting significant volatility tied to capital markets activity levels and trading revenue, which can swing meaningfully with market conditions.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text placeholder">{{No specific forward-quarter or full-year 2026 EPS guidance was independently sourced for this report — recommend reviewing Goldman Sachs' most recent earnings call transcript for management's outlook on trading and investment banking activity levels.}}</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">The average price target of $1,142 (range $730–$1,325) implies approximately 20% upside from the current price of $951.47. However, the rating distribution (6 Strong Buy, 1 Buy, 16 Hold, 1 Sell, 1 Strong Sell) shows a clear majority (64%) at Hold, and the source's own headline consensus label is "Hold" rather than "Buy" — an unusual combination we weight over the raw average target in arriving at our overall rating.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Goldman Sachs is a leading global investment bank operating across three primary divisions: Global Banking &amp; Markets (investment banking advisory, underwriting, and trading), Asset &amp; Wealth Management, and Platform Solutions, serving corporations, financial institutions, governments, and individuals worldwide.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Global Banking &amp; Markets investment banking fees and trading revenue, which can be volatile with capital markets activity levels</li>
+      <li>Asset &amp; Wealth Management fee income, benefiting from scale and investment performance</li>
+      <li>Platform Solutions revenue, including transaction banking and consumer platform businesses</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Compensation expense, which represents a significant portion of Goldman Sachs' cost base and scales with revenue performance</li>
+      <li class="placeholder">{{Specific technology and regulatory compliance expense figures not independently sourced for this report}}</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Goldman Sachs competes in the global investment banking and brokerage industry most directly against Morgan Stanley (see separate MS report in this series), with additional competition from the investment banking and trading divisions of large diversified banks including JPMorgan Chase, Bank of America, and Citigroup.</p>
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — reputation, client relationships, and regulatory capital requirements create significant barriers to entry in large-scale investment banking.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — the ability to attract and retain top investment banking and trading talent represents a key input cost and competitive factor.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate — large corporate and institutional clients can negotiate fees, though top-tier advisory relationships carry switching costs.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate — boutique advisory firms and alternative capital providers present competitive alternatives for certain investment banking services.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — intense competition among global investment banks (Morgan Stanley and the investment banking arms of large diversified banks) for market share.</td></tr>
+    </table>
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Goldman Sachs' moat rests on its leading global brand and reputation in investment banking advisory and underwriting, deep institutional client relationships, and strong trading franchise across asset classes.</p>
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major U.S. diversified and investment banks. See separate JPM, BAC, WFC, C, and MS reports in this series.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>Goldman Sachs</td><td>GS</td><td>Headline Hold consensus despite ~20% implied upside; 64% Hold distribution</td></tr>
+      <tr><td>Morgan Stanley</td><td>MS</td><td>See separate MS report in this series</td></tr>
+      <tr><td>JPMorgan Chase</td><td>JPM</td><td>See separate JPM report in this series</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — investment bank valuation is typically approached via P/E, P/TBV, and ROE-based frameworks rather than standard DCF}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>Average sell-side price target of $1,142 (25 analysts) as of the report date</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">We rate GS a <strong>HOLD</strong>. While the average price target implies substantial upside, the underlying rating distribution and the source's own headline "Hold" consensus label reflect greater caution than the target alone suggests — likely tied to concerns about the sustainability of currently elevated trading and investment banking revenue levels and the stock's wide trading range over the past year.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>TTM</th></tr>
+      <tr><td>Revenue</td><td>$67.57 billion (+23.3%)</td></tr>
+      <tr><td>Net Income</td><td>$19.98 billion (+34.8%)</td></tr>
+      <tr><td>Market Capitalization</td><td>$288.07 billion (+21.1%)</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">Goldman Sachs' earnings growth has been driven substantially by trading and investment banking activity, both of which are inherently more volatile and cyclical than steady net-interest-income-driven bank earnings. This cyclicality may partly explain the more cautious analyst rating distribution relative to the magnitude of reported earnings growth.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>Trading and investment banking revenue can be highly volatile quarter to quarter, dependent on capital markets activity levels and market volatility, as reflected in the stock's wide 52-week trading range.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>As a systemically important financial institution, GS is subject to stringent capital and liquidity requirements; earnings quality is more dependent on cyclical capital markets activity than peers with larger traditional lending franchises.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span class="placeholder">{{Banking and broker-dealer regulatory policy (capital requirements, trading regulations) represents an ongoing industry-wide consideration; specific current developments not independently verified for this report.}}</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against Goldman Sachs' most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in the sources reviewed — verify directly against Goldman Sachs' 10-K/10-Q auditor opinion. The gap between the sizable average price target and the majority-Hold rating distribution flagged above should be independently reconciled before this report is used for any investment decision.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul class="placeholder"><li>{{ESG_ENV — sustainable finance commitments and operational emissions targets not independently sourced}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul class="placeholder"><li>{{ESG_SOC — community reinvestment and workforce program specifics not independently sourced}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul class="placeholder"><li>{{ESG_GOV — board composition and diversity not independently sourced}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 18, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (financial data aggregators and sell-side analyst rating summaries) that may be delayed or inconsistent, including a noted gap between the average price target and the majority-Hold rating distribution. All figures should be independently verified against Goldman Sachs' 10-K/10-Q filings and live market data before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

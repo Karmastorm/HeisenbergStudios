@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — PEP</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">PepsiCo, Inc.</h1>
+      <div class="ticker-line">PEP &nbsp;|&nbsp; NASDAQ &nbsp;|&nbsp; Consumer Staples / Beverages &amp; Snack Foods</div>
+    </div>
+    <div class="report-date">September 15, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#4caf50;">BUY</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Trading Level</span><span class="value">Near 52-week low</span></div>
+      <div class="reco-stat"><span class="label">Target Price (Consensus)</span><span class="value">~$145–$171 (wide range)</span></div>
+      <div class="reco-stat"><span class="label">P/E Ratio</span><span class="value">~16.5x</span></div>
+      <div class="reco-stat"><span class="label">Dividend Yield</span><span class="value">~3.9%</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">PEP</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NASDAQ</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Consumer Staples</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Beverages &amp; Snack Foods</td></tr>
+      <tr><td class="k">Segments</td><td class="v">PepsiCo Foods North America, PepsiCo Beverages North America, International Beverages Franchise, Europe/Middle East/Africa, Latin America Foods, Asia Pacific Foods</td></tr>
+      <tr><td class="k">Dividend</td><td class="v">$1.48/quarter (raised 4% in July 2026); 54 consecutive years of dividend increases — a "Dividend Aristocrat"; payout ratio ~89% (on the higher end)</td></tr>
+      <tr><td class="k">Share Buyback</td><td class="v">$10 billion program authorized, running through 2030</td></tr>
+      <tr><td class="k">52-Week Performance</td><td class="v">+8.4% over trailing 52 weeks (one source, dated ~June 2026), underperforming the S&amp;P 500's 22.2% gain over the same period; more recent sources describe the stock trading "close to" its 52-week low</td></tr>
+      <tr><td class="k">CEO / Headquarters</td><td class="v">Ramon Laguarta (CEO); headquartered in Purchase, New York</td></tr>
+      <tr><td class="k">Activist Investor</td><td class="v">Elliott Investment Management holds a ~$4 billion stake (revealed Sept. 2, 2025), pushing for capital-allocation and structural changes; PepsiCo has rejected full bottling-operations refranchising as "not under consideration"</td></tr>
+      <tr><td class="k">Analyst Ratings</td><td class="v">"Moderate Buy" (8 Strong Buy / 14 Hold / 1 Strong Sell of 23 analysts, one source) — genuinely mixed, with at least one recent downgrade (Citi to Hold, $145 target, from $170)</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      PepsiCo is navigating a genuine, disclosed North American demand slowdown even as its international business performs strongly — Q2 2026 net revenue rose 6.4% to $24.18 billion (beating the ~$23.95 billion consensus), but organic revenue grew only 2.4%, with North American food volume flat and North American beverage volume down 4%, as CEO Ramon Laguarta directly attributed the weakness to "consumer budgets tightening due to rising inflationary pressures" — specifically citing a four-year-high gas price of $4.56/gallon in late May (amid the U.S.-Iran conflict) that hit convenience-store channel demand particularly hard. This stands in explicit, repeatedly-noted contrast to rival Coca-Cola's much stronger 2026 (see separate KO report), a genuine competitive divergence the market has priced accordingly — PepsiCo shares are now trading near their 52-week low and at a meaningfully lower P/E (~16.5x) than Coca-Cola's ~25.3x. Management has responded with concrete actions: price reductions of up to 15% on Lay's, Tostitos, Doritos, and Cheetos (rolled out February 2026) aimed at winning back shoppers, and branding overhauls on Gatorade and Lay's. Activist investor Elliott Investment Management's ~$4 billion stake adds a distinct catalyst dimension, pushing for capital-allocation changes and reduced emphasis on capital-intensive bottling operations (though PepsiCo has explicitly rejected full bottling refranchising) — Elliott had called out potential for 50% upside in the shares when it first disclosed its position. Given a genuinely depressed valuation (P/E ~16.5x, >6% earnings yield per one source) against a company that still maintains real pricing power and structural brand moats even amid the current North American softness, and with an active, well-capitalized shareholder pushing for value-unlocking changes, this supports a BUY — though the timing and magnitude of a North American demand recovery (tied significantly to gas prices and broader consumer-budget conditions outside PepsiCo's control) remains genuinely uncertain.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">PepsiCo reported Q2 2026 net revenue of $24.18 billion (+6.4% YoY, beating the ~$23.95 billion consensus), with adjusted EPS of $2.20, one cent below the $2.21 consensus (a narrow miss, following four consecutive quarters of beats). Organic revenue grew 2.4%, driven entirely by international markets, while North American food volume was flat and North American beverage volume declined 4%. Global food volume grew 3% and beverage volume grew 2%, both figures reflecting strong international performance masking domestic softness. CEO Ramon Laguarta stated results were "tempered in the quarter as U.S. food and beverage category performance moderated with consumer budgets tightening due to rising inflationary pressures," specifically citing gas prices that hit a four-year high of $4.56/gallon in late May amid the U.S.-Iran conflict, and noting demand was "particularly weak at convenience stores." Laguarta added: "I think the consumer is worse than what we had anticipated, and it's driven mainly by gas prices... We need to see some improvement in the convenience and gas channel." Management left full-year 2026 guidance intact: organic revenue growth of 2-4% and core constant-currency EPS growth of 4-6% (translating to reported net revenue growth of 4-6% and core EPS growth of roughly 5-7% after factoring in a ~1-point FX benefit). PepsiCo raised its quarterly dividend 4% to $1.48/share, marking 54 consecutive years of increases, and authorized a $10 billion share repurchase program running through 2030. The company continues working to reverse persistent North American volume declines: price reductions of up to 15% on Lay's, Tostitos, Doritos, and Cheetos were rolled out in February 2026, alongside branding overhauls on Gatorade and Lay's. Activist investor Elliott Investment Management, which built its ~$4 billion stake in September 2025 and called out potential for 50% upside at the time, has continued pushing PepsiCo to reduce prices on selected products and expand more affordable pack sizes (per Barron's), and separately to consider reducing capital intensity in bottling operations; PepsiCo stated during a December 2025 investor Q&A that "a full refranchising of our North American beverage operation is not under consideration." PepsiCo separately shifted its $1.7 billion global media account to Publicis Groupe from incumbent Omnicom, and Indian authorities raided an illegal operation in Mumbai found to be faking expiry dates and nutritional information on food export products manufactured by PepsiCo, Nestlé, Coca-Cola, and Unilever. The company has also been using Siemens' Digital Twin Composer running on Nvidia's Omniverse platform for manufacturing/operations simulation.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Full-year 2026 guidance remains unchanged at organic revenue growth of 2-4% and core constant-currency EPS growth of 4-6% (roughly 5-7% core EPS growth and 4-6% reported net revenue growth after the ~1-point FX benefit). Management's explicit commentary tying near-term recovery to "improvement in the convenience and gas channel" suggests PepsiCo's own near-term forecast is meaningfully dependent on macro conditions (gas prices, broader consumer-budget pressure) outside the company's direct control, distinct from a purely company-specific execution narrative.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">PepsiCo trades at approximately 16.5x P/E with a >6% earnings yield per one source, a meaningfully lower valuation than Coca-Cola's ~25.3x, reflecting the market's discounting of PepsiCo's North American softness relative to Coca-Cola's stronger execution in the same period. Analyst price targets show real dispersion and a generally cautious recent trend: one source's average target of $169.38 (from April 2026) implied ~19.2% upside, while more recent, specific downward revisions include Citi cutting to $145 (from $170, downgrading to Hold) and a Simply Wall St internal fair-value estimate trimmed from $168.27 to $164.86. Analysts see "at least 10% upside" in PepsiCo per one September 2026 source specifically framing it (alongside Medtronic) as a dividend-aristocrat opportunity given proximity to 52-week lows.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">PepsiCo, Inc., headquartered in Purchase, New York, manufactures, markets, distributes, and sells beverages and convenient foods worldwide, operating through six segments: PepsiCo Foods North America (Frito-Lay snacks — Lay's, Tostitos, Doritos, Cheetos — and Quaker Foods), PepsiCo Beverages North America (Pepsi, Gatorade, Mountain Dew, and other beverages), International Beverages Franchise, Europe/Middle East/Africa, Latin America Foods, and Asia Pacific Foods. Unlike Coca-Cola's largely asset-light concentrate/licensing model, PepsiCo owns and operates significantly more of its own bottling and manufacturing infrastructure directly — a structural difference activist investor Elliott Investment Management has specifically targeted as an area for potential capital-allocation improvement, though PepsiCo has resisted full-scale bottling refranchising.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>International beverage and food volume growth, the primary source of PepsiCo's positive organic growth in Q2 2026 even as North America struggled</li>
+      <li>Pricing actions and pack-size innovation (up to 15% price cuts on core Frito-Lay brands rolled out February 2026), a deliberate strategy to rebuild North American volume at the expense of near-term price/mix</li>
+      <li>Brand refresh initiatives (Gatorade and Lay's rebranding efforts) aimed at reinvigorating flagship product engagement</li>
+      <li>Consumer shift toward healthier snacking, with one survey cited showing 61% of consumers willing to pay more for healthier options — a trend PepsiCo's broader portfolio evolution could capture</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>North American price reductions (up to 15% on core Frito-Lay products), a direct, disclosed near-term margin/revenue trade-off aimed at volume recovery</li>
+      <li>Continued capital intensity in owned bottling operations — the specific structural cost base Elliott Investment Management has targeted for potential restructuring</li>
+      <li>Marketing investment behind brand overhauls (Gatorade, Lay's)</li>
+      <li>An elevated dividend payout ratio (~89%), leaving less retained capital for reinvestment relative to peers with lower payout ratios</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">PepsiCo competes in the global beverage and snack-food industry, most directly against Coca-Cola in beverages (see separate KO report in this series) and against a range of snack-food competitors (Mondelez — see separate MDLZ report in this series — and others) in the Frito-Lay category. The single most notable current industry dynamic is the sharp, well-documented performance divergence between PepsiCo and Coca-Cola in 2026: one source's headline directly frames this as "Coca-Cola is pounding Pepsi on Wall Street, riding a lean beverage strategy to near-record highs while its bloated rival chokes on a slumping snack business" — an unusually blunt characterization, but one broadly consistent with the underlying data reviewed (Coca-Cola's guidance raises and record highs versus PepsiCo's North American volume declines and downgrades).</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — PepsiCo's scale across both beverages and snacks, plus its owned manufacturing/distribution infrastructure, represent substantial barriers to entry.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — input costs and the capital intensity of owned bottling operations are a specific, disclosed structural cost consideration that Elliott Investment Management has targeted.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>High and clearly evidenced — North American consumers have shown meaningful price sensitivity amid inflationary pressure and elevated gas prices, directly driving the 4% North American beverage volume decline and prompting PepsiCo's own price-cut response.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate — Coca-Cola and other beverage/snack competitors offer substitutes across most categories; convenience-store channel weakness specifically suggests consumers are also substituting away from impulse/convenience purchases generally amid budget pressure.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — Coca-Cola is PepsiCo's primary beverage competitor and has substantially outperformed it in 2026; Mondelez and other snack-food competitors compete in the Frito-Lay category.</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">PepsiCo's moat rests on a uniquely diversified combination of leading beverage (Pepsi, Gatorade, Mountain Dew) and snack-food (Lay's, Doritos, Cheetos, Tostitos, Quaker) brands — a broader category diversification than beverage-only competitor Coca-Cola. One source specifically notes PepsiCo "maintains pricing power and moats, executing well even as North America food and beverage volumes face pressure," suggesting the underlying brand strength remains intact even as near-term execution and macro conditions have weighed on results. The activist involvement from Elliott specifically targets unlocking additional value from this existing brand portfolio through capital-allocation changes rather than questioning the fundamental brand moat itself.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major global beverage and snack-food companies. See separate KO and MDLZ reports in this series.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>PepsiCo</td><td>PEP</td><td>P/E ~16.5x; trading near 52-week low; North American volume declines; Elliott activist stake</td></tr>
+      <tr><td>Coca-Cola</td><td>KO</td><td>See separate KO report — P/E ~25.3x, +29% YTD, two consecutive guidance raises in 2026</td></tr>
+      <tr><td>Mondelez</td><td>MDLZ</td><td>See separate MDLZ report in this series</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled — the central question is whether North American volume trends recover toward historical levels or remain structurally pressured}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>One source's internal fair-value estimate was trimmed from $168.27 to $164.86 following more cautious assumptions on PepsiCo Foods North America and softer recent U.S. trends — not independently rebuilt in this summary</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">PepsiCo's depressed valuation (P/E ~16.5x, trading near 52-week lows) relative to Coca-Cola's premium multiple reflects a genuine, well-documented performance gap rather than a data-quality issue — this is a name where the valuation discount is earned by real operational underperformance, not an obvious market overreaction. That said, the combination of a >6% earnings yield, continued brand-level pricing power even amid volume softness, and active Elliott Investment Management involvement pushing for capital-allocation improvement provides multiple, distinct paths to a re-rating that do not solely depend on a North American consumer recovery.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q1 2026</th><th>Q2 2026</th><th>FY2026 Guidance</th></tr>
+      <tr><td>Net Revenue</td><td>$19.4B (beat est.)</td><td>$24.18B (+6.4% YoY, beat est.)</td><td>Reported net revenue +4–6%</td></tr>
+      <tr><td>Organic Revenue Growth</td><td class="placeholder">{{Not directly sourced}}</td><td>+2.4% (entirely international-driven)</td><td>+2–4%</td></tr>
+      <tr><td>Adjusted EPS</td><td>$1.61 (beat est.)</td><td>$2.20 (missed $2.21 est. by $0.01)</td><td>Core constant-currency EPS +4–6%</td></tr>
+      <tr><td>North America Food Volume</td><td class="placeholder">{{Not directly sourced}}</td><td>Flat</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>North America Beverage Volume</td><td class="placeholder">{{Not directly sourced}}</td><td>−4%</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Global Food/Beverage Volume</td><td class="placeholder">{{Not directly sourced}}</td><td>+3% food / +2% beverage (both international-driven)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">PepsiCo's Q2 2026 results show a clean, well-corroborated, and specifically-attributed revenue/volume miss — management directly and repeatedly attributed the North American weakness to macro consumer-budget pressure and elevated gas prices rather than offering a vague explanation, a positive disclosure-transparency signal even though the underlying news is negative. The one-cent EPS miss (versus four consecutive prior quarters of beats) is modest in isolation but notable as an inflection in trend. Analysts should track convenience-store-channel-specific data going forward, since management explicitly identified this channel as the source of the sharpest weakness and tied near-term recovery expectations to its improvement.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>North American food and beverage volumes have declined for multiple consecutive periods, with management explicitly uncertain about the timing of recovery ("we need to see some improvement in the convenience and gas channel, and hopefully..."). Price cuts on core Frito-Lay brands are a direct trade-off between near-term margin and volume recovery that has not yet been proven successful.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>An elevated dividend payout ratio (~89%) leaves less capital flexibility than lower-payout peers; a one-cent EPS miss broke a streak of four consecutive quarterly beats, worth monitoring for whether it represents a genuine inflection.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span>Indian authorities raided an illegal operation found to be faking expiry dates and nutritional information on food export products manufactured by PepsiCo (among other companies) — while this appears to implicate a third-party/counterfeit operation rather than PepsiCo's own conduct directly, it illustrates supply-chain/counterfeiting risk in international markets worth monitoring for any further developments.</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation directly involving PepsiCo (beyond the third-party counterfeiting matter noted above) was identified in the sources reviewed for this summary — verify against PepsiCo's most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in sources reviewed — verify directly against PepsiCo's 10-K/10-Q auditor opinion.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul class="placeholder"><li>{{ESG_ENV — not independently sourced in this summary}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul><li>A consumer survey cited found 61% of consumers willing to pay more for healthier snacks — a relevant social/health trend for PepsiCo's snack-food portfolio evolution, though the company's own specific response strategy was not detailed in sources reviewed</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul><li>Elliott Investment Management's active, disclosed ~$4 billion activist stake and specific capital-allocation/structural proposals represent a significant, ongoing governance dynamic; PepsiCo has publicly and specifically rejected one of Elliott's key proposals (full bottling-operations refranchising) while apparently accommodating others (pricing/pack-size changes)</li><li class="placeholder">{{ESG_GOV — broader board composition and executive compensation structure not sourced beyond the above}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 15, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (Yahoo Finance, CNBC, Simply Wall St, StockAnalysis.com, Barchart, and PepsiCo's own investor relations materials) that may be delayed or inconsistent. All figures should be independently verified against PepsiCo's 10-K/10-Q filings before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

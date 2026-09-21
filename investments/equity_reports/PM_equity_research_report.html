@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — PM</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Philip Morris International Inc.</h1>
+      <div class="ticker-line">PM &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Consumer Staples / Tobacco (Smoke-Free Products &amp; Combustibles)</div>
+    </div>
+    <div class="report-date">September 15, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#4caf50;">BUY</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Market Cap</span><span class="value">~$281.7 billion (pre-Q2 snapshot)</span></div>
+      <div class="reco-stat"><span class="label">Target Price (Consensus)</span><span class="value">~$180–$210 (varies by source/date)</span></div>
+      <div class="reco-stat"><span class="label">2026 YTD Performance</span><span class="value">+13.42% (one source, prior to Q2 report)</span></div>
+      <div class="reco-stat"><span class="label">FY2026 Adj. EPS Guidance</span><span class="value">$8.26–$8.41 (+9.5–11.5%)</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">PM</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Consumer Staples</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Tobacco (Smoke-Free Products &amp; Combustibles)</td></tr>
+      <tr><td class="k">Key Brands</td><td class="v">IQOS (heated tobacco), ZYN (oral nicotine pouches), VEEV (e-vapor), Marlboro and other combustible cigarette brands</td></tr>
+      <tr><td class="k">Dividend</td><td class="v">$1.47/quarter (reaffirmed); payout ratio ~78.79% (one source, described as "rising")</td></tr>
+      <tr><td class="k">Smoke-Free Revenue Mix</td><td class="v">~42% of total net revenues (per one source) — a structurally important and rising share</td></tr>
+      <tr><td class="k">5-Year Total Shareholder Return</td><td class="v">130.17% (one source)</td></tr>
+      <tr><td class="k">Headquarters</td><td class="v">Stamford, Connecticut</td></tr>
+      <tr><td class="k">Regulatory Milestone</td><td class="v">FDA granted Modified Risk Tobacco Product (MRTP) authorization to 20 ZYN variants on June 30, 2026 — the first and only MRTP authorization for a nicotine pouch product</td></tr>
+      <tr><td class="k">Earnings Beat Streak</td><td class="v">Fifth consecutive quarterly EPS beat as of Q2 2026 (streak dating to at least Q3 2024)</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted); margin-top:-14px;">Note: sources showed some inconsistency in EPS figures — GAAP/reported diluted EPS guidance ($7.18-7.43 across different snapshots) is distinct from adjusted diluted EPS guidance ($8.26-8.41), and these should not be conflated. A $511-533 million non-cash impairment on the RBH (Rothmans, Benson & Hedges) Canadian equity investment affected reported (not adjusted) EPS specifically.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Philip Morris International's multi-year pivot toward smoke-free products continues to deliver genuinely strong results: Q2 2026 organic net revenue grew 8%, adjusted diluted EPS rose 15% to $2.20 (beating the $2.05 consensus by ~7.4%, a fifth consecutive quarterly beat), and smoke-free revenue grew 14.2%, powered by IQOS momentum and FDA Modified Risk Tobacco Product authorization for 20 ZYN nicotine-pouch variants — the first such authorization ever granted for this product category, a significant regulatory validation. Smoke-free products now represent approximately 42% of total net revenues, evidence the company's transformation away from traditional combustible cigarettes is structurally advancing rather than merely aspirational. Management reaffirmed full-year guidance (organic net revenue growth of 5-7%, adjusted diluted EPS of $8.26-8.41, representing 9.5-11.5% growth) even while absorbing a $511-533 million non-cash impairment on its Canadian RBH equity investment that depressed reported (GAAP) EPS by 8.3-8.4% year-over-year — a useful reminder to evaluate PM primarily on adjusted metrics given this one-time item. A modest wrinkle: full first-half U.S. net revenues declined due to inventory movements and higher manufacturing costs, though management has explicitly committed to accelerating U.S. investment in ZYN in the second half of 2026 to support the newly expanded portfolio and prepare for the IQOS ILUMA launch. Given strong, well-diversified international smoke-free growth, a first-ever regulatory endorsement for the ZYN category, a well-covered (if elevated) dividend, and a stock that had gained a still-modest 13.4% year-to-date heading into the Q2 beat (with subsequent analyst price-target increases to as high as $210 on smoke-free confidence), this supports a BUY.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Philip Morris International reported Q2 2026 results (July 22, 2026) with adjusted diluted EPS of $2.20, beating the $2.05 consensus by approximately 7.4% and up 15% year-over-year (9.4% excluding currency); revenue was $11.19 billion, about 5.2% ahead of the $10.64 billion consensus. Organic net revenue grew 8%. Net earnings attributable to shareholders declined 8.3% to $5.3 billion on a reported (GAAP) basis, with reported diluted EPS falling 8.4% to $3.36 (H1 figures) — this decline was primarily driven by a $511-533 million non-cash impairment charge on the company's Rothmans, Benson & Hedges (RBH) Canadian equity investment, plus a higher effective tax rate, and should not be read as indicating operational weakness given the strong organic and adjusted results. IQOS (heated tobacco) net revenue grew 13.7% with gross profit up 16.9%, despite some market challenges in Japan (HTU adjusted in-market sales volume declined 3.4% in Japan, though grew 1.0% excluding consumer pantry de-loading following an April 1 excise-driven price increase); globally, IQOS reached 9.2% of combined cigarette/HTU industry volume in markets where present, with heated tobacco unit shipment volume up 7.6% to 41.8 billion. On June 30, 2026, the FDA granted Modified Risk Tobacco Product (MRTP) authorization to 20 variants in the ZYN range — the first and only such authorization for a nicotine pouch product, a significant regulatory milestone. However, full first-half U.S. net revenues declined due to inventory movements and higher manufacturing costs, with Q2 U.S. segment net revenue down 0.9% organically — ZYN revenues were broadly stable, but declines in the cigar business and unfavorable phasing in the Wellness segment (health/wellness products, delivered net revenue of $856 million, down 0.7% reported/0.9% organic, with adjusted gross profit down 8.9% organic on manufacturing capacity expansion costs, and adjusted operating income down 19.1% organic on marketing/R&D investment phasing) weighed on the U.S. segment specifically. Management reaffirmed full-year 2026 guidance: organic net revenue growth of 5-7%, organic operating income growth of 7-9%, and adjusted diluted EPS of $8.26-8.41 (9.5-11.5% growth), including a $0.15 currency tailwind; shipment volume is expected to be stable to slightly positive, with high-single-digit smoke-free product growth offsetting a 2-3% decline in cigarette volumes. Management specifically announced plans to accelerate U.S. commercial investment in ZYN during the second half of 2026 to maximize long-term brand value and prepare for the future IQOS ILUMA launch, alongside further footprint and portfolio expansion across Europe (now present in every European market with smoke-free products), the UK, Pakistan, Poland, Greece, and the Philippines. The company stated it does not assume a prolonged impact from current geopolitical conflicts but has factored in increased transport and energy costs into guidance. Separately, Nicole Saphier's nomination as U.S. Surgeon General included PM in her disclosed financial portfolio, per one source, though the relevance/implications of this were not further detailed in sources reviewed.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Full-year 2026 guidance (reaffirmed following Q2) calls for organic net revenue growth of 5-7%, organic operating income growth of 7-9%, and adjusted diluted EPS of $8.26-8.41 (representing 9.5-11.5% growth), including a $0.15 currency tailwind. Reported (GAAP) diluted EPS guidance, distinct from the adjusted figure, has been cited at various points between $7.18-7.43, incorporating the RBH impairment and other one-time adjustment items (total projected full-year adjustments of $1.07 per share per one source). Management's own framing emphasizes that the trajectory of the smoke-free business — now approximately 42% of total net revenues — and successful navigation of European flavor bans and the U.S. ZYN ramp-up will be central to hitting these revised annual targets.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Analyst price-target activity around the Q2 2026 report showed some initial mixed signals (one source noted a target trimmed from ~$183 to ~$180 following a Jefferies downgrade) before subsequently shifting more bullish: another source cited fair-value estimates raised from $153 to $158 (characterizing an initial post-earnings pullback as "an overreaction," citing better-than-expected organic sales, margin expansion, and EPS growth), and a separate, more recent source cited a blended price target lifted to approximately $210, reflecting "growing confidence in the company's smoke-free portfolio," the planned U.S. Zyn Ultra launch, recent IQOS developments in Japan, and expectations for an orderly CFO transition. This progression — initial caution followed by upward target revisions as analysts absorbed the full results — is itself informative about the market's evolving read on PM's smoke-free transformation durability.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Philip Morris International Inc., headquartered in Stamford, Connecticut, is a tobacco company operating internationally (outside the United States for its legacy combustible business, though it re-entered the U.S. market for smoke-free products following its 2022 acquisition of Swedish Match, which brought the ZYN brand into its portfolio) that manufactures and sells cigarettes and smoke-free products, including heat-not-burn (IQOS), e-vapor (VEEV), and oral nicotine pouch (ZYN) products, alongside consumer accessories. The company has executed one of the most closely-watched corporate transformations in consumer staples, shifting its business mix from traditional combustible cigarettes toward smoke-free alternatives — now approximately 42% of total net revenues — a transition that has both scientific/regulatory validation (the June 2026 ZYN MRTP authorization) and genuine, sustained financial results (organic net revenue growth in the mid-to-high single digits, adjusted EPS growth in the double digits) behind it.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>IQOS heated-tobacco global expansion and volume growth (+13.7% net revenue in Q2 2026), now present in 109 markets, with continued share gains against combustible cigarettes</li>
+      <li>ZYN nicotine pouch growth, freshly bolstered by FDA MRTP authorization for 20 variants and planned accelerated U.S. commercial investment in H2 2026, including a Zyn Ultra launch</li>
+      <li>Resilient combustible cigarette pricing/execution even amid a structurally declining 2-3% annual volume trend, offset by smoke-free product growth to keep total shipment volume stable to slightly positive</li>
+      <li>Continued European market expansion (now present in every European market with smoke-free products) and other geographic footprint growth (UK, Pakistan, Poland, Greece, Philippines)</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Accelerated U.S. ZYN commercial investment planned for H2 2026, alongside preparation costs for the future IQOS ILUMA U.S. launch</li>
+      <li>Manufacturing capacity expansion costs in the Wellness segment, which pressured that segment's gross margin (-6.0 percentage points) in the quarter cited</li>
+      <li>The $511-533 million non-cash RBH equity-investment impairment, a one-time item depressing reported (not adjusted) EPS</li>
+      <li>Increased transport and energy costs, factored into guidance amid ongoing geopolitical conflicts, though management does not assume a prolonged impact</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Philip Morris International operates in the global tobacco and nicotine-products industry, an industry undergoing a structural, multi-decade shift from combustible cigarettes toward reduced-risk smoke-free alternatives (heated tobacco, e-vapor, nicotine pouches) amid tightening regulatory environments (e.g., new flavor bans in Europe) and evolving public-health policy. PM has positioned itself as a first-mover and scale leader in this transition through IQOS and, since the 2022 Swedish Match acquisition, ZYN — the first product in this category to receive FDA Modified Risk Tobacco Product authorization, a meaningful competitive and regulatory differentiator.</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low-to-moderate — extensive regulatory approval requirements (evidenced by the multi-year process behind ZYN's MRTP authorization) and brand/distribution scale represent real barriers, though the smoke-free category overall remains younger and more competitively contested than legacy combustibles.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Low-to-moderate — PM's global manufacturing scale provides negotiating leverage, though increased transport and energy costs were specifically disclosed as a factored-in cost pressure.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Low — nicotine-product demand is generally price-inelastic given addictive product characteristics, supporting PM's demonstrated pricing power even amid volume declines in combustibles.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate — the broader shift from combustibles to smoke-free alternatives is itself a substitution dynamic PM has proactively led rather than resisted; new flavor bans in Europe represent a regulatory-driven substitution risk to specific product variants.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — British American Tobacco, Japan Tobacco International, and Altria (see separate MO report in this series, PM's former U.S. affiliate prior to a 2008 spin-off) all compete across combustible and smoke-free categories globally.</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">PM's moat rests on decades of accumulated global brand strength (Marlboro internationally, IQOS, and now ZYN), extensive international distribution infrastructure across 109+ markets, and — increasingly — genuine first-mover regulatory and scientific validation in the smoke-free category, exemplified by the ZYN MRTP authorization. The company's demonstrated ability to grow adjusted EPS in the double digits while structurally transitioning its entire product mix away from legacy combustibles is a notable execution achievement that reinforces confidence in the moat's durability through the ongoing industry transition.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major global tobacco companies. See separate MO report in this series.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>Philip Morris International</td><td>PM</td><td>Smoke-free products ~42% of revenue; fifth consecutive quarterly EPS beat; international (ex-U.S. combustibles, re-entered U.S. via ZYN)</td></tr>
+      <tr><td>Altria</td><td>MO</td><td>See separate MO report in this series — PM's former U.S. domestic affiliate prior to the 2008 spin-off</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled — the central question is the pace at which smoke-free products (currently ~42% of revenue) continue displacing combustible-cigarette revenue and whether the transition remains margin-accretive at that pace}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>One source's fair-value estimate was raised from $153 to $158; another source's blended analyst price target reached approximately $210 following continued post-earnings confidence — reflecting a range of views but a generally improving trend following the Q2 2026 results</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">Philip Morris's price-target trajectory around its Q2 2026 report — initial caution (one target trimmed following a Jefferies downgrade) followed by multiple upward revisions as the smoke-free growth story and ZYN regulatory validation were more fully absorbed — suggests a generally constructive but not unanimous analyst view. Given the genuine structural strength of the smoke-free transition (double-digit adjusted EPS growth, first-ever ZYN MRTP authorization, five consecutive quarterly beats) against a still-reasonable valuation following only modest (13.4%) YTD gains heading into the Q2 print, this supports a constructive stance.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q2 2025</th><th>Q2 2026</th><th>FY2026 Guidance</th></tr>
+      <tr><td>Revenue</td><td class="placeholder">{{Implied ~$10.64B given the beat percentage}}</td><td>$11.19B (beat $10.64B est. by ~5.2%)</td><td>Organic net revenue growth 5–7%</td></tr>
+      <tr><td>Organic Net Revenue Growth</td><td class="placeholder">{{Not directly sourced}}</td><td>+8%</td><td>5–7% (full year)</td></tr>
+      <tr><td>Adjusted Diluted EPS</td><td>$1.91 (per one source's prior-year reference)</td><td>$2.20 (+15% YoY; beat $2.05 est. by ~7.4%)</td><td>$8.26–$8.41 (+9.5–11.5%, full year)</td></tr>
+      <tr><td>Reported (GAAP) Diluted EPS</td><td class="placeholder">{{Higher, given the 8.4% H1 decline}}</td><td class="placeholder">{{H1 2026: $3.36, −8.4% YoY}}</td><td>$7.18–$7.43 (source-dependent, incl. RBH impairment)</td></tr>
+      <tr><td>Smoke-Free Revenue Mix</td><td class="placeholder">{{Lower, given the rising trend}}</td><td>~42% of total net revenue</td><td class="placeholder">{{Trending higher}}</td></tr>
+      <tr><td>IQOS Net Revenue Growth</td><td class="placeholder">{{Not directly sourced}}</td><td>+13.7%</td><td class="placeholder">{{Not separately guided}}</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">PM's Q2 2026 results present a clean, well-itemized example of a one-time item (the $511-533 million RBH non-cash impairment) clearly separated from otherwise strong underlying performance — reported EPS declined 8.3-8.4% while adjusted EPS grew 15%, and management specifically and transparently attributed the gap to this identified impairment plus a higher effective tax rate. This is a favorable disclosure/earnings-quality signal: analysts have a clear, specific reconciling item rather than a vague explanation for the GAAP/adjusted divergence. The U.S. Wellness segment's organic declines in gross profit (-8.9%) and operating income (-19.1%) reflect disclosed, deliberate investment phasing (manufacturing capacity expansion, marketing/R&D timing) rather than demand weakness — though this should still be tracked for whether the expected payoff materializes in subsequent quarters.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>Japan HTU (heated tobacco unit) volumes declined amid consumer pantry de-loading following an excise-driven price increase — a market-specific headwind worth monitoring for whether it normalizes. U.S. Wellness segment underperformance (organic gross profit and operating income declines) reflects investment phasing that has not yet demonstrated its expected payoff.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>An elevated and reportedly "rising" dividend payout ratio (~78.79% per one source) leaves somewhat less capital flexibility than lower-payout peers, though the company's strong cash flow generation and "unwavering commitment" to its dividend policy (management's own framing) provide some reassurance.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span>New flavor bans in Europe represent an active, disclosed regulatory headwind management specifically flagged as central to hitting revised annual targets. Broader FDA enforcement trends on vapes and evolving nicotine-product regulation remain an ongoing industry-wide consideration, even as the ZYN MRTP authorization represents a significant positive regulatory milestone specifically for PM.</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against PM's most recent 10-K legal proceedings disclosure; note that tobacco companies broadly carry a long history of litigation exposure that should be checked directly.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in sources reviewed — verify directly against PM's 10-K/10-Q auditor opinion. Sources cited differing reported (GAAP) EPS guidance figures ($7.18–7.33, $7.19–7.34, and $7.28–7.43 across different snapshots and dates) — likely reflecting sequential guidance updates across the year rather than contradictions; verify the most current figure directly against PM's latest investor communications.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul class="placeholder"><li>{{ESG_ENV — not independently sourced in this summary}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul><li>PM's public health/harm-reduction positioning is central to its entire business strategy and public narrative — the smoke-free product transition (now ~42% of revenue) and the ZYN FDA MRTP authorization specifically represent the company's most concrete, third-party-validated public health claim to date, though the fundamental question of tobacco/nicotine product harm remains a subject some investors screen for on ethical/values grounds</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul><li>An expected CFO transition was referenced in one source as a near-term governance consideration, described as anticipated to be "orderly"</li><li class="placeholder">{{ESG_GOV — broader board composition and executive compensation structure not sourced beyond the above}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 15, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (Quartr, Yahoo Finance, Simply Wall St, Tobacco Insider, Benzinga, ChartMill.com, 24/7 Wall St., and Philip Morris International's own investor relations materials) that may be delayed or inconsistent. All figures should be independently verified against PM's 10-K/10-Q filings before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>

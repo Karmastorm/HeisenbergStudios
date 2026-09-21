@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — LLY</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #e9edf2;
+    color: var(--text);
+    font-family: "Georgia", "Times New Roman", serif;
+    line-height: 1.55;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.12);
+    padding: 40px 50px 60px;
+  }
+
+  .report-header {
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .firm-name {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .company-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+  }
+
+  .reco-banner {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .reco-main {
+    flex: 0 0 170px;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .reco-main .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+
+  .reco-main .value {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+
+  .reco-stats {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--gray-bg);
+  }
+
+  .reco-stat {
+    padding: 10px 14px;
+    border-left: 1px solid var(--border);
+  }
+
+  .reco-stat .label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    display: block;
+  }
+
+  .reco-stat .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .basic-info {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+
+  .basic-info td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .basic-info td.k {
+    color: var(--muted);
+    width: 38%;
+  }
+
+  .basic-info td.v {
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  section { margin-bottom: 32px; }
+
+  h2.section-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: var(--navy);
+    padding: 8px 14px;
+    margin: 0 0 14px 0;
+    border-left: 5px solid var(--accent);
+  }
+
+  h3.sub-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    margin: 18px 0 10px;
+  }
+
+  p.body-text { font-size: 15px; margin: 0 0 12px; }
+
+  ul.bullet-list { margin: 0 0 12px 0; padding-left: 20px; }
+  ul.bullet-list li { margin-bottom: 6px; font-size: 15px; }
+
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  .thesis-box .thesis-label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-dark);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  table.data-table th {
+    background: var(--navy);
+    color: #fff;
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  table.data-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background: var(--gray-bg); }
+
+  .risk-item { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+
+  .risk-tag {
+    flex: 0 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    background: var(--red);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .risk-tag.op { background: #b8860b; }
+  .risk-tag.fin { background: var(--red); }
+  .risk-tag.reg { background: #6a3d9a; }
+  .risk-tag.legal { background: #444; }
+
+  .esg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+
+  .esg-card {
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: 4px;
+    padding: 12px 14px;
+  }
+
+  .esg-card.environmental { border-top-color: #2e7d32; }
+  .esg-card.social { border-top-color: #1565c0; }
+  .esg-card.governance { border-top-color: #6a1b9a; }
+
+  .esg-card h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px;
+    color: var(--navy);
+  }
+
+  .esg-card ul { margin: 0; padding-left: 16px; font-size: 13px; }
+  .esg-card li { margin-bottom: 4px; }
+
+  .peer-note {
+    font-size: 12.5px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: -6px;
+    margin-bottom: 12px;
+  }
+
+  footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  footer .analyst-line { margin-bottom: 8px; font-size: 12px; color: var(--text); }
+
+  @media (max-width: 700px) {
+    .page { padding: 24px 18px; }
+    .reco-banner { flex-direction: column; }
+    .reco-stats { grid-template-columns: repeat(2, 1fr); }
+    .esg-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Eli Lilly and Company</h1>
+      <div class="ticker-line">LLY &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Healthcare / Drug Manufacturers — General (Biopharmaceuticals)</div>
+    </div>
+    <div class="report-date">
+      September 15, 2026<br>
+      Analyst: [Name Not Specified]
+    </div>
+  </div>
+
+  <!-- ============ RECOMMENDATION BANNER ============ -->
+  <div class="reco-banner">
+    <div class="reco-main">
+      <span class="label">Recommendation</span>
+      <span class="value" style="color:#4caf50;">BUY</span>
+    </div>
+    <div class="reco-stats">
+      <div class="reco-stat">
+        <span class="label">Current Price</span>
+        <span class="value">~$1,136–$1,144</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Target Price (Consensus)</span>
+        <span class="value">~$1,318.66</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Market Cap</span>
+        <span class="value">~$1.01–1.08 trillion</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Implied Upside</span>
+        <span class="value">~15–16% (consensus average)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BASIC INFORMATION ============ -->
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">LLY</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Healthcare</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Drug Manufacturers — General (Biopharmaceuticals)</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$712.05 – $1,292.65</td></tr>
+      <tr><td class="k">Shares Outstanding</td><td class="v">~941.4 million</td></tr>
+      <tr><td class="k">Average Daily Volume (Liquidity)</td><td class="v">~2.3M shares (10-day average, per one source)</td></tr>
+      <tr><td class="k">Dividend (Annual / Yield)</td><td class="v">~$6.92 / ~0.61%</td></tr>
+      <tr><td class="k">Beta</td><td class="v">~0.46 (low, per one source) — reflects defensive large-cap pharma profile despite high growth</td></tr>
+      <tr><td class="k">Analyst Ratings</td><td class="v">~24 Buy, 2 Sell (one source) — overall "Buy" consensus</td></tr>
+      <tr><td class="k">Float</td><td class="v placeholder">{{Not independently sourced — verify against most recent proxy/13F data; ownership is expected to be heavily institutional given mega-cap status}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT SUMMARY ============ -->
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Eli Lilly has established a commanding lead in the GLP-1/incretin diabetes and obesity market through tirzepatide (marketed as Mounjaro for diabetes and Zepbound for obesity), with combined Q2 2026 revenue of $14.9 billion (up from $8.6B in Q2 2025) and the newly launched oral obesity pill Foundayo already capturing roughly 30% of new obesity patients since its April 2026 launch. Despite the stock's massive run and premium valuation (P/E in the high-30x/low-40x range versus a broader pharma industry closer to 15x), the market may still be under-pricing the depth and durability of Lilly's pipeline — including the oral GLP-1 orforglipron and the triple-agonist retatrutide, whose Phase 3 package is now complete ahead of a planned Q1 2027 regulatory submission. The mispricing thesis rests on Lilly's manufacturing scale (an aggressive, multi-billion-dollar capacity buildout, including a further $4.5 billion Indiana investment) functioning as a durable competitive moat in a market where supply, not just clinical efficacy, has historically been the binding constraint — a moat the market may not be fully crediting relative to the premium multiple already priced in.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Lilly reported Q2 2026 revenue of $23.0 billion, up 48% year-over-year, driven primarily by Mounjaro (+91% YoY to $9.9 billion worldwide) and Zepbound (+44% YoY to $4.9 billion in the U.S.). Reported diluted EPS was $7.94 (+26% YoY) and non-GAAP EPS was $8.38 (+33% YoY), with both figures absorbing $3.03 of acquired IPR&D charges from Q2 business-development activity (versus just $0.14 in Q2 2025) — reflecting Lilly's active M&A pace, including a completed ~$3.8 billion AtaiBeckley acquisition and a pending ~$7 billion Kelonia deal, aimed at diversifying beyond GLP-1s into areas such as psychiatry and cell therapy. The company raised full-year 2026 revenue guidance to $85.0–$87.0 billion (from $82.0–$85.0 billion) and non-GAAP EPS guidance to $35.50–$36.50.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text">Management guides to full-year 2026 non-GAAP performance margin of 49–50.5% and non-GAAP EPS of $35.50–$36.50, a figure that already nets out a meaningful amount of acquired IPR&D charges from recent deal activity. Analysts should model the underlying (pre-M&A-charge) EPS trajectory separately from headline guidance to track core operating momentum, since the pace of Lilly's business development activity is likely to keep introducing similar charges in future quarters.</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Lilly trades at a significant premium to both pharmaceutical peers and the broader industry — one source cites a P/E of roughly 41.5x versus 24.9x for a peer set and 14.9x for the broader U.S. pharmaceuticals industry — reflecting the market's expectation of continued outsized growth from the incretin franchise and pipeline. The average 12-month analyst price target of approximately $1,318.66 (range $930–$1,600) implies further upside from current levels, though the size of the premium leaves relatively little room for execution missteps.</p>
+  </section>
+
+  <!-- ============ BUSINESS DESCRIPTION ============ -->
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Eli Lilly and Company, headquartered in Indianapolis, Indiana, is a global biopharmaceutical company engaged in the discovery, development, manufacture, and sale of pharmaceutical products across diabetes, obesity, oncology, immunology, and neuroscience. Its current growth engine is the incretin (GLP-1/GIP) franchise built around tirzepatide, marketed as Mounjaro for type 2 diabetes and Zepbound for chronic weight management, alongside the newly launched oral GLP-1 pill Foundayo (approved April 2026). The company's broader portfolio includes Jardiance (diabetes/cardiovascular, via a collaboration with Boehringer Ingelheim), Trulicity (legacy GLP-1), Verzenio and other oncology therapies, and a growing neuroscience and immunology pipeline. Lilly has been aggressively expanding manufacturing capacity — a cumulative ~$21 billion invested in Indiana since 2020 — and has pursued business-development activity (AtaiBeckley, pending Kelonia) to diversify beyond its core metabolic franchise into psychiatry, vaccines, and cell therapy.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Mounjaro (diabetes) and Zepbound (obesity) volume growth, both domestically and internationally (ex-U.S. Mounjaro revenue +172% YoY in Q2 2026)</li>
+      <li>Foundayo (oral GLP-1 pill) adoption — already ~30% of new obesity-patient starts within months of its April 2026 launch</li>
+      <li>Pipeline progression — retatrutide (triple agonist) Phase 3 package now complete, with a Biologics License Application planned for Q1 2027</li>
+      <li>Jardiance ex-U.S. sales, including milestone payments under the Boehringer Ingelheim collaboration</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Manufacturing capacity expansion capex (e.g., an additional $4.5 billion commitment to Indiana facilities)</li>
+      <li>R&D spend (+14% YoY to $3.8 billion in Q2 2026, ~17% of revenue), funding the incretin, oncology, and neuroscience pipeline</li>
+      <li>Acquired IPR&D and integration charges from an active business-development pace (AtaiBeckley, Kelonia, and other deals), which have materially affected reported EPS in recent quarters</li>
+      <li>Declining realized prices on Mounjaro/Zepbound in some markets (e.g., cash-pay discounts in the U.S.; lower international pricing following Mounjaro's addition to China's National Reimbursement Drug List)</li>
+    </ul>
+  </section>
+
+  <!-- ============ INDUSTRY OVERVIEW & COMPETITIVE POSITIONING ============ -->
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Lilly competes in the large-cap global biopharmaceutical industry, with its most significant current exposure to the GLP-1/incretin diabetes and obesity market — a market some industry analysts project could exceed $100 billion by 2030. This market has effectively been a two-company race between Lilly's tirzepatide-based products (Mounjaro/Zepbound) and Novo Nordisk's semaglutide-based products (Ozempic/Wegovy), though additional entrants (oral small-molecule GLP-1s from other developers, and eventually generic semaglutide in some ex-U.S. markets) are beginning to compete at the margins. Early in the GLP-1 boom, demand consistently outstripped supply industry-wide, making manufacturing scale — not just clinical differentiation — a key competitive lever, an area where Lilly's aggressive capacity investment appears to give it an edge.</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low-to-moderate — extremely high R&D, clinical trial, and manufacturing-scale barriers in the incretin space, though multiple biotech and pharma players are pursuing oral and next-generation GLP-1 candidates.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Moderate — active pharmaceutical ingredient and biologics manufacturing capacity has historically been a bottleneck industry-wide, giving scaled manufacturers like Lilly and Novo relative supplier leverage versus smaller competitors.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>High and rising — U.S. payers, PBMs, and international reimbursement bodies (e.g., China's National Reimbursement Drug List) exert substantial pricing pressure, evident in declining realized prices for Mounjaro and Zepbound even as volumes grow strongly.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate — generic semaglutide is emerging in some ex-U.S. markets (e.g., India, Brazil), and compounded/compounding-pharmacy versions of GLP-1s have been a recurring competitive and regulatory issue (referenced as "503B rule" dynamics in industry coverage).</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High and concentrated — Novo Nordisk is Lilly's primary direct competitor in GLP-1/incretin therapies, with Lilly also competing more broadly against Merck, Pfizer, AbbVie, Bristol Myers Squibb, and others across its oncology, immunology, and neuroscience portfolio.</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Lilly's moat is increasingly framed around manufacturing scale as much as molecular science: its dual GIP/GLP-1 mechanism (tirzepatide) has demonstrated superior weight-loss efficacy versus single-mechanism GLP-1 competitors, but the more durable advantage may be its aggressive, multi-billion-dollar capacity investment (~$21 billion in Indiana alone), which reduces the risk that production constraints — a historical industry-wide problem — limit Lilly's ability to capture demand for both current products and future pipeline launches (Foundayo, retatrutide). This manufacturing depth, combined with a broader and more diversified pipeline than Novo Nordisk's, is viewed by some analysts as difficult for competitors to replicate quickly.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: large-cap global pharmaceutical companies, with Novo Nordisk as the closest direct competitor in Lilly's largest growth market (GLP-1/incretins). Figures are approximate and should be verified against a single consistent data source.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Focus Overlap</th><th>P/E (approx., source-dependent)</th></tr>
+      <tr><td>Eli Lilly</td><td>LLY</td><td>Diabetes, obesity (GLP-1), oncology, immunology, neuroscience</td><td>~38–42x (TTM); ~27.6x forward (NTM)</td></tr>
+      <tr><td>Novo Nordisk</td><td>NVO</td><td>Diabetes, obesity (GLP-1) — closest direct competitor</td><td>Reported as notably lower than LLY's multiple in most comparisons reviewed; specific current figure not independently verified</td></tr>
+      <tr><td>Merck &amp; Co.</td><td>MRK</td><td>Oncology, vaccines</td><td class="placeholder">{{Not independently sourced in this summary}}</td></tr>
+      <tr><td>Pfizer</td><td>PFE</td><td>Broad pharma portfolio, oncology</td><td class="placeholder">{{Not independently sourced in this summary}}</td></tr>
+      <tr><td>AbbVie</td><td>ABBV</td><td>Immunology, oncology</td><td class="placeholder">{{Not independently sourced in this summary}}</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12.5px; color:var(--muted);">One source cited a broader pharma-peer average P/E of ~24.9x and a wider U.S. pharmaceuticals industry average of ~14.9x versus Lilly's ~41.5x — illustrating the scale of Lilly's valuation premium versus the sector, driven largely by its GLP-1 growth story.</p>
+  </section>
+
+  <!-- ============ VALUATION ============ -->
+  <section>
+    <h2 class="section-title">Valuation</h2>
+
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified cost of capital assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — recommend explicit forecast through at least the mid-2030s given the multi-drug incretin/pipeline ramp (Foundayo, retatrutide, orforglipron)}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>Third-party narratives reviewed cite DCF-based fair-value estimates ranging from roughly $956 (a "Hold"-rated bearish case) to $1,477 (a bullish case reflecting undervaluation) — a wide dispersion that was not independently reconciled in this summary</td></tr>
+    </table>
+
+    <h3 class="sub-title">Relative Valuation</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Eli Lilly (LLY)</th><th>Peer/Industry Reference</th></tr>
+      <tr><td>P/E (TTM)</td><td>~38–42x</td><td>~24.9x (peer average, one source); ~14.9x (broader U.S. pharma industry, same source)</td></tr>
+      <tr><td>Forward P/E (NTM)</td><td>~27.6x</td><td class="placeholder">{{Not independently sourced}}</td></tr>
+      <tr><td>Dividend Yield</td><td>~0.60–0.62%</td><td class="placeholder">{{Not independently sourced}}</td></tr>
+      <tr><td>ROE (TTM)</td><td>~102% (per one source)</td><td class="placeholder">{{Not independently sourced}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">Lilly's valuation premium versus both direct peers and the broader pharmaceutical industry is substantial and reflects the market's expectation that the incretin franchise, plus an expanding pipeline (Foundayo, retatrutide, orforglipron), will sustain multi-year, above-industry growth. The consensus analyst price target of ~$1,318.66 implies further upside, but reviewed third-party DCF estimates ranged widely (from below to meaningfully above the current price), underscoring how sensitive Lilly's valuation is to assumptions about pipeline success rates, pricing/reimbursement trends, and the durability of its manufacturing-scale advantage. A rigorous, analyst-built DCF using company-specific WACC and growth assumptions is recommended before relying on any single external fair-value estimate.</p>
+  </section>
+
+  <!-- ============ FINANCIAL ANALYSIS ============ -->
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Q2 2025</th><th>Q2 2026</th><th>FY2026 Guidance</th></tr>
+      <tr><td>Revenue</td><td>$15.56B</td><td>$23.0B (+48% YoY)</td><td>$85.0B–$87.0B</td></tr>
+      <tr><td>Mounjaro Revenue (worldwide)</td><td class="placeholder">{{Implied ~$5.2B based on 91% YoY growth}}</td><td>$9.9B (+91% YoY)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Zepbound Revenue (U.S.)</td><td class="placeholder">{{Implied ~$3.4B based on 44–46% YoY growth}}</td><td>$4.9B (+44–46% YoY, source-dependent)</td><td class="placeholder">{{Not separately guided}}</td></tr>
+      <tr><td>Reported Diluted EPS</td><td class="placeholder">{{Implied ~$6.30 based on 26% YoY growth}}</td><td>$7.94 (+26% YoY)</td><td class="placeholder">{{Not separately guided (GAAP)}}</td></tr>
+      <tr><td>Non-GAAP EPS</td><td class="placeholder">{{Implied ~$6.30 based on 33% YoY growth}}</td><td>$8.38 (+33% YoY, incl. $3.03 IPR&amp;D charges)</td><td>$35.50–$36.50 (full year)</td></tr>
+    </table>
+
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">Both reported and non-GAAP EPS in Q2 2026 included $3.03 per share of acquired IPR&D charges (versus just $0.14 in the prior-year quarter), reflecting Lilly's active business-development pace. Management's own framing of full-year guidance explicitly separates a $2.78-per-share uplift from underlying business performance from the offsetting $3.03 impact of Q2 acquired IPR&D charges — a useful, company-provided breakdown that analysts should carry forward into their own models rather than treating headline EPS growth rates as purely organic. Gross margin improved 1.5 points year-over-year to 85.8% in Q2 2026, driven by improved production costs and favorable mix, partially offset by lower realized prices — a sign that underlying unit economics remain healthy even as headline pricing declines.</p>
+
+    <h3 class="sub-title">Industry-Specific Ratios</h3>
+    <table class="data-table">
+      <tr><th>Ratio</th><th>Value</th></tr>
+      <tr><td>Combined Mounjaro + Zepbound revenue (Q2 2026)</td><td>$14.9 billion (vs. $8.6B combined a year earlier)</td></tr>
+      <tr><td>Foundayo share of new obesity-patient starts</td><td>~30% since April 2026 launch (per one source); "nearly 1 in 4" per another</td></tr>
+      <tr><td>Cumulative Indiana manufacturing investment</td><td>~$21 billion since 2020 (plus a further $4.5B committed)</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT RISKS ============ -->
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+
+    <div class="risk-item">
+      <span class="risk-tag op">Operational</span>
+      <span>Manufacturing scale-up execution risk remains significant given the scale of ongoing capacity investment (~$21B+ in Indiana); historical industry-wide GLP-1 supply shortages illustrate how binding this constraint can be on growth.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag fin">Financial</span>
+      <span>An aggressive business-development pace (AtaiBeckley, pending Kelonia, and other deals) is introducing recurring, sizable acquired IPR&D charges that create earnings volatility and complicate like-for-like comparisons; management flagged integration risk and potential dilution of focus from core therapeutic areas as an explicit concern in its own earnings call commentary.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag reg">Regulatory</span>
+      <span>Exposure to evolving U.S. drug-pricing policy and reimbursement dynamics (e.g., Medicare negotiation risk broadly across the industry) and to specific national reimbursement decisions abroad, such as Mounjaro's addition to China's National Reimbursement Drug List, which has already pressured realized prices; compounding-pharmacy ("503B") regulatory outcomes are also a live industry issue affecting GLP-1 competitive dynamics.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag legal">Legal</span>
+      <span>Litigation dynamics in the GLP-1 space include Novo Nordisk's advertising-related lawsuit referenced in coverage of Lilly's relative valuation — while this specific suit was framed as a Novo Nordisk matter, broader intellectual-property and advertising-practices litigation risk is a recurring feature of the competitive GLP-1 landscape and should be monitored for either company.</span>
+    </div>
+
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or disclosed material weaknesses in internal controls were identified in the sources reviewed for this summary — verify directly against Lilly's most recent 10-K/10-Q auditor opinion before relying on this. One data source noted "4 Warning Signs" flagged by its own screening tool without specifying what they are — worth investigating directly at the source before treating as informative.}}</p>
+  </section>
+
+  <!-- ============ ESG ============ -->
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental">
+        <h4>Environmental</h4>
+        <ul class="placeholder">
+          <li>{{ESG_ENV — no specific emissions, energy-use, or waste-management metrics were independently sourced in this summary; large-scale manufacturing expansion (Indiana) plausibly carries meaningful environmental-footprint implications worth investigating directly in Lilly's sustainability disclosures}}</li>
+        </ul>
+      </div>
+      <div class="esg-card social">
+        <h4>Social</h4>
+        <ul class="placeholder">
+          <li>{{ESG_SOC — access/affordability programs for GLP-1 therapies (a significant public-interest topic given high list prices and cash-pay dynamics) were referenced only indirectly via pricing/discount commentary; specific program details not independently sourced here}}</li>
+          <li>{{ESG_SOC_2 — labor standards/workforce diversity data not sourced in this summary}}</li>
+        </ul>
+      </div>
+      <div class="esg-card governance">
+        <h4>Governance</h4>
+        <ul class="placeholder">
+          <li>{{ESG_GOV — board composition, executive compensation structure, and succession-planning detail not sourced in this summary; CEO referenced in sources reviewed is David A. Ricks}}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER / DISCLOSURES ============ -->
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 15, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party financial data sources (Yahoo Finance, CNBC, Robinhood, Investing.com, WallStreetZen, Seeking Alpha, company earnings materials, and various financial media) that may be delayed, inconsistent, or subject to revision. Market cap, dividend, and valuation figures varied somewhat across providers searched (e.g., market cap estimates ranging from roughly $994.91B to $1.08T depending on source and date). All figures should be independently verified against primary sources (Eli Lilly's 10-K/10-Q filings and investor relations disclosures) before being used for any actual investment decision. This is not a research report from a registered investment adviser or broker-dealer, does not constitute investment advice, and should not be relied upon as such.
+  </footer>
+
+</div>
+</body>
+</html>

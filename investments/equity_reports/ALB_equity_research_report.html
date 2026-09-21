@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — ALB</title>
+<style>
+  :root {
+    --navy: #1b2a4a;
+    --accent: #0d6efd;
+    --accent-dark: #0a4fb5;
+    --green: #1e7e34;
+    --red: #b02a37;
+    --gray-bg: #f5f7fa;
+    --border: #d8dee6;
+    --text: #222;
+    --muted: #5a6472;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #e9edf2;
+    color: var(--text);
+    font-family: "Georgia", "Times New Roman", serif;
+    line-height: 1.55;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.12);
+    padding: 40px 50px 60px;
+  }
+
+  /* ---------- Header ---------- */
+  .report-header {
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .firm-name {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .company-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--navy);
+    margin: 0;
+  }
+
+  .ticker-line {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .report-date {
+    text-align: right;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    white-space: nowrap;
+  }
+
+  /* ---------- Recommendation banner ---------- */
+  .reco-banner {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .reco-main {
+    flex: 0 0 170px;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .reco-main .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+
+  .reco-main .value {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+
+  .reco-stats {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--gray-bg);
+  }
+
+  .reco-stat {
+    padding: 10px 14px;
+    border-left: 1px solid var(--border);
+  }
+
+  .reco-stat .label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    display: block;
+  }
+
+  .reco-stat .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* ---------- Basic info table ---------- */
+  .basic-info {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 28px;
+  }
+
+  .basic-info td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .basic-info td.k {
+    color: var(--muted);
+    width: 38%;
+  }
+
+  .basic-info td.v {
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  /* ---------- Section styling ---------- */
+  section {
+    margin-bottom: 32px;
+  }
+
+  h2.section-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: var(--navy);
+    padding: 8px 14px;
+    margin: 0 0 14px 0;
+    border-left: 5px solid var(--accent);
+  }
+
+  h3.sub-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--navy);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    margin: 18px 0 10px;
+  }
+
+  p.body-text {
+    font-size: 15px;
+    margin: 0 0 12px;
+  }
+
+  .placeholder {
+    color: #8a8fa3;
+    font-style: italic;
+  }
+
+  ul.bullet-list {
+    margin: 0 0 12px 0;
+    padding-left: 20px;
+  }
+
+  ul.bullet-list li {
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+
+  /* ---------- Investment Summary callout ---------- */
+  .thesis-box {
+    background: var(--gray-bg);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+
+  .thesis-box .thesis-label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-dark);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  /* ---------- Valuation table ---------- */
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  table.data-table th {
+    background: var(--navy);
+    color: #fff;
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  table.data-table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  table.data-table tr:nth-child(even) td {
+    background: var(--gray-bg);
+  }
+
+  /* ---------- Risk list ---------- */
+  .risk-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+  }
+
+  .risk-tag {
+    flex: 0 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    background: var(--red);
+    border-radius: 3px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .risk-tag.op { background: #b8860b; }
+  .risk-tag.fin { background: var(--red); }
+  .risk-tag.reg { background: #6a3d9a; }
+  .risk-tag.legal { background: #444; }
+
+  /* ---------- ESG grid ---------- */
+  .esg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .esg-card {
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: 4px;
+    padding: 12px 14px;
+  }
+
+  .esg-card.environmental { border-top-color: #2e7d32; }
+  .esg-card.social { border-top-color: #1565c0; }
+  .esg-card.governance { border-top-color: #6a1b9a; }
+
+  .esg-card h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px;
+    color: var(--navy);
+  }
+
+  .esg-card ul {
+    margin: 0;
+    padding-left: 16px;
+    font-size: 13px;
+  }
+
+  .esg-card li { margin-bottom: 4px; }
+
+  /* ---------- Peer comparison ---------- */
+  .peer-note {
+    font-size: 12.5px;
+    color: var(--muted);
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: -6px;
+    margin-bottom: 12px;
+  }
+
+  /* ---------- Footer / disclosures ---------- */
+  footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  footer .analyst-line {
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  @media (max-width: 700px) {
+    .page { padding: 24px 18px; }
+    .reco-banner { flex-direction: column; }
+    .reco-stats { grid-template-columns: repeat(2, 1fr); }
+    .esg-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research &middot; Equity Research</div>
+      <h1 class="company-title">Albemarle Corporation</h1>
+      <div class="ticker-line">ALB &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Materials / Specialty Chemicals (Lithium)</div>
+    </div>
+    <div class="report-date">
+      September 18, 2026<br>
+      Analyst: Equity Research Desk
+    </div>
+  </div>
+
+  <!-- ============ RECOMMENDATION BANNER ============ -->
+  <div class="reco-banner">
+    <div class="reco-main">
+      <span class="label">Recommendation</span>
+      <span class="value" style="color:#1e7e34;">BUY</span>
+    </div>
+    <div class="reco-stats">
+      <div class="reco-stat">
+        <span class="label">Current Price</span>
+        <span class="value">$111.39</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Target Price</span>
+        <span class="value">$172.56</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Market Cap</span>
+        <span class="value">$13.14B</span>
+      </div>
+      <div class="reco-stat">
+        <span class="label">Implied Upside/Downside</span>
+        <span class="value">+54.9%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BASIC INFORMATION ============ -->
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">ALB</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Materials</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Specialty Chemicals (Lithium)</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$79.30 &ndash; $221.00</td></tr>
+      <tr><td class="k">Average Daily Volume (Liquidity)</td><td class="v">~1,782,997 shares</td></tr>
+      <tr><td class="k">Float</td><td class="v"><span class="placeholder">{{FLOAT — not independently sourced; effectively equal to shares outstanding less insider holdings}}</span></td></tr>
+      <tr><td class="k">Shares Outstanding</td><td class="v">~118.01 million</td></tr>
+      <tr><td class="k">Major Shareholders</td><td class="v"><span class="placeholder">{{MAJOR_SHAREHOLDERS — Vanguard and BlackRock are known large institutional holders; exact stakes not independently verified in this pass}}</span></td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT SUMMARY ============ -->
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Albemarle Corporation is one of the world's largest lithium producers, supplying lithium compounds for electric-vehicle and energy-storage batteries alongside bromine specialties and catalyst products. The company has endured a severe two-year earnings downturn tied to a collapse in global lithium prices, posting net losses in both FY2024 (-$1.32B) and FY2025 (-$677M), though FY2025 showed a narrowing loss and a swing to positive free cash flow ($692M, versus -$993M in FY2024). Notably, Q2 2026 quarterly results reportedly showed a return to positive net income ($57.4M) alongside 31% year-over-year revenue growth, a potentially significant inflection point suggesting the lithium price cycle may be turning; this should be independently verified against the company's most recent 10-Q, as a single quarter of improvement does not yet establish a durable trend. A reliable separately-reported TTM figure could not be obtained in this research pass. The stock's market capitalization has risen approximately 38% recently, though it remains roughly half its 52-week high of $221.00. The 22-analyst distribution (10 Strong Buy / 3 Buy / 9 Hold / 0 Sell / 0 Strong Sell) shows Strong Buy as the largest single bucket with 59.1% Buy-or-better, supporting a BUY rating consistent with the average price target of $172.56, which implies a substantial +54.9% upside from the current price — reflecting analyst conviction that a lithium price recovery is likely to drive a significant earnings re-rating.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text"><strong>Q2 2026 results reportedly showed a return to positive net income ($57.4M) and 31% year-over-year revenue growth ($1.7B), a potentially important signal that the lithium price downturn may be stabilizing or reversing.</strong> <span class="placeholder">{{RECENT_DEVELOPMENTS — the specific drivers of the Q2 2026 improvement (lithium price recovery versus cost-cutting/production-curtailment benefits), along with any updates to production guidance or capital expenditure plans, should be sourced from the most recent 10-Q/8-K and verified independently}}</span></p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text placeholder">{{EARNINGS_FORECAST_SUMMARY — forward EPS and revenue estimates for FY2027E, highly sensitive to the assumed forward lithium price curve, should be sourced from consensus data and verified independently; the very large gap between trailing (236x, reflecting near-zero trailing earnings) and forward (12.11x) P/E multiples implies analysts expect a substantial earnings recovery}}</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">At $111.39, ALB's trailing P/E of 236x is not meaningful given depressed trailing earnings, but the forward P/E of just 12.11x suggests the market is pricing in a substantial lithium-price-driven earnings recovery. The stock trades well below the midpoint of its wide 52-week range of $79.30–$221.00, and the average analyst target's very large implied upside (+54.9%) reflects significant potential reward if the recent Q2 2026 profitability inflection proves durable, balanced against the risk that lithium prices remain depressed for longer.</p>
+  </section>
+
+  <!-- ============ BUSINESS DESCRIPTION ============ -->
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Albemarle Corporation is one of the world's largest producers of lithium compounds (lithium hydroxide, lithium carbonate) used primarily in electric-vehicle and grid-scale battery production, operating through Energy Storage, Specialties (bromine and other specialty chemicals), and Ktalco (catalysts) segments. The company's earnings are highly leveraged to global lithium prices, which experienced a severe multi-year collapse from 2022-2023 peaks amid a combination of new supply additions and slower-than-expected electric-vehicle demand growth, though recent quarters have shown signs of price stabilization.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Global lithium price, which is highly cyclical and sensitive to electric-vehicle demand growth, battery manufacturing capacity additions, and global lithium mining/processing supply growth</li>
+      <li>Lithium compound production volumes across the company's mining and processing operations</li>
+      <li>Bromine specialties and catalyst product sales, which provide a more stable, less cyclical revenue base than the lithium business</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Mining, processing, and energy costs for lithium extraction and conversion, which have significant operating leverage given largely fixed production capacity</li>
+      <li>Capital expenditure on lithium production capacity expansion, though this has reportedly been scaled back amid the recent price downturn</li>
+    </ul>
+  </section>
+
+  <!-- ============ INDUSTRY OVERVIEW & COMPETITIVE POSITIONING ============ -->
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text placeholder">{{INDUSTRY_OVERVIEW — the global lithium industry has experienced a severe multi-year price downturn driven by new supply capacity additions outpacing electric-vehicle demand growth, though recent price stabilization signs (as reflected in ALB's Q2 2026 results) should be independently verified against current lithium price benchmark data}}</p>
+
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Moderate — lithium mining and processing require significant capital and technical expertise, though the prior price boom attracted substantial new global supply capacity, contributing to the current oversupply</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Low-to-Moderate — Albemarle largely controls its own upstream lithium resource base through owned mining operations, reducing dependence on third-party lithium suppliers</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate-to-High — battery and electric-vehicle manufacturers have significant negotiating leverage during periods of lithium oversupply, though long-term supply agreements provide some revenue stability</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate — alternative battery chemistries (e.g., sodium-ion) are under development and could reduce lithium demand growth over the long term, though lithium-based batteries remain dominant for most current applications</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — intense competition among Albemarle, SQM, Ganfeng Lithium, and various other global lithium producers, with the recent price downturn intensifying competitive pressure industry-wide</td></tr>
+    </table>
+
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Albemarle's moat is rooted in its large-scale, low-cost lithium resource base (including its Chilean brine operations and Australian hard-rock mining interests) and long-standing customer relationships with major battery and electric-vehicle manufacturers, though the company's recent multi-year earnings downturn illustrates the limits of these advantages during periods of severe industry-wide oversupply.</p>
+
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set used for relative valuation and competitive benchmarking.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Market Cap</th><th>P/E</th><th>EV/EBITDA</th></tr>
+      <tr><td>Albemarle Corporation</td><td>ALB</td><td>$13.14B</td><td class="placeholder">236x (trailing, N/M)</td><td class="placeholder">{{EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">Sociedad Quimica y Minera de Chile S.A.</td><td class="placeholder">SQM</td><td class="placeholder">{{PEER_1_MCAP}}</td><td class="placeholder">{{PEER_1_PE}}</td><td class="placeholder">{{PEER_1_EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">Ganfeng Lithium Co., Ltd.</td><td class="placeholder">1772.HK</td><td class="placeholder">{{PEER_2_MCAP}}</td><td class="placeholder">{{PEER_2_PE}}</td><td class="placeholder">{{PEER_2_EV_EBITDA}}</td></tr>
+      <tr><td class="placeholder">FMC Corporation</td><td class="placeholder">FMC</td><td class="placeholder">{{PEER_3_MCAP}}</td><td class="placeholder">{{PEER_3_PE}}</td><td class="placeholder">{{PEER_3_EV_EBITDA}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ VALUATION ============ -->
+  <section>
+    <h2 class="section-title">Valuation</h2>
+
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{WACC — not independently modeled in this pass; typical large-cap lithium/specialty chemicals WACC range 9-11%, given extreme commodity-price cyclicality}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{TERMINAL_GROWTH — typically 2-3% for a mature-stage terminal assumption}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{FORECAST_PERIOD — should explicitly model a range of lithium price recovery scenarios given the extreme price sensitivity and current cyclical trough}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td class="placeholder">{{DCF_INTRINSIC_VALUE — not independently modeled in this pass}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Relative Valuation</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>Albemarle Corporation</th><th>Peer Average</th><th>Industry Average</th></tr>
+      <tr><td>P/E (Trailing)</td><td class="placeholder">236x (N/M, near-zero trailing earnings)</td><td class="placeholder">{{PEER_PE_AVG}}</td><td class="placeholder">{{INDUSTRY_PE_AVG}}</td></tr>
+      <tr><td>P/E (Forward)</td><td>12.11x</td><td class="placeholder">{{PEER_FWD_PE_AVG}}</td><td class="placeholder">{{INDUSTRY_FWD_PE_AVG}}</td></tr>
+      <tr><td>P/Sales</td><td class="placeholder">~2.6x (estimated from market cap/FY2025 revenue)</td><td class="placeholder">{{PEER_PS_AVG}}</td><td class="placeholder">{{INDUSTRY_PS_AVG}}</td></tr>
+      <tr><td>P/Book Value</td><td class="placeholder">{{PB_RATIO}}</td><td class="placeholder">{{PEER_PB_AVG}}</td><td class="placeholder">{{INDUSTRY_PB_AVG}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">With Strong Buy as the largest single bucket and 59.1% Buy-or-better, this report assigns a BUY rating, consistent with the substantial +54.9% implied upside from the average price target. This is a higher-risk, higher-reward valuation case than most others in this coverage batch: the very large gap between trailing and forward P/E multiples signals that the investment case depends heavily on a durable lithium price recovery materializing, which the single positive Q2 2026 quarter suggests may be underway but has not yet been established as a multi-quarter trend.</p>
+  </section>
+
+  <!-- ============ FINANCIAL ANALYSIS ============ -->
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+
+    <h3 class="sub-title">Historical &amp; Forecast Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>FY2023</th><th>FY2024</th><th>FY2025</th><th>FY2027E</th></tr>
+      <tr><td>Revenue</td><td class="placeholder">{{REV_Y0 — not independently sourced in this pass}}</td><td>$5,378M</td><td>$5,143M</td><td class="placeholder">{{REV_Y3}}</td></tr>
+      <tr><td>EBITDA</td><td class="placeholder">{{EBITDA_Y0}}</td><td class="placeholder">{{EBITDA_Y1}}</td><td class="placeholder">{{EBITDA_Y2}}</td><td class="placeholder">{{EBITDA_Y3}}</td></tr>
+      <tr><td>Net Income</td><td class="placeholder">{{NI_Y0 — not independently sourced in this pass}}</td><td>-$1,316M</td><td>-$677.4M</td><td class="placeholder">{{NI_Y3}}</td></tr>
+      <tr><td>EPS (Diluted)</td><td class="placeholder">{{EPS_Y0}}</td><td>-$11.20</td><td>-$5.76</td><td class="placeholder">{{EPS_Y3}}</td></tr>
+      <tr><td>Free Cash Flow</td><td class="placeholder">{{FCF_Y0}}</td><td>-$992.7M</td><td>$692.5M</td><td class="placeholder">{{FCF_Y3}}</td></tr>
+    </table>
+
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text">A reliable separately-reported TTM figure could not be obtained in this research pass; readers should source current TTM figures directly from Albemarle's most recent 10-Q. Unlike several other names in this coverage batch, the two-year net loss streak (FY2024 -$1.32B, FY2025 -$677M) does not appear to be a data-extraction anomaly — it is consistent with a well-documented, severe global lithium price collapse, and the narrowing loss trajectory combined with the swing to positive free cash flow in FY2025 is a genuinely encouraging trend that should be independently monitored. The reported Q2 2026 return to positive net income ($57.4M) is a potentially important inflection point but represents a single quarter and should not be extrapolated into a durable recovery without further confirming quarters.</p>
+
+    <h3 class="sub-title">Industry-Specific Ratios</h3>
+    <table class="data-table">
+      <tr><th>Ratio</th><th>Value</th></tr>
+      <tr><td>Realized Lithium Price per Metric Ton (LCE)</td><td class="placeholder">{{INDUSTRY_RATIO_1_VALUE — the single most important metric for assessing ALB's earnings trajectory; not independently sourced in this pass}}</td></tr>
+      <tr><td>Energy Storage Segment Volume Growth</td><td class="placeholder">{{INDUSTRY_RATIO_2_VALUE — not independently sourced in this pass}}</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ INVESTMENT RISKS ============ -->
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+
+    <div class="risk-item">
+      <span class="risk-tag op">Operational</span>
+      <span>A resumption of the lithium price downturn, or a failure of the Q2 2026 profitability inflection to persist into subsequent quarters, would undermine the core BUY thesis, which is heavily dependent on a durable price recovery.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag fin">Financial</span>
+      <span>Two consecutive years of net losses have likely pressured the balance sheet; readers should independently verify current leverage levels and liquidity position, particularly given the historically negative free cash flow in FY2024.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag reg">Regulatory</span>
+      <span>Critical-minerals and battery-supply-chain policy (including potential tariffs, subsidies, or domestic-sourcing requirements for electric-vehicle batteries) could significantly affect lithium demand and pricing dynamics, in either direction.</span>
+    </div>
+    <div class="risk-item">
+      <span class="risk-tag legal">Legal</span>
+      <span>Standard environmental and commercial litigation typical of a large mining and chemicals company, alongside potential shareholder litigation risk given the severity of the recent multi-year earnings downturn; outcomes should be independently monitored via the company's most recent 10-K legal proceedings disclosure.</span>
+    </div>
+
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text"><strong>This report flags the two-year net loss streak (FY2024-FY2025) and the single-quarter nature of the reported Q2 2026 profitability inflection as material items requiring independent verification before this report is relied upon for an investment decision.</strong> <span class="placeholder">{{AUDITOR_FLAGS — no material weaknesses or qualified audit opinions are otherwise known to this analyst as of the report date; this should be independently confirmed against Albemarle's most recent 10-K auditor's report}}</span></p>
+  </section>
+
+  <!-- ============ ESG ============ -->
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental">
+        <h4>Environmental</h4>
+        <ul>
+          <li>Lithium is a critical enabling material for electric-vehicle and grid-scale battery storage, positioning Albemarle favorably from a long-term energy-transition demand narrative</li>
+          <li class="placeholder">{{ESG_ENV_2 — lithium brine extraction water usage practices (particularly in Chile) have drawn environmental scrutiny industry-wide and should be sourced from Albemarle's sustainability report}}</li>
+          <li class="placeholder">{{ESG_ENV_3 — specific corporate carbon-reduction targets not independently verified in this pass}}</li>
+        </ul>
+      </div>
+      <div class="esg-card social">
+        <h4>Social</h4>
+        <ul>
+          <li class="placeholder">{{ESG_SOC_1 — worker safety metrics at mining and processing operations should be sourced from Albemarle's disclosures}}</li>
+          <li class="placeholder">{{ESG_SOC_2 — community and indigenous-rights relations near Chilean brine operations not independently verified in this pass}}</li>
+          <li class="placeholder">{{ESG_SOC_3 — workforce diversity metrics not independently verified in this pass}}</li>
+        </ul>
+      </div>
+      <div class="esg-card governance">
+        <h4>Governance</h4>
+        <ul>
+          <li class="placeholder">{{ESG_GOV_1 — board composition not independently verified in this pass; should be sourced from the most recent proxy statement}}</li>
+          <li><strong>The two-year net loss streak and its impact on capital allocation flexibility, including the dividend, is a governance consideration that warrants independent review of management's revised capital allocation guidance.</strong></li>
+          <li class="placeholder">{{ESG_GOV_2 — executive compensation structure should be sourced from the most recent proxy statement}}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER / DISCLOSURES ============ -->
+  <footer>
+    <div class="analyst-line">Prepared by Equity Research Desk, Equity Analyst — Independent Equity Research</div>
+    This report is compiled from publicly available data sources believed to be reliable but not independently audited. Figures marked as placeholders require independent verification before use in an investment decision. This report does not constitute investment advice, an offer, or a solicitation to buy or sell any security. Ratings: BUY = expected to outperform the market over the next 12 months; HOLD = expected to perform in line with the market; SELL = expected to underperform the market. The analyst(s) preparing this report may or may not hold a position in the subject security. Past performance is not indicative of future results.
+  </footer>
+
+</div>
+</body>
+</html>

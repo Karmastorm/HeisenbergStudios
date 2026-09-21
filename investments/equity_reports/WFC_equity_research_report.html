@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Equity Research Report — WFC</title>
+<style>
+  :root { --navy:#1b2a4a; --accent:#0d6efd; --accent-dark:#0a4fb5; --green:#1e7e34; --red:#b02a37; --gray-bg:#f5f7fa; --border:#d8dee6; --text:#222; --muted:#5a6472; font-family:"Georgia","Times New Roman",serif; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:0; background:#e9edf2; color:var(--text); font-family:"Georgia","Times New Roman",serif; line-height:1.55; }
+  .page { max-width:900px; margin:30px auto; background:#fff; box-shadow:0 0 20px rgba(0,0,0,0.12); padding:40px 50px 60px; }
+  .report-header { border-bottom:3px solid var(--navy); padding-bottom:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; font-family:Arial, Helvetica, sans-serif; }
+  .firm-name { font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--muted); margin-bottom:4px; }
+  .company-title { font-size:28px; font-weight:bold; color:var(--navy); margin:0; }
+  .ticker-line { font-size:15px; color:var(--muted); margin-top:4px; }
+  .report-date { text-align:right; font-size:13px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; white-space:nowrap; }
+  .reco-banner { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; margin-bottom:24px; font-family:Arial, Helvetica, sans-serif; }
+  .reco-main { flex:0 0 170px; background:var(--navy); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:14px 10px; text-align:center; }
+  .reco-main .label { font-size:11px; text-transform:uppercase; letter-spacing:1px; opacity:0.8; }
+  .reco-main .value { font-size:22px; font-weight:bold; margin-top:4px; }
+  .reco-stats { flex:1; display:grid; grid-template-columns:repeat(4,1fr); background:var(--gray-bg); }
+  .reco-stat { padding:10px 14px; border-left:1px solid var(--border); }
+  .reco-stat .label { font-size:10.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--muted); display:block; }
+  .reco-stat .value { font-size:16px; font-weight:bold; color:var(--navy); display:block; margin-top:2px; }
+  .basic-info { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:28px; }
+  .basic-info td { padding:6px 10px; border-bottom:1px solid var(--border); }
+  .basic-info td.k { color:var(--muted); width:38%; }
+  .basic-info td.v { font-weight:bold; color:var(--text); }
+  section { margin-bottom:32px; }
+  h2.section-title { font-family:Arial, Helvetica, sans-serif; font-size:15px; text-transform:uppercase; letter-spacing:1px; color:#fff; background:var(--navy); padding:8px 14px; margin:0 0 14px 0; border-left:5px solid var(--accent); }
+  h3.sub-title { font-family:Arial, Helvetica, sans-serif; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy); border-bottom:1px solid var(--border); padding-bottom:4px; margin:18px 0 10px; }
+  p.body-text { font-size:15px; margin:0 0 12px; }
+  ul.bullet-list { margin:0 0 12px 0; padding-left:20px; }
+  ul.bullet-list li { margin-bottom:6px; font-size:15px; }
+  .thesis-box { background:var(--gray-bg); border-left:4px solid var(--accent); padding:14px 18px; margin-bottom:16px; font-size:15px; }
+  .thesis-box .thesis-label { font-family:Arial, Helvetica, sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--accent-dark); font-weight:bold; display:block; margin-bottom:6px; }
+  table.data-table { width:100%; border-collapse:collapse; font-family:Arial, Helvetica, sans-serif; font-size:13px; margin-bottom:16px; }
+  table.data-table th { background:var(--navy); color:#fff; text-align:left; padding:8px 10px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; }
+  table.data-table td { padding:7px 10px; border-bottom:1px solid var(--border); }
+  table.data-table tr:nth-child(even) td { background:var(--gray-bg); }
+  .risk-item { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
+  .risk-tag { flex:0 0 auto; font-family:Arial, Helvetica, sans-serif; font-size:10.5px; text-transform:uppercase; font-weight:bold; color:#fff; background:var(--red); border-radius:3px; padding:2px 8px; white-space:nowrap; margin-top:2px; }
+  .risk-tag.op { background:#b8860b; } .risk-tag.fin { background:var(--red); } .risk-tag.reg { background:#6a3d9a; } .risk-tag.legal { background:#444; }
+  .esg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .esg-card { border:1px solid var(--border); border-top:4px solid var(--accent); border-radius:4px; padding:12px 14px; }
+  .esg-card.environmental { border-top-color:#2e7d32; } .esg-card.social { border-top-color:#1565c0; } .esg-card.governance { border-top-color:#6a1b9a; }
+  .esg-card h4 { font-family:Arial, Helvetica, sans-serif; font-size:12.5px; text-transform:uppercase; letter-spacing:0.5px; margin:0 0 8px; color:var(--navy); }
+  .esg-card ul { margin:0; padding-left:16px; font-size:13px; } .esg-card li { margin-bottom:4px; }
+  .peer-note { font-size:12.5px; color:var(--muted); font-family:Arial, Helvetica, sans-serif; margin-top:-6px; margin-bottom:12px; }
+  .placeholder { color:#8a8fa3; font-style:italic; }
+  footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--border); font-family:Arial, Helvetica, sans-serif; font-size:10.5px; color:var(--muted); line-height:1.5; }
+  footer .analyst-line { margin-bottom:8px; font-size:12px; color:var(--text); }
+  @media (max-width:700px) { .page{padding:24px 18px;} .reco-banner{flex-direction:column;} .reco-stats{grid-template-columns:repeat(2,1fr);} .esg-grid{grid-template-columns:1fr;} }
+  @media print { body{background:#fff;} .page{box-shadow:none;margin:0;max-width:100%;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="report-header">
+    <div>
+      <div class="firm-name">Independent Equity Research</div>
+      <h1 class="company-title">Wells Fargo &amp; Company</h1>
+      <div class="ticker-line">WFC &nbsp;|&nbsp; NYSE &nbsp;|&nbsp; Financials / Diversified Banks</div>
+    </div>
+    <div class="report-date">September 18, 2026<br>Analyst: [Name Not Specified]</div>
+  </div>
+
+  <div class="reco-banner">
+    <div class="reco-main"><span class="label">Recommendation</span><span class="value" style="color:#1e7e34;">BUY</span></div>
+    <div class="reco-stats">
+      <div class="reco-stat"><span class="label">Current Price</span><span class="value">$86.89</span></div>
+      <div class="reco-stat"><span class="label">Target Price</span><span class="value">$100.46 (avg.)</span></div>
+      <div class="reco-stat"><span class="label">Market Cap</span><span class="value">$262.8B</span></div>
+      <div class="reco-stat"><span class="label">Implied Upside</span><span class="value">~+15.6%</span></div>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="section-title">Basic Information</h2>
+    <table class="basic-info">
+      <tr><td class="k">Ticker Symbol</td><td class="v">WFC</td></tr>
+      <tr><td class="k">Primary Exchange</td><td class="v">NYSE</td></tr>
+      <tr><td class="k">Sector</td><td class="v">Financials</td></tr>
+      <tr><td class="k">Industry</td><td class="v">Diversified Banks</td></tr>
+      <tr><td class="k">52-Week Range</td><td class="v">$72.78 – $97.76</td></tr>
+      <tr><td class="k">Consensus Rating</td><td class="v">Buy (26 analysts: 13 Strong Buy, 3 Buy, 10 Hold)</td></tr>
+      <tr><td class="k">TTM Revenue / Net Income</td><td class="v">$83.03 billion / $21.62 billion</td></tr>
+      <tr><td class="k">Forward P/E</td><td class="v">11.70x</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Summary</h2>
+    <div class="thesis-box">
+      <span class="thesis-label">Investment Thesis</span>
+      Wells Fargo delivered TTM revenue of $83.03 billion (up 7.0% year-over-year) and net income of $21.62 billion (up 9.9%), continuing its post-regulatory-remediation earnings recovery following the lifting of its asset cap. The analyst rating distribution is supportive, with 16 of 26 analysts (62%) rating Buy or Strong Buy and the remaining 10 at Hold, no Sell ratings, and an average price target of $100.46 implying roughly 15.6% upside from the current price of $86.89. We rate WFC a BUY, supported by continued earnings growth, a majority-bullish analyst base, and a forward P/E (11.70x) that remains at a discount to several money-center peers.
+    </div>
+    <h3 class="sub-title">Recent Developments</h3>
+    <p class="body-text">Wells Fargo's trailing-twelve-month results showed revenue of $83.03 billion (up 7.0%) and net income of $21.62 billion (up 9.9%), building on full-year 2025 results of $80.04 billion in revenue and $20.29 billion in earnings. The stock trades within a 52-week range of $72.78 to $97.76, reflecting continued investor confidence following the bank's exit from the multi-year regulatory consent order period that had previously capped its balance sheet growth.</p>
+    <h3 class="sub-title">Earnings Forecast</h3>
+    <p class="body-text placeholder">{{No specific forward-quarter or full-year 2026 EPS guidance was independently sourced for this report — recommend reviewing Wells Fargo's most recent earnings call transcript for management's net interest income and expense guidance.}}</p>
+    <h3 class="sub-title">Valuation Summary</h3>
+    <p class="body-text">Consensus rating is Buy across 26 analysts (13 Strong Buy, 3 Buy, 10 Hold, 0 Sell), a 62% Buy/Strong Buy majority. The average price target of $100.46 (range $90–$115) implies approximately 15.6% upside, with a forward P/E of 11.70x below JPMorgan's comparable forward multiple.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Business Description</h2>
+    <p class="body-text">Wells Fargo is one of the largest U.S. diversified banks, operating across Consumer Banking &amp; Lending, Commercial Banking, Corporate &amp; Investment Banking, and Wealth &amp; Investment Management segments, with a particularly large retail branch and mortgage banking footprint.</p>
+    <h3 class="sub-title">Key Revenue Drivers</h3>
+    <ul class="bullet-list">
+      <li>Net interest income from its large consumer deposit and lending franchise, including mortgage and auto lending</li>
+      <li>Commercial banking and middle-market lending relationships</li>
+      <li>Growing Corporate &amp; Investment Banking and Wealth &amp; Investment Management fee income following the lifting of its asset cap</li>
+    </ul>
+    <h3 class="sub-title">Key Expense Drivers</h3>
+    <ul class="bullet-list">
+      <li>Ongoing regulatory remediation and compliance-related operating costs</li>
+      <li class="placeholder">{{Specific technology and credit-provisioning expense figures not independently sourced for this report}}</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">Industry Overview &amp; Competitive Positioning</h2>
+    <p class="body-text">Wells Fargo competes in the U.S. diversified banking industry against JPMorgan Chase, Bank of America, and Citigroup (see separate JPM, BAC, and C reports in this series).</p>
+    <h3 class="sub-title">Porter's Five Forces</h3>
+    <table class="data-table">
+      <tr><th>Force</th><th>Assessment</th></tr>
+      <tr><td>Threat of New Entrants</td><td>Low — high regulatory capital requirements and scale advantages create significant barriers to entry.</td></tr>
+      <tr><td>Bargaining Power of Suppliers</td><td>Low-to-Moderate — funding costs are influenced by broader interest rate policy.</td></tr>
+      <tr><td>Bargaining Power of Buyers</td><td>Moderate — retail and commercial banking clients can switch providers, though switching costs for full-service relationships are meaningful.</td></tr>
+      <tr><td>Threat of Substitutes</td><td>Moderate — fintech and non-bank lenders present competitive alternatives for certain lending and payments products.</td></tr>
+      <tr><td>Competitive Rivalry</td><td>High — intense competition among large diversified banks for market share across all business lines.</td></tr>
+    </table>
+    <h3 class="sub-title">Competitive Advantage ("Economic Moat")</h3>
+    <p class="body-text">Wells Fargo's moat rests on its large retail branch network and deposit franchise, though its growth has historically been constrained relative to peers by the multi-year regulatory asset cap, now lifted, which management is leveraging to expand Corporate &amp; Investment Banking and Wealth Management.</p>
+    <h3 class="sub-title">Peer Group Comparison</h3>
+    <div class="peer-note">Peer set: major U.S. diversified and investment banks. See separate JPM, BAC, C, GS, and MS reports in this series.</div>
+    <table class="data-table">
+      <tr><th>Company</th><th>Ticker</th><th>Notes</th></tr>
+      <tr><td>Wells Fargo</td><td>WFC</td><td>Post-asset-cap earnings recovery story; 62% Buy+ rating</td></tr>
+      <tr><td>JPMorgan Chase</td><td>JPM</td><td>See separate JPM report in this series</td></tr>
+      <tr><td>Bank of America</td><td>BAC</td><td>See separate BAC report in this series</td></tr>
+      <tr><td>Citigroup</td><td>C</td><td>See separate C report in this series</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2 class="section-title">Valuation</h2>
+    <h3 class="sub-title">Absolute Valuation — Discounted Cash Flow</h3>
+    <table class="data-table">
+      <tr><th>Assumption</th><th>Value</th></tr>
+      <tr><td>WACC</td><td class="placeholder">{{Not modeled — requires analyst-specified assumptions}}</td></tr>
+      <tr><td>Terminal Growth Rate</td><td class="placeholder">{{Not modeled}}</td></tr>
+      <tr><td>Forecast Period</td><td class="placeholder">{{Not modeled — bank valuation is typically approached via P/E, P/TBV, and dividend discount methods rather than standard DCF}}</td></tr>
+      <tr><td>Implied Intrinsic Value / Share</td><td>Average sell-side price target of $100.46 (26 analysts) as of the report date</td></tr>
+    </table>
+    <h3 class="sub-title">Valuation Conclusion</h3>
+    <p class="body-text">We rate WFC a <strong>BUY</strong>. Continued post-asset-cap earnings growth, a majority-bullish 62% Buy/Strong Buy analyst distribution, and a below-peer forward P/E support a constructive stance with meaningful (~16%) upside to target.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Financial Analysis</h2>
+    <h3 class="sub-title">Recent Results Summary</h3>
+    <table class="data-table">
+      <tr><th>Metric</th><th>2025</th><th>TTM</th></tr>
+      <tr><td>Revenue</td><td>$80.04 billion</td><td>$83.03 billion (+7.0%)</td></tr>
+      <tr><td>Net Income</td><td>$20.29 billion</td><td>$21.62 billion (+9.9%)</td></tr>
+      <tr><td>Forward P/E</td><td class="placeholder">{{N/A}}</td><td>11.70x</td></tr>
+      <tr><td>Dividend Yield</td><td class="placeholder">{{N/A}}</td><td>2.30% ($2.00/share)</td></tr>
+    </table>
+    <h3 class="sub-title">Earnings Quality Notes</h3>
+    <p class="body-text placeholder">{{Detailed earnings-quality items such as reserve build/release and mortgage banking revenue volatility were not independently sourced for this report — recommend reviewing Wells Fargo's 10-K and quarterly earnings supplements for detail.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Investment Risks</h2>
+    <div class="risk-item"><span class="risk-tag op">Operational</span><span>Earnings are sensitive to interest rate movements and mortgage banking activity levels, which can be volatile with housing market conditions.</span></div>
+    <div class="risk-item"><span class="risk-tag fin">Financial</span><span>As a systemically important financial institution, WFC is subject to stringent capital and liquidity requirements that can constrain capital return flexibility.</span></div>
+    <div class="risk-item"><span class="risk-tag reg">Regulatory</span><span class="placeholder">{{Wells Fargo has operated under various regulatory consent orders in recent years; while the asset cap has reportedly been lifted, specific current regulatory status was not independently verified for this report and should be confirmed against the company's latest disclosures.}}</span></div>
+    <div class="risk-item"><span class="risk-tag legal">Legal</span><span class="placeholder">{{No specific major litigation was identified in the sources reviewed for this summary — verify against Wells Fargo's most recent 10-K legal proceedings disclosure.}}</span></div>
+    <h3 class="sub-title">Disclosure Flags</h3>
+    <p class="body-text placeholder">{{No qualified audit opinions or material weaknesses were identified in the sources reviewed — verify directly against Wells Fargo's 10-K/10-Q auditor opinion, including confirmation of current regulatory consent order status.}}</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">Environmental, Social &amp; Governance (ESG)</h2>
+    <div class="esg-grid">
+      <div class="esg-card environmental"><h4>Environmental</h4><ul class="placeholder"><li>{{ESG_ENV — sustainable finance commitments and operational emissions targets not independently sourced}}</li></ul></div>
+      <div class="esg-card social"><h4>Social</h4><ul class="placeholder"><li>{{ESG_SOC — community reinvestment and workforce program specifics not independently sourced}}</li></ul></div>
+      <div class="esg-card governance"><h4>Governance</h4><ul><li>Continued progress on regulatory remediation programs is a governance focus area actively monitored by investors</li><li class="placeholder">{{ESG_GOV — board composition and diversity not independently sourced}}</li></ul></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="analyst-line">Prepared using publicly available data as of September 18, 2026 — for illustrative/educational purposes only.</div>
+    This report was generated from third-party sources (financial data aggregators and sell-side analyst rating summaries) that may be delayed or inconsistent. All figures should be independently verified against Wells Fargo's 10-K/10-Q filings and live market data before use in any investment decision. This is not investment advice.
+  </footer>
+</div>
+</body>
+</html>
