@@ -32,7 +32,7 @@ if (!$folderRow) {
     $files = [];
     if (is_dir($fullPath)) {
         foreach (scandir($fullPath) as $f) {
-            if ($f === '.' || $f === '..' || $f === '.htaccess') continue;
+            if ($f === '.' || $f === '..' || $f === '.htaccess' || $f === '.gitkeep') continue;
             if (is_file($fullPath . '/' . $f)) {
                 $files[] = [
                     'name' => $f,
@@ -72,16 +72,6 @@ function format_size(int $bytes): string {
             </div>
         <?php else: ?>
             <h1 class="page-title"><?php echo htmlspecialchars($folderRow['display_name']); ?></h1>
-
-            <?php if ($folderRow['folder_path'] === 'analysis/research'): ?>
-                <div class="card" style="margin-bottom:1.5rem;">
-                    <div class="card-body">
-                        <span class="card-headline">Equity Sector Reports</span>
-                        <p class="card-synopsis">132 equity research reports, grouped by sector with a sector jump menu.</p>
-                        <p><a href="../investments/equity_reports.php">Browse equity sector reports &rarr;</a></p>
-                    </div>
-                </div>
-            <?php endif; ?>
 
             <?php if (empty($files)): ?>
                 <p>No files have been uploaded to this folder yet.</p>
